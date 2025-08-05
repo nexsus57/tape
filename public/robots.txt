@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://delightful-panda-036f75.netlify.app/sitemap.xml
