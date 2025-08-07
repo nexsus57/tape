@@ -1,3 +1,6 @@
 User-agent: *
-Allow: /
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+
 Sitemap: https://tapeindia.shop/sitemap.xml
