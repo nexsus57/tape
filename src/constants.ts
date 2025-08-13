@@ -80,7 +80,7 @@ export const CATEGORIES: Category[] = [
         name: 'Safety Tapes',
         icon: 'ShieldCheckIcon',
         subtitle: 'Hazard marking, floor safety, and security tapes.',
-        description: 'Enhance workplace safety with our comprehensive range of industrial safety tapes. This includes durable floor marking tapes, high-traction anti-skid tapes, photoluminescent glow-in-the-dark tapes, and tamper-evident security solutions to protect assets and personnel.',
+        description: 'Enhance workplace safety with our comprehensive range of industrial safety tapes. This includes durable <a href="/product/floor-marking-tape" class="text-brand-accent hover:underline font-semibold">floor marking tapes</a>, high-traction <a href="/product/anti-skid-tape" class="text-brand-accent hover:underline font-semibold">anti-skid tapes</a>, photoluminescent <a href="/product/glow-in-the-dark-tape" class="text-brand-accent hover:underline font-semibold">glow-in-the-dark tapes</a>, and <a href="/product/tamper-proof-security-packing-tape" class="text-brand-accent hover:underline font-semibold">tamper-evident security solutions</a> to protect assets and personnel.',
         seo: {
             title: "Safety Tapes Manufacturer | Floor, Anti-Skid & Hazard Tapes",
             description: "Enhance workplace safety with Tape India's industrial safety tapes. We supply durable floor marking, anti-skid, and hazard tapes. Get a quote!",
@@ -102,7 +102,7 @@ export const CATEGORIES: Category[] = [
         name: 'Double-Sided Tapes',
         icon: 'LayersIcon',
         subtitle: 'Powerful mounting and bonding solutions for any surface.',
-        description: 'Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From tissue and cloth tapes for general use to high-strength acrylic foam tapes (VHB) that can replace mechanical fasteners, we have a solution for every mounting application.',
+        description: 'Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From general use <a href="/product/tissue-tape" class="text-brand-accent hover:underline font-semibold">double-sided tissue tape</a> and powerful <a href="/product/double-sided-cloth-tape" class="text-brand-accent hover:underline font-semibold">double-sided cloth tape</a>, to high-strength <a href="/product/vhb-tape" class="text-brand-accent hover:underline font-semibold">acrylic foam tapes (VHB)</a> that can replace mechanical fasteners, we have a solution for every mounting application.',
         seo: {
             title: "Double-Sided Tapes | Foam, Acrylic & Tissue Tapes | Tape India",
             description: "Shop a wide range of industrial double-sided tapes. We stock foam, acrylic, tissue, and VHB tapes for permanent mounting and bonding. Indian manufacturer.",
@@ -156,8 +156,8 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp'],
     seo: {
-      title: "Buy Hazard Tape | Black & Yellow Barrier Tape | Tape India",
-      description: "Mark hazardous areas with Tape India's high-visibility black and yellow hazard tape. Durable, tear-resistant, and ideal for industrial safety. Supplier in India."
+      title: "Hazard Tape Manufacturer | Black & Yellow Barrier Tape India",
+      description: "As a leading Hazard Tape manufacturer, Tape India supplies high-visibility black and yellow barrier tape. Durable and tear-resistant for industrial safety."
     }
   },
   {
