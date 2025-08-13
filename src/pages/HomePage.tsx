@@ -1,6 +1,5 @@
-
 import { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
@@ -13,13 +12,12 @@ import { ExperienceIcon, QualityIcon, RangeIcon } from '../components/icons/WhyC
 import { type Product } from '../types';
 import CategoryCard from '../components/CategoryCard';
 import TestimonialCard from '../components/TestimonialCard';
+import CanonicalTag from '../components/CanonicalTag';
 
 export default function HomePage() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const { settings } = useSettings();
-    const location = useLocation();
-    const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
 
     const categoryMap = useMemo(() => {
         const map = new Map<string, string>();
@@ -37,8 +35,8 @@ export default function HomePage() {
       <Helmet>
         <title>Industrial Adhesive Tape Manufacturer & Supplier | Tape India</title>
         <meta name="description" content={`Tape India is a leading B2B manufacturer and supplier of over ${products.length} industrial adhesive tapes. We provide high-performance solutions for packaging, HVAC, electronics, and more. Request a quote.`} />
-        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
+      <CanonicalTag />
       
       {/* Hero Section */}
       <section className="relative text-white overflow-hidden">
