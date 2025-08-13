@@ -1,3 +1,4 @@
+
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -33,7 +34,7 @@ export default function HomePage() {
     <>
       <Helmet>
         <title>Industrial Adhesive Tape Manufacturer & Supplier | Tape India</title>
-        <meta name="description" content="Tape India is a leading B2B manufacturer and supplier of over 98 industrial adhesive tapes. We provide high-performance solutions for packaging, HVAC, electronics, and more. Request a quote." />
+        <meta name="description" content={`Tape India is a leading B2B manufacturer and supplier of over ${products.length} industrial adhesive tapes. We provide high-performance solutions for packaging, HVAC, electronics, and more. Request a quote.`} />
         <link rel="canonical" href="https://delightful-panda-036f75.netlify.app/" />
       </Helmet>
       
@@ -113,7 +114,7 @@ export default function HomePage() {
                 </div>
                 <div className="bg-white p-8 rounded-lg shadow-sm text-center border-t-4 border-brand-accent hover:shadow-xl transition-shadow duration-300">
                   <RangeIcon className="h-12 w-12 mx-auto text-brand-accent mb-5" />
-                  <h3 className="mb-3">98+ Solutions</h3>
+                  <h3 className="mb-3">Over {products.length} Solutions</h3>
                   <p className="text-gray-600">Our extensive product range caters to diverse industries, ensuring you find the perfect tape for any application.</p>
                 </div>
               </div>
@@ -195,7 +196,9 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-       <section className="py-16 md:py-24 bg-brand-gray">
+       <section className="py-16 md:py-24 bg-brand-gray" itemScope itemType="https://schema.org/Organization">
+        <meta itemProp="name" content="Tape India" />
+        <link itemProp="url" href="https://delightful-panda-036f75.netlify.app/" />
         <div className="container mx-auto px-5 lg:px-8">
             <AnimatedSection className="text-center">
                 <h2 className="font-bold mb-6">Trusted by Industry Leaders</h2>
