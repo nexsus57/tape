@@ -1,6 +1,6 @@
 
 import { useMemo, useState, type ReactNode, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
@@ -67,6 +67,9 @@ export default function ProductPage() {
 
     const [isImageZoomed, setIsImageZoomed] = useState(false);
     const [isImageBroken, setIsImageBroken] = useState(false);
+    
+    const location = useLocation();
+    const canonicalUrl = `https://tapeindia.shop${location.pathname}`;
 
     useEffect(() => {
         setIsImageBroken(false);
@@ -85,7 +88,7 @@ export default function ProductPage() {
       if (!product || !category) return [];
       return products
         .filter(p => p.category === product.category && p.id !== product.id)
-        .slice(0, 4);
+        .slice(0, 3);
     }, [product, category, products]);
 
     if (!product) {
@@ -94,6 +97,7 @@ export default function ProductPage() {
     
     const pageTitle = product.seo?.title || `${product.name} | Tape India`;
     const pageDescription = product.seo?.description || product.shortDescription;
+    const imageAltText = product.seo?.title || product.name;
 
     const hasImage = product.images && product.images.length > 0;
     const showPlaceholder = !hasImage || isImageBroken;
@@ -107,6 +111,8 @@ export default function ProductPage() {
         }
     };
     
+    const productUrl = `https://tapeindia.shop/product/${product.id}`;
+
     const productSchema = {
         "@context": "https://schema.org/",
         "@type": "Product",
@@ -120,7 +126,7 @@ export default function ProductPage() {
         },
         "offers": {
             "@type": "Offer",
-            "url": `https://delightful-panda-036f75.netlify.app/product/${product.id}`,
+            "url": productUrl,
             "priceCurrency": "INR",
             "availability": "https://schema.org/InStock",
             "seller": {
@@ -131,14 +137,14 @@ export default function ProductPage() {
     };
     
     const breadcrumbItems = [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://delightful-panda-036f75.netlify.app/" }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" }
     ];
     if (category) {
-        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": category.name, "item": `https://delightful-panda-036f75.netlify.app/products?category=${category.id}` });
+        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": category.name, "item": `https://tapeindia.shop/products?category=${category.id}` });
     } else {
-        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://delightful-panda-036f75.netlify.app/products" });
+        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" });
     }
-    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": product.name, "item": `https://delightful-panda-036f75.netlify.app/product/${product.id}` });
+    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": product.name, "item": productUrl });
     
     const breadcrumbSchema = {
         "@context": "https://schema.org",
@@ -151,7 +157,7 @@ export default function ProductPage() {
             <Helmet>
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
-                <link rel="canonical" href={`https://delightful-panda-036f75.netlify.app/product/${product.id}`} />
+                <link rel="canonical" href={canonicalUrl} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
@@ -211,9 +217,9 @@ export default function ProductPage() {
                                     ) : (
                                         <img 
                                             src={product.images![0]} 
-                                            alt={product.name} 
+                                            alt={imageAltText} 
                                             className="max-w-full max-h-full object-contain" 
-                                            loading="lazy"
+                                            loading="eager"
                                             onError={() => setIsImageBroken(true)}
                                             width="384"
                                             height="384"
