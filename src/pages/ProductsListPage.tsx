@@ -51,7 +51,7 @@ export default function ProductsListPage() {
     const { filteredProducts, pageTitle, pageDescription, breadcrumb, canonicalUrl, pageContent, breadcrumbSchema } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
-        let url = 'https://delightful-panda-036f75.netlify.app/products';
+        let url = `https://tapeindia.shop${location.pathname}${location.search}`;
 
         let prods = products;
         let title = 'All Products';
@@ -68,7 +68,6 @@ export default function ProductsListPage() {
                 desc = industryDetail?.seo?.description || `Explore specialized tapes for the ${industry.name} industry.`;
                 pageContent = industryDetail?.description || null;
                 crumb = { name: 'Industries', link: '/industries' };
-                url += `?industry=${industryId}`;
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
@@ -78,22 +77,21 @@ export default function ProductsListPage() {
                 desc = category.seo?.description || `View all products in the ${category.name} category.`;
                 pageContent = category.description || null;
                 crumb = null; // Direct child of "Products"
-                url += `?category=${categoryId}`;
             }
         }
         
         const listItems = [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://delightful-panda-036f75.netlify.app/" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" },
         ];
         
         if (crumb) { 
-            listItems.push({ "@type": "ListItem", "position": 2, "name": crumb.name, "item": `https://delightful-panda-036f75.netlify.app${crumb.link}` });
+            listItems.push({ "@type": "ListItem", "position": 2, "name": crumb.name, "item": `https://tapeindia.shop${crumb.link}` });
         } else {
-            listItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://delightful-panda-036f75.netlify.app/products" });
+            listItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" });
         }
         
         if (breadcrumbTitle !== 'All Products') {
-             listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": `https://delightful-panda-036f75.netlify.app${location.pathname}${location.search}` });
+             listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": url });
         }
 
         const bSchema = {
@@ -159,7 +157,7 @@ export default function ProductsListPage() {
                 {pageContent && (
                     <AnimatedSection className="delay-100">
                         <div className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-lg shadow-sm border-l-4 border-brand-accent">
-                            <p className="text-slate-600 text-lg leading-relaxed">{pageContent}</p>
+                            <div className="text-slate-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent }} />
                         </div>
                     </AnimatedSection>
                 )}
