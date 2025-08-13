@@ -1,3 +1,4 @@
+
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -11,13 +12,13 @@ import AnimatedSection from '../components/AnimatedSection';
 interface FilterButtonProps {
     label: string;
     isActive: boolean;
-    onClick: () => void;
+    to: string;
 }
 
-const FilterButton: FC<FilterButtonProps> = ({ label, isActive, onClick }) => {
+const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
     return (
-        <button
-            onClick={onClick}
+        <Link
+            to={to}
             className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 whitespace-nowrap border ${
                 isActive 
                 ? 'bg-brand-accent text-white border-brand-accent shadow' 
@@ -25,12 +26,12 @@ const FilterButton: FC<FilterButtonProps> = ({ label, isActive, onClick }) => {
             }`}
         >
             {label}
-        </button>
+        </Link>
     );
 }
 
 export default function ProductsListPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const location = useLocation();
     const { products } = useProducts();
     const { categories } = useCategories();
@@ -39,15 +40,24 @@ export default function ProductsListPage() {
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
-    const { filteredProducts, pageTitle, pageDescription, breadcrumb, canonicalUrl } = useMemo(() => {
+    const breadcrumbTitle = useMemo(() => {
+        const categoryId = searchParams.get('category');
+        const industryId = searchParams.get('industry');
+        if (industryId) return INDUSTRIES.find(i => i.id === industryId)?.name || 'Industry';
+        if (categoryId) return categories.find(c => c.id === categoryId)?.name || 'Category';
+        return 'All Products';
+    }, [searchParams, categories]);
+    
+    const { filteredProducts, pageTitle, pageDescription, breadcrumb, canonicalUrl, pageContent, breadcrumbSchema } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
         let url = 'https://delightful-panda-036f75.netlify.app/products';
 
         let prods = products;
         let title = 'All Products';
-        let desc = 'Browse our complete range of over 98 industrial adhesive tapes. As a leading manufacturer in India, we supply solutions for every application.';
+        let desc = `Browse our complete range of over ${products.length} industrial adhesive tapes. As a leading manufacturer in India, we supply solutions for every application.`;
         let crumb = null;
+        let pageContent: string | null = null;
 
         if (industryId) {
             const industry = INDUSTRIES.find(i => i.id === industryId);
@@ -56,6 +66,7 @@ export default function ProductsListPage() {
                 prods = products.filter(p => p.industries?.includes(industryId));
                 title = industryDetail?.seo?.title || industry.name;
                 desc = industryDetail?.seo?.description || `Explore specialized tapes for the ${industry.name} industry.`;
+                pageContent = industryDetail?.description || null;
                 crumb = { name: 'Industries', link: '/industries' };
                 url += `?industry=${industryId}`;
             }
@@ -65,43 +76,50 @@ export default function ProductsListPage() {
                 prods = products.filter(p => p.category === categoryId);
                 title = category.seo?.title || category.name;
                 desc = category.seo?.description || `View all products in the ${category.name} category.`;
+                pageContent = category.description || null;
                 crumb = null; // Direct child of "Products"
                 url += `?category=${categoryId}`;
             }
         }
         
+        const listItems = [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://delightful-panda-036f75.netlify.app/" },
+        ];
+        
+        if (crumb) { 
+            listItems.push({ "@type": "ListItem", "position": 2, "name": crumb.name, "item": `https://delightful-panda-036f75.netlify.app${crumb.link}` });
+        } else {
+            listItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://delightful-panda-036f75.netlify.app/products" });
+        }
+        
+        if (breadcrumbTitle !== 'All Products') {
+             listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": `https://delightful-panda-036f75.netlify.app${location.pathname}${location.search}` });
+        }
+
+        const bSchema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": listItems
+        };
+
         return {
             filteredProducts: prods,
             pageTitle: title,
             pageDescription: desc,
             breadcrumb: crumb,
             canonicalUrl: url,
+            pageContent,
+            breadcrumbSchema: JSON.stringify(bSchema)
         };
-    }, [searchParams, products, categories, detailedIndustries]);
+    }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location]);
     
     useEffect(() => {
         // Close mobile filter when route changes
         setIsMobileFilterOpen(false);
     }, [location]);
-
-    const handleFilterChange = (type: 'category' | 'industry' | 'all', id: string | null) => {
-        const params = new URLSearchParams();
-        if (type === 'category' && id) {
-            params.set('category', id);
-        } else if (type === 'industry' && id) {
-            params.set('industry', id);
-        }
-        setSearchParams(params, { replace: true });
-    };
     
     const currentCategoryId = searchParams.get('category');
     const currentIndustryId = searchParams.get('industry');
-
-    const breadcrumbTitle = useMemo(() => {
-        if (currentIndustryId) return INDUSTRIES.find(i => i.id === currentIndustryId)?.name || 'Industry';
-        if (currentCategoryId) return categories.find(c => c.id === currentCategoryId)?.name || 'Category';
-        return 'All Products';
-    }, [currentCategoryId, currentIndustryId, categories]);
 
     return (
         <main className="py-16 md:py-24 bg-brand-gray min-h-[60vh]">
@@ -109,6 +127,7 @@ export default function ProductsListPage() {
                 <title>{`${pageTitle} | Tape India`}</title>
                 <meta name="description" content={pageDescription} />
                 <link rel="canonical" href={canonicalUrl} />
+                <script type="application/ld+json">{breadcrumbSchema}</script>
             </Helmet>
             <div className="container mx-auto px-5 lg:px-8">
                 <AnimatedSection>
@@ -137,6 +156,14 @@ export default function ProductsListPage() {
                     </div>
                 </AnimatedSection>
                 
+                {pageContent && (
+                    <AnimatedSection className="delay-100">
+                        <div className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-lg shadow-sm border-l-4 border-brand-accent">
+                            <p className="text-slate-600 text-lg leading-relaxed">{pageContent}</p>
+                        </div>
+                    </AnimatedSection>
+                )}
+                
                 {/* Filters Section */}
                 <aside className="mb-14 p-6 bg-white rounded-lg shadow-sm">
                     {/* Desktop Filters */}
@@ -144,9 +171,9 @@ export default function ProductsListPage() {
                         <div className="flex items-center gap-x-4 gap-y-2 flex-wrap">
                             <h3 className="text-base font-bold flex-shrink-0 pr-2 text-slate-600 tracking-wider">CATEGORY:</h3>
                             <div className="flex flex-wrap gap-2">
-                                <FilterButton label="All Products" isActive={!currentIndustryId && !currentCategoryId} onClick={() => handleFilterChange('all', null)} />
+                                <FilterButton label="All Products" isActive={!currentIndustryId && !currentCategoryId} to="/products" />
                                 {categories.map(cat => (
-                                    <FilterButton key={cat.id} label={cat.name} isActive={currentCategoryId === cat.id} onClick={() => handleFilterChange('category', cat.id)} />
+                                    <FilterButton key={cat.id} label={cat.name} isActive={currentCategoryId === cat.id} to={`/products?category=${cat.id}`} />
                                 ))}
                             </div>
                         </div>
@@ -154,7 +181,7 @@ export default function ProductsListPage() {
                             <h3 className="text-base font-bold flex-shrink-0 pr-2 text-slate-600 tracking-wider">INDUSTRY:</h3>
                             <div className="flex flex-wrap gap-2">
                                 {INDUSTRIES.map(ind => (
-                                    <FilterButton key={ind.id} label={ind.name} isActive={currentIndustryId === ind.id} onClick={() => handleFilterChange('industry', ind.id)} />
+                                    <FilterButton key={ind.id} label={ind.name} isActive={currentIndustryId === ind.id} to={`/products?industry=${ind.id}`} />
                                 ))}
                             </div>
                         </div>
@@ -202,9 +229,9 @@ export default function ProductsListPage() {
                     ) : (
                         <div className="text-center py-20 bg-white rounded-lg shadow-sm">
                             <p className="text-gray-500 mb-4">No products found for this selection.</p>
-                            <button onClick={() => handleFilterChange('all', null)} className="text-brand-accent font-semibold hover:underline transition-colors group">
+                            <Link to="/products" className="text-brand-accent font-semibold hover:underline transition-colors group">
                                 View All Products <span className="transition-transform duration-300 inline-block group-hover:translate-x-1">&rarr;</span>
-                            </button>
+                            </Link>
                         </div>
                     )}
                 </section>
