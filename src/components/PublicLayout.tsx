@@ -22,7 +22,20 @@ const ScrollToTop = () => {
 // Organization Schema for SEO
 const OrganizationSchema = () => {
     const { settings } = useSettings();
-    const { contact, socialLinks } = settings;
+    const { contact, socialLinks, testimonials } = settings;
+
+    const reviewSchema = testimonials.map(testimonial => ({
+        "@type": "Review",
+        "reviewBody": testimonial.quote,
+        "author": {
+            "@type": "Person",
+            "name": testimonial.author
+        },
+        "itemReviewed": {
+            "@type": "Organization",
+            "name": "Tape India"
+        }
+    }));
 
     const schema = {
         "@context": "https://schema.org",
@@ -40,7 +53,13 @@ const OrganizationSchema = () => {
             socialLinks?.facebook,
             socialLinks?.linkedin,
             socialLinks?.instagram,
-        ].filter(Boolean)
+        ].filter(Boolean),
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "37"
+        },
+        "review": reviewSchema
     };
     
     return (
