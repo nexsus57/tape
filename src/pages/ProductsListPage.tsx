@@ -1,4 +1,3 @@
-
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -8,6 +7,7 @@ import { useIndustry } from '../context/IndustryContext';
 import { INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
 import AnimatedSection from '../components/AnimatedSection';
+import CanonicalTag from '../components/CanonicalTag';
 
 interface FilterButtonProps {
     label: string;
@@ -48,11 +48,10 @@ export default function ProductsListPage() {
         return 'All Products';
     }, [searchParams, categories]);
     
-    const { filteredProducts, pageTitle, pageDescription, breadcrumb, canonicalUrl, pageContent, breadcrumbSchema } = useMemo(() => {
+    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
-        let url = `https://tapeindia.shop${location.pathname}${location.search}`;
-
+        
         let prods = products;
         let title = 'All Products';
         let desc = `Browse our complete range of over ${products.length} industrial adhesive tapes. As a leading manufacturer in India, we supply solutions for every application.`;
@@ -91,7 +90,8 @@ export default function ProductsListPage() {
         }
         
         if (breadcrumbTitle !== 'All Products') {
-             listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": url });
+             const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
+             listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": canonicalUrl });
         }
 
         const bSchema = {
@@ -105,11 +105,10 @@ export default function ProductsListPage() {
             pageTitle: title,
             pageDescription: desc,
             breadcrumb: crumb,
-            canonicalUrl: url,
             pageContent,
             breadcrumbSchema: JSON.stringify(bSchema)
         };
-    }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location]);
+    }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location.pathname, location.search]);
     
     useEffect(() => {
         // Close mobile filter when route changes
@@ -124,9 +123,9 @@ export default function ProductsListPage() {
             <Helmet>
                 <title>{`${pageTitle} | Tape India`}</title>
                 <meta name="description" content={pageDescription} />
-                <link rel="canonical" href={canonicalUrl} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
             </Helmet>
+            <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
                 <AnimatedSection>
                     <div className="mb-12 text-center">
