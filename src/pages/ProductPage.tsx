@@ -6,6 +6,7 @@ import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { INDUSTRIES } from '../constants';
 import NotFoundPage from './NotFoundPage';
+import ProductCard from '../components/ProductCard';
 
 const InfoList = ({ items, icon }: { items: string[], icon: 'arrow' | 'cog' }) => {
     const iconMap = {
@@ -79,6 +80,13 @@ export default function ProductPage() {
         if (!product?.industries) return [];
         return INDUSTRIES.filter(ind => product.industries?.includes(ind.id));
     }, [product]);
+    
+    const relatedProducts = useMemo(() => {
+      if (!product || !category) return [];
+      return products
+        .filter(p => p.category === product.category && p.id !== product.id)
+        .slice(0, 4);
+    }, [product, category, products]);
 
     if (!product) {
         return <NotFoundPage />;
@@ -121,6 +129,22 @@ export default function ProductPage() {
             }
         }
     };
+    
+    const breadcrumbItems = [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://delightful-panda-036f75.netlify.app/" }
+    ];
+    if (category) {
+        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": category.name, "item": `https://delightful-panda-036f75.netlify.app/products?category=${category.id}` });
+    } else {
+        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://delightful-panda-036f75.netlify.app/products" });
+    }
+    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": product.name, "item": `https://delightful-panda-036f75.netlify.app/product/${product.id}` });
+    
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbItems
+    };
 
     return (
         <>
@@ -129,6 +153,7 @@ export default function ProductPage() {
                 <meta name="description" content={pageDescription} />
                 <link rel="canonical" href={`https://delightful-panda-036f75.netlify.app/product/${product.id}`} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
+                <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
 
             {isImageZoomed && canZoom && (
@@ -190,6 +215,8 @@ export default function ProductPage() {
                                             className="max-w-full max-h-full object-contain" 
                                             loading="lazy"
                                             onError={() => setIsImageBroken(true)}
+                                            width="384"
+                                            height="384"
                                         />
                                     )}
                                 </div>
@@ -226,7 +253,7 @@ export default function ProductPage() {
                                     <DetailSection title="Available Options">
                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-4">
                                             {product.availableColors?.map(colorOpt => (
-                                                <ColorSwatch key={colorOpt.name} {...colorOpt} />
+                                                <ColorSwatch key={colorOpt.name} name={colorOpt.name} colors={colorOpt.colors} />
                                             ))}
                                             {product.customizable && (
                                                 <div className="flex items-center gap-3">
@@ -263,6 +290,19 @@ export default function ProductPage() {
                     </div>
                 </div>
             </main>
+            
+            {relatedProducts.length > 0 && (
+                <section className="py-16 md:py-24 bg-brand-gray">
+                    <div className="container mx-auto px-5 lg:px-8">
+                        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Related Products</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                            {relatedProducts.map(p => (
+                                <ProductCard key={p.id} product={p} categoryName={category?.name || ''} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }
