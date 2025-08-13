@@ -1,9 +1,10 @@
 
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
+import type { ReactNode } from 'react';
 
-const Section = ({ title, children }: { title: string, children: React.ReactNode }) => (
+const Section = ({ title, children }: { title: string, children: ReactNode }) => (
     <div className="mb-8">
         <h3 className="mb-3 text-2xl font-bold">{title}</h3>
         <div className="space-y-4 text-gray-700">{children}</div>
@@ -11,12 +12,15 @@ const Section = ({ title, children }: { title: string, children: React.ReactNode
 );
 
 export default function PrivacyPolicyPage() {
+  const location = useLocation();
+  const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
+
   return (
     <>
       <Helmet>
         <title>Privacy Policy | TAPE INDIA</title>
         <meta name="description" content="Read the Privacy Policy for TAPE INDIA. Learn how we collect, use, and protect your data when you visit our website." />
-        <link rel="canonical" href="https://delightful-panda-036f75.netlify.app/privacy-policy" />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       
       <main className="bg-white py-16 md:py-24">
