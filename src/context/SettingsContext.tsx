@@ -1,3 +1,4 @@
+
 import { createContext, useContext, ReactNode, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Settings } from '../types';
@@ -18,6 +19,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
         phone1: "+91-9840647096",
         phone2: "9841137052",
         email: "Tapeindia@yahoo.com"
+    },
+    socialLinks: {
+        facebook: "https://www.facebook.com/tapeindia",
+        linkedin: "https://www.linkedin.com/company/tape-india",
+        instagram: "https://www.instagram.com/tapeindia"
     },
     popularProductIds: [
         'ptfe-silicone-adhesive-tape',
