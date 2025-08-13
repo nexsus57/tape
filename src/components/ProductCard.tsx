@@ -18,6 +18,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   }, [product.id]);
 
   const showPlaceholder = !hasImage || isImageBroken;
+  const imageAltText = product.seo?.title || product.name;
 
   return (
     <article className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
@@ -33,7 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
           ) : (
              <img 
                src={product.images?.[0]} 
-               alt={product.name}
+               alt={imageAltText}
                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                loading="lazy"
                onError={() => setIsImageBroken(true)}
