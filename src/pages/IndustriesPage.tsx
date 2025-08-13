@@ -1,5 +1,6 @@
+
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useIndustry } from '../context/IndustryContext';
 import { useProducts } from '../context/ProductContext';
@@ -8,6 +9,8 @@ import AnimatedSection from '../components/AnimatedSection';
 export default function IndustriesPage() {
   const { products } = useProducts();
   const { industries } = useIndustry();
+  const location = useLocation();
+  const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
 
   const productMap = useMemo(() => {
     return new Map(products.map(p => [p.id, p]));
@@ -20,7 +23,7 @@ export default function IndustriesPage() {
       <Helmet>
         <title>Industrial Tape Solutions for All Major Industries | Tape India</title>
         <meta name="description" content="Tape India delivers specialized adhesive tape solutions for demanding industries like packaging, HVAC, electronics, print, and more. Find products engineered for your application." />
-        <link rel="canonical" href="https://delightful-panda-036f75.netlify.app/industries" />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <main className="bg-brand-gray py-16 md:py-24">
         <div className="container mx-auto px-5 lg:px-8">
