@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+
+import { Link, useLocation } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import AnimatedSection from "../components/AnimatedSection";
 import { useSettings } from '../context/SettingsContext';
@@ -6,13 +7,15 @@ import { useSettings } from '../context/SettingsContext';
 export default function ContactPage() {
   const { settings } = useSettings();
   const { contact } = settings;
+  const location = useLocation();
+  const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
 
   return (
     <>
       <Helmet>
         <title>Contact Us | Tape India | Get In Touch</title>
         <meta name="description" content="Get in touch with Tape India. Find our address, phone number, and email. Reach out for technical support or to request a quote for your industrial tape needs." />
-        <link rel="canonical" href="https://delightful-panda-036f75.netlify.app/contact" />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <main className="bg-white py-16 md:py-24">
         <div className="container mx-auto px-5 lg:px-8">
