@@ -1,9 +1,12 @@
+
 import { useLocation, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from './Header';
 import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 import Analytics from './Analytics';
+import { useSettings } from '../context/SettingsContext';
 
 // This component ensures the page scrolls to the top on navigation
 const ScrollToTop = () => {
@@ -17,24 +20,37 @@ const ScrollToTop = () => {
 };
 
 // Organization Schema for SEO
-const OrganizationSchema = () => (
-    <script type="application/ld+json">
-        {`
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Tape India",
-            "url": "https://delightful-panda-036f75.netlify.app/",
-            "logo": "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png",
-            "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+91-9840647096",
-                "contactType": "customer service"
-            }
-        }
-        `}
-    </script>
-);
+const OrganizationSchema = () => {
+    const { settings } = useSettings();
+    const { contact, socialLinks } = settings;
+
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Tape India",
+        "url": "https://tapeindia.shop",
+        "logo": "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": `+91-${contact.phone1.replace(/[^0-9]/g, '')}`,
+            "contactType": "customer service",
+            "email": contact.email
+        },
+        "sameAs": [
+            socialLinks?.facebook,
+            socialLinks?.linkedin,
+            socialLinks?.instagram,
+        ].filter(Boolean)
+    };
+    
+    return (
+        <Helmet>
+            <script type="application/ld+json">
+                {JSON.stringify(schema)}
+            </script>
+        </Helmet>
+    );
+};
 
 
 const PublicLayout = () => {
