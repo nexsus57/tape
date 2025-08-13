@@ -38,7 +38,7 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
-              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="lazy" />
+              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="lazy" width="56" height="56" />
             </Link>
             
             <nav className="hidden lg:flex items-center space-x-8">
@@ -99,7 +99,7 @@ export default function Header() {
         >
           <div className="flex justify-between items-center p-5 border-b border-gray-100">
              <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
-                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="lazy" />
+                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="lazy" width="48" height="48" />
              </Link>
              <button
                 onClick={closeMenu}
