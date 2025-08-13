@@ -37,6 +37,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                loading="lazy"
                onError={() => setIsImageBroken(true)}
+               width="192"
+               height="192"
              />
           )}
         </div>
