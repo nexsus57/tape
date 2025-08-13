@@ -1,20 +1,17 @@
-
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { QualityIcon, TeamIcon, InnovationIcon, IntegrityIcon } from '../components/icons/WhyChooseUsIcons';
+import CanonicalTag from '../components/CanonicalTag';
 
 export default function AboutPage() {
-  const location = useLocation();
-  const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
-
   return (
     <>
       <Helmet>
         <title>About Us | 65+ Years as India's Leading Tape Manufacturer</title>
         <meta name="description" content="Learn about Tape India's history since 1957. Discover our mission to be India's most trusted partner in engineered adhesion, and our commitment to quality, partnership, and innovation." />
-        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
+      <CanonicalTag />
       
       {/* Hero Section */}
       <header className="bg-brand-blue-deep text-white">
