@@ -1,4 +1,3 @@
-
 import { useMemo, useState, type ReactNode, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -7,6 +6,7 @@ import { useCategories } from '../context/CategoryContext';
 import { INDUSTRIES } from '../constants';
 import NotFoundPage from './NotFoundPage';
 import ProductCard from '../components/ProductCard';
+import CanonicalTag from '../components/CanonicalTag';
 
 const InfoList = ({ items, icon }: { items: string[], icon: 'arrow' | 'cog' }) => {
     const iconMap = {
@@ -68,9 +68,6 @@ export default function ProductPage() {
     const [isImageZoomed, setIsImageZoomed] = useState(false);
     const [isImageBroken, setIsImageBroken] = useState(false);
     
-    const location = useLocation();
-    const canonicalUrl = `https://tapeindia.shop${location.pathname}`;
-
     useEffect(() => {
         setIsImageBroken(false);
     }, [productId]);
@@ -157,10 +154,10 @@ export default function ProductPage() {
             <Helmet>
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
-                <link rel="canonical" href={canonicalUrl} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
             </Helmet>
+            <CanonicalTag stripQuery={true} />
 
             {isImageZoomed && canZoom && (
                 <div 
