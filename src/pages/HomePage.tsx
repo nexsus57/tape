@@ -1,3 +1,4 @@
+
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -196,9 +197,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-       <section className="py-16 md:py-24 bg-brand-gray" itemScope itemType="https://schema.org/Organization">
-        <meta itemProp="name" content="Tape India" />
-        <link itemProp="url" href="https://tapeindia.shop/" />
+       <section className="py-16 md:py-24 bg-brand-gray">
         <div className="container mx-auto px-5 lg:px-8">
             <AnimatedSection className="text-center">
                 <h2 className="font-bold mb-6">Trusted by Industry Leaders</h2>
