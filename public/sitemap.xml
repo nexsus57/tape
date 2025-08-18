@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Main Pages -->
-  <url><loc>https://tapeindia.shop/</loc></url>
-  <url><loc>https://tapeindia.shop/about-us</loc></url>
-  <url><loc>https://tapeindia.shop/industry</loc></url>
-  <url><loc>https://tapeindia.shop/products</loc></url>
-  <url><loc>https://tapeindia.shop/contact</loc></url>
+  <url>
+    <loc>https://tapeindia.shop/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://tapeindia.shop/about</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tapeindia.shop/industries</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tapeindia.shop/products</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tapeindia.shop/contact</loc>
+    <priority>0.8</priority>
+  </url>
 
   <!-- Product Pages -->
   <url><loc>https://tapeindia.shop/product/hazard-tape</loc></url>
@@ -108,4 +126,3 @@
   <url><loc>https://tapeindia.shop/product/tin-plated-copper-tape</loc></url>
 
 </urlset>
-
