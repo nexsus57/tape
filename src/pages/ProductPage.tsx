@@ -159,9 +159,6 @@ export default function ProductPage() {
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
-                {product.faqSchema && (
-                    <script type="application/ld+json">{JSON.stringify(product.faqSchema)}</script>
-                )}
             </Helmet>
             <CanonicalTag stripQuery={true} />
 
