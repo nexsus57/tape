@@ -1,3 +1,4 @@
+
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -48,7 +49,7 @@ export default function ProductsListPage() {
         return 'All Products';
     }, [searchParams, categories]);
     
-    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema } = useMemo(() => {
+    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema, categoryH1, faqSchema } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
         
@@ -57,6 +58,8 @@ export default function ProductsListPage() {
         let desc = `Browse our complete range of over ${products.length} industrial adhesive tapes. As a leading manufacturer in India, we supply solutions for every application.`;
         let crumb = null;
         let pageContent: string | null = null;
+        let catH1: string | null = null;
+        let fSchema: string | null = null;
 
         if (industryId) {
             const industry = INDUSTRIES.find(i => i.id === industryId);
@@ -76,6 +79,8 @@ export default function ProductsListPage() {
                 desc = category.seo?.description || `View all products in the ${category.name} category.`;
                 pageContent = category.description || null;
                 crumb = null; // Direct child of "Products"
+                catH1 = category.seo?.h1 || category.name;
+                fSchema = category.faqSchema ? JSON.stringify(category.faqSchema) : null;
             }
         }
         
@@ -106,7 +111,9 @@ export default function ProductsListPage() {
             pageDescription: desc,
             breadcrumb: crumb,
             pageContent,
-            breadcrumbSchema: JSON.stringify(bSchema)
+            breadcrumbSchema: JSON.stringify(bSchema),
+            categoryH1: catH1 || breadcrumbTitle,
+            faqSchema: fSchema
         };
     }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location.pathname, location.search]);
     
@@ -124,6 +131,9 @@ export default function ProductsListPage() {
                 <title>{`${pageTitle} | Tape India`}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
+                {faqSchema && (
+                    <script type="application/ld+json">{faqSchema}</script>
+                )}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
@@ -149,7 +159,7 @@ export default function ProductsListPage() {
                             <li className="text-brand-blue-dark" aria-current="page">{breadcrumbTitle}</li>
                           </ol>
                         </nav>
-                        <h1 className="font-extrabold">{breadcrumbTitle}</h1>
+                        <h1 className="font-extrabold">{categoryH1}</h1>
                     </div>
                 </AnimatedSection>
                 
