@@ -49,7 +49,7 @@ export default function ProductsListPage() {
         return 'All Products';
     }, [searchParams, categories]);
     
-    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema, categoryH1, faqSchema } = useMemo(() => {
+    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema, categoryH1 } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
         
@@ -59,7 +59,6 @@ export default function ProductsListPage() {
         let crumb = null;
         let pageContent: string | null = null;
         let catH1: string | null = null;
-        let fSchema: string | null = null;
 
         if (industryId) {
             const industry = INDUSTRIES.find(i => i.id === industryId);
@@ -80,7 +79,6 @@ export default function ProductsListPage() {
                 pageContent = category.description || null;
                 crumb = null; // Direct child of "Products"
                 catH1 = category.seo?.h1 || category.name;
-                fSchema = category.faqSchema ? JSON.stringify(category.faqSchema) : null;
             }
         }
         
@@ -113,7 +111,6 @@ export default function ProductsListPage() {
             pageContent,
             breadcrumbSchema: JSON.stringify(bSchema),
             categoryH1: catH1 || breadcrumbTitle,
-            faqSchema: fSchema
         };
     }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location.pathname, location.search]);
     
@@ -131,9 +128,6 @@ export default function ProductsListPage() {
                 <title>{`${pageTitle} | Tape India`}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
-                {faqSchema && (
-                    <script type="application/ld+json">{faqSchema}</script>
-                )}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
