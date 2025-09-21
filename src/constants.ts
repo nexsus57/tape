@@ -91,65 +91,11 @@ export const CATEGORIES: Category[] = [
         name: 'Reflective Tapes',
         icon: 'SunIcon',
         subtitle: 'High-visibility tapes and fabrics for low-light conditions.',
-        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries.<br/><br/>
-        <h2>What is Reflective Tape?</h2>
-        <p>Reflective tape, also known as retro-reflective tape, is designed to reflect light back to its source, making it highly visible in low-light and nighttime conditions. It enhances safety by making objects and people more conspicuous to drivers and equipment operators.</p>
-        <h3>Materials & Reflectivity Levels</h3><p>Our tapes are made from durable materials with microprismatic or glass bead technology to achieve various levels of reflectivity, suitable for everything from personal safety to highway signage.</p>
-        <h3>Types (Tape for Clothing vs Vehicles vs Road Marking)</h3><p>We offer specialized tapes for different uses, including flexible, sew-on tapes for clothing; durable, weather-resistant tapes for vehicles; and heavy-duty options for road and pavement marking.</p>
-        
-        <h2>Benefits of Reflective Tape</h2>
-        <h3>Increased Visibility</h3><p>The primary benefit is a dramatic increase in nighttime visibility, significantly reducing the risk of accidents.</p>
-        <h3>Safety Compliance</h3><p>Using certified reflective tapes helps meet regulatory safety standards for vehicles and workwear in India.</p>
-        <h3>Weather Resistance</h3><p>Our tapes are built to withstand rain, sun, and extreme temperatures, ensuring long-lasting performance outdoors.</p>
-        
-        <h2>Applications</h2>
-        <h3>Road & Signage</h3><p>Used on traffic signs, barricades, and cones to ensure they are visible to drivers at night.</p>
-        <h3>Vehicles</h3><p>Mandatory for commercial vehicles to outline their shape and size, preventing collisions.</p>
-        <h3>Safety Apparel</h3><p>Applied to jackets, vests, and trousers for construction workers, emergency responders, and cyclists.</p>
-        <h3>Outdoor Gear</h3><p>Enhances visibility on backpacks, tents, and other gear for nighttime safety.</p>
-        
-        <h2>Choosing Reflective Tape</h2>
-        <h3>Reflectivity Grade</h3><p>Select the appropriate grade based on your needs, from standard visibility for personal use to high-intensity prismatic for official signage.</p>
-        <h3>Adhesive & Durability</h3><p>Choose between permanent adhesive for hard surfaces and sew-on or heat-transfer options for fabrics.</p>
-        <h3>Size & Width Options</h3><p>We offer a range of widths and lengths to suit any project, from narrow strips to wide panels.</p>
-        
-        <h2>Reflective Tape Pricing Guide</h2>
-        <p>Pricing depends on the reflectivity grade, material, and quantity. TapeIndia provides competitive pricing with bulk discounts available for large orders. Contact us for a detailed quote.</p>
-        
-        <h2>FAQs about Reflective Tape</h2>
-        <p><strong>How visible is reflective tape at night?</strong><br/>Extremely visible. High-quality reflective tape can be seen from hundreds of meters away when illuminated by a light source like headlights, making it a critical safety feature.</p>
-        <p><strong>Which grade of reflective tape meets IS standards in India?</strong><br/>Different applications require different standards (e.g., AIS-090 for vehicles). Please consult with our team to ensure you select a tape that meets the specific Indian Standards (IS) for your needs.</p>
-        
-        <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-          <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Your Source for Reflective Tape</h3>
-          <p>TapeIndia offers premium reflective tape for safety, road marking, vehicles & outdoor use. Choose from various reflectivity grades & sizes. Durable, weatherproof & great low-light visibility. Bulk discounts & reliable delivery across India.</p>
-        </div>`,
+        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries.`,
         seo: {
             title: "Reflective Tape | High Visibility Safety & Auto Uses | TapeIndia",
             description: "Buy high-quality reflective tape ideal for safety, signage & vehicles. Durable, highly visible in low light. Fast shipping at TapeIndia.",
             h1: "Reflective Tape for Safety, Outdoors & Vehicle Markings"
-        },
-        faqSchema: {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "How visible is reflective tape at night?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Extremely visible. High-quality reflective tape can be seen from hundreds of meters away when illuminated by a light source like headlights, making it a critical safety feature."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Which grade of reflective tape meets IS standards in India?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Different applications require different standards (e.g., AIS-090 for vehicles). Please consult with our team to ensure you select a tape that meets the specific Indian Standards (IS) for your needs."
-                    }
-                }
-            ]
         }
     },
     {
@@ -157,63 +103,11 @@ export const CATEGORIES: Category[] = [
         name: 'Double-Sided Tapes',
         icon: 'LayersIcon',
         subtitle: 'Powerful mounting and bonding solutions for any surface.',
-        description: `Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From general use <a href="/product/tissue-tape" class="text-brand-accent hover:underline font-semibold">double-sided tissue tape</a> and powerful <a href="/product/double-sided-cloth-tape" class="text-brand-accent hover:underline font-semibold">double-sided cloth tape</a>, to high-strength <a href="/product/vhb-tape" class="text-brand-accent hover:underline font-semibold">acrylic foam tapes (VHB)</a> that can replace mechanical fasteners, we have a solution for every mounting application.<br/><br/>
-        <h2>What is Double-Sided Tape?</h2>
-        <p>Double-sided tape is an adhesive tape coated with adhesive on both sides. It is designed to stick two surfaces together, often in a way that is not visible in the final product, creating a neat and clean finish.</p>
-        <h3>Foam vs Film Backing</h3><p>Foam tapes are thicker and ideal for bonding to irregular or textured surfaces, while thin film-backed tapes provide a strong, precise bond with a minimal gap between surfaces.</p>
-        
-        <h2>Benefits of Double-Sided Tape</h2>
-        <h3>Clean Finish</h3><p>It provides a virtually invisible bond, eliminating the need for unsightly screws, rivets, or welds.</p>
-        <h3>Strong Adhesion</h3><p>Modern double-sided tapes, like VHB, offer incredible strength and can create permanent, structural bonds.</p>
-        <h3>Easy Removal</h3><p>Many options are designed for clean removal without leaving sticky residue or damaging surfaces.</p>
-        
-        <h2>Applications</h2>
-        <h3>Wall Mounting</h3><p>Perfect for hanging pictures, mirrors, and decorations without drilling holes.</p>
-        <h3>DIY Crafts</h3><p>An essential tool for scrapbooking, card making, and other creative projects.</p>
-        <h3>Office & Industrial Use</h3><p>Used in everything from product assembly and signage to carpet laying and printing plate mounting.</p>
-        
-        <h2>Choosing Double-Sided Tape</h2>
-        <h3>Strength Level</h3><p>Choose from general-purpose tapes for light tasks to high-strength VHB tapes for heavy-duty mounting.</p>
-        <h3>Thickness</h3><p>Select a thickness based on the gap you need to fill and the texture of the surfaces you're bonding.</p>
-        <h3>Removability</h3><p>Consider whether you need a permanent bond or a tape that can be removed cleanly.</p>
-        
-        <h2>Double-Sided Tape Price Guide</h2>
-        <p>Prices vary based on the type (foam, film, etc.), strength, and brand. TapeIndia offers a wide range from economical general-use tapes to premium industrial solutions. We provide bulk discounts for commercial orders.</p>
-        
-        <h2>FAQs about Double-Sided Tape</h2>
-        <p><strong>Will double-sided tape damage paint?</strong><br/>It depends on the tape. Some are designed for clean removal from painted surfaces, while others may cause damage. Always check the product specifications and test in an inconspicuous area if you're unsure.</p>
-        <p><strong>What weight can double-sided tape hold?</strong><br/>This varies greatly. General-purpose foam tape might hold a few hundred grams, while high-strength acrylic mounting tapes can hold several kilograms. Always check the packaging for weight ratings.</p>
-        
-        <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-          <h3 style="font-weight: bold; margin-bottom: 0.75rem;">The Right Double-Sided Tape for Your Project</h3>
-          <p>TapeIndia offers double-sided tape for professional mounting, crafting & industrial applications. Strong adhesive, residue-free removal, and multiple size options. Order in bulk for discounts.</p>
-        </div>`,
+        description: `Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From general use <a href="/product/tissue-tape" class="text-brand-accent hover:underline font-semibold">double-sided tissue tape</a> and powerful <a href="/product/double-sided-cloth-tape" class="text-brand-accent hover:underline font-semibold">double-sided cloth tape</a>, to high-strength <a href="/product/vhb-tape" class="text-brand-accent hover:underline font-semibold">acrylic foam tapes (VHB)</a> that can replace mechanical fasteners, we have a solution for every mounting application.`,
         seo: {
             title: "Double-Sided Tape | Strong Adhesive for Mounting & Craft | TapeIndia",
             description: "Buy strong double-sided tape for mounting, crafts & office use. High-tack adhesive with clean removal. Shop online at TapeIndia.",
             h1: "Double-Sided Tape for Mounting, Fixing & Creative Projects"
-        },
-        faqSchema: {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "Will double-sided tape damage paint?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "It depends on the tape. Some are designed for clean removal from painted surfaces, while others may cause damage. Always check the product specifications and test in an inconspicuous area if you're unsure."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "What weight can double-sided tape hold?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "This varies greatly. General-purpose foam tape might hold a few hundred grams, while high-strength acrylic mounting tapes can hold several kilograms. Always check the packaging for weight ratings."
-                    }
-                }
-            ]
         }
     },
     {
@@ -232,63 +126,11 @@ export const CATEGORIES: Category[] = [
         name: 'PTFE & Teflon Tapes',
         icon: 'ThermometerIcon',
         subtitle: 'High-temperature, non-stick surfaces for industrial processes.',
-        description: `Our PTFE & Teflon tapes offer superior non-stick properties, high-temperature resistance, and chemical inertness. They are essential for heat sealing, mold release, and creating low-friction surfaces in demanding manufacturing environments.<br/><br/>
-        <h2>What is PTFE Tape?</h2>
-        <p>PTFE (Polytetrafluoroethylene) tape, commonly known by the brand name Teflon, is a versatile tape used primarily for sealing pipe threads in plumbing. Its key properties are its extremely low friction and high chemical resistance.</p>
-        <h3>Composition & Properties</h3><p>PTFE tape is a thin, non-sticky film that deforms to fill thread gaps, creating a tight, leak-proof seal. It is hydrophobic (repels water) and inert, meaning it won't react with most chemicals.</p>
-        
-        <h2>Benefits of PTFE Tape</h2>
-        <h3>Leak Prevention</h3><p>It creates a reliable, durable seal on threaded pipe joints, preventing water, air, and gas leaks.</p>
-        <h3>Heat & Chemical Resistance</h3><p>PTFE is stable across a wide range of temperatures and is resistant to most common solvents, acids, and bases.</p>
-        
-        <h2>Applications</h2>
-        <h3>Plumbing</h3><p>The most common use is for sealing water pipes, shower heads, and taps.</p>
-        <h3>Air Lines</h3><p>Used to seal connections in pneumatic systems and compressed air lines.</p>
-        <h3>Gas Lines</h3><p>Specialized, higher-density PTFE tapes are certified for use on natural gas and propane lines.</p>
-        <h3>Industrial Sealing</h3><p>Used in chemical processing and other industries for sealing threaded connections carrying various fluids.</p>
-        
-        <h2>Choosing PTFE Tape</h2>
-        <h3>Density Options</h3><p>Standard density is for water pipes, while higher-density tapes are required for gas lines and more critical applications.</p>
-        <h3>Thickness & Width</h3><p>Choose a width appropriate for your pipe size. Common widths are 1/2" and 3/4".</p>
-        <h3>Safety Standards</h3><p>Ensure you use tape certified for your specific application, especially for gas or potable water.</p>
-        
-        <h2>PTFE Tape Price Guide</h2>
-        <p>PTFE tape is an economical product. Pricing varies based on density, length, and quantity. TapeIndia offers competitive prices on bulk packs for professional plumbers and industrial users.</p>
-        
-        <h2>FAQs about PTFE Tape</h2>
-        <p><strong>Is PTFE tape safe for gas lines?</strong><br/>Only if it is a high-density tape specifically rated and certified for gas. Standard white PTFE tape should not be used for gas connections.</p>
-        <p><strong>How many wraps of Teflon tape are recommended?</strong><br/>Typically, 3-5 wraps in the direction of the threads are sufficient. The goal is to fill the thread voids without over-applying, which can make it difficult to tighten the fitting.</p>
-        
-        <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-          <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Reliable Sealing with PTFE Tape</h3>
-          <p>TapeIndia offers premium PTFE/Teflon tape for plumbing, gas & air line sealing. Leak-proof, easy to apply, and highly durable. Choose from multiple densities for professional use. Bulk packs available.</p>
-        </div>`,
+        description: `Our PTFE & Teflon tapes offer superior non-stick properties, high-temperature resistance, and chemical inertness. They are essential for heat sealing, mold release, and creating low-friction surfaces in demanding manufacturing environments.`,
         seo: {
             title: "PTFE / Teflon Tape | Thread Seal & Leak-Proof Plumber Tape | TapeIndia",
             description: "High-quality PTFE tape for plumbing, sealing pipe threads & preventing leaks. Bulk orders & fast shipping from TapeIndia.",
             h1: "PTFE / Teflon Tape for Plumbing, Thread Seal & Leak Prevention"
-        },
-        faqSchema: {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "Is PTFE tape safe for gas lines?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Only if it is a high-density tape specifically rated and certified for gas. Standard white PTFE tape should not be used for gas connections."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "How many wraps of Teflon tape are recommended?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Typically, 3-5 wraps in the direction of the threads are sufficient. The goal is to fill the thread voids without over-applying, which can make it difficult to tighten the fitting."
-                    }
-                }
-            ]
         }
     },
     {
@@ -296,62 +138,11 @@ export const CATEGORIES: Category[] = [
         name: 'Antistatic & ESD Tapes',
         icon: 'ZapIcon',
         subtitle: 'Protection for sensitive electronics from static discharge.',
-        description: `Safeguard your sensitive components with our range of Antistatic and ESD tapes. We provide high-temperature polyimide (<a href="/product/kapton-tape" class="text-brand-accent hover:underline font-semibold">Kapton</a>) tapes for masking, conductive tapes for shielding, and thermal management tapes for reliable performance in electronics assembly.<br/><br/>
-        <h2>What is ESD Tape?</h2>
-        <p>ESD (Electrostatic Discharge) tape, or anti-static tape, is specifically designed for use in environments where static electricity can damage sensitive electronic components. It is made from materials that do not generate a significant triboelectric charge when handled or unwound.</p>
-        <h3>Conductive vs Dissipative Properties</h3><p>Tapes can be conductive (allowing charge to flow easily to ground) or static dissipative (allowing charge to flow more slowly and in a more controlled manner). The choice depends on the specific application within an Electrostatic Protected Area (EPA).</p>
-        
-        <h2>Benefits of ESD Tape</h2>
-        <h3>Static Protection</h3><p>Its primary benefit is protecting sensitive components from damaging electrostatic discharge during manufacturing, assembly, and packaging.</p>
-        <h3>Clean Adhesive</h3><p>ESD tapes are designed with adhesives that hold securely but can be removed cleanly without leaving residue that could interfere with electronic processes.</p>
-        <h3>No Residue</h3><p>Clean removal is critical in electronics to ensure no contaminants are left on circuit boards or components.</p>
-        
-        <h2>Applications</h2>
-        <h3>PCB Masking</h3><p>High-temperature ESD tapes like <a href="/product/esd-kapton-tape" class="text-brand-accent hover:underline font-semibold">ESD Kapton tape</a> are used to mask off areas of a Printed Circuit Board (PCB) during wave soldering.</p>
-        <h3>Electronics Packaging</h3><p>Used to seal ESD-safe bags and containers that hold sensitive components, ensuring a static-safe environment during shipping and storage.</p>
-        <h3>Lab Environments</h3><p>Used for general purpose holding, sealing, and labeling within an EPA where standard adhesive tapes are prohibited.</p>
-        
-        <h2>Choosing ESD Tape</h2>
-        <h3>Resistance Ratings</h3><p>Tapes are classified by their surface and volume resistance. Ensure the tape you choose meets the requirements for your specific EPA.</p>
-        <h3>Width & Thickness Options</h3><p>We offer a variety of sizes to suit different needs, from narrow tapes for masking to wider tapes for packaging.</p>
-        
-        <h2>ESD Tape Price Guide</h2>
-        <p>ESD tapes are specialty products, and their price reflects their advanced materials. TapeIndia provides competitive pricing for businesses, with discounts available for bulk purchases.</p>
-        
-        <h2>FAQs about ESD Tape</h2>
-        <p><strong>Is ESD tape conductive?</strong><br/>Some are (like copper foil tape), but most common types are static dissipative. They are designed to control static, not necessarily conduct a current. For example, conductive grid tape has a buried conductive layer but a dissipative surface.</p>
-        <p><strong>Where to use anti-static tape?</strong><br/>It should be used for any application within an Electrostatic Protected Area (EPA), such as electronics manufacturing labs, assembly lines, and repair depots, where standard tapes could generate a damaging static charge.</p>
-        
-        <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-          <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Protect Your Electronics with ESD Tape</h3>
-          <p>TapeIndia’s ESD anti-static tape is designed to safely mask and protect electronics. Clean removal, static-safe, and perfect for PCB and lab work. Bulk discounts and fast India-wide shipping.</p>
-        </div>`,
+        description: `Safeguard your sensitive components with our range of Antistatic and ESD tapes. We provide high-temperature polyimide (<a href="/product/kapton-tape" class="text-brand-accent hover:underline font-semibold">Kapton</a>) tapes for masking, conductive tapes for shielding, and thermal management tapes for reliable performance in electronics assembly.`,
         seo: {
             title: "ESD Anti-Static Tape | Safe for Electronics & PCB Use | TapeIndia",
             description: "Protect sensitive electronics with ESD-safe anti-static tape. Clean removal & static protection. Ideal for PCB work.",
             h1: "ESD / Anti-Static Tape for Electronics Assembly & Protection"
-        },
-        faqSchema: {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "Is ESD tape conductive?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Some are (like copper foil tape), but most common types are static dissipative. They are designed to control static, not necessarily conduct a current. For example, conductive grid tape has a buried conductive layer but a dissipative surface."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Where to use anti-static tape?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "It should be used for any application within an Electrostatic Protected Area (EPA), such as electronics manufacturing labs, assembly lines, and repair depots, where standard tapes could generate a damaging static charge."
-                    }
-                }
-            ]
         }
     },
 ];
@@ -378,39 +169,7 @@ export const PRODUCTS: Product[] = [
     name: 'Floor Marking Tape',
     category: 'safety-tapes',
     shortDescription: 'Durable PVC tape for marking aisles, walkways, and safe zones in industrial environments to improve workflow and safety.',
-    description: `Our heavy-duty Floor Marking Tape is engineered to withstand the rigors of industrial environments, including foot traffic, pallet jacks, and forklifts. Made from tough PVC with a strong rubber-based adhesive, it adheres securely to a variety of surfaces yet can be removed cleanly. Use it to implement 5S systems, mark safe walkways, designate storage areas, and enhance overall organizational efficiency and safety.<br/><br/>
-    <h2>What is Floor Marking Tape?</h2>
-    <p>Floor marking tape is a durable, self-adhesive tape, typically made from PVC or vinyl, used to create lines, lanes, and safety warnings directly on facility floors. It is a faster, more flexible alternative to painting lines.</p>
-    <h3>Types; Adhesive Strength; Material Variants</h3><p>We offer various types, from standard duty for foot traffic to heavy-duty laminated tapes that resist forklift traffic. Adhesives range from general purpose to aggressive options for rough or cold surfaces. Material variants include different colors and patterns for specific safety codes.</p>
-    
-    <h2>Benefits of Floor Marking Tape</h2>
-    <h3>Safety Compliance</h3><p>Helps facilities comply with OSHA and other safety regulations by clearly marking hazards, walkways, and restricted areas.</p>
-    <h3>Visibility</h3><p>Bright, contrasting colors are highly visible, improving organization and guiding personnel safely through the workplace.</p>
-    <h3>Durability</h3><p>Industrial-grade tapes are resistant to abrasion, moisture, and chemicals, ensuring they last in tough environments.</p>
-    <h3>Slip Resistance</h3><p>Many floor tapes have a non-slip surface to enhance safety, especially in areas prone to moisture.</p>
-    
-    <h2>Applications</h2>
-    <h3>Warehouses</h3><p>Used for aisle marking, pallet locations, and pedestrian pathways.</p>
-    <h3>Factories</h3><p>Designates work cell boundaries, machine safety zones, and quality control areas.</p>
-    <h3>Public Spaces</h3><p>Guides foot traffic, indicates social distancing, and marks off restricted areas in hospitals, schools, and retail stores.</p>
-    <h3>Sports Floors</h3><p>Creates temporary or permanent court lines for basketball, volleyball, and other sports.</p>
-    
-    <h2>Choosing Floor Marking Tape</h2>
-    <h3>Width & Color Choices</h3><p>Select colors based on safety standards (e.g., yellow for caution, red for danger) and a width that is clearly visible for the intended application.</p>
-    <h3>Adhesive & Lifespan</h3><p>Choose an adhesive based on your floor type and the expected level of traffic to ensure a long-lasting application.</p>
-    <h3>Installation Tips</h3><p>For best results, ensure the floor is clean, dry, and free of debris before applying the tape.</p>
-    
-    <h2>Floor Marking Tape Price Guide</h2>
-    <p>Pricing is dependent on the tape's durability, width, and roll length. TapeIndia offers options for every budget, from economical vinyl to premium heavy-duty tapes, with bulk discounts available.</p>
-    
-    <h2>FAQs about Floor Marking Tape</h2>
-    <p><strong>How to choose color & width?</strong><br/>Color choice is often dictated by safety standards (e.g., OSHA). Yellow marks aisles and traffic lanes, while red indicates danger or fire hazards. A width of 2 to 3 inches is standard for most visual marking applications.</p>
-    <p><strong>Is floor marking tape safe for wet surfaces?</strong><br/>While the tape should be applied to a dry surface, many of our industrial tapes are waterproof and maintain their adhesion in wet environments. For added safety, consider an anti-slip variant.</p>
-    
-    <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-      <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Durable Floor Marking Solutions</h3>
-      <p>TapeIndia provides strong floor marking tape for warehouses, public areas & safety zones. Choose from various colors, widths & adhesive types. Durable, long-lasting & easy to apply. Bulk deals & nationwide shipping.</p>
-    </div>`,
+    description: `Our heavy-duty Floor Marking Tape is engineered to withstand the rigors of industrial environments, including foot traffic, pallet jacks, and forklifts. Made from tough PVC with a strong rubber-based adhesive, it adheres securely to a variety of surfaces yet can be removed cleanly. Use it to implement 5S systems, mark safe walkways, designate storage areas, and enhance overall organizational efficiency and safety.`,
     features: ['High-visibility solid colors (Yellow, Red, Green, etc.)', 'Resistant to abrasion, moisture, and wear', 'Strong rubber-based adhesive for secure bonding', 'Easy to apply and removes cleanly from most surfaces', 'Conformable PVC backing'],
     uses: ['Warehouse and factory aisle marking', 'Designating social distancing spaces', 'Identifying safety equipment zones (fire extinguishers, eyewash stations)', 'Color-coding specific work areas'],
     industries: ['packaging-industry'],
@@ -420,28 +179,6 @@ export const PRODUCTS: Product[] = [
       description: "Buy durable floor marking tape ideal for warehouses, factories & safety zones. Long-lasting adhesive & visibility. Fast delivery at TapeIndia.",
       h1: "Floor Marking Tape for Warehouses, Safety & Industrial Floor Lines",
       imageAlt: "yellow floor marking tape on warehouse floor"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "How to choose color & width?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Color choice is often dictated by safety standards (e.g., OSHA). Yellow marks aisles and traffic lanes, while red indicates danger or fire hazards. A width of 2 to 3 inches is standard for most visual marking applications."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Is floor marking tape safe for wet surfaces?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "While the tape should be applied to a dry surface, many of our industrial tapes are waterproof and maintain their adhesion in wet environments. For added safety, consider an anti-slip variant."
-                }
-            }
-        ]
     }
   },
   {
@@ -449,35 +186,7 @@ export const PRODUCTS: Product[] = [
     name: 'Anti-Skid Tape',
     category: 'safety-tapes',
     shortDescription: 'High-traction safety tape with a mineral-coated surface to prevent slips and falls on stairs, ramps, and floors.',
-    description: `Reduce the risk of workplace accidents with Tape India's Anti-Skid Tape. Featuring a durable, mineral-coated surface, it provides excellent traction on both wet and dry surfaces. The aggressive, pressure-sensitive adhesive ensures a long-lasting bond on stairs, ramps, walkways, and machinery floors. It is an essential safety solution for any industrial, commercial, or public area.<br/><br/>
-    <h2>What is Anti-Skid Tape?</h2>
-    <p>Anti-skid tape, also known as anti-slip or non-slip tape, is an adhesive tape with a rough, abrasive surface designed to increase friction and prevent slips and falls in potentially hazardous areas.</p>
-    <h3>Materials & Grit Options</h3><p>The surface is typically coated with mineral or aluminum oxide grit, similar to sandpaper. We offer various grit levels, from fine, less abrasive options for barefoot areas to coarse grits for industrial environments.</p>
-    
-    <h2>Benefits</h2>
-    <h3>Accident Prevention</h3><p>Its primary purpose is to significantly reduce the risk of slip-and-fall accidents, a leading cause of workplace injuries.</p>
-    <h3>Wet/Outdoor Use</h3><p>The tape is waterproof and weather-resistant, making it highly effective on outdoor stairs, ramps, and areas prone to moisture.</p>
-    <h3>Easy Application</h3><p>With a simple peel-and-stick backing, it can be quickly applied to most clean, dry surfaces without special tools.</p>
-    
-    <h2>Applications</h2>
-    <h3>Stairs, Ramps, Bathrooms, Industrial Floors</h3><p>It is commonly used on stair treads, wheelchair ramps, loading docks, ladders, around machinery, and in commercial kitchens and bathrooms to provide secure footing.</p>
-    
-    <h2>Choosing Anti-Skid Tape</h2>
-    <h3>Grit Level</h3><p>Choose a coarser grit for industrial areas with heavy boots and a finer, more comfortable grit for areas with barefoot traffic.</p>
-    <h3>Width Options</h3><p>Select a width that provides adequate coverage for the application, such as 1-inch or 2-inch widths for stair treads.</p>
-    <h3>Adhesive Strength</h3><p>Our tapes feature a strong, pressure-sensitive adhesive designed for long-lasting performance on various surfaces.</p>
-    
-    <h2>Anti-Skid Tape Price Guide</h2>
-    <p>The price of anti-skid tape is determined by the grit level, width, and length of the roll. TapeIndia offers competitive pricing on all grades, with bulk discounts available for industrial and commercial clients.</p>
-    
-    <h2>FAQs about Anti-Skid Tape</h2>
-    <p><strong>Is anti-skid tape waterproof?</strong><br/>Yes, our anti-skid tapes are designed with a waterproof adhesive and backing, making them suitable for use in wet areas, outdoors, and in environments that require frequent cleaning.</p>
-    <p><strong>How long does anti-slip tape last?</strong><br/>Durability depends on the level of foot traffic and the environment. In high-traffic industrial areas, it may need to be replaced periodically, while in residential settings, it can last for several years.</p>
-    
-    <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-      <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Maximum Grip for Maximum Safety</h3>
-      <p>TapeIndia’s anti-skid tape provides maximum grip and prevents slips in high-risk areas. Perfect for stairs, ramps, and wet surfaces. Available in multiple colors and sizes. Bulk order discounts & pan-India delivery.</p>
-    </div>`,
+    description: `Reduce the risk of workplace accidents with Tape India's Anti-Skid Tape. Featuring a durable, mineral-coated surface, it provides excellent traction on both wet and dry surfaces. The aggressive, pressure-sensitive adhesive ensures a long-lasting bond on stairs, ramps, walkways, and machinery floors. It is an essential safety solution for any industrial, commercial, or public area.`,
     features: ['Durable 60-grit mineral coating for high traction', 'Strong, waterproof adhesive for long-lasting performance', 'Suitable for indoor and outdoor applications', 'Resistant to oil, water, and common chemicals'],
     uses: ['Stairs, ladders, and ramps', 'Industrial walkways and loading docks', 'Floors around machinery', 'Entrances and commercial kitchens'],
     industries: ['packaging-industry'],
@@ -487,28 +196,6 @@ export const PRODUCTS: Product[] = [
       description: "Buy premium anti-skid tape for stairs, ramps & wet areas. Strong grip & weather-resistant. Bulk deals & nationwide shipping.",
       h1: "Anti-Skid / Anti-Slip Tape for Safety and Accident Prevention",
       imageAlt: "black anti-skid tape applied on stairs"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Is anti-skid tape waterproof?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, our anti-skid tapes are designed with a waterproof adhesive and backing, making them suitable for use in wet areas, outdoors, and in environments that require frequent cleaning."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How long does anti-slip tape last?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Durability depends on the level of foot traffic and the environment. In high-traffic industrial areas, it may need to be replaced periodically, while in residential settings, it can last for several years."
-                }
-            }
-        ]
     }
   },
   {
@@ -1167,35 +854,7 @@ export const PRODUCTS: Product[] = [
     name: 'BOPP Tape',
     category: 'specialty-tapes',
     shortDescription: 'The industry-standard packaging tape for carton sealing, made from Biaxially Oriented Polypropylene film.',
-    description: `BOPP (Biaxially Oriented Polypropylene) tape is the most widely used tape for sealing corrugated boxes. Its polypropylene film backing is strong and durable, while the acrylic adhesive provides a reliable, long-lasting seal. We offer this tape in various thicknesses and colors, including clear, brown, and custom printed options, to meet all your packaging needs.<br/><br/>
-    <h2>What is BOPP Tape?</h2>
-    <p>BOPP (Biaxially-Oriented Polypropylene) tape is the most common type of packaging tape used for sealing cartons and boxes. It is strong, reliable, and cost-effective, making it an essential supply for shipping and logistics.</p>
-    <h3>Material Strength & Adhesive Types</h3><p>The polypropylene film is stretched in two directions (biaxially oriented) to increase its strength and clarity. It is typically coated with a durable water-based acrylic adhesive or a stronger hot-melt adhesive for more demanding applications.</p>
-    
-    <h2>Benefits of BOPP Tape</h2>
-    <h3>Strong Adhesion</h3><p>Provides a secure, long-lasting seal that keeps cartons closed during transit, protecting contents from damage and theft.</p>
-    <h3>Cost-Effective</h3><p>BOPP tape offers excellent performance at an affordable price point, making it ideal for high-volume packaging operations.</p>
-    <h3>Branding Option</h3><p>The tape surface is easily printable, allowing businesses to add logos, branding, or handling instructions directly onto the seal.</p>
-    
-    <h2>Applications</h2>
-    <h3>Carton Sealing</h3><p>Its primary use is for sealing cardboard boxes of all sizes for shipping and storage.</p>
-    <h3>Logistics & Warehousing</h3><p>Essential for bundling packages, reinforcing containers, and general use in fulfillment centers.</p>
-    <h3>E-commerce</h3><p>A critical component for e-commerce businesses to ensure packages are sealed securely for delivery to customers.</p>
-    
-    <h2>Choosing BOPP Tape</h2>
-    <h3>Thickness, Print Options, Roll Length</h3><p>Choose a thickness (measured in microns) based on the weight of your cartons. We offer clear, brown, and custom printed tapes in various roll lengths for hand-held dispensers and automatic taping machines.</p>
-    
-    <h2>BOPP Tape Price Guide</h2>
-    <p>BOPP tape is priced per roll, with significant cost savings available for bulk purchases (by the carton or pallet). Custom printed tape has a higher initial cost due to setup fees but is economical at scale. Contact TapeIndia for a custom quote.</p>
-    
-    <h2>FAQs about BOPP Tape</h2>
-    <p><strong>Can I order custom printed BOPP tape?</strong><br/>Yes, TapeIndia specializes in custom printed BOPP tape. We can print your company logo, branding, or any other message to enhance your packaging and security.</p>
-    <p><strong>What is the standard thickness for BOPP tape?</strong><br/>Standard thicknesses range from 40 to 50 microns. For heavy-duty packages, a thickness of 45 microns or higher is recommended for optimal strength and security.</p>
-    
-    <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-      <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Secure Your Shipments with BOPP Tape</h3>
-      <p>TapeIndia supplies high-quality BOPP packing tape for secure carton sealing. Choose from plain or custom printed options. Perfect for shipping, warehousing & e-commerce. Bulk deals & fast dispatch.</p>
-    </div>`,
+    description: `BOPP (Biaxially Oriented Polypropylene) tape is the most widely used tape for sealing corrugated boxes. Its polypropylene film backing is strong and durable, while the acrylic adhesive provides a reliable, long-lasting seal. We offer this tape in various thicknesses and colors, including clear, brown, and custom printed options, to meet all your packaging needs.`,
     features: ['High tensile strength and durability', 'Water-based acrylic adhesive for a long-lasting seal', 'Resistant to splitting and tearing', 'Available in clear, brown, and custom printed'],
     uses: ['Standard carton and box sealing', 'Bundling and strapping of goods', 'Use in manual and automated packaging lines', 'General industrial packaging'],
     industries: ['packaging-industry'],
@@ -1205,28 +864,6 @@ export const PRODUCTS: Product[] = [
       description: "Order strong BOPP packing tape for cartons & shipping. Available in transparent, brown & custom print. Bulk prices at TapeIndia.",
       h1: "BOPP Packing Tape for Secure Carton Sealing & Packaging",
       imageAlt: "brown BOPP tape sealing shipping box"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Can I order custom printed BOPP tape?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, TapeIndia specializes in custom printed BOPP tape. We can print your company logo, branding, or any other message to enhance your packaging and security."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the standard thickness for BOPP tape?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Standard thicknesses range from 40 to 50 microns. For heavy-duty packages, a thickness of 45 microns or higher is recommended for optimal strength and security."
-                }
-            }
-        ]
     }
   },
   {
@@ -1234,38 +871,7 @@ export const PRODUCTS: Product[] = [
     name: 'Aluminium Foil Tape',
     category: 'specialty-tapes',
     shortDescription: 'A heat and light reflective tape with a soft aluminum foil backing, used for sealing, patching, and thermal insulation.',
-    description: `Our Aluminium Foil Tape features a soft, conformable aluminum foil backing coated with a high-performance acrylic adhesive. It excels in applications requiring thermal conductivity or heat and light reflectivity. It conforms well to irregular surfaces and performs reliably across a wide range of temperatures, making it a staple in the HVAC and appliance industries.<br/><br/>
-    <h2>What is Aluminum Foil Tape?</h2>
-    <p>Aluminum foil tape is an adhesive tape made from a thin layer of aluminum foil with a pressure-sensitive adhesive. It is known for its resistance to moisture, chemicals, and extreme temperatures, as well as its ability to reflect heat and light.</p>
-    <h3>Material & Adhesive Properties</h3><p>The soft aluminum foil backing is highly conformable. We offer tapes with various adhesives, including acrylic adhesives that perform well across a wide range of temperatures and provide a long-lasting bond.</p>
-    
-    <h2>Benefits of Aluminum Foil Tape</h2>
-    <h3>Heat Resistance</h3><p>It can withstand high temperatures, making it ideal for sealing high-temperature ducts and for heat shielding applications.</p>
-    <h3>Moisture Barrier</h3><p>The solid foil backing creates an excellent barrier against moisture and vapor, protecting insulation and preventing leaks.</p>
-    <h3>Strong Adhesion</h3><p>The high-performance adhesive bonds securely to a wide variety of surfaces, including metal, insulation, and plastic.</p>
-    
-    <h2>Applications</h2>
-    <h3>HVAC Systems</h3><p>The primary use is for sealing joints, seams, and connections in flexible and rigid HVAC ductwork to prevent air leaks.</p>
-    <h3>Insulation</h3><p>Used to seal seams on foil-faced insulation boards and pipe lagging to maintain the integrity of the vapor barrier.</p>
-    <h3>Automotive</h3><p>Used for heat shielding and repairs on exhaust systems and engine compartments.</p>
-    <h3>Electrical Repairs</h3><p>Can be used for EMI/RFI shielding and cable wrapping in certain applications.</p>
-    
-    <h2>Choosing Aluminum Foil Tape</h2>
-    <h3>Thickness Options</h3><p>Thicker foils offer greater durability and puncture resistance for more demanding jobs.</p>
-    <h3>Foil Strength</h3><p>Consider the tensile strength needed for your application, especially if the tape will be under stress.</p>
-    <h3>Temperature Range</h3><p>Ensure the tape's specified temperature range is suitable for your application, particularly for high-heat HVAC or automotive uses.</p>
-    
-    <h2>Aluminum Foil Tape Price Guide</h2>
-    <p>Pricing for aluminum foil tape varies based on the foil's thickness, width, and the type of adhesive. TapeIndia offers a range of options for both general purpose and high-performance needs, with bulk pricing for contractors and industrial buyers.</p>
-    
-    <h2>FAQs about Aluminum Foil Tape</h2>
-    <p><strong>Is aluminum foil tape fire resistant?</strong><br/>Yes, aluminum foil itself is not flammable. Many of our foil tapes are made with flame-retardant adhesives, making them highly resistant to fire and suitable for use in applications where fire safety is a concern.</p>
-    <p><strong>Can I use aluminum tape for duct sealing?</strong><br/>Absolutely. It is the preferred tape for sealing HVAC ductwork. Its ability to create a strong, airtight seal helps improve system efficiency and prevent energy loss.</p>
-    
-    <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-      <h3 style="font-weight: bold; margin-bottom: 0.75rem;">High-Performance Aluminum Foil Tape</h3>
-      <p>TapeIndia supplies high-performance aluminum foil tape for HVAC, insulation and industrial sealing. Heat-resistant, strong adhesive, and long-lasting. Available in various widths & lengths with bulk order discounts.</p>
-    </div>`,
+    description: `Our Aluminium Foil Tape features a soft, conformable aluminum foil backing coated with a high-performance acrylic adhesive. It excels in applications requiring thermal conductivity or heat and light reflectivity. It conforms well to irregular surfaces and performs reliably across a wide range of temperatures, making it a staple in the HVAC and appliance industries.`,
     features: ['Thermally conductive and heat reflective', 'Resistant to moisture, UV, and chemicals', 'Soft foil backing conforms to irregular shapes', 'Wide operating temperature range'],
     uses: ['Sealing joints and seams in HVAC ductwork', 'Patching and sealing in roofing and gutters', 'Heat shielding and EMI/RFI shielding', 'Appliance manufacturing and repair'],
     industries: ['hvac-industry', 'packaging-industry'],
@@ -1275,28 +881,6 @@ export const PRODUCTS: Product[] = [
       description: "Shop aluminum foil tape for sealing ducts, insulation & heat-resistant repairs. High-strength adhesive & reliable performance.",
       h1: "Aluminum Foil Tape for HVAC, Insulation & Sealing Applications",
       imageAlt: "aluminum foil tape sealing air duct"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Is aluminum foil tape fire resistant?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, aluminum foil itself is not flammable. Many of our foil tapes are made with flame-retardant adhesives, making them highly resistant to fire and suitable for use in applications where fire safety is a concern."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can I use aluminum tape for duct sealing?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Absolutely. It is the preferred tape for sealing HVAC ductwork. Its ability to create a strong, airtight seal helps improve system efficiency and prevent energy loss."
-                }
-            }
-        ]
     }
   },
   {
@@ -1304,39 +888,7 @@ export const PRODUCTS: Product[] = [
     name: 'Kapton Tape',
     category: 'specialty-tapes',
     shortDescription: 'High-temperature resistant polyimide tape, essential for masking and insulation in electronics manufacturing.',
-    description: `Kapton® (Polyimide) Tape is the industry standard for high-temperature applications in electronics. Its polyimide film backing can withstand extreme temperatures (up to 260°C) without degrading. The silicone adhesive bonds securely but removes cleanly without leaving residue, making it the perfect choice for masking gold contacts during wave soldering and other demanding PCB processes. For conductive applications, it can be used alongside a <a href=\"/product/copper-foil-tape\" class=\"text-brand-accent hover:underline font-semibold\">copper tape alternative for electrical work</a>.<br/><br/>
-    <h2>What is Kapton Tape?</h2>
-    <p>Kapton tape is a brand name for a polyimide film-based tape that has exceptional thermal stability and electrical insulation properties. It is the industry standard for high-temperature applications in electronics manufacturing.</p>
-    <h3>Material Properties; Heat & Chemical Resistance</h3><p>The polyimide film maintains its properties across a vast temperature range. It is combined with a high-temperature silicone adhesive that removes cleanly, leaving no residue. It is also highly resistant to solvents and chemicals used in electronics fabrication.</p>
-    
-    <h2>Benefits of Kapton Tape</h2>
-    <h3>High Temp Performance</h3><p>It can withstand short-term temperatures up to 260°C (500°F) or higher, making it perfect for soldering processes.</p>
-    <h3>Insulation</h3><p>It has excellent dielectric strength, making it a reliable electrical insulator for wrapping coils, capacitors, and wires.</p>
-    <h3>Chemical Stability</h3><p>It resists damage from common industrial chemicals, acids, and solvents.</p>
-    <h3>Low Residue</h3><p>A key feature is its ability to be removed cleanly from surfaces even after exposure to high heat.</p>
-    
-    <h2>Applications</h2>
-    <h3>PCB Masking</h3><p>Its most common use is to mask off gold finger contacts and other components on a Printed Circuit Board (PCB) during wave soldering.</p>
-    <h3>Transformer/Motor Insulation</h3><p>Used for slot, final, and interlayer insulation in transformers and motors.</p>
-    <h3>Electronic Manufacturing</h3><p>Used for bundling and insulating wires and cables in high-temperature environments.</p>
-    <h3>Aerospace Use</h3><p>Its stability and lightweight nature make it suitable for various applications in aerospace and aviation.</p>
-    
-    <h2>Choosing Kapton Tape</h2>
-    <h3>Thickness Options</h3><p>Available in various thicknesses (typically 1 or 2 mil) to balance conformability and dielectric strength.</p>
-    <h3>Adhesive Types</h3><p>While silicone is standard, other adhesives are available for specific needs. ESD-safe versions are also available.</p>
-    <h3>Color & Width</h3><p>Typically amber-colored, it comes in a wide range of widths for precise masking applications.</p>
-    
-    <h2>Kapton Tape Price Guide</h2>
-    <p>Kapton is a premium material, and its price reflects its high performance. Pricing depends on width, thickness, and quantity. TapeIndia offers competitive B2B pricing for manufacturers and assemblers.</p>
-    
-    <h2>FAQs about Kapton Tape</h2>
-    <p><strong>Up to what temperature does Kapton tape work?</strong><br/>Standard Kapton tape with silicone adhesive is generally rated for continuous use at around 180°C (356°F) and can withstand short-term exposure up to 260°C (500°F) and beyond, depending on the grade.</p>
-    <p><strong>Is Kapton tape adhesive safe for PCB components?</strong><br/>Yes, the silicone adhesive is specially formulated to be chemically inert and non-corrosive. Its clean-removal properties ensure that no harmful residue is left on sensitive PCB components after processing.</p>
-    
-    <div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-      <h3 style="font-weight: bold; margin-bottom: 0.75rem;">High-Performance Kapton Tape Solutions</h3>
-      <p>TapeIndia offers Kapton / polyimide tape for demanding applications. Excellent for PCB masking, transformer insulation & high-temp work. Choose from various thickness and adhesive options. Reliable, durable, and fast shipping across India.</p>
-    </div>`,
+    description: `Kapton® (Polyimide) Tape is the industry standard for high-temperature applications in electronics. Its polyimide film backing can withstand extreme temperatures (up to 260°C) without degrading. The silicone adhesive bonds securely but removes cleanly without leaving residue, making it the perfect choice for masking gold contacts during wave soldering and other demanding PCB processes.`,
     features: ['Withstands extreme temperatures (up to 260°C / 500°F)', 'Excellent dielectric strength for insulation', 'Removes cleanly with no adhesive residue', 'High chemical and radiation resistance'],
     uses: ['Masking circuit boards for wave soldering', 'Electrical insulation of coils, transformers, and capacitors', 'Powder coating masking', 'Splicing wires in high-temperature environments'],
     industries: ['electronic-industry', 'packaging-industry'],
@@ -1346,28 +898,6 @@ export const PRODUCTS: Product[] = [
       description: "Explore high performance Kapton tape that withstands extreme heat, ideal for PCB masking & insulation. Durable & reliable at TapeIndia.",
       h1: "Kapton / Polyimide Tape for High Temperature & Insulation Applications",
       imageAlt: "Kapton tape on PCB masking"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Up to what temperature does Kapton tape work?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Standard Kapton tape with silicone adhesive is generally rated for continuous use at around 180°C (356°F) and can withstand short-term exposure up to 260°C (500°F) and beyond, depending on the grade."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Is Kapton tape adhesive safe for PCB components?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, the silicone adhesive is specially formulated to be chemically inert and non-corrosive. Its clean-removal properties ensure that no harmful residue is left on sensitive PCB components after processing."
-                }
-            }
-        ]
     }
   },
   {
@@ -1979,7 +1509,7 @@ export const PRODUCTS: Product[] = [
     name: 'EMI Shielding Tape',
     category: 'antistatic-esd-tapes',
     shortDescription: 'Conductive foil tapes (copper or aluminum) used to block electromagnetic interference (EMI) and radio frequency interference (RFI) in electronics.',
-    description: "EMI Shielding Tapes are used to control electromagnetic interference in electronic devices. These tapes, typically made from copper or aluminum foil with a conductive adhesive, are used to seal enclosures, wrap cables, and ground components, preventing unwanted electronic \"noise\" from affecting sensitive circuits. For targeted shielding, consider our high-grade <a href=\"/product/copper-foil-tape\" class=\"text-brand-accent hover:underline font-semibold\">copper tape for EMI shielding</a>.",
+    description: "EMI Shielding Tapes are used to control electromagnetic interference in electronic devices. These tapes, typically made from copper or aluminum foil with a conductive adhesive, are used to seal enclosures, wrap cables, and ground components, preventing unwanted electronic \"noise\" from affecting sensitive circuits.",
     features: ['Conductive foil backing (Copper or Aluminum)', 'Conductive adhesive for a reliable electrical connection', 'Effective at shielding against EMI and RFI', 'Solderable for grounding applications'],
     uses: ['Shielding seams on electronic enclosures', 'Wrapping cables to prevent interference', 'Grounding applications', 'Shielding guitar cavities and pickguards'],
     industries: ['electronic-industry', 'packaging-industry'],
@@ -1994,7 +1524,7 @@ export const PRODUCTS: Product[] = [
     name: 'Copper Foil Tape',
     category: 'antistatic-esd-tapes',
     shortDescription: 'A versatile conductive tape featuring a copper foil backing, used for EMI shielding, grounding, and electronics repair.',
-    description: `Our Copper Foil Tape features a soft copper foil backing with a conductive acrylic adhesive, making it a highly versatile tool for electronics professionals and hobbyists. It is ideal for EMI/RFI shielding, creating conductive traces on circuit boards, grounding, and even arts and crafts like making stained glass.<br /><br /><h2>What is Copper Tape?</h2><p>Copper tape is a versatile adhesive tape made from a thin strip of copper foil, often with an adhesive backing. It's prized for its excellent electrical conductivity, durability, and resistance to corrosion.</p><h3>Properties & Types (Conductive vs Non-Conductive)</h3><p>The key property of copper tape is its conductivity. Most variants feature a conductive adhesive, ensuring a reliable electrical path. While most common types are conductive, non-conductive adhesive options exist for specific applications where only the foil itself needs to be conductive.</p><br /><h2>Benefits of Copper Tape</h2><h3>EMI/RFI Shielding</h3><p>Copper's conductive properties make it highly effective at blocking electromagnetic interference (EMI) and radio frequency interference (RFI), protecting sensitive electronic components from unwanted noise.</p><h3>Electrical Grounding & PCB Repair</h3><p>It's an essential tool for creating grounding points, repairing broken traces on printed circuit boards (PCBs), and creating temporary electrical pathways in prototypes and hobby projects. You can <a href="/product/kapton-tape" class="text-brand-accent hover:underline font-semibold">compare with Kapton tape</a> for high-temperature insulation needs.</p><h3>Pest Control & Gardening</h3><p>A surprising but effective use is as a natural slug and snail repellent. When these pests touch the copper, it creates a mild electric shock that deters them from crossing the barrier.</p><h3>Arts, Crafts & Decorative Uses</h3><p>From creating stained glass art to adding metallic accents to projects, copper tape's aesthetic appeal and malleability make it a favorite among crafters and artists.</p><br /><h2>Copper Tape Applications</h2><h3>Electronics & Hobby Projects</h3><p>Used extensively for shielding guitar cavities, repairing electronics, and building simple circuits for educational purposes.</p><h3>Industrial & HVAC Uses</h3><p>In industrial settings, it's used for cable wrapping, sealing, and grounding applications. Its thermal properties are also beneficial in certain HVAC scenarios.</p><h3>Creative & Educational Uses</h3><p>Ideal for STEM projects, paper circuits, and creating unique decorative items.</p><br /><h2>Choosing the Right Copper Tape</h2><h3>Adhesive vs Non-Adhesive</h3><p>Most applications benefit from adhesive-backed tape for easy application. Non-adhesive foil is available for wrapping or when a different bonding method is preferred.</p><h3>Width & Thickness Options</h3><p>TapeIndia offers various widths and thicknesses to suit your project's needs, from fine PCB repairs to broader shielding applications.</p><h3>Bulk vs Small Rolls</h3><p>We provide options for both small-scale hobbyists and large industrial orders, ensuring you get the quantity you need at a competitive price.</p><br /><h2>Copper Tape Price Guide</h2><p>The price of copper tape varies based on width, thickness, and quantity. TapeIndia offers competitive pricing for all our copper foil products, with significant discounts available for bulk purchases. Contact us for a personalized quote for your specific requirements.</p><br /><h2>FAQs About Copper Tape</h2><p><strong>What is copper tape used for?</strong><br>Copper tape is used for a wide range of tasks, including EMI/RFI shielding in electronics, repairing printed circuit boards, creating electrical connections, gardening (as a slug repellent), and various arts and crafts.</p><p><strong>Is the adhesive on copper tape conductive?</strong><br>Many of our copper tapes come with a conductive adhesive, which is essential for applications where electricity needs to pass through the adhesive layer, such as in EMI shielding and grounding. We also offer options with non-conductive adhesive for specific needs.</p><br /><div style="margin-top: 2.5rem; padding: 1.5rem; background-color: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;"> <h3 style="font-weight: bold; margin-bottom: 0.75rem;">Your Source for Premium Copper Tape in India</h3> <p>Looking for premium copper tape? TapeIndia offers conductive and non-conductive copper tape for EMI shielding, PCB repairs, and creative projects. Choose from multiple widths and thicknesses with bulk order discounts and fast shipping across India.</p></div>`,
+    description: `Our Copper Foil Tape features a soft copper foil backing with a conductive acrylic adhesive, making it a highly versatile tool for electronics professionals and hobbyists. It is ideal for EMI/RFI shielding, creating conductive traces on circuit boards, grounding, and even arts and crafts like making stained glass.`,
     features: ['Highly conductive copper foil', 'Conductive adhesive ensures a reliable bond', 'Solderable for easy grounding', 'Conformable for wrapping and irregular shapes'],
     uses: ['EMI/RFI shielding in electronic devices', 'Static charge draining', 'Creating circuit traces for prototyping', 'Stained glass crafting'],
     industries: ['electronic-industry', 'packaging-industry'],
@@ -2004,25 +1534,6 @@ export const PRODUCTS: Product[] = [
       description: "Shop high-quality copper tape for EMI shielding, PCB repair & DIY. Bulk order discounts & fast shipping across India from TapeIndia.",
       h1: "Copper Tape for EMI Shielding, Electrical Repairs & DIY Projects",
       imageAlt: "Copper tape roll for EMI shielding and PCB repair"
-    },
-    faqSchema: {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-            "@type": "Question",
-            "name": "What is copper tape used for?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Copper tape is used for EMI shielding, electrical grounding, PCB repair, pest control, and craft applications."
-            }
-        }, {
-            "@type": "Question",
-            "name": "Is copper tape conductive?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, most copper tapes are conductive, including those with conductive adhesive, making them ideal for electronic applications."
-            }
-        }]
     }
   },
   {
@@ -2045,7 +1556,7 @@ export const PRODUCTS: Product[] = [
     name: 'ESD Kapton Tape',
     category: 'antistatic-esd-tapes',
     shortDescription: 'High-temperature polyimide tape treated with anti-static properties, designed for masking in ESD-sensitive electronics manufacturing.',
-    description: "ESD Kapton Tape combines the exceptional high-temperature resistance of polyimide film with static-dissipative properties. This ensures that no static charge is generated when the tape is applied or removed from a circuit board, protecting sensitive components from ESD damage during high-temperature processes like wave soldering. While Kapton tape provides insulation, explore our <a href=\"/product/copper-foil-tape\" class=\"text-brand-accent hover:underline font-semibold\">best copper tape for PCB repair</a> when conductive traces are needed.",
+    description: "ESD Kapton Tape combines the exceptional high-temperature resistance of polyimide film with static-dissipative properties. This ensures that no static charge is generated when the tape is applied or removed from a circuit board, protecting sensitive components from ESD damage during high-temperature processes like wave soldering.",
     features: ['High-temperature resistance of Kapton®', 'Static-dissipative adhesive and/or backing', 'Prevents tribocharging during application and removal', 'Removes cleanly with no residue'],
     uses: ['Masking PCBs with ESD-sensitive components', 'High-temperature applications within an EPA', 'Securing components during reflow soldering'],
     industries: ['electronic-industry'],
