@@ -1,3 +1,4 @@
+
 import { useMemo, useState, type ReactNode, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -94,7 +95,8 @@ export default function ProductPage() {
     
     const pageTitle = product.seo?.title || `${product.name} | Tape India`;
     const pageDescription = product.seo?.description || product.shortDescription;
-    const imageAltText = product.seo?.title || product.name;
+    const imageAltText = product.seo?.imageAlt || product.seo?.title || product.name;
+    const h1Text = product.seo?.h1 || product.name;
 
     const hasImage = product.images && product.images.length > 0;
     const showPlaceholder = !hasImage || isImageBroken;
@@ -114,12 +116,12 @@ export default function ProductPage() {
         "@context": "https://schema.org/",
         "@type": "Product",
         "name": product.name,
-        "image": product.images || [],
+        "image": (product.images && product.images.length > 0 ? product.images[0] : []),
         "description": pageDescription,
         "sku": product.id,
         "brand": {
             "@type": "Brand",
-            "name": product.brand || "Tape India"
+            "name": product.brand || "TapeIndia"
         },
         "offers": {
             "@type": "Offer",
@@ -132,16 +134,17 @@ export default function ProductPage() {
             }
         }
     };
-    
+
     const breadcrumbItems = [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" }
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" },
+        { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" }
     ];
+
     if (category) {
-        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": category.name, "item": `https://tapeindia.shop/products?category=${category.id}` });
-    } else {
-        breadcrumbItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" });
+        breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": category.name, "item": `https://tapeindia.shop/products?category=${category.id}` });
     }
-    breadcrumbItems.push({ "@type": "ListItem", "position": 3, "name": product.name, "item": productUrl });
+    
+    breadcrumbItems.push({ "@type": "ListItem", "position": 4, "name": product.name, "item": productUrl });
     
     const breadcrumbSchema = {
         "@context": "https://schema.org",
@@ -156,6 +159,9 @@ export default function ProductPage() {
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+                {product.faqSchema && (
+                    <script type="application/ld+json">{JSON.stringify(product.faqSchema)}</script>
+                )}
             </Helmet>
             <CanonicalTag stripQuery={true} />
 
@@ -193,7 +199,7 @@ export default function ProductPage() {
                                  <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
                             </li>
                            )}
-                          <li className="text-brand-blue-dark max-w-xs truncate" aria-current="page">{product.name}</li>
+                           <li className="text-brand-blue-dark max-w-xs truncate" aria-current="page">{product.name}</li>
                         </ol>
                     </nav>
 
@@ -229,7 +235,7 @@ export default function ProductPage() {
                         <section className="w-full md:w-3/5 flex-grow">
                            <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6 md:p-8 border border-gray-200/80">
                                 <h1 className="font-bold text-brand-blue-dark">
-                                    {product.name}
+                                    {h1Text}
                                 </h1>
                                 
                                 <p className="mt-3 md:mt-4 text-gray-600 leading-relaxed">{product.shortDescription}</p>
