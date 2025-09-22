@@ -91,11 +91,11 @@ export const CATEGORIES: Category[] = [
         name: 'Reflective Tapes',
         icon: 'SunIcon',
         subtitle: 'High-visibility tapes and fabrics for low-light conditions.',
-        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries. Our reflective tapes and reflector stickers are designed for road, industrial, and safety applications. Chennai manufacturer with Pan-India shipping.`,
+        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries. Our reflective tapes and reflector stickers are designed for road, industrial, and safety applications. TapeIndia manufactures reflective tapes for safety, transport, and industrial marking, available in multiple colors.`,
         seo: {
-            title: "Reflective Tape Supplier | Chennai & Pan-India Delivery",
-            description: "Reflective tapes and reflector stickers for safety and marking. Bulk supply available across India from Chennai-based TapeIndia.",
-            h1: "Reflective Tape & Safety Marking Supplier"
+            title: "Reflective Tape Manufacturer in India | TapeIndia",
+            description: "Leading reflective tape manufacturer in India. Chennai-based supplier with nationwide bulk delivery for safety, transport, and industrial uses.",
+            h1: "Reflective Tape Manufacturer — Pan-India Supply"
         }
     },
     {
@@ -103,11 +103,11 @@ export const CATEGORIES: Category[] = [
         name: 'Double-Sided Tapes',
         icon: 'LayersIcon',
         subtitle: 'Powerful mounting and bonding solutions for any surface.',
-        description: `Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From general use <a href="/product/tissue-tape" class="text-brand-accent hover:underline font-semibold">double-sided tissue tape</a> and powerful <a href="/product/double-sided-cloth-tape" class="text-brand-accent hover:underline font-semibold">double-sided cloth tape</a>, to high-strength <a href="/product/vhb-tape" class="text-brand-accent hover:underline font-semibold">acrylic foam tapes (VHB)</a> that can replace mechanical fasteners, we have a solution for every mounting application.`,
+        description: `Find the perfect invisible bonding solution with our extensive range of double-sided tapes. From general use <a href="/product/tissue-tape" class="text-brand-accent hover:underline font-semibold">double-sided tissue tape</a> and powerful <a href="/product/double-sided-cloth-tape" class="text-brand-accent hover:underline font-semibold">double-sided cloth tape</a>, to high-strength <a href="/product/vhb-tape" class="text-brand-accent hover:underline font-semibold">acrylic foam tapes (VHB)</a> that can replace mechanical fasteners, we have a solution for every mounting application. Our clothing-safe double-sided tapes are used in fashion, tailoring, and textile production. Bulk rolls available.`,
         seo: {
-            title: "Double-Sided Tape | Strong Adhesive for Mounting & Craft | TapeIndia",
-            description: "Buy strong double-sided tape for mounting, crafts & office use. High-tack adhesive with clean removal. Shop online at TapeIndia.",
-            h1: "Double-Sided Tape for Mounting, Fixing & Creative Projects"
+            title: "Double Sided Tape for Clothes | Fabric Tape Supplier",
+            description: "Fabric-friendly double-sided tapes for clothing, hemming, and crafts. Bulk supply available across India from TapeIndia for all your textile needs.",
+            h1: "Double Sided Fabric Tape Supplier"
         }
     },
     {
@@ -203,14 +203,15 @@ export const PRODUCTS: Product[] = [
     name: 'Caution Tape',
     category: 'safety-tapes',
     shortDescription: 'Lightweight, non-adhesive polyethylene tape for temporarily cordoning off restricted or potentially hazardous areas.',
-    description: "Tape India's Caution Tape provides a quick and effective way to alert personnel to potential hazards. This non-adhesive barrier tape is lightweight and easy to deploy, making it ideal for temporarily restricting access to areas with wet floors, ongoing maintenance, or other short-term risks. The high-visibility yellow and bold black lettering are universally recognized for safety.",
+    description: "Tape India's Caution Tape provides a quick and effective way to alert personnel to potential hazards. This non-adhesive barrier tape is lightweight and easy to deploy, making it ideal for temporarily restricting access to areas with wet floors, ongoing maintenance, or other short-term risks. The high-visibility yellow and bold black lettering are universally recognized for safety. Our caution tapes are perfect for construction sites, factories, and public safety zones, and are available in multiple colors.",
     features: ['High-visibility yellow with bold "CAUTION" text', 'Durable and lightweight polyethylene', 'Weather-resistant for temporary outdoor use', 'Economical and disposable'],
     uses: ['Blocking off wet floors or spills', 'Restricting access during cleaning or maintenance', 'Temporary crowd control at events', 'Identifying minor hazards on-site'],
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/caution%20tape.webp'],
     seo: {
-      title: "Buy Caution Tape | Yellow Barrier Tape Supplier | Tape India",
-      description: "Temporarily restrict access with Tape India's yellow caution tape. Lightweight, non-adhesive, and highly visible for workplace safety. Bulk orders available."
+      title: "Caution Tape Supplier | Hazard Marking",
+      description: "Caution tapes for hazard marking and safety warnings. Chennai supplier with Pan-India delivery, ideal for construction sites and factories.",
+      h1: "Caution & Warning Tape Supplier"
     }
   },
   {
@@ -263,14 +264,15 @@ export const PRODUCTS: Product[] = [
     name: 'Glow In The Dark Tape',
     category: 'safety-tapes',
     shortDescription: 'Photoluminescent adhesive tape that absorbs light and glows brightly in darkness to mark safety paths and emergency exits.',
-    description: 'Enhance egress safety during power failures with our Glow in the Dark Tape. This photoluminescent tape absorbs energy from ambient light sources and releases it as a bright, visible glow when the lights go out. It is an essential, code-compliant component for marking escape routes, stairways, handrails, and emergency equipment locations, ensuring clear guidance in critical situations.',
+    description: 'Enhance egress safety during power failures with our Glow in the Dark Tape. This photoluminescent tape absorbs energy from ambient light sources and releases it as a bright, visible glow when the lights go out. It is an essential, code-compliant component for marking escape routes, stairways, handrails, and emergency equipment locations, ensuring clear guidance in critical situations. Our glow tapes provide visibility during power outages and low-light conditions, ideal for safety marking.',
     features: ['Charges in natural or artificial light', 'Long-lasting and bright afterglow', 'Durable adhesive backing for various surfaces', 'Improves safety during power outages', 'Meets safety standards for egress marking'],
     uses: ['Marking emergency exits and escape routes', 'Outlining stairways, corridors, and handrails', 'Highlighting light switches and fire extinguishers', 'Low-light safety marking in theaters and venues'],
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/glowindark.webp'],
     seo: {
-      title: "Glow in the Dark Tape | Photoluminescent Safety Tape India",
-      description: "Mark escape routes with Tape India's glow-in-the-dark tape. Our photoluminescent tape provides a long-lasting glow for emergency egress systems. Buy now."
+      title: "Glow Tape Supplier | Luminous Safety Tape",
+      description: "Glow-in-the-dark safety tapes for marking exits, stairways and low-light areas. Pan-India supply for enhanced emergency visibility.",
+      h1: "Glow Tape & Photoluminescent Tape Supplier"
     }
   },
   {
@@ -385,14 +387,15 @@ export const PRODUCTS: Product[] = [
     name: 'Heat Transfer Reflective Tape',
     category: 'reflective-tapes',
     shortDescription: 'A reflective film designed to be heat-pressed onto garments, allowing for custom designs and logos on safety and athletic wear.',
-    description: 'Our Heat Transfer Reflective Tape allows for the creation of custom, permanent reflective designs on textiles. This film can be plotter-cut into intricate logos, letters, or segmented patterns and then permanently bonded to fabric using a heat press. It offers excellent reflectivity and wash durability while maintaining the flexibility of the garment, perfect for sportswear and branded safety apparel.',
+    description: 'Our Heat Transfer Reflective Tape allows for the creation of custom, permanent reflective designs on textiles. This film can be plotter-cut into intricate logos, letters, or segmented patterns and then permanently bonded to fabric using a heat press. It offers excellent reflectivity and wash durability while maintaining the flexibility of the garment, perfect for sportswear and branded safety apparel. We supply heat transfer paper for garment printing, fabric marking, and industrial applications, with nationwide delivery from our Chennai base.',
     features: ['Heat-activated adhesive for permanent application', 'Can be plotter cut into custom logos and designs', 'Stretches with fabric without cracking or peeling', 'Maintains high reflectivity after repeated washing'],
     uses: ['Custom branding on corporate safety apparel', 'Logos and accents on athletic and team sportswear', 'Segmented tape designs for enhanced flexibility', 'Decorative and safety elements on fashion garments'],
     industries: ['reflective-safety-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/heattransfer.webp'],
     seo: {
-      title: "Heat Transfer Reflective Tape | Iron-On Reflective Vinyl",
-      description: "Create custom reflective designs with our heat transfer tape. Ideal for plotter cutting and applying logos to safety and sportswear. Buy from Tape India."
+      title: "Heat Transfer Paper Supplier | Chennai & Pan-India",
+      description: "Heat transfer paper for garment printing and textile applications. Chennai-based supplier shipping Pan-India for all your fabric design needs.",
+      h1: "Heat Transfer Paper Supplier — TapeIndia"
     }
   },
   {
@@ -573,8 +576,9 @@ export const PRODUCTS: Product[] = [
     industries: ['print-labels-signage-industry', 'electronic-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/3M%20Foam%20foam%20tape'],
     seo: {
-      title: "3M Double Sided Foam Tape Distributor | Tape India",
-      description: "Buy genuine 3M double-sided foam tapes from Tape India. High-strength acrylic foam tape for automotive, electronics, and mounting applications."
+      title: "3M Material Supplier | Chennai & Pan-India",
+      description: "3M tapes, adhesives, and materials supplier in Chennai. Bulk supply and Pan-India delivery for industrial and commercial applications.",
+      h1: "3M Material Supplier — TapeIndia"
     }
   },
   {
@@ -582,14 +586,15 @@ export const PRODUCTS: Product[] = [
     name: 'Tissue Tape',
     category: 'double-sided-tapes',
     shortDescription: 'A versatile, general-purpose double-sided tape with a tissue paper carrier, ideal for lightweight mounting and splicing.',
-    description: "Our Double Sided Tissue Tape is a versatile and economical solution for a wide range of applications. It features a non-woven tissue paper carrier coated on both sides with a high-quality rubber or acrylic adhesive. It is easy to tear by hand and conforms well to irregular surfaces, making it perfect for stationery, paper splicing, crafting, and light-duty mounting.",
+    description: "Our Double Sided Tissue Tape is a versatile and economical solution for a wide range of applications. It features a non-woven tissue paper carrier coated on both sides with a high-quality rubber or acrylic adhesive. It is easy to tear by hand and conforms well to irregular surfaces, making it perfect for stationery, paper splicing, crafting, and light-duty mounting. Our double-sided tissue tapes are ideal for bonding paper, leather, and foam in industrial applications, and are available in multiple roll sizes.",
     features: ['Easy to tear by hand', 'Conformable to irregular surfaces', 'Available with rubber or acrylic adhesive', 'Excellent for paper and lightweight materials'],
     uses: ['Splicing paper webs in printing and converting', 'Mounting posters, photos, and lightweight signs', 'General office and stationery use', 'Crafting and scrapbooking'],
     industries: ['print-labels-signage-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/tissue%20tape.webp'],
     seo: {
-      title: "Double Sided Tissue Tape | Splicing & Mounting Tape",
-      description: "Versatile and economical double-sided tissue tape from Tape India. Ideal for paper splicing, lightweight mounting, and crafting. Get a bulk quote."
+      title: "Double Sided Tissue Tape | Bulk Supplier",
+      description: "Double-sided tissue tapes for bonding, lamination, and splicing. Bulk supply available Pan-India for industrial and commercial needs.",
+      h1: "Double Sided Tissue Tape Supplier"
     }
   },
   {
@@ -839,15 +844,15 @@ export const PRODUCTS: Product[] = [
     name: 'Masking Tape',
     category: 'specialty-tapes',
     shortDescription: 'A general-purpose crepe paper tape for painting, bundling, and light-duty applications where clean removal is required.',
-    description: "Our General Purpose Masking Tape is a versatile and reliable tool for a multitude of tasks. It features a crepe paper backing that is highly conformable and easy to tear, with a rubber-based adhesive that sticks well to a variety of surfaces but can be removed cleanly without leaving residue. It's an essential item for painting, labeling, bundling, and temporary holding.",
+    description: "Our General Purpose Masking Tape is a versatile and reliable tool for a multitude of tasks. It features a crepe paper backing that is highly conformable and easy to tear, with a rubber-based adhesive that sticks well to a variety of surfaces but can be removed cleanly without leaving residue. It's an essential item for painting, labeling, bundling, and temporary holding. Our Chennai facility manufactures and supplies masking tapes for painting, automotive, and industrial use.",
     features: ['Crepe paper backing for high conformability', 'Removes cleanly from most surfaces', 'Easy to tear by hand', 'Resistant to paint bleed-through'],
     uses: ['General purpose painting and decorating', 'Bundling light items and labeling', 'Temporary holding and fastening', 'Crafts and school projects'],
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/masking%20tape.webp'],
     seo: {
-      title: "Masking Tape Manufacturer | Pan-India Supply",
-      description: "Masking tape manufacturer supplying automotive, painting, and general-purpose masking tapes across India. Bulk orders available.",
-      h1: "Masking Tape Manufacturer & Supplier"
+      title: "Masking Tape Manufacturer in Chennai | TapeIndia",
+      description: "Masking tape manufacturer and supplier in Chennai with Pan-India delivery for painting, automotive, and industrial uses. Get a quote for bulk orders.",
+      h1: "Masking Tape Manufacturer (Chennai)"
     }
   },
   {
@@ -855,15 +860,15 @@ export const PRODUCTS: Product[] = [
     name: 'BOPP Tape',
     category: 'specialty-tapes',
     shortDescription: 'The industry-standard packaging tape for carton sealing, made from Biaxially Oriented Polypropylene film.',
-    description: `BOPP (Biaxially Oriented Polypropylene) tape is the most widely used tape for sealing corrugated boxes. Its polypropylene film backing is strong and durable, while the acrylic adhesive provides a reliable, long-lasting seal. We offer this tape in various thicknesses and colors, including clear, brown, and custom printed options, to meet all your packaging needs.`,
+    description: `BOPP (Biaxially Oriented Polypropylene) tape is the most widely used tape for sealing corrugated boxes. Its polypropylene film backing is strong and durable, while the acrylic adhesive provides a reliable, long-lasting seal. We offer this tape in various thicknesses and colors, including clear, brown, and custom printed options, to meet all your packaging needs. As a local manufacturer, we supply BOPP tapes with fast delivery across India.`,
     features: ['High tensile strength and durability', 'Water-based acrylic adhesive for a long-lasting seal', 'Resistant to splitting and tearing', 'Available in clear, brown, and custom printed'],
     uses: ['Standard carton and box sealing', 'Bundling and strapping of goods', 'Use in manual and automated packaging lines', 'General industrial packaging'],
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/bopp%20tape.webp'],
     seo: {
-      title: "Brown & BOPP Tape Manufacturer in Chennai | TapeIndia",
-      description: "Chennai-based brown tape and BOPP packaging tape manufacturer. We offer cello tape wholesale rates and Pan-India delivery for bulk orders.",
-      h1: "Brown BOPP Packaging Tape Manufacturer in Chennai",
+      title: "BOPP Tape Manufacturer Near Me | Chennai",
+      description: "BOPP tape manufacturer and bulk supplier in Chennai. Get local service with the convenience of Pan-India delivery available for your packaging needs.",
+      h1: "Local BOPP Tape Manufacturer & Supplier",
       imageAlt: "brown BOPP tape sealing a shipping box"
     }
   },
@@ -872,15 +877,15 @@ export const PRODUCTS: Product[] = [
     name: 'Aluminium Foil Tape',
     category: 'specialty-tapes',
     shortDescription: 'A heat and light reflective tape with a soft aluminum foil backing, used for sealing, patching, and thermal insulation.',
-    description: `Our Aluminium Foil Tape features a soft, conformable aluminum foil backing coated with a high-performance acrylic adhesive. It excels in applications requiring thermal conductivity or heat and light reflectivity. It conforms well to irregular surfaces and performs reliably across a wide range of temperatures, making it a staple in the HVAC and appliance industries.`,
+    description: `Our Aluminium Foil Tape features a soft, conformable aluminum foil backing coated with a high-performance acrylic adhesive. It excels in applications requiring thermal conductivity or heat and light reflectivity. It conforms well to irregular surfaces and performs reliably across a wide range of temperatures, making it a staple in the HVAC and appliance industries. Our aluminium foil tapes are ideal for HVAC, duct sealing, and insulation use. Bulk rolls available.`,
     features: ['Thermally conductive and heat reflective', 'Resistant to moisture, UV, and chemicals', 'Soft foil backing conforms to irregular shapes', 'Wide operating temperature range'],
     uses: ['Sealing joints and seams in HVAC ductwork', 'Patching and sealing in roofing and gutters', 'Heat shielding and EMI/RFI shielding', 'Appliance manufacturing and repair'],
     industries: ['hvac-industry', 'packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/aluminum%20foil%20tap2e.webp'],
     seo: {
-      title: "Aluminum Foil Tape | HVAC, Insulation & Heat Resistant | TapeIndia",
-      description: "Shop aluminum foil tape for sealing ducts, insulation & heat-resistant repairs. High-strength adhesive & reliable performance.",
-      h1: "Aluminum Foil Tape for HVAC, Insulation & Sealing Applications",
+      title: "Aluminium Foil Tape Supplier | Chennai",
+      description: "Aluminium foil tapes for HVAC, insulation, and sealing applications. Chennai supplier with Pan-India delivery for industrial and commercial projects.",
+      h1: "Aluminium Foil Tape Supplier",
       imageAlt: "aluminum foil tape sealing air duct"
     }
   },
@@ -1433,14 +1438,15 @@ export const PRODUCTS: Product[] = [
     name: 'PTFE Coated Fiberglass Fabric (Non-Adhesive)',
     category: 'teflon-ptfe-tapes',
     shortDescription: 'A heat-resistant, non-stick fiberglass fabric coated with PTFE, used as a reusable release sheet in various industrial processes.',
-    description: "This material combines the strength and dimensional stability of fiberglass with the non-stick, high-temperature properties of PTFE (Teflon). Supplied without adhesive, it is used as a reusable release liner, conveyor belt, or protective curtain in processes like heat sealing, laminating, and composite manufacturing.",
+    description: "This material combines the strength and dimensional stability of fiberglass with the non-stick, high-temperature properties of PTFE (Teflon). Supplied without adhesive, it is used as a reusable release liner, conveyor belt, or protective curtain in processes like heat sealing, laminating, and composite manufacturing. Our PTFE sheets are heat-resistant and non-stick, ideal for industrial, sealing, and cookware use.",
     features: ['Excellent non-stick release properties', 'Withstands continuous high temperatures (up to 260°C)', 'High strength and dimensional stability', 'Chemically inert and easy to clean'],
     uses: ['Release sheets for heat sealing and plastic bag manufacturing', 'Conveyor belts for curing ovens', 'Laminating press release liners', 'Protective curtains for welding and chemical processing'],
     industries: ['ptfe-teflon-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/ptef%20coated%20fabric%20non%20adhesive%20(1).webp'],
     seo: {
-      title: "Non-Adhesive PTFE Fabric | Teflon Coated Fiberglass Sheet",
-      description: "Buy reusable, non-stick PTFE coated fiberglass fabric from Tape India. Perfect as a release sheet for heat sealing and industrial processes."
+      title: "Teflon Sheet Supplier | PTFE Sheets & Rolls",
+      description: "PTFE Teflon sheets for heat-resistant and non-stick applications. Chennai supplier with Pan-India delivery for industrial and commercial needs.",
+      h1: "PTFE / Teflon Sheet Supplier"
     }
   },
   {
