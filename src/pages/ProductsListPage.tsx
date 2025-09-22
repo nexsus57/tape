@@ -114,6 +114,21 @@ export default function ProductsListPage() {
         };
     }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location.pathname, location.search]);
     
+    const faqSchema = useMemo(() => {
+        const categoryId = searchParams.get('category');
+        if (categoryId === 'reflective-tapes') {
+            return {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"What are reflective tapes used for?","acceptedAnswer":{"@type":"Answer","text":"Reflective tapes and reflector stickers are used to enhance visibility and safety on roads, vehicles, industrial equipment, and safety apparel in low-light conditions."}},
+                {"@type":"Question","name":"Do you offer different colors for reflective tapes?","acceptedAnswer":{"@type":"Answer","text":"Yes, we supply reflective tapes in multiple colors and widths, including options suitable for vehicle markings and industrial safety applications."}}
+              ]
+            };
+        }
+        return null;
+    }, [searchParams]);
+
     useEffect(() => {
         // Close mobile filter when route changes
         setIsMobileFilterOpen(false);
@@ -128,6 +143,7 @@ export default function ProductsListPage() {
                 <title>{`${pageTitle} | Tape India`}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
+                {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
