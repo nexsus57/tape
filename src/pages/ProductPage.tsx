@@ -89,6 +89,56 @@ export default function ProductPage() {
         .slice(0, 3);
     }, [product, category, products]);
 
+    const faqSchema = useMemo(() => {
+        if (!productId) return null;
+
+        const productFaqs: { [key: string]: object } = {
+            'copper-foil-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Where can I buy copper tape near me?","acceptedAnswer":{"@type":"Answer","text":"Tape India is a Chennai-based supplier, but we deliver copper tape and copper foil sheets Pan-India. You can order from anywhere and we will ship it to you."}},
+                {"@type":"Question","name":"What is copper tape used for?","acceptedAnswer":{"@type":"Answer","text":"Copper tape is primarily used for electrical applications such as EMI/RFI shielding, grounding circuits, and electronics repair. It is also popular for craft projects like stained glass."}}
+              ]
+            },
+            'bopp-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Are you a packaging tape manufacturer near me?","acceptedAnswer":{"@type":"Answer","text":"We are a Chennai-based BOPP packaging tape manufacturer. We offer Pan-India shipping, so we can be your supplier regardless of your location."}},
+                {"@type":"Question","name":"Do you offer wholesale cello tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we supply BOPP tape (commonly known as cello tape) at wholesale rates for bulk and commercial buyers across India."}},
+                {"@type":"Question","name":"Do you manufacture brown packaging tape in Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes, we are a leading manufacturer of brown BOPP packaging tape in Chennai, supplying businesses with reliable carton sealing solutions."}}
+              ]
+            },
+            'floor-marking-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"What colors are available for floor marking tape?","acceptedAnswer":{"@type":"Answer","text":"We supply floor marking tape in a variety of standard safety colors including yellow, red, green, and white. Custom colors may be available for bulk orders."}},
+                {"@type":"Question","name":"Are these tapes suitable for factory floors?","acceptedAnswer":{"@type":"Answer","text":"Yes, our floor marking tapes are designed for industrial durability, resisting abrasion from foot traffic, pallet jacks, and forklifts, making them ideal for factory and warehouse safety."}}
+              ]
+            },
+            'anti-skid-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Where can I buy anti-skid tape?","acceptedAnswer":{"@type":"Answer","text":"You can order high-quality anti-skid tape directly from Tape India. We are a Chennai-based supplier and deliver our safety grip tapes across India."}},
+                {"@type":"Question","name":"What sizes of anti-skid tape are available?","acceptedAnswer":{"@type":"Answer","text":"We supply anti-skid tape in various standard widths. We can also provide custom lengths and potentially custom widths based on your bulk order requirements."}}
+              ]
+            },
+            'masking-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Do you supply automotive masking tapes?","acceptedAnswer":{"@type":"Answer","text":"Yes, as a masking tape manufacturer in India, we offer automotive-grade masking tapes designed for paint and bodywork applications that require clean removal."}},
+                {"@type":"Question","name":"Are custom widths available for masking tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we can slit masking tapes to custom widths based on your specific requirements for bulk orders."}}
+              ]
+            }
+        };
+        
+        return productFaqs[productId] || null;
+    }, [productId]);
+
     if (!product) {
         return <NotFoundPage />;
     }
@@ -159,6 +209,7 @@ export default function ProductPage() {
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
                 <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+                {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
             </Helmet>
             <CanonicalTag stripQuery={true} />
 
