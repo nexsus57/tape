@@ -91,11 +91,11 @@ export const CATEGORIES: Category[] = [
         name: 'Reflective Tapes',
         icon: 'SunIcon',
         subtitle: 'High-visibility tapes and fabrics for low-light conditions.',
-        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries.`,
+        description: `Our collection of reflective materials ensures maximum visibility and safety. We supply high-grade reflective tapes for vehicles, sew-on fabrics for garments, and flame-retardant options to meet stringent safety standards in various industries. Our reflective tapes and reflector stickers are designed for road, industrial, and safety applications. Chennai manufacturer with Pan-India shipping.`,
         seo: {
-            title: "Reflective Tape | High Visibility Safety & Auto Uses | TapeIndia",
-            description: "Buy high-quality reflective tape ideal for safety, signage & vehicles. Durable, highly visible in low light. Fast shipping at TapeIndia.",
-            h1: "Reflective Tape for Safety, Outdoors & Vehicle Markings"
+            title: "Reflective Tape Supplier | Chennai & Pan-India Delivery",
+            description: "Reflective tapes and reflector stickers for safety and marking. Bulk supply available across India from Chennai-based TapeIndia.",
+            h1: "Reflective Tape & Safety Marking Supplier"
         }
     },
     {
@@ -175,9 +175,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/floor%20marking%20tape.webp'],
     seo: {
-      title: "Floor Marking Tape | Safety Lines & Industrial Use | TapeIndia",
-      description: "Buy durable floor marking tape ideal for warehouses, factories & safety zones. Long-lasting adhesive & visibility. Fast delivery at TapeIndia.",
-      h1: "Floor Marking Tape for Warehouses, Safety & Industrial Floor Lines",
+      title: "Floor Marking Tape | Safety Marking Supplier",
+      description: "Durable floor marking tapes for industrial safety and hazard marking. Available in multiple colors and sizes. Pan-India shipping.",
+      h1: "Floor & Safety Marking Tape Supplier",
       imageAlt: "yellow floor marking tape on warehouse floor"
     }
   },
@@ -192,9 +192,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/coloured-anti-slip-tape.webp'],
     seo: {
-      title: "Anti-Skid Tape | Non-Slip Safety Grip for Floors & Stairs | TapeIndia",
-      description: "Buy premium anti-skid tape for stairs, ramps & wet areas. Strong grip & weather-resistant. Bulk deals & nationwide shipping.",
-      h1: "Anti-Skid / Anti-Slip Tape for Safety and Accident Prevention",
+      title: "Anti-Skid Tape Supplier | Safety Grip Tapes",
+      description: "Anti-skid safety tapes for stairs, ramps and industrial flooring. Chennai-based supplier with Pan-India delivery.",
+      h1: "Anti-Skid & Safety Grip Tape Supplier",
       imageAlt: "black anti-skid tape applied on stairs"
     }
   },
@@ -845,8 +845,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/masking%20tape.webp'],
     seo: {
-      title: "Masking Tape Supplier | General Purpose Crepe Paper Tape",
-      description: "Buy quality masking tape from Tape India. Ideal for painting, bundling, and labeling. Removes cleanly from most surfaces. Bulk orders available."
+      title: "Masking Tape Manufacturer | Pan-India Supply",
+      description: "Masking tape manufacturer supplying automotive, painting, and general-purpose masking tapes across India. Bulk orders available.",
+      h1: "Masking Tape Manufacturer & Supplier"
     }
   },
   {
@@ -860,10 +861,10 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/bopp%20tape.webp'],
     seo: {
-      title: "BOPP Packing Tape | Strong Adhesive Carton Sealing Tape | TapeIndia",
-      description: "Order strong BOPP packing tape for cartons & shipping. Available in transparent, brown & custom print. Bulk prices at TapeIndia.",
-      h1: "BOPP Packing Tape for Secure Carton Sealing & Packaging",
-      imageAlt: "brown BOPP tape sealing shipping box"
+      title: "Brown & BOPP Tape Manufacturer in Chennai | TapeIndia",
+      description: "Chennai-based brown tape and BOPP packaging tape manufacturer. We offer cello tape wholesale rates and Pan-India delivery for bulk orders.",
+      h1: "Brown BOPP Packaging Tape Manufacturer in Chennai",
+      imageAlt: "brown BOPP tape sealing a shipping box"
     }
   },
   {
@@ -1530,10 +1531,10 @@ export const PRODUCTS: Product[] = [
     industries: ['electronic-industry', 'packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/copper%20tape%202.webp'],
     seo: {
-      title: "Copper Tape | EMI Shielding, PCB Repair & Crafts | TapeIndia",
-      description: "Shop high-quality copper tape for EMI shielding, PCB repair & DIY. Bulk order discounts & fast shipping across India from TapeIndia.",
-      h1: "Copper Tape for EMI Shielding, Electrical Repairs & DIY Projects",
-      imageAlt: "Copper tape roll for EMI shielding and PCB repair"
+      title: "Copper Tape & Copper Foil Sheets | Chennai Supplier",
+      description: "Copper tapes and copper foil sheets for EMI shielding and electrical applications. Bulk supply across India from TapeIndia.",
+      h1: "Copper Tape & Foil Sheet Supplier for EMI Shielding",
+      imageAlt: "Copper tape roll and copper foil sheet for EMI shielding"
     }
   },
   {
