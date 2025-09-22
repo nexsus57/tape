@@ -116,17 +116,24 @@ export default function ProductsListPage() {
     
     const faqSchema = useMemo(() => {
         const categoryId = searchParams.get('category');
-        if (categoryId === 'reflective-tapes') {
-            return {
+        const categoryFaqs: { [key: string]: object } = {
+            'reflective-tapes': {
               "@context":"https://schema.org",
               "@type":"FAQPage",
               "mainEntity":[
-                {"@type":"Question","name":"What are reflective tapes used for?","acceptedAnswer":{"@type":"Answer","text":"Reflective tapes and reflector stickers are used to enhance visibility and safety on roads, vehicles, industrial equipment, and safety apparel in low-light conditions."}},
-                {"@type":"Question","name":"Do you offer different colors for reflective tapes?","acceptedAnswer":{"@type":"Answer","text":"Yes, we supply reflective tapes in multiple colors and widths, including options suitable for vehicle markings and industrial safety applications."}}
+                {"@type":"Question","name":"Are you a reflective tape manufacturer?","acceptedAnswer":{"@type":"Answer","text":"Yes — as a leading reflective tape manufacturer in India, we produce and supply a wide range of reflective tapes for safety and industrial use across the country."}}
               ]
-            };
-        }
-        return null;
+            },
+            'double-sided-tapes': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Is your double sided tape safe for clothes?","acceptedAnswer":{"@type":"Answer","text":"Yes — our double-sided tapes are fabric-safe and designed to leave minimal residue, making them suitable for clothing, hemming, and textile applications."}},
+                {"@type":"Question","name":"Do you offer bulk rolls for garment manufacturing?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply bulk rolls of double-sided fabric tape for garment manufacturing units, tailors, and textile businesses."}}
+              ]
+            }
+        };
+        return categoryFaqs[categoryId || ''] || null;
     }, [searchParams]);
 
     useEffect(() => {
@@ -197,6 +204,12 @@ export default function ProductsListPage() {
                          <div className="flex items-center gap-x-4 gap-y-2 flex-wrap">
                             <h3 className="text-base font-bold flex-shrink-0 pr-2 text-slate-600 tracking-wider">INDUSTRY:</h3>
                             <div className="flex flex-wrap gap-2">
+                                <Link
+                                    to="/industries"
+                                    className="px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 whitespace-nowrap border bg-white text-gray-600 border-gray-300 hover:bg-gray-100 hover:border-gray-400"
+                                >
+                                    All Industries
+                                </Link>
                                 {INDUSTRIES.map(ind => (
                                     <FilterButton key={ind.id} label={ind.name} isActive={currentIndustryId === ind.id} to={`/products?industry=${ind.id}`} />
                                 ))}
