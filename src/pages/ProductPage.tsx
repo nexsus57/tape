@@ -93,6 +93,58 @@ export default function ProductPage() {
         if (!productId) return null;
 
         const productFaqs: { [key: string]: object } = {
+            'tissue-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"What is tissue cutting tape used for?","acceptedAnswer":{"@type":"Answer","text":"Tissue cutting tapes are used for bonding, lamination, and precise applications in manufacturing."}},
+                {"@type":"Question","name":"Do you provide custom widths?","acceptedAnswer":{"@type":"Answer","text":"Yes — custom slit rolls are available for tissue tapes."}},
+                {"@type":"Question","name":"Do you supply double-sided tissue tape?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply double-sided tissue tapes in standard and custom widths for industrial use, with Pan-India delivery."}}
+              ]
+            },
+            'heat-transfer-reflective-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"What is heat transfer paper used for?","acceptedAnswer":{"@type":"Answer","text":"It is used for transferring designs, logos, and images onto fabrics in garment manufacturing and textile printing."}},
+                {"@type":"Question","name":"Do you supply bulk heat transfer paper?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply bulk rolls and sheets of heat transfer paper for printing houses and textile units across India."}}
+              ]
+            },
+             '3m-double-sided-foam-tape': {
+              "@context":"https://schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"Do you supply 3M products?","acceptedAnswer":{"@type":"Answer","text":"Yes — we are a trusted supplier of 3M tapes, adhesives, and specialty products, providing Pan-India distribution for industrial needs."}}
+              ]
+            },
+            'aluminium-foil-tape': {
+                "@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                    {"@type":"Question","name":"What is aluminium foil tape used for?","acceptedAnswer":{"@type":"Answer","text":"Aluminium foil tape is primarily used for sealing HVAC ducts, various insulation applications, and for heat reflection purposes in industrial and construction settings."}}
+                ]
+            },
+            'caution-tape': {
+                "@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                    {"@type":"Question","name":"Where can I buy caution tape?","acceptedAnswer":{"@type":"Answer","text":"You can order caution tapes for hazard marking and safety directly from TapeIndia. We are a Chennai-based supplier and we deliver Pan-India."}}
+                ]
+            },
+            'glow-in-the-dark-tape': {
+                "@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                    {"@type":"Question","name":"Where can I use glow tape?","acceptedAnswer":{"@type":"Answer","text":"Glow tapes are ideal for safety marking in emergency exits, stairways, corridors, and other low-light safety zones to ensure visibility during power outages."}}
+                ]
+            },
+            'ptfe-coated-fiberglass-fabric-non-adhesive': {
+                "@context":"https://schema.org",
+                "@type":"FAQPage",
+                "mainEntity":[
+                    {"@type":"Question","name":"What is a PTFE sheet used for?","acceptedAnswer":{"@type":"Answer","text":"PTFE (Teflon) sheets are used for industrial applications requiring heat insulation, chemical resistance, and non-stick surfaces, such as gaskets and release liners."}}
+                ]
+            },
             'copper-foil-tape': {
               "@context":"https://schema.org",
               "@type":"FAQPage",
@@ -107,7 +159,7 @@ export default function ProductPage() {
               "mainEntity":[
                 {"@type":"Question","name":"Are you a packaging tape manufacturer near me?","acceptedAnswer":{"@type":"Answer","text":"We are a Chennai-based BOPP packaging tape manufacturer. We offer Pan-India shipping, so we can be your supplier regardless of your location."}},
                 {"@type":"Question","name":"Do you offer wholesale cello tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we supply BOPP tape (commonly known as cello tape) at wholesale rates for bulk and commercial buyers across India."}},
-                {"@type":"Question","name":"Do you manufacture brown packaging tape in Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes, we are a leading manufacturer of brown BOPP packaging tape in Chennai, supplying businesses with reliable carton sealing solutions."}}
+                {"@type":"Question","name":"Do you supply to nearby cities from Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes — as a manufacturer in Chennai, we supply to nearby cities and across all of India with fast dispatch for bulk orders."}}
               ]
             },
             'floor-marking-tape': {
@@ -130,7 +182,7 @@ export default function ProductPage() {
               "@context":"https://schema.org",
               "@type":"FAQPage",
               "mainEntity":[
-                {"@type":"Question","name":"Do you supply automotive masking tapes?","acceptedAnswer":{"@type":"Answer","text":"Yes, as a masking tape manufacturer in India, we offer automotive-grade masking tapes designed for paint and bodywork applications that require clean removal."}},
+                {"@type":"Question","name":"Do you manufacture masking tape in Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes — we have a manufacturing and dispatch facility in Chennai for producing high-quality masking tapes for automotive, painting, and industrial use."}},
                 {"@type":"Question","name":"Are custom widths available for masking tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we can slit masking tapes to custom widths based on your specific requirements for bulk orders."}}
               ]
             }
