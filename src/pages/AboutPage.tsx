@@ -1,4 +1,5 @@
 
+
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
@@ -32,6 +33,14 @@ export default function AboutPage() {
             "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Yes, as a leading tape manufacturer in Chennai, we produce a wide variety of high-performance adhesive tapes, including products that serve as excellent alternatives to brands like Wonder Tape."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do you supply 3M products?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — we are a trusted supplier of 3M tapes, adhesives, and specialty products, providing Pan-India distribution for industrial needs."
             }
         }
     ]
@@ -74,7 +83,10 @@ export default function AboutPage() {
                       Our journey began in 1957 when Sha Kundanmal Misrimal was founded in Chennai with a clear vision: to supply high-quality adhesive materials to local businesses. Fueled by a commitment to excellence and customer satisfaction, we quickly grew from a small proprietorship into a trusted name in the industrial supply sector.
                   </p>
                   <p>
-                      Through decades of technological evolution and changing market demands, we have consistently invested in advanced manufacturing, rigorous quality control, and a diverse product portfolio. Today, Tape India stands as a testament to that legacy—a modern, dynamic company with a national footprint, still guided by the core principles of quality and reliability that our founders instilled. While known as Tape India, we manufacture a wide range of products comparable to leading brands like Wonder Tape, ensuring premium quality and performance for all our clients in Chennai and across India.
+                      Through decades of technological evolution and changing market demands, we have consistently invested in advanced manufacturing, rigorous quality control, and a diverse product portfolio. Today, Tape India stands as a testament to that legacy—a modern, dynamic company with a national footprint, still guided by the core principles of quality and reliability that our founders instilled.
+                  </p>
+                   <p>
+                      While known as Tape India, we manufacture a wide variety of products comparable to leading brands like Wonder Tape, ensuring premium quality and performance. As part of our commitment to providing comprehensive solutions, we also source and supply premium materials from world-renowned brands like 3M, ensuring our clients have access to the best industrial tapes and adhesives available, all with Pan-India distribution.
                   </p>
                 </div>
             </AnimatedSection>
