@@ -1,4 +1,3 @@
-
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { INDUSTRIES, NAV_LINKS } from '../constants';
@@ -115,7 +114,7 @@ export default function Footer() {
           
         </div>
       </div>
-      <div className="bg-brand-blue-dark py-5 pb-24">
+      <div className="bg-brand-blue-dark py-5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-400 md:flex justify-between items-center">
           <div className="mb-2 md:mb-0 space-x-4">
             <span>&copy; {new Date().getFullYear()} Sha Kundanmal Misrimal. All Rights Reserved.</span>
