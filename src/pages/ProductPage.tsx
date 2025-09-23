@@ -1,4 +1,3 @@
-
 import { useMemo, useState, type ReactNode, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -342,7 +341,7 @@ export default function ProductPage() {
                                 
                                 {product.description && product.description.trim() !== '' && (
                                     <DetailSection title="Product Description">
-                                        <div className="text-gray-700 leading-relaxed space-y-4" dangerouslySetInnerHTML={{ __html: product.description.replace(/\n/g, '<br />') }} />
+                                        <div className="text-gray-700 leading-relaxed space-y-4 [&_a]:text-brand-accent [&_a]:font-semibold hover:[&_a]:underline" dangerouslySetInnerHTML={{ __html: product.description.replace(/\n/g, '<br />') }} />
                                     </DetailSection>
                                 )}
 
