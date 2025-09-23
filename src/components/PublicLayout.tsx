@@ -1,11 +1,10 @@
-
 import { useLocation, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from './Header';
 import Footer from './Footer';
-import WhatsAppButton from './WhatsAppButton';
 import Analytics from './Analytics';
+import BottomNavBar from './BottomNavBar';
 import { useSettings } from '../context/SettingsContext';
 
 // This component ensures the page scrolls to the top on navigation
@@ -79,11 +78,11 @@ const PublicLayout = () => {
       <OrganizationSchema />
       <ScrollToTop />
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow pb-20 lg:pb-0">
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppButton />
+      <BottomNavBar />
     </div>
   );
 };
