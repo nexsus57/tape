@@ -1,15 +1,13 @@
-
 import { useState, useEffect } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import AnimatedSection from '../components/AnimatedSection';
+import CanonicalTag from '../components/CanonicalTag';
 
 export default function RequestQuotePage() {
     const [searchParams] = useSearchParams();
     const { products } = useProducts();
-    const location = useLocation();
-    const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
 
     const [message, setMessage] = useState('');
     const [redirectUrl, setRedirectUrl] = useState('');
@@ -41,8 +39,8 @@ export default function RequestQuotePage() {
             <Helmet>
                 <title>Request a Quote | Tape India</title>
                 <meta name="description" content="Get a personalized quote for your industrial tape needs. Fill out our form, and our experts will get back to you with pricing and information." />
-                <link rel="canonical" href={canonicalUrl} />
             </Helmet>
+            <CanonicalTag />
             <main className="bg-brand-gray py-16 md:py-24">
                 <div className="container mx-auto px-5 lg:px-8">
                     <AnimatedSection>
@@ -98,7 +96,7 @@ export default function RequestQuotePage() {
                                 <div className="mt-8 text-center">
                                     <button
                                         type="submit"
-                                        className="bg-brand-yellow text-brand-blue-dark font-bold py-3 px-12 rounded-lg text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
+                                        className="w-full sm:w-auto bg-brand-yellow text-brand-blue-dark font-bold py-3 px-12 rounded-lg text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
                                     >
                                         Submit
                                     </button>
