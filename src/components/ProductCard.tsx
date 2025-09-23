@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { type FC, useState, useEffect } from 'react';
 import { Product } from '../types';
@@ -64,13 +63,13 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
            <div className="flex flex-col md:flex-row items-center gap-2">
                 <Link
                   to={`/product/${product.id}`}
-                  className="w-full md:flex-1 text-center bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-2.5 px-3 rounded-md text-sm hover:bg-slate-200 transition-colors"
+                  className="w-full md:flex-1 text-center bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-md text-base sm:text-sm hover:bg-slate-200 transition-colors"
                 >
                   Details
                 </Link>
                 <Link
                   to={`/request-quote?product=${product.id}`}
-                  className="w-full md:flex-1 text-center bg-brand-accent text-white font-semibold py-2.5 px-3 rounded-md text-sm hover:bg-brand-accent-dark transition-colors"
+                  className="w-full md:flex-1 text-center bg-brand-accent text-white font-semibold py-3 px-4 rounded-md text-base sm:text-sm hover:bg-brand-accent-dark transition-colors"
                 >
                   Get Quote
                 </Link>
