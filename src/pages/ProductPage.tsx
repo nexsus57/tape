@@ -1,4 +1,5 @@
-import { useMemo, useState, type ReactNode, useEffect } from 'react';
+
+import { useMemo, useState, type ReactNode, useEffect, FC } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
@@ -32,7 +33,13 @@ const DetailSection = ({ title, children }: { title: string, children?: ReactNod
     </div>
 );
 
-const ColorSwatch = ({ name, colors }: { name: string, colors: string[] }) => {
+// FIX: Explicitly type ColorSwatch as a React.FC to resolve the 'key' prop issue.
+interface ColorSwatchProps {
+    name: string;
+    colors: string[];
+}
+
+const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
     let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0";
     let swatchStyle = {};
 
