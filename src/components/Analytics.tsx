@@ -1,53 +1,30 @@
 import { useEffect, FC } from 'react';
-import { useSettings } from '../context/SettingsContext';
+import { useLocation } from 'react-router-dom';
+
+// To satisfy TypeScript, we can declare dataLayer on the window object.
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
 
 const Analytics: FC = () => {
-    const { settings } = useSettings();
-    const { gtm } = settings;
+    const location = useLocation();
 
     useEffect(() => {
-        // Only run this in production
-        if (import.meta.env.PROD && gtm.head) {
-            const headScriptId = 'gtm-head-script';
-            if (document.getElementById(headScriptId)) {
-                return; // Script already exists
-            }
+        // Use a short timeout to allow react-helmet-async to update the document title
+        // before sending the page_view event.
+        const timerId = setTimeout(() => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'page_view',
+                page_path: location.pathname + location.search,
+                page_title: document.title,
+            });
+        }, 0);
 
-            const script = document.createElement('script');
-            script.id = headScriptId;
-            script.innerHTML = gtm.head;
-            document.head.appendChild(script);
-
-            // Cleanup function
-            return () => {
-                const existingScript = document.getElementById(headScriptId);
-                if (existingScript) {
-                    existingScript.remove();
-                }
-            };
-        }
-    }, [gtm.head]);
-    
-    useEffect(() => {
-        if (import.meta.env.PROD && gtm.body) {
-            const bodyScriptId = 'gtm-body-script';
-            if (document.getElementById(bodyScriptId)) {
-                return; // Script already exists
-            }
-            
-            const noscript = document.createElement('noscript');
-            noscript.id = bodyScriptId;
-            noscript.innerHTML = gtm.body;
-            document.body.prepend(noscript);
-            
-             return () => {
-                const existingScript = document.getElementById(bodyScriptId);
-                if (existingScript) {
-                    existingScript.remove();
-                }
-            };
-        }
-    }, [gtm.body])
+        return () => clearTimeout(timerId);
+    }, [location.pathname, location.search]);
 
     return null; // This component does not render anything
 };
