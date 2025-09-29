@@ -1,7 +1,7 @@
-
 import { useState, ReactNode } from 'react';
 import Sidebar from './Sidebar';
 import AdminHeader from './AdminHeader';
+import Analytics from '../Analytics';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -12,6 +12,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   return (
     <div className="flex h-screen bg-admin-bg font-sans">
+      <Analytics />
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
