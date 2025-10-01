@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
 import SearchBar from './SearchBar';
+import { useSearchModal } from '../context/SearchModalContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { openSearchModal } = useSearchModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,14 +69,21 @@ export default function Header() {
                 )}
             </div>
 
-            <div className="lg:hidden">
+            <div className="lg:hidden flex items-center gap-4">
+               <button
+                onClick={openSearchModal}
+                className="text-gray-700 hover:text-brand-accent focus:outline-none"
+                aria-label="Open search"
+              >
+                <i className="fas fa-search text-xl"></i>
+              </button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-brand-accent focus:outline-none z-50 relative"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
-                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
               </button>
             </div>
           </div>
