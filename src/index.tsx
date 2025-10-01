@@ -10,6 +10,7 @@ import { ProductProvider } from './context/ProductContext';
 import { CategoryProvider } from './context/CategoryContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { IndustryProvider } from './context/IndustryContext';
+import { SearchModalProvider } from './context/SearchModalContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -21,17 +22,19 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <AuthProvider>
-          <SettingsProvider>
-            <ProductProvider>
-              <CategoryProvider>
-                <IndustryProvider>
-                  <App />
-                </IndustryProvider>
-              </CategoryProvider>
-            </ProductProvider>
-          </SettingsProvider>
-        </AuthProvider>
+        <SearchModalProvider>
+          <AuthProvider>
+            <SettingsProvider>
+              <ProductProvider>
+                <CategoryProvider>
+                  <IndustryProvider>
+                    <App />
+                  </IndustryProvider>
+                </CategoryProvider>
+              </ProductProvider>
+            </SettingsProvider>
+          </AuthProvider>
+        </SearchModalProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
