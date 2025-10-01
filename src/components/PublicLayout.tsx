@@ -1,3 +1,4 @@
+
 import { useLocation, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -5,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Analytics from './Analytics';
 import BottomNavBar from './BottomNavBar';
+import SearchModal from './SearchModal';
 import { useSettings } from '../context/SettingsContext';
 
 // This component ensures the page scrolls to the top on navigation
@@ -77,6 +79,7 @@ const PublicLayout = () => {
       <Analytics />
       <OrganizationSchema />
       <ScrollToTop />
+      <SearchModal />
       <Header />
       <main className="flex-grow pb-20 lg:pb-0">
         <Outlet />
