@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { Product } from '../types';
 
-const SearchBar = () => {
+const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Product[]>([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -42,6 +42,7 @@ const SearchBar = () => {
     setQuery('');
     setResults([]);
     setIsFocused(false);
+    onResultClick?.();
   };
 
   const handleSearchSubmit = (e: FormEvent) => {
