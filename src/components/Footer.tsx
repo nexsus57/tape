@@ -73,7 +73,7 @@ export default function Footer() {
           <AccordionColumn title="Quick Links" sectionId="quick-links" isOpen={openAccordion === 'quick-links'} onToggle={toggleAccordion}>
             {NAV_LINKS.filter(l => !l.isButton).map(link => (
               <li key={link.name}>
-                <Link to={link.path} className="text-gray-300 hover:text-white transition-colors">
+                <Link to={link.path} className="text-gray-300 hover:text-white transition-colors inline-block py-1">
                   {link.name}
                 </Link>
               </li>
@@ -84,13 +84,13 @@ export default function Footer() {
           <AccordionColumn title="Categories" sectionId="categories" isOpen={openAccordion === 'categories'} onToggle={toggleAccordion}>
             {categories.slice(0, 7).map(category => (
               <li key={category.id}>
-                <Link to={`/products?category=${category.id}`} className="text-gray-300 hover:text-white transition-colors">
+                <Link to={`/products?category=${category.id}`} className="text-gray-300 hover:text-white transition-colors inline-block py-1">
                   {category.name}
                 </Link>
               </li>
             ))}
              <li>
-              <Link to="/products" className="text-gray-300 font-semibold hover:text-white transition-colors">
+              <Link to="/products" className="text-gray-300 font-semibold hover:text-white transition-colors inline-block py-1">
                 View All...
               </Link>
             </li>
@@ -100,13 +100,13 @@ export default function Footer() {
           <AccordionColumn title="Industries" sectionId="industries" isOpen={openAccordion === 'industries'} onToggle={toggleAccordion}>
             {INDUSTRIES.slice(0, 6).map(industry => (
               <li key={industry.id}>
-                <Link to={`/products?industry=${industry.id}`} className="text-gray-300 hover:text-white transition-colors">
+                <Link to={`/products?industry=${industry.id}`} className="text-gray-300 hover:text-white transition-colors inline-block py-1">
                   {industry.name}
                 </Link>
               </li>
             ))}
             <li>
-              <Link to="/industries" className="text-gray-300 font-semibold hover:text-white transition-colors">
+              <Link to="/industries" className="text-gray-300 font-semibold hover:text-white transition-colors inline-block py-1">
                 View All...
               </Link>
             </li>
