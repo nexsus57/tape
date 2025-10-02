@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
@@ -40,7 +39,7 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
-              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="lazy" width="56" height="56" />
+              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="eager" width="56" height="56" />
             </Link>
             
             <nav className="hidden lg:flex items-center space-x-8">
@@ -69,21 +68,14 @@ export default function Header() {
                 )}
             </div>
 
-            <div className="lg:hidden flex items-center gap-4">
-               <button
-                onClick={openSearchModal}
-                className="text-gray-700 hover:text-brand-accent focus:outline-none"
-                aria-label="Open search"
-              >
-                <i className="fas fa-search text-xl"></i>
-              </button>
+            <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-brand-accent focus:outline-none z-50 relative"
+                className="text-gray-700 hover:text-brand-accent focus:outline-none z-50 relative p-2 -mr-2"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
-                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
+                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
               </button>
             </div>
           </div>
@@ -108,7 +100,7 @@ export default function Header() {
         >
           <div className="flex justify-between items-center p-5 border-b border-gray-100">
              <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
-                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="lazy" width="48" height="48" />
+                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="eager" width="48" height="48" />
              </Link>
              <button
                 onClick={closeMenu}
