@@ -98,10 +98,12 @@ export interface Settings {
 }
 
 export interface BlogArticle {
-  id: string;
+  id: string; // This will act as the slug
   title: string;
   summary: string;
+  content: string; // The full HTML content of the blog post
   category: string;
+  tags?: string[];
   readTime: number; // in minutes
   image: string;
   author: string;
