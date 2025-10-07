@@ -6,6 +6,7 @@ export const NAV_LINKS: NavLinkData[] = [
     { name: 'About Us', path: '/about' },
     { name: 'Industries', path: '/industries' },
     { name: 'Products', path: '/products' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
     { name: 'Request a Quote', path: '/request-quote', isButton: true },
 ];
