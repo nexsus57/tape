@@ -14,6 +14,7 @@ const IndustriesPage = lazy(() => import('./pages/IndustriesPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin components
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="/products" element={<ProductsListPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/request-quote" element={<RequestQuotePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         </Route>
