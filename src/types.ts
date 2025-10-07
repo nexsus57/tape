@@ -25,6 +25,8 @@ export interface Product {
   seo?: {
     title: string;
     description: string;
+    h1?: string;
+    imageAlt?: string;
   };
 }
 
@@ -38,6 +40,7 @@ export interface Category {
   seo?: {
     title: string;
     description: string;
+    h1?: string;
   };
 }
 
@@ -84,7 +87,24 @@ export interface Settings {
         phone1: string;
         phone2: string;
         email: string;
-    },
+    };
+    socialLinks?: {
+        facebook?: string;
+        linkedin?: string;
+        instagram?: string;
+    };
     popularProductIds: string[];
     testimonials: Testimonial[];
+}
+
+export interface BlogArticle {
+  id: string;
+  title: string;
+  summary: string;
+  category: string;
+  readTime: number; // in minutes
+  image: string;
+  author: string;
+  datePublished: string;
+  dateModified: string;
 }
