@@ -1,3 +1,4 @@
+
 type IconProps = {
   className?: string;
 };
@@ -31,6 +32,13 @@ export const IndustryIcon = (props: IconProps) => (
     <path d="M12 10l-2-2-2 2" />
     <path d="M18 10l-2-2-2 2" />
     <path d="M5 22V10l3-3 4 4 4-4 3 3v12" />
+  </svg>
+);
+
+export const BlogIcon = (props: IconProps) => (
+  <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+    <path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 1 4 14.5V4.5A2.5 2.5 0 0 1 6.5 2z"/>
   </svg>
 );
 
