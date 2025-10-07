@@ -1,5 +1,6 @@
+
 import { Link, NavLink } from 'react-router-dom';
-import { DashboardIcon, ProductsIcon, CategoriesIcon, SettingsIcon, IndustryIcon } from '../icons/AdminIcons';
+import { DashboardIcon, ProductsIcon, CategoriesIcon, SettingsIcon, IndustryIcon, BlogIcon } from '../icons/AdminIcons';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -16,6 +17,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     { to: '/admin/products', icon: ProductsIcon, text: 'Products' },
     { to: '/admin/categories', icon: CategoriesIcon, text: 'Categories' },
     { to: '/admin/industries', icon: IndustryIcon, text: 'Industries' },
+    { to: '/admin/blog', icon: BlogIcon, text: 'Blog' },
   ];
   
   const bottomLinks = [
