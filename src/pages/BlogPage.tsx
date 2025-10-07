@@ -1,22 +1,23 @@
 
 import { Helmet } from 'react-helmet-async';
-import { useState, useMemo, type FC } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 import BlogCard from '../components/BlogCard'; // New component for blog posts
-import { ARTICLES as allArticles } from '../constants'; // Assuming articles are moved to constants
+import { useBlog } from '../context/BlogContext'; // Fetch articles from context
 
 const POSTS_PER_PAGE = 6;
 
 export default function BlogPage() {
+    const { articles: allArticles } = useBlog();
     const [visiblePosts, setVisiblePosts] = useState(POSTS_PER_PAGE);
 
     const loadMorePosts = () => {
         setVisiblePosts(prev => prev + POSTS_PER_PAGE);
     };
     
-    const currentArticles = useMemo(() => allArticles.slice(0, visiblePosts), [visiblePosts]);
+    const currentArticles = useMemo(() => allArticles.slice(0, visiblePosts), [allArticles, visiblePosts]);
 
     return (
         <>
@@ -42,11 +43,18 @@ export default function BlogPage() {
             <main className="bg-white py-16 md:py-24">
                 <div className="container mx-auto px-5 lg:px-8">
                     <AnimatedSection>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-                            {currentArticles.map((article) => (
-                                <BlogCard key={article.id} article={article} />
-                            ))}
-                        </div>
+                        {currentArticles.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+                                {currentArticles.map((article) => (
+                                    <BlogCard key={article.id} article={article} />
+                                ))}
+                            </div>
+                        ) : (
+                             <div className="text-center py-20 bg-white rounded-lg shadow-sm">
+                                <h2 className="text-2xl font-bold mb-4">No Articles Found</h2>
+                                <p className="text-gray-500">There are currently no articles to display. Please check back later.</p>
+                            </div>
+                        )}
                     </AnimatedSection>
 
                     {visiblePosts < allArticles.length && (
