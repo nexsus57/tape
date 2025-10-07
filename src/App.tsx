@@ -15,6 +15,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin components
@@ -28,6 +29,8 @@ const AdminCategoriesPage = lazy(() => import('./pages/admin/AdminCategoriesPage
 const AdminIndustriesPage = lazy(() => import('./pages/admin/AdminIndustriesPage'));
 const AdminIndustryEditPage = lazy(() => import('./pages/admin/AdminIndustryEditPage'));
 const AdminSettingsPage = lazy(() => import('./pages/admin/AdminSettingsPage'));
+const AdminBlogListPage = lazy(() => import('./pages/admin/AdminBlogListPage'));
+const AdminBlogEditPage = lazy(() => import('./pages/admin/AdminBlogEditPage'));
 
 // The router for all admin pages, rendered inside the AdminLayout
 function AdminRouter() {
@@ -41,6 +44,9 @@ function AdminRouter() {
       <Route path="categories" element={<AdminCategoriesPage />} />
       <Route path="industries" element={<AdminIndustriesPage />} />
       <Route path="industries/edit/:industryId" element={<AdminIndustryEditPage />} />
+      <Route path="blog" element={<AdminBlogListPage />} />
+      <Route path="blog/new" element={<AdminBlogEditPage />} />
+      <Route path="blog/edit/:slug" element={<AdminBlogEditPage />} />
       <Route path="settings" element={<AdminSettingsPage />} />
       <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
     </Routes>
@@ -75,6 +81,7 @@ export default function App() {
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/request-quote" element={<RequestQuotePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         </Route>
