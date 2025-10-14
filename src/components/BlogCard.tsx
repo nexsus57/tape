@@ -16,7 +16,7 @@ const BlogCard: FC<BlogCardProps> = ({ article }) => {
                 <img
                     src={article.image}
                     alt={`Featured image for article titled: ${article.title}`}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
                     loading="lazy"
                     width="400"
                     height="225"
