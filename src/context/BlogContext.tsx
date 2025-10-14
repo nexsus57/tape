@@ -1,3 +1,4 @@
+
 import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
@@ -557,7 +558,7 @@ const INITIAL_ARTICLES: BlogArticle[] = [
         category: 'Innovation',
         tags: ['smart tape', 'IoT', 'adhesive technology', 'RFID tape', 'conductive tape', 'future of manufacturing'],
         readTime: 8,
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/future-tape.webp',
+        image: 'https://file.garden/aIULwzQ_QkPKQcGw/kapton%20tape.webp',
         author: 'Tape India R&D Team',
         datePublished: '2024-08-12',
         dateModified: '2024-08-12',
@@ -610,7 +611,7 @@ const INITIAL_ARTICLES: BlogArticle[] = [
         category: 'Automotive & EV',
         tags: ['EV battery tape', 'heat resistant tape', 'polyimide tape', 'thermal management', 'electric vehicle manufacturing', 'Kapton tape'],
         readTime: 8,
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/ev-tapes.webp',
+        image: 'https://file.garden/aIULwzQ_QkPKQcGw/polyimide%20tape.webp',
         author: 'Tape India Automotive Solutions',
         datePublished: '2024-08-11',
         dateModified: '2024-08-11',
@@ -648,7 +649,7 @@ const INITIAL_ARTICLES: BlogArticle[] = [
         category: 'Energy & Industrial',
         tags: ['renewable energy', 'solar panel tapes', 'wind turbine tapes', 'edge sealing tape', 'leading edge protection', 'structural bonding'],
         readTime: 8,
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/renewable-energy.webp',
+        image: 'https://file.garden/aIULwzQ_QkPKQcGw/vhb%20tape.webp',
         author: 'Tape India Energy Division',
         datePublished: '2024-08-10',
         dateModified: '2024-08-10',
@@ -708,7 +709,7 @@ const INITIAL_ARTICLES: BlogArticle[] = [
         category: 'Technical Guides',
         tags: ['tape application', 'adhesive failure', 'industrial tape tips', 'surface preparation', 'surface energy', 'pressure-sensitive adhesive'],
         readTime: 8,
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/application-mistakes.webp',
+        image: 'https://file.garden/aIULwzQ_QkPKQcGw/green%20polyster.webp',
         author: 'Tape India Application Engineers',
         datePublished: '2024-08-09',
         dateModified: '2024-08-09',
