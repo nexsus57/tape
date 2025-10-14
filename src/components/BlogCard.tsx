@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import type { FC } from 'react';
 import { BlogArticle } from '../types';
