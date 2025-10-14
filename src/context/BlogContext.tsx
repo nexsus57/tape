@@ -1,4 +1,3 @@
-
 import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
@@ -114,7 +113,7 @@ const INITIAL_ARTICLES: BlogArticle[] = [
             <p><strong>Ideal For:</strong> Attaching heat sinks to CPUs, LEDs, and power transistors. Learn more about our <a href="/product/double-sided-thermal-tape">Thermal Tapes</a>.</p>
         `,
         category: 'Industry Guides',
-        tags: ['Industrial Tapes', 'Manufacturing', 'Adhesive Tapes', '2025 Guide'],
+        tags: ['industrial tapes', 'best tapes for manufacturing', 'adhesive tapes 2025', 'industrial tape suppliers'],
         readTime: 8,
         image: 'https://file.garden/aIULwzQ_QkPKQcGw/various-tapes.webp',
         author: 'Tape India Experts',
@@ -198,9 +197,9 @@ const INITIAL_ARTICLES: BlogArticle[] = [
             <p>Need help selecting the right thermal interface material? Explore our range of <a href="/products?category=antistatic-esd-tapes">thermal management solutions</a> or contact the experts at Tape India today!</p>
         `,
         category: 'Thermal Management',
-        tags: ['Thermal Tape', 'Thermal Pad', 'Heat Management', 'Electronics Cooling'],
+        tags: ['thermal conductive tape', 'thermal pads', 'heat dissipation', 'electronics adhesive'],
         readTime: 6,
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/thermal-pads-vs-tape.webp',
+        image: 'https://file.garden/aIULwzQ_QkPKQcGw/thermal%20condu%20pads.webp',
         author: 'Tape India Technical Team',
         datePublished: '2024-08-08',
         dateModified: '2024-08-08',
