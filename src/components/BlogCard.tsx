@@ -11,14 +11,14 @@ const BlogCard: FC<BlogCardProps> = ({ article }) => {
 
     return (
         <article className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
-            <Link to={articleUrl} className="block overflow-hidden">
+            <Link to={articleUrl} className="block overflow-hidden bg-white">
                 <img
                     src={article.image}
                     alt={`Featured image for article titled: ${article.title}`}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+                    className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-500 ease-in-out"
                     loading="lazy"
                     width="400"
-                    height="225"
+                    height="192"
                 />
             </Link>
             <div className="p-6 flex flex-col flex-grow">
