@@ -1,82 +1,172 @@
 
-import { Link } from 'react-router-dom';
+import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useBlog } from '../../context/BlogContext';
-import { PlusCircleIcon } from '../../components/icons/AdminIcons';
+import type { BlogArticle } from '../../types';
 
-export default function AdminBlogListPage() {
-  const { articles, deleteArticle } = useBlog();
+type EditableArticle = Omit<BlogArticle, 'id'> & { id?: string };
 
-  const handleDelete = (articleId: string, articleTitle: string) => {
-    if (window.confirm(`Are you sure you want to delete the article "${articleTitle}"? This action cannot be undone.`)) {
-      deleteArticle(articleId);
-      alert(`Article "${articleTitle}" deleted successfully.`);
-    }
-  };
+const today = new Date().toISOString().split('T')[0];
 
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-admin-text">Blog Posts</h1>
-        <Link 
-          to="/admin/blog/new" 
-          className="bg-admin-accent text-white font-bold py-2 px-4 rounded-md hover:bg-admin-accent-hover transition-colors duration-300 flex items-center"
-        >
-          <PlusCircleIcon className="w-5 h-5 mr-2" />
-          Add New Post
-        </Link>
-      </div>
+const AdminBlogEditPage = () => {
+    const { slug } = useParams<{ slug: string }>();
+    const navigate = useNavigate();
+    const { articles, addArticle, updateArticle } = useBlog();
+    const isEditing = Boolean(slug);
 
-      <div className="bg-admin-card shadow-md rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full leading-normal">
-            <thead>
-              <tr className="border-b-2 border-admin-border bg-gray-50">
-                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Title</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Category</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Author</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Published Date</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {articles.map((article) => (
-                <tr key={article.id} className="border-b border-admin-border hover:bg-gray-50">
-                  <td className="px-5 py-4 text-sm">
-                    <p className="text-admin-text font-semibold whitespace-no-wrap">{article.title}</p>
-                  </td>
-                  <td className="px-5 py-4 text-sm">
-                    <p className="text-admin-text-light whitespace-no-wrap">{article.category}</p>
-                  </td>
-                   <td className="px-5 py-4 text-sm">
-                    <p className="text-admin-text-light whitespace-no-wrap">{article.author}</p>
-                  </td>
-                  <td className="px-5 py-4 text-sm">
-                    <p className="text-admin-text-light whitespace-no-wrap">{new Date(article.datePublished).toLocaleDateString()}</p>
-                  </td>
-                  <td className="px-5 py-4 text-sm">
-                    <div className="flex items-center space-x-3">
-                      <Link to={`/admin/blog/edit/${article.id}`} className="text-admin-accent hover:text-admin-accent-hover font-semibold">Edit</Link>
-                      <button 
-                        onClick={() => handleDelete(article.id, article.title)} 
-                        className="text-red-500 hover:text-red-700 font-semibold"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {articles.length === 0 && (
-                <tr>
-                    <td colSpan={5} className="text-center py-10 text-gray-500">
-                        No articles found. <Link to="/admin/blog/new" className="text-admin-accent hover:underline">Add one now!</Link>
-                    </td>
-                </tr>
+    const [article, setArticle] = useState<EditableArticle>({
+        title: '',
+        summary: '',
+        content: '<h2>Start writing your article here...</h2><p>You can use <strong>HTML tags</strong> to format your content.</p>',
+        category: 'Industry Guides',
+        tags: [],
+        readTime: 3,
+        image: '',
+        author: 'Tape India Experts',
+        datePublished: today,
+        dateModified: today,
+    });
+
+    useEffect(() => {
+        if (isEditing && slug) {
+            const existingArticle = articles.find(a => a.id === slug);
+            if (existingArticle) {
+                setArticle({
+                    ...existingArticle,
+                    tags: existingArticle.tags || []
+                });
+            } else {
+                alert('Article not found!');
+                navigate('/admin/blog');
+            }
+        }
+    // FIX: Dependency array is changed to [slug] to prevent form state from being overwritten on every render.
+    // This fixes the bug where input fields were not editable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [slug]);
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setArticle(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleTagsChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const tags = e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag);
+        setArticle(prev => ({ ...prev, tags }));
+    };
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        
+        const finalArticleData = {
+            ...article,
+            readTime: Number(article.readTime) || 3, // Ensure readTime is a number
+            dateModified: new Date().toISOString().split('T')[0],
+        };
+
+        if (isEditing && finalArticleData.id) {
+            updateArticle(finalArticleData.id, finalArticleData as BlogArticle);
+            alert('Article updated successfully!');
+        } else {
+            // FIX: The 'id' property must be omitted before calling addArticle to avoid bugs.
+            const { id, ...articleToAdd } = finalArticleData;
+            addArticle(articleToAdd);
+            alert('Article created successfully!');
+        }
+        
+        navigate('/admin/blog');
+    };
+
+    const pageTitle = isEditing ? 'Edit Article' : 'Add New Article';
+    const allCategories = [...new Set(articles.map(a => a.category))];
+
+    return (
+        <div>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-3xl font-bold text-admin-text">{pageTitle}</h1>
+              {isEditing && article.id && (
+                <a href={`/blog/${article.id}`} target="_blank" rel="noopener noreferrer" className="text-sm bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">
+                    View Post <i className="fas fa-external-link-alt ml-2"></i>
+                </a>
               )}
-            </tbody>
-          </table>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Main Details */}
+                <div className="bg-admin-card p-6 rounded-lg shadow-md space-y-6">
+                    <section>
+                        <label htmlFor="title" className="block text-sm font-medium text-admin-text-light mb-1">Title</label>
+                        <input type="text" id="title" name="title" value={article.title} onChange={handleInputChange} className="w-full p-2 border border-admin-border rounded-md focus:ring-admin-accent focus:border-admin-accent" required/>
+                    </section>
+                    
+                    <section>
+                        <label htmlFor="image" className="block text-sm font-medium text-admin-text-light mb-1">Featured Image URL</label>
+                        <input type="url" id="image" name="image" value={article.image} onChange={handleInputChange} className="w-full p-2 border border-admin-border rounded-md focus:ring-admin-accent focus:border-admin-accent" placeholder="https://example.com/image.webp" required/>
+                    </section>
+
+                    <section>
+                        <label htmlFor="summary" className="block text-sm font-medium text-admin-text-light mb-1">Summary (Short Description for cards)</label>
+                        <textarea id="summary" name="summary" value={article.summary} onChange={handleInputChange} rows={3} className="w-full p-2 border border-admin-border rounded-md focus:ring-admin-accent focus:border-admin-accent" required></textarea>
+                    </section>
+                </div>
+
+                {/* Content Editor & Preview */}
+                <div className="bg-admin-card p-6 rounded-lg shadow-md">
+                    <h2 className="text-xl font-semibold text-admin-text mb-4">Content Editor</h2>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <section>
+                            <label htmlFor="content" className="block text-sm font-medium text-admin-text-light mb-1">Full Content (HTML allowed)</label>
+                            <textarea id="content" name="content" value={article.content} onChange={handleInputChange} rows={20} className="w-full h-full p-3 border border-admin-border rounded-md focus:ring-admin-accent focus:border-admin-accent font-mono text-sm resize-y" required></textarea>
+                        </section>
+                        <section>
+                             <label className="block text-sm font-medium text-admin-text-light mb-1">Live Preview</label>
+                             <div 
+                                className="w-full h-full p-4 border border-admin-border rounded-md bg-white overflow-y-auto prose prose-sm max-w-none"
+                                dangerouslySetInnerHTML={{ __html: article.content }}
+                             />
+                        </section>
+                    </div>
+                </div>
+
+                {/* Metadata */}
+                <div className="bg-admin-card p-6 rounded-lg shadow-md">
+                    <h2 className="text-xl font-semibold text-admin-text mb-4">Metadata & Details</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                         <section>
+                            <label htmlFor="category" className="block text-sm font-medium text-admin-text-light mb-1">Category</label>
+                            <input type="text" id="category" name="category" list="category-suggestions" value={article.category} onChange={handleInputChange} className="w-full p-2 border border-admin-border rounded-md" required />
+                            <datalist id="category-suggestions">
+                                {allCategories.map(cat => <option key={cat} value={cat} />)}
+                            </datalist>
+                        </section>
+                        <section>
+                            <label htmlFor="tags" className="block text-sm font-medium text-admin-text-light mb-1">Tags (comma-separated)</label>
+                            <input type="text" id="tags" name="tags" value={article.tags?.join(', ') || ''} onChange={handleTagsChange} className="w-full p-2 border border-admin-border rounded-md" />
+                        </section>
+                        <section>
+                            <label htmlFor="author" className="block text-sm font-medium text-admin-text-light mb-1">Author</label>
+                            <input type="text" id="author" name="author" value={article.author} onChange={handleInputChange} className="w-full p-2 border border-admin-border rounded-md" required />
+                        </section>
+                        <section>
+                            <label htmlFor="readTime" className="block text-sm font-medium text-admin-text-light mb-1">Read Time (minutes)</label>
+                            <input type="number" id="readTime" name="readTime" value={article.readTime} onChange={handleInputChange} min="1" className="w-full p-2 border border-admin-border rounded-md" required />
+                        </section>
+                        <section>
+                            <label htmlFor="datePublished" className="block text-sm font-medium text-admin-text-light mb-1">Published Date</label>
+                            <input type="date" id="datePublished" name="datePublished" value={article.datePublished} onChange={handleInputChange} className="w-full p-2 border border-admin-border rounded-md" required />
+                        </section>
+                    </div>
+                </div>
+
+                 <div className="flex justify-end space-x-4 mt-6">
+                    <Link to="/admin/blog" className="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Cancel</Link>
+                    <button type="submit" className="bg-admin-accent text-white font-bold py-2 px-4 rounded-md hover:bg-admin-accent-hover transition-colors">
+                        {isEditing ? 'Save Changes' : 'Publish Article'}
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
+
+export default AdminBlogEditPage;
