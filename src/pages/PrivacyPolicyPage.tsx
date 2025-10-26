@@ -1,9 +1,11 @@
 
+
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import type { ReactNode } from 'react';
 import CanonicalTag from '../components/CanonicalTag';
+import { useSettings } from '../context/SettingsContext';
 
 // FIX: Make children optional to handle cases where the component might be called without them, resolving the TypeScript error.
 const Section = ({ title, children }: { title: string, children?: ReactNode }) => (
@@ -14,6 +16,8 @@ const Section = ({ title, children }: { title: string, children?: ReactNode }) =
 );
 
 export default function PrivacyPolicyPage() {
+  const { settings } = useSettings();
+  
   return (
     <>
       <Helmet>
@@ -62,7 +66,7 @@ export default function PrivacyPolicyPage() {
                     <Section title="Contact Us">
                         <p>If you have questions or comments about this Privacy Policy, please contact us:</p>
                         <ul className="list-disc list-inside space-y-2">
-                            <li>By email: <a href="mailto:Tapeindia@yahoo.com" className="text-brand-accent hover:underline">Tapeindia@yahoo.com</a></li>
+                            <li>By email: <a href={`mailto:${settings.contact.email}`} className="text-brand-accent hover:underline">{settings.contact.email}</a></li>
                             <li>By visiting our <Link to="/contact" className="text-brand-accent hover:underline">Contact Us page</Link>.</li>
                         </ul>
                     </Section>
