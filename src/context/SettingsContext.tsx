@@ -1,4 +1,5 @@
 
+
 import { createContext, useContext, ReactNode, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Settings } from '../types';
@@ -18,7 +19,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
         address: "SHA KUNDANMAL MISRIMAL,\n#52, Narayana Mudali Street,\nSowcarpet, Chennai – 600 079",
         phone1: "+91-9840647096",
         phone2: "9841137052",
-        email: "Tapeindia@yahoo.com"
+        email: "tapeindiain@yahoo.com"
     },
     socialLinks: {
         facebook: "https://www.facebook.com/tapeindia",
