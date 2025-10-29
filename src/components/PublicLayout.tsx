@@ -38,6 +38,13 @@ const OrganizationSchema = () => {
         }
     }));
 
+    // Simple parsing of address string
+    const addressParts = contact.address.split(',\n');
+    const streetAddress = addressParts.length > 1 ? `${addressParts[0]}, ${addressParts[1]}` : contact.address;
+    const locality = addressParts.length > 2 ? addressParts[2].split(' – ')[0] : 'Chennai';
+    const postalCode = contact.address.match(/\d{6}/)?.[0] || '600079';
+
+
     const schema = {
         "@context": "https://schema.org",
         "@type": "Organization",
@@ -50,6 +57,33 @@ const OrganizationSchema = () => {
             "contactType": "customer service",
             "email": contact.email
         },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": streetAddress,
+          "addressLocality": locality,
+          "postalCode": postalCode,
+          "addressCountry": "IN"
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Monday",
+                "opens": "10:30",
+                "closes": "19:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday"
+                ],
+                "opens": "10:15",
+                "closes": "19:30"
+            }
+        ],
         "sameAs": [
             socialLinks?.facebook,
             socialLinks?.linkedin,
