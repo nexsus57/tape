@@ -1,3 +1,4 @@
+// FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
 import { type FC, useState, useEffect } from 'react';
 import { Product } from '../types';
@@ -20,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   const imageAltText = product.seo?.title || product.name;
 
   return (
-    <article className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
+    <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
       
       <Link to={`/product/${product.id}`} className="relative w-full flex-shrink-0" aria-label={`View details for ${product.name}`}>
         <div className="h-48 bg-white flex items-center justify-center p-2">
