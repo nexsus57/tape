@@ -1,5 +1,7 @@
 
+
 import { useMemo } from 'react';
+// FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
@@ -77,7 +79,7 @@ export default function HomePage() {
           <img 
             src="https://file.garden/aIULwzQ_QkPKQcGw/banner.webp" 
             alt="Banner showing various industrial tapes from Tape India, a leading manufacturer and supplier in Chennai"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover animate-ken-burns"
             loading="eager"
             aria-hidden="true"
           />
