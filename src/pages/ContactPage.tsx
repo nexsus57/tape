@@ -1,7 +1,9 @@
+
 import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import AnimatedSection from "../components/AnimatedSection";
 import { useSettings } from '../context/SettingsContext';
+import CanonicalTag from '../components/CanonicalTag';
 
 export default function ContactPage() {
   const { settings } = useSettings();
@@ -12,8 +14,8 @@ export default function ContactPage() {
       <Helmet>
         <title>Contact Us | Tape India | Get In Touch</title>
         <meta name="description" content="Get in touch with Tape India. Find our address, phone number, and email. Reach out for technical support or to request a quote for your industrial tape needs." />
-        <link rel="canonical" href="https://tapeindia.shop/contact" />
       </Helmet>
+      <CanonicalTag />
       <main className="bg-white py-16 md:py-24">
         <div className="container mx-auto px-5 lg:px-8">
           <AnimatedSection>
@@ -58,6 +60,15 @@ export default function ContactPage() {
                                   <a href={`mailto:${contact.email}`} className="text-gray-600 hover:text-brand-blue transition-colors">{contact.email}</a>
                               </div>
                           </li>
+                           <li className="flex items-start">
+                              <i className="fas fa-clock text-brand-accent w-6 text-center mt-1 mr-5 flex-shrink-0"></i>
+                              <div>
+                                  <h3 className="font-semibold text-gray-800">Business Hours</h3>
+                                  <p className="text-gray-600">Monday: 10:30 am – 7:00 pm</p>
+                                  <p className="text-gray-600">Tuesday - Saturday: 10:15 am – 7:30 pm</p>
+                                  <p className="text-gray-600">Sunday: Closed</p>
+                              </div>
+                          </li>
                       </ul>
                        <div className="mt-12 border-t border-gray-200 pt-8">
                           <h3 className="font-bold">Need a Quote?</h3>
@@ -71,7 +82,7 @@ export default function ContactPage() {
                       </div>
                   </div>
 
-                  {/* Right Column: Map */}
+                  {/* Right Column: Map Placeholder */}
                   <div className="rounded-lg overflow-hidden shadow-md h-[400px] lg:h-auto">
                       <iframe 
                         src="https://maps.google.com/maps?q=Sha%20Kundanmal%20Misrimal%2C%2052%2C%20Narayana%20Mudali%20Street%2C%20Chennai&t=&z=17&ie=UTF8&iwloc=B&output=embed"
