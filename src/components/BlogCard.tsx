@@ -10,7 +10,7 @@ const BlogCard: FC<BlogCardProps> = ({ article }) => {
     const articleUrl = `/blog/${article.id}`;
 
     return (
-        <article className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
+        <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
             <Link to={articleUrl} className="block overflow-hidden bg-white">
                 <img
                     src={article.image}
