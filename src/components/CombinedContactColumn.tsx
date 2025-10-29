@@ -78,15 +78,6 @@ export default function CombinedContactColumn() {
                     <i className="fas fa-envelope text-brand-yellow w-5 text-center mt-1 mr-4 flex-shrink-0"></i>
                     <a href={`mailto:${contact.email}`} className="text-gray-300 hover:text-white transition-colors">{contact.email}</a>
                 </div>
-                 <div className="flex items-start">
-                    <i className="fas fa-clock text-brand-yellow w-5 text-center mt-1 mr-4 flex-shrink-0"></i>
-                    <div>
-                        <p className="text-white font-semibold">Business Hours</p>
-                        <p className="text-gray-300">Mon: 10:30 am – 7:00 pm</p>
-                        <p className="text-gray-300">Tue - Sat: 10:15 am – 7:30 pm</p>
-                        <p className="text-gray-300">Sun: Closed</p>
-                    </div>
-                </div>
             </div>
         </div>
     );
