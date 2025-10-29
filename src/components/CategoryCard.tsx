@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import type { FC } from 'react';
 import { Category } from '../types';
@@ -14,7 +13,7 @@ const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
   return (
     <Link 
       to={`/products?category=${category.id}`} 
-      className="group block bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out border border-gray-100/50 transform hover:-translate-y-1.5 h-full"
+      className="group block bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 ease-in-out border border-gray-100/50 transform hover:-translate-y-1.5 h-full"
       aria-label={`Browse ${category.name}`}
     >
       <div className="flex flex-col items-center text-center justify-center p-8 h-full">
