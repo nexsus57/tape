@@ -42,10 +42,16 @@ export default {
           '0%': { transform: 'translateY(-20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+        'ken-burns': {
+          '0%': { transform: 'scale(1) rotate(0deg)' },
+          '50%': { transform: 'scale(1.1) rotate(0.5deg)' },
+          '100%': { transform: 'scale(1) rotate(0deg)' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s ease-out forwards',
         'slide-down': 'slide-down 0.3s ease-out forwards',
+        'ken-burns': 'ken-burns 30s ease-in-out infinite alternate',
       },
     },
   },
