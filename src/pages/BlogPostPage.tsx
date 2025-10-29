@@ -6,12 +6,14 @@ import NotFoundPage from './NotFoundPage';
 import BlogCard from '../components/BlogCard';
 import CanonicalTag from '../components/CanonicalTag';
 import AnimatedSection from '../components/AnimatedSection';
+import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
 
 export default function BlogPostPage() {
     const { slug } = useParams<{ slug: string }>();
     const { articles } = useBlog();
     
     const article = articles.find(a => a.id === slug);
+    const { enhancedContent, articleSchema } = useSeoEnhancedContent(article);
 
     if (!article) {
         return <NotFoundPage />;
@@ -23,7 +25,7 @@ export default function BlogPostPage() {
         
     const pageTitle = `${article.title} | Tape India Blog`;
     const pageDescription = article.summary;
-    const currentUrl = window.location.href;
+    const currentUrl = `https://tapeindia.shop/blog/${article.id}`;
 
     return (
         <>
@@ -36,13 +38,14 @@ export default function BlogPostPage() {
                 <meta property="og:type" content="article" />
                 <meta property="og:url" content={currentUrl} />
                 <meta name="twitter:card" content="summary_large_image" />
+                {articleSchema && <script type="application/ld+json">{articleSchema}</script>}
             </Helmet>
             <CanonicalTag />
             
             <main className="bg-white">
                 <header className="relative py-24 md:py-32">
                     <div className="absolute inset-0">
-                         <img src={article.image} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+                         <img src={article.image} alt={`Featured image for ${article.title}`} className="w-full h-full object-cover" aria-hidden="true" />
                          <div className="absolute inset-0 bg-black/50"></div>
                     </div>
                      <div className="relative container mx-auto px-5 lg:px-8 text-center text-white">
@@ -62,8 +65,8 @@ export default function BlogPostPage() {
                     <div className="container mx-auto px-5 lg:px-8">
                         <article className="prose prose-lg lg:prose-xl max-w-4xl mx-auto">
                            <div 
-                             dangerouslySetInnerHTML={{ __html: article.content }} 
-                             className="prose-headings:text-brand-blue-dark prose-a:text-brand-accent hover:prose-a:text-brand-accent-dark"
+                             dangerouslySetInnerHTML={{ __html: enhancedContent }} 
+                             className="prose-headings:text-brand-blue-dark prose-a:text-brand-accent hover:prose-a:text-brand-accent-dark prose-strong:text-brand-blue-dark"
                            />
                         </article>
                         
