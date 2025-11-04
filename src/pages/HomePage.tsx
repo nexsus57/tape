@@ -75,6 +75,14 @@ export default function HomePage() {
             <main>
                 {/* Hero Section */}
                 <header className="relative bg-brand-blue-deep text-white overflow-hidden">
+                    <div className="absolute inset-0 z-0">
+                        <img 
+                            src="https://file.garden/aIULwzQ_QkPKQcGw/banner.webp" 
+                            alt="Industrial tape manufacturing facility"
+                            className="w-full h-full object-cover object-center md:animate-ken-burns"
+                        />
+                        <div className="absolute inset-0 bg-brand-blue-dark/70"></div>
+                    </div>
                     <div className="container mx-auto px-5 lg:px-8 py-24 md:py-32 text-center relative z-10">
                         <AnimatedSection>
                             <h1 className="font-extrabold mb-4 text-white">
