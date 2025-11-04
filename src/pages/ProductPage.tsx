@@ -13,11 +13,28 @@ import { ColorOption } from '../types';
 // Helper to convert simple markdown to HTML
 const markdownToHtml = (text: string | undefined): string => {
   if (!text) return '';
+
   return text
-    .replace(/^### (.*$)/gim, '<h4 class="text-lg font-bold text-brand-blue-dark mb-3 mt-5">$1</h4>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br />');
+    .split(/\n\n+/) // Split into paragraphs by one or more blank lines
+    .map(paragraph => {
+      const trimmedParagraph = paragraph.trim();
+      if (!trimmedParagraph) return '';
+
+      // Check if the paragraph is a heading
+      if (trimmedParagraph.startsWith('### ')) {
+        // More space above heading, less below to reduce gap to the question.
+        return `<h4 class="text-lg font-bold text-brand-blue-dark mb-2 mt-6">${trimmedParagraph.substring(4)}</h4>`;
+      }
+      
+      // Process bold within the paragraph
+      const withBold = trimmedParagraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      
+      // Add margin below regular paragraphs for spacing, and handle line breaks internally.
+      return `<p class="mb-4">${withBold.replace(/\n/g, '<br />')}</p>`;
+    })
+    .join('');
 };
+
 
 interface ColorSwatchProps {
     name: string;
@@ -287,9 +304,9 @@ export default function ProductPage() {
                             
                              <div className="space-y-6 text-slate-700">
                                {product.description && (
-                                   <div className="text-base leading-relaxed space-y-4">
+                                   <div className="text-base leading-relaxed">
                                        <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
-                                       <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                                       <div className="mt-4" dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
                                    </div>
                                 )}
 
