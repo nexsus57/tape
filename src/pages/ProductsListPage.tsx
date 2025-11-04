@@ -1,4 +1,5 @@
 
+
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -15,6 +16,15 @@ interface FilterButtonProps {
     isActive: boolean;
     to: string;
 }
+
+// Helper to convert simple markdown to HTML
+const markdownToHtml = (text: string | undefined): string => {
+  if (!text) return '';
+  return text
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>') // Process headings first
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Then process bold
+    .replace(/\n/g, '<br />'); // Then handle line breaks
+};
 
 const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
     return (
@@ -183,7 +193,7 @@ export default function ProductsListPage() {
                 {pageContent && (
                     <AnimatedSection className="delay-100">
                         <div className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-lg shadow-sm border-l-4 border-brand-accent">
-                            <div className="text-slate-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                            <div className="text-slate-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownToHtml(pageContent) }} />
                         </div>
                     </AnimatedSection>
                 )}
