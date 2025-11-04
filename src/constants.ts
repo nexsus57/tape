@@ -1,4 +1,3 @@
-
 import { Product, Category, Industry, NavLinkData, Testimonial } from './types';
 
 export const NAV_LINKS: NavLinkData[] = [
