@@ -14,7 +14,7 @@ import { ColorOption } from '../types';
 const markdownToHtml = (text: string | undefined): string => {
   if (!text) return '';
   return text
-    .replace(/^### (.*$)/gim, '<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-6">$1</h4>')
+    .replace(/^### (.*$)/gim, '<h4 class="text-lg font-bold text-brand-blue-dark mb-3 mt-5">$1</h4>')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br />');
 };
@@ -25,7 +25,7 @@ interface ColorSwatchProps {
 }
 
 const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
-    let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0";
+    let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0 shadow-inner";
     let swatchStyle: React.CSSProperties = {};
 
     if (colors[0] === 'transparent') {
@@ -40,13 +40,13 @@ const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
     }
 
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
             <div
                 className={swatchClasses}
                 style={swatchStyle}
                 title={name}
             ></div>
-            <span className="text-gray-700">{name}</span>
+            <span className="text-gray-600 text-sm">{name}</span>
         </div>
     );
 };
@@ -155,8 +155,10 @@ export default function ProductPage() {
               "@context":"https://schema.org",
               "@type":"FAQPage",
               "mainEntity":[
-                {"@type":"Question","name":"What colors are available for floor marking tape?","acceptedAnswer":{"@type":"Answer","text":"We supply floor marking tape in a variety of standard safety colors including yellow, red, green, and white. Custom colors may be available for bulk orders."}},
-                {"@type":"Question","name":"Are these tapes suitable for factory floors?","acceptedAnswer":{"@type":"Answer","text":"Yes, our floor marking tapes are designed for industrial durability, resisting abrasion from foot traffic, pallet jacks, and forklifts, making them ideal for factory and warehouse safety."}}
+                {"@type":"Question","name":"What is Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"Floor marking tape, a type of industrial marking tape, is a durable adhesive used in warehouses, factories, and public spaces to delineate aisles, walkways, and hazardous areas. Made from robust materials like PVC, it ensures safety compliance and enhances organizational efficiency."}},
+                {"@type":"Question","name":"What are the benefits of using Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"The primary benefits include improved safety by marking hazardous zones, enhanced visibility for clear navigation, long-lasting durability against traffic and wear, and slip resistance to prevent accidents. This makes it an essential warehouse safety tape and safety line tape."}},
+                {"@type":"Question","name":"In which applications is Floor Marking Tape commonly used?","acceptedAnswer":{"@type":"Answer","text":"This tape is widely used in warehouses for aisle marking, factories for designating work zones, public spaces for crowd control, and on sports floors for boundary lines. As an adhesive tape for factories, it is indispensable for maintaining an organized and safe environment."}},
+                {"@type":"Question","name":"How do I choose the right Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"When selecting PVC marking tape, consider factors like width for visibility, color for coding specific areas (e.g., yellow for caution), adhesive strength for surface compatibility, and proper installation for longevity. For specialized needs, consider industrial adhesive products tailored to your environment."}}
               ]
             },
             'anti-skid-tape': {
@@ -229,7 +231,7 @@ export default function ProductPage() {
             </Helmet>
             <CanonicalTag />
             
-            <main className="py-12 md:py-16 bg-white">
+            <main className="py-12 md:py-16 bg-gray-50">
                 <div className="container mx-auto px-5 lg:px-8">
                     {/* Breadcrumbs */}
                     <nav className="text-sm font-semibold mb-6" aria-label="Breadcrumb">
@@ -248,62 +250,53 @@ export default function ProductPage() {
                                     <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
                                 </li>
                             )}
-                            <li className="text-brand-blue-dark" aria-current="page">{product.name}</li>
+                            <li className="text-brand-blue-dark truncate max-w-[200px]" aria-current="page">{product.name}</li>
                         </ol>
                     </nav>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-                        {/* Product Image */}
-                        <div className="sticky top-24 self-start">
-                            <div 
-                                className="relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4"
-                            >
-                                {showPlaceholder ? (
-                                    <div className="text-center">
-                                        <h3 className="font-bold text-slate-700 text-2xl">{product.name}</h3>
-                                        <p className="text-slate-500 mt-2">Image Coming Soon</p>
-                                    </div>
-                                ) : (
-                                    <img
-                                        src={product.images![0]}
-                                        alt={imageAltText}
-                                        className="max-w-full max-h-full object-contain"
-                                        onError={() => setIsImageBroken(true)}
-                                    />
-                                )}
+                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-md grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+                        {/* Left Column: Product Image */}
+                        <div className="lg:col-span-2">
+                             <div className="sticky top-24 self-start">
+                                <div 
+                                    className="relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4"
+                                >
+                                    {showPlaceholder ? (
+                                        <div className="text-center">
+                                            <h3 className="font-bold text-slate-700 text-xl">{product.name}</h3>
+                                            <p className="text-slate-500 mt-2 text-sm">Image Coming Soon</p>
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={product.images![0]}
+                                            alt={imageAltText}
+                                            className="max-w-[85%] max-h-[85%] object-contain"
+                                            onError={() => setIsImageBroken(true)}
+                                            width="300"
+                                            height="300"
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
 
-                        {/* Product Details */}
-                        <div>
-                            <h1 className="font-extrabold text-brand-blue-dark mb-4">{h1Text}</h1>
+                        {/* Right Column: Product Details */}
+                        <div className="lg:col-span-3">
+                            <h1 className="font-extrabold text-brand-blue-dark mb-3 leading-tight">{h1Text}</h1>
                             <p className="text-slate-600 text-lg leading-relaxed mb-6">{product.shortDescription}</p>
-
-                             <div className="bg-blue-50 border-l-4 border-brand-accent p-6 rounded-r-lg my-8">
-                                <h3 className="font-bold text-xl text-brand-blue-dark mb-3">Request a Bulk Quote</h3>
-                                <p className="text-gray-700 mb-5">
-                                    For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our team for a personalized quote.
-                                </p>
-                                <Link
-                                    to={`/request-quote?product=${product.id}`}
-                                    className="inline-block bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
-                                >
-                                    Get a Quote
-                                </Link>
-                            </div>
                             
-                            <div className="prose prose-lg max-w-none text-slate-700 space-y-8 mt-8">
-                               <h2 className="text-2xl font-bold text-brand-blue-dark mb-6 !mt-12">
-                                 Product Description
-                               </h2>
-                                {product.description && (
-                                   <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                             <div className="space-y-6 text-slate-700">
+                               {product.description && (
+                                   <div className="text-base leading-relaxed space-y-4">
+                                       <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
+                                       <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                                   </div>
                                 )}
 
                                 {product.features && product.features.length > 0 && (
                                     <div>
-                                        <h3 className="font-bold text-xl">Key Features</h3>
-                                        <ul className="list-disc list-outside pl-5 space-y-1">
+                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-2">Key Features</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-1 text-base">
                                             {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
                                         </ul>
                                     </div>
@@ -311,8 +304,8 @@ export default function ProductPage() {
                                 
                                 {product.uses && product.uses.length > 0 && (
                                     <div>
-                                        <h3 className="font-bold text-xl">Common Applications</h3>
-                                        <ul className="list-disc list-outside pl-5 space-y-1">
+                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-2">Common Applications</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-1 text-base">
                                             {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
                                         </ul>
                                     </div>
@@ -320,20 +313,20 @@ export default function ProductPage() {
 
                                 {hasOptions && (
                                     <div>
-                                        <h3 className="font-bold text-xl">Options & Customization</h3>
-                                        <div className="space-y-4 mt-4 not-prose">
+                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Options & Customization</h3>
+                                        <div className="space-y-4">
                                             {product.availableColors && product.availableColors.length > 0 && (
                                                 <div>
-                                                    <h4 className="font-semibold text-lg mb-2 text-gray-800">Available Colors:</h4>
-                                                    <div className="flex flex-wrap gap-x-6 gap-y-3">
+                                                    <h4 className="font-semibold text-base mb-2 text-gray-800">Available Colors:</h4>
+                                                    <div className="flex flex-wrap gap-x-4 gap-y-2">
                                                         {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
                                                     </div>
                                                 </div>
                                             )}
                                             {product.customizable && (
                                                 <div>
-                                                    <h4 className="font-semibold text-lg mb-2 text-gray-800">Custom Sizes:</h4>
-                                                    <p className="text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
+                                                    <h4 className="font-semibold text-base mb-2 text-gray-800">Custom Sizes:</h4>
+                                                    <p className="text-base text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
                                                 </div>
                                             )}
                                         </div>
@@ -342,16 +335,30 @@ export default function ProductPage() {
 
                                 {relatedIndustries.length > 0 && (
                                     <div>
-                                        <h3 className="font-bold text-xl">Relevant Industries</h3>
-                                        <div className="flex flex-wrap gap-3 mt-4 not-prose">
+                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Relevant Industries</h3>
+                                        <div className="flex flex-wrap gap-2">
                                             {relatedIndustries.map(industry => (
-                                                <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
+                                                <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-md hover:bg-brand-accent hover:text-white transition-colors text-sm">
                                                     {industry.name}
                                                 </Link>
                                             ))}
                                         </div>
                                     </div>
                                 )}
+
+                                {/* Request Quote Section */}
+                                <div className="!mt-10 pt-6 border-t border-gray-200">
+                                  <h3 className="text-xl font-bold text-brand-blue-dark">Get a Quote for {product.name}</h3>
+                                  <p className="text-gray-600 my-3">
+                                      For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our team for a personalized quote.
+                                  </p>
+                                  <Link
+                                      to={`/request-quote?product=${product.id}`}
+                                      className="inline-block bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-base hover:bg-yellow-400 transition-colors transform hover:scale-105"
+                                  >
+                                      Request a Quote
+                                  </Link>
+                                </div>
                            </div>
                         </div>
                     </div>
