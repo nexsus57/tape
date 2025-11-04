@@ -1,7 +1,6 @@
 
-import { useMemo, useState, type ReactNode, useEffect, FC } from 'react';
-// FIX: The reported errors are likely a cascade issue. These imports are correct for react-router-dom v5.
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useMemo, useState, type FC, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
@@ -9,41 +8,17 @@ import { INDUSTRIES } from '../constants';
 import NotFoundPage from './NotFoundPage';
 import ProductCard from '../components/ProductCard';
 import CanonicalTag from '../components/CanonicalTag';
+import { ColorOption } from '../types';
 
 // Helper to convert simple markdown to HTML
 const markdownToHtml = (text: string | undefined): string => {
   if (!text) return '';
   return text
-    .replace(/^### (.*$)/gim, '<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-6">$1</h4>') // Process headings first
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Then process bold
-    .replace(/\n/g, '<br />'); // Then handle line breaks
+    .replace(/^### (.*$)/gim, '<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-6">$1</h4>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br />');
 };
 
-const InfoList = ({ items, icon }: { items: string[], icon: 'arrow' | 'cog' }) => {
-    const iconMap = {
-        arrow: 'fa-check-circle text-brand-accent',
-        cog: 'fa-cog text-gray-500',
-    };
-    return (
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
-        {items.map((item, index) => (
-          <li key={index} className="flex items-start text-base">
-            <i className={`fas ${iconMap[icon]} w-5 text-center mt-1 mr-3 flex-shrink-0`}></i>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    );
-};
-  
-const DetailSection = ({ title, children }: { title: string, children?: ReactNode }) => (
-    <div className="mb-12">
-      <h3 className="font-bold text-2xl mb-6 text-brand-blue-dark border-b pb-4">{title}</h3>
-      {children}
-    </div>
-);
-
-// FIX: Explicitly type ColorSwatch as a React.FC to resolve the 'key' prop issue.
 interface ColorSwatchProps {
     name: string;
     colors: string[];
@@ -51,7 +26,7 @@ interface ColorSwatchProps {
 
 const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
     let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0";
-    let swatchStyle = {};
+    let swatchStyle: React.CSSProperties = {};
 
     if (colors[0] === 'transparent') {
         swatchClasses += " bg-white";
@@ -87,7 +62,6 @@ export default function ProductPage() {
     useEffect(() => {
         setIsImageBroken(false);
     }, [productId]);
-
 
     const { categories } = useCategories();
     const category = useMemo(() => categories.find(c => c.id === product?.category), [categories, product]);
@@ -328,56 +302,60 @@ export default function ProductPage() {
                     
                     {/* Full Description & Details Section */}
                     <div className="mt-16 lg:mt-24">
-                        {product.description && (
-                           <DetailSection title="Product Description">
-                                <div className="text-slate-600 text-lg leading-relaxed prose max-w-none" dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
-                           </DetailSection>
-                        )}
+                        <div className="max-w-4xl mx-auto">
+                           <div className="border-t pt-12">
+                               <h2 className="text-3xl font-bold text-brand-blue-dark mb-6">
+                                 Product Details
+                               </h2>
+                               <div className="prose prose-lg max-w-none text-slate-700 space-y-8">
+                                    {product.description && (
+                                       <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                                    )}
 
-                        {(product.features?.length > 0 || product.uses?.length > 0) && (
-                            <DetailSection title="Features & Applications">
-                                 <div className="space-y-10">
                                     {product.features && product.features.length > 0 && (
                                         <div>
-                                            <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Key Features:</h4>
-                                            <InfoList items={product.features} icon="arrow" />
+                                            <h3 className="font-bold text-xl">Key Features</h3>
+                                            <ul className="list-disc list-outside pl-5 space-y-1">
+                                                {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
+                                            </ul>
                                         </div>
                                     )}
+                                    
                                     {product.uses && product.uses.length > 0 && (
                                         <div>
-                                            <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Common Applications:</h4>
-                                            <InfoList items={product.uses} icon="cog" />
+                                            <h3 className="font-bold text-xl">Common Applications</h3>
+                                            <ul className="list-disc list-outside pl-5 space-y-1">
+                                                {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
+                                            </ul>
                                         </div>
                                     )}
-                                </div>
-                            </DetailSection>
-                        )}
-                        
-                        {(hasOptions || relatedIndustries.length > 0) && (
-                             <DetailSection title="Options & Industries">
-                                <div className="space-y-10">
+
                                     {hasOptions && (
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                                            {product.availableColors && product.availableColors.length > 0 && (
-                                                <div>
-                                                    <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Available Colors:</h4>
-                                                    <div className="flex flex-wrap gap-x-6 gap-y-3">
-                                                        {product.availableColors.map((opt) => <ColorSwatch key={opt.name} {...opt} />)}
+                                        <div>
+                                            <h3 className="font-bold text-xl">Options & Customization</h3>
+                                            <div className="space-y-4 mt-4 not-prose">
+                                                {product.availableColors && product.availableColors.length > 0 && (
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg mb-2 text-gray-800">Available Colors:</h4>
+                                                        <div className="flex flex-wrap gap-x-6 gap-y-3">
+                                                            {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
-                                            {product.customizable && (
-                                                <div>
-                                                    <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Custom Sizes Available:</h4>
-                                                    <p className="text-gray-700">This product can be slit to custom widths or die-cut into specific shapes to meet your exact manufacturing requirements. Please mention your needs in your quote request.</p>
-                                                </div>
-                                            )}
+                                                )}
+                                                {product.customizable && (
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg mb-2 text-gray-800">Custom Sizes:</h4>
+                                                        <p className="text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     )}
+
                                     {relatedIndustries.length > 0 && (
                                         <div>
-                                            <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Relevant Industries:</h4>
-                                            <div className="flex flex-wrap gap-3">
+                                            <h3 className="font-bold text-xl">Relevant Industries</h3>
+                                            <div className="flex flex-wrap gap-3 mt-4 not-prose">
                                                 {relatedIndustries.map(industry => (
                                                     <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
                                                         {industry.name}
@@ -386,9 +364,9 @@ export default function ProductPage() {
                                             </div>
                                         </div>
                                     )}
-                                </div>
-                            </DetailSection>
-                        )}
+                               </div>
+                           </div>
+                        </div>
                     </div>
                 </div>
             </main>
