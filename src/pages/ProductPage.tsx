@@ -1,5 +1,4 @@
 
-
 import { useMemo, useState, type ReactNode, useEffect, FC } from 'react';
 // FIX: The reported errors are likely a cascade issue. These imports are correct for react-router-dom v5.
 import { useParams, Link, useLocation } from 'react-router-dom';
@@ -15,18 +14,18 @@ import CanonicalTag from '../components/CanonicalTag';
 const markdownToHtml = (text: string | undefined): string => {
   if (!text) return '';
   return text
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>') // Process headings first
+    .replace(/^### (.*$)/gim, '<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-6">$1</h4>') // Process headings first
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Then process bold
     .replace(/\n/g, '<br />'); // Then handle line breaks
 };
 
 const InfoList = ({ items, icon }: { items: string[], icon: 'arrow' | 'cog' }) => {
     const iconMap = {
-        arrow: 'fa-arrow-right text-brand-accent',
+        arrow: 'fa-check-circle text-brand-accent',
         cog: 'fa-cog text-gray-500',
     };
     return (
-      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-gray-700">
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
         {items.map((item, index) => (
           <li key={index} className="flex items-start text-base">
             <i className={`fas ${iconMap[icon]} w-5 text-center mt-1 mr-3 flex-shrink-0`}></i>
@@ -38,8 +37,8 @@ const InfoList = ({ items, icon }: { items: string[], icon: 'arrow' | 'cog' }) =
 };
   
 const DetailSection = ({ title, children }: { title: string, children?: ReactNode }) => (
-    <div className="mt-10">
-      <h3 className="font-bold mb-5 border-b-2 border-gray-200 pb-3">{title}</h3>
+    <div className="mb-10">
+      <h3 className="font-bold text-2xl mb-6 text-brand-blue-dark">{title}</h3>
       {children}
     </div>
 );
@@ -77,18 +76,39 @@ const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
     );
 };
 
+const TabButton = ({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) => (
+    <button
+        onClick={onClick}
+        className={`py-4 px-1 text-base md:text-lg font-semibold border-b-2 transition-colors duration-300 whitespace-nowrap ${
+            isActive 
+            ? 'border-brand-accent text-brand-accent' 
+            : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'
+        }`}
+        role="tab"
+        aria-selected={isActive}
+    >
+        {label}
+    </button>
+);
+
 
 export default function ProductPage() {
     const { productId } = useParams<{ productId: string }>();
     const { products } = useProducts();
     const product = products.find(p => p.id === productId);
 
+    const [mainImage, setMainImage] = useState<string>('');
     const [isImageZoomed, setIsImageZoomed] = useState(false);
     const [isImageBroken, setIsImageBroken] = useState(false);
+    const [activeTab, setActiveTab] = useState('description');
     
     useEffect(() => {
         setIsImageBroken(false);
-    }, [productId]);
+        if (product?.images?.[0]) {
+            setMainImage(product.images[0]);
+        }
+        setActiveTab('description');
+    }, [productId, product]);
 
 
     const { categories } = useCategories();
@@ -217,9 +237,9 @@ export default function ProductPage() {
     const imageAltText = product.seo?.imageAlt || product.seo?.title || product.name;
     const h1Text = product.seo?.h1 || product.name;
 
-    const hasImage = product.images && product.images.length > 0;
-    const showPlaceholder = !hasImage || isImageBroken;
-    const canZoom = hasImage && !isImageBroken;
+    const hasImages = product.images && product.images.length > 0;
+    const showPlaceholder = !hasImages || isImageBroken;
+    const canZoom = hasImages && !isImageBroken;
 
     const hasOptions = (product.availableColors && product.availableColors.length > 0) || product.customizable;
 
@@ -254,6 +274,21 @@ export default function ProductPage() {
         }
     };
 
+    const TABS = {
+        description: {
+            label: 'Description',
+            isRendered: product.description,
+        },
+        specs: {
+            label: 'Features & Applications',
+            isRendered: product.features || product.uses,
+        },
+        options: {
+            label: 'Options & Industries',
+            isRendered: hasOptions || relatedIndustries.length > 0,
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -264,13 +299,34 @@ export default function ProductPage() {
             </Helmet>
             <CanonicalTag />
             
-            <main className="py-16 md:py-24 bg-white">
+            <main className="py-12 md:py-16 bg-white">
                 <div className="container mx-auto px-5 lg:px-8">
+                    {/* Breadcrumbs */}
+                    <nav className="text-sm font-semibold mb-6" aria-label="Breadcrumb">
+                        <ol className="list-none p-0 inline-flex items-center flex-wrap">
+                            <li className="flex items-center">
+                                <Link to="/" className="text-gray-500 hover:text-brand-blue">Home</Link>
+                                <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                            </li>
+                            <li className="flex items-center">
+                                <Link to="/products" className="text-gray-500 hover:text-brand-blue">Products</Link>
+                                <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                            </li>
+                                {category && (
+                                <li className="flex items-center">
+                                    <Link to={`/products?category=${category.id}`} className="text-gray-500 hover:text-brand-blue">{category.name}</Link>
+                                    <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                                </li>
+                            )}
+                            <li className="text-brand-blue-dark" aria-current="page">{product.name}</li>
+                        </ol>
+                    </nav>
+
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                         {/* Product Image Gallery */}
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 sticky top-24 self-start">
                             <div 
-                                className={`relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4 ${canZoom ? 'cursor-zoom-in' : ''}`}
+                                className={`relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4 transition-shadow hover:shadow-lg ${canZoom ? 'cursor-zoom-in' : ''}`}
                                 onClick={handleImageContainerClick}
                             >
                                 {showPlaceholder ? (
@@ -280,114 +336,125 @@ export default function ProductPage() {
                                     </div>
                                 ) : (
                                     <img
-                                        src={product.images?.[0]}
+                                        src={mainImage}
                                         alt={imageAltText}
                                         className="max-w-full max-h-full object-contain"
                                         onError={() => setIsImageBroken(true)}
                                     />
                                 )}
                             </div>
+                             {product.images && product.images.length > 1 && (
+                                <div className="grid grid-cols-5 gap-3">
+                                    {product.images.map((imgSrc, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setMainImage(imgSrc)}
+                                            className={`aspect-square w-full rounded-md overflow-hidden border-2 transition-colors ${mainImage === imgSrc ? 'border-brand-accent' : 'border-transparent hover:border-gray-300'}`}
+                                        >
+                                            <img src={imgSrc} alt={`${product.name} thumbnail ${index + 1}`} className="w-full h-full object-contain bg-white"/>
+                                        </button>
+                                    ))}
+                                </div>
+                             )}
                         </div>
 
                         {/* Product Details */}
                         <div>
-                            <nav className="text-sm font-semibold mb-4" aria-label="Breadcrumb">
-                                <ol className="list-none p-0 inline-flex items-center flex-wrap">
-                                    <li className="flex items-center">
-                                        <Link to="/" className="text-gray-500 hover:text-brand-blue">Home</Link>
-                                        <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
-                                    </li>
-                                    <li className="flex items-center">
-                                        <Link to="/products" className="text-gray-500 hover:text-brand-blue">Products</Link>
-                                        <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
-                                    </li>
-                                     {category && (
-                                        <li className="flex items-center">
-                                            <Link to={`/products?category=${category.id}`} className="text-gray-500 hover:text-brand-blue">{category.name}</Link>
-                                            <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
-                                        </li>
-                                    )}
-                                    <li className="text-brand-blue-dark" aria-current="page">{product.name}</li>
-                                </ol>
-                            </nav>
-
                             <h1 className="font-extrabold text-brand-blue-dark mb-4">{h1Text}</h1>
                             <p className="text-slate-600 text-lg leading-relaxed mb-6">{product.shortDescription}</p>
 
-                            <div className="bg-brand-gray p-6 rounded-lg">
-                                <h3 className="font-bold text-xl mb-4">Request a Bulk Quote</h3>
+                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 my-6">
+                                {category && <div className="flex items-center gap-2"><i className="fas fa-tag text-gray-400"></i><span className="font-semibold">Category:</span> {category.name}</div>}
+                                {product.brand && <div className="flex items-center gap-2"><i className="fas fa-building text-gray-400"></i><span className="font-semibold">Brand:</span> {product.brand}</div>}
+                                {product.minOrderQty && <div className="flex items-center gap-2"><i className="fas fa-box-open text-gray-400"></i><span className="font-semibold">Min. Order:</span> {product.minOrderQty}</div>}
+                            </div>
+                            
+                             <div className="bg-blue-50 border-l-4 border-brand-accent p-6 rounded-r-lg mt-8">
+                                <h3 className="font-bold text-xl text-brand-blue-dark mb-3">Request a Bulk Quote</h3>
                                 <p className="text-gray-700 mb-5">
-                                    As an industrial supplier, we specialize in bulk and B2B orders. Contact us for competitive pricing, custom sizes, and Pan-India delivery options.
+                                    For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our team for a personalized quote.
                                 </p>
                                 <Link
                                     to={`/request-quote?product=${product.id}`}
-                                    className="inline-block w-full sm:w-auto text-center bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
+                                    className="inline-block bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
                                 >
                                     Get a Quote
                                 </Link>
                             </div>
-                            
-                            {(product.brand || product.color || product.minOrderQty) && (
-                                <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
-                                    {product.brand && <div><strong className="block text-gray-500">Brand</strong><span className="text-gray-800 font-semibold">{product.brand}</span></div>}
-                                    {product.color && <div><strong className="block text-gray-500">Color</strong><span className="text-gray-800 font-semibold">{product.color}</span></div>}
-                                    {product.minOrderQty && <div><strong className="block text-gray-500">Min. Order Qty</strong><span className="text-gray-800 font-semibold">{product.minOrderQty}</span></div>}
-                                </div>
-                            )}
-
                         </div>
                     </div>
                     
-                    {/* Full Description & Details */}
-                    <div className="mt-16">
-                        <DetailSection title="Features">
-                            <InfoList items={product.features} icon="arrow" />
-                        </DetailSection>
+                    {/* Full Description & Details via Tabs */}
+                    <div className="mt-20">
+                        <div className="border-b border-gray-200">
+                           <div className="flex items-center gap-4 md:gap-8 overflow-x-auto hide-scrollbar" role="tablist">
+                                {Object.entries(TABS).map(([key, tab]) => 
+                                    tab.isRendered && (
+                                        <TabButton
+                                            key={key}
+                                            label={tab.label}
+                                            isActive={activeTab === key}
+                                            onClick={() => setActiveTab(key)}
+                                        />
+                                    )
+                                )}
+                           </div>
+                        </div>
 
-                        {product.description && (
-                            <DetailSection title="Product Description">
-                                <div className="text-slate-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
-                            </DetailSection>
-                        )}
-                        
-                        {product.uses && product.uses.length > 0 && (
-                            <DetailSection title="Applications & Uses">
-                                <InfoList items={product.uses} icon="cog" />
-                            </DetailSection>
-                        )}
-                        
-                        {hasOptions && (
-                            <DetailSection title="Customization & Options">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {product.availableColors && product.availableColors.length > 0 && (
-                                        <div>
-                                            <h4 className="font-semibold text-lg mb-4">Available Colors:</h4>
-                                            <div className="flex flex-wrap gap-x-6 gap-y-3">
-                                                {product.availableColors.map((opt) => <ColorSwatch key={opt.name} {...opt} />)}
-                                            </div>
-                                        </div>
+                        <div className="py-10" role="tabpanel">
+                            {activeTab === 'description' && TABS.description.isRendered && (
+                                <div className="text-slate-600 text-lg leading-relaxed animate-fade-in" dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                            )}
+                             {activeTab === 'specs' && TABS.specs.isRendered && (
+                                <div className="space-y-12 animate-fade-in">
+                                    {product.features && product.features.length > 0 && (
+                                        <DetailSection title="Key Features">
+                                            <InfoList items={product.features} icon="arrow" />
+                                        </DetailSection>
                                     )}
-                                    {product.customizable && (
-                                         <div>
-                                            <h4 className="font-semibold text-lg mb-4">Custom Sizes:</h4>
-                                            <p className="text-gray-700">This product can be slit to custom widths or die-cut into specific shapes to meet your exact manufacturing requirements. Please mention your needs in your quote request.</p>
-                                        </div>
+                                    {product.uses && product.uses.length > 0 && (
+                                        <DetailSection title="Common Applications">
+                                            <InfoList items={product.uses} icon="cog" />
+                                        </DetailSection>
                                     )}
                                 </div>
-                            </DetailSection>
-                        )}
-                        
-                        {relatedIndustries.length > 0 && (
-                            <DetailSection title="Relevant Industries">
-                               <div className="flex flex-wrap gap-3">
-                                 {relatedIndustries.map(industry => (
-                                     <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
-                                         {industry.name}
-                                     </Link>
-                                 ))}
-                               </div>
-                            </DetailSection>
-                        )}
+                            )}
+                             {activeTab === 'options' && TABS.options.isRendered && (
+                                <div className="space-y-12 animate-fade-in">
+                                    {hasOptions && (
+                                        <DetailSection title="Customization & Options">
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                                {product.availableColors && product.availableColors.length > 0 && (
+                                                    <div>
+                                                        <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Available Colors:</h4>
+                                                        <div className="flex flex-wrap gap-x-6 gap-y-3">
+                                                            {product.availableColors.map((opt) => <ColorSwatch key={opt.name} {...opt} />)}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {product.customizable && (
+                                                    <div>
+                                                        <h4 className="font-semibold text-xl mb-4 text-brand-blue-dark">Custom Sizes Available:</h4>
+                                                        <p className="text-gray-700">This product can be slit to custom widths or die-cut into specific shapes to meet your exact manufacturing requirements. Please mention your needs in your quote request.</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </DetailSection>
+                                    )}
+                                    {relatedIndustries.length > 0 && (
+                                        <DetailSection title="Relevant Industries">
+                                            <div className="flex flex-wrap gap-3">
+                                                {relatedIndustries.map(industry => (
+                                                    <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
+                                                        {industry.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </DetailSection>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
@@ -407,15 +474,15 @@ export default function ProductPage() {
             )}
 
             {/* Image Zoom Modal */}
-            {isImageZoomed && product.images && (
+            {isImageZoomed && mainImage && (
                  <div 
-                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 animate-fade-in"
                     onClick={() => setIsImageZoomed(false)}
                 >
                     <img 
-                        src={product.images[0]} 
+                        src={mainImage} 
                         alt={`Zoomed view of ${product.name}`}
-                        className="max-w-full max-h-full object-contain"
+                        className="max-w-[90vw] max-h-[90vh] object-contain"
                     />
                      <button
                         onClick={() => setIsImageZoomed(false)}
