@@ -279,13 +279,7 @@ export default function ProductPage() {
                             <h1 className="font-extrabold text-brand-blue-dark mb-4">{h1Text}</h1>
                             <p className="text-slate-600 text-lg leading-relaxed mb-6">{product.shortDescription}</p>
 
-                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600 my-6">
-                                {category && <div className="flex items-center gap-2"><i className="fas fa-tag text-gray-400"></i><span className="font-semibold">Category:</span> {category.name}</div>}
-                                {product.brand && <div className="flex items-center gap-2"><i className="fas fa-building text-gray-400"></i><span className="font-semibold">Brand:</span> {product.brand}</div>}
-                                {product.minOrderQty && <div className="flex items-center gap-2"><i className="fas fa-box-open text-gray-400"></i><span className="font-semibold">Min. Order:</span> {product.minOrderQty}</div>}
-                            </div>
-                            
-                             <div className="bg-blue-50 border-l-4 border-brand-accent p-6 rounded-r-lg mt-8">
+                             <div className="bg-blue-50 border-l-4 border-brand-accent p-6 rounded-r-lg my-8">
                                 <h3 className="font-bold text-xl text-brand-blue-dark mb-3">Request a Bulk Quote</h3>
                                 <p className="text-gray-700 mb-5">
                                     For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our team for a personalized quote.
@@ -297,74 +291,67 @@ export default function ProductPage() {
                                     Get a Quote
                                 </Link>
                             </div>
-                        </div>
-                    </div>
-                    
-                    {/* Full Description & Details Section */}
-                    <div className="mt-16 lg:mt-24">
-                        <div className="max-w-4xl mx-auto">
-                           <div className="border-t pt-12">
-                               <h2 className="text-3xl font-bold text-brand-blue-dark mb-6">
-                                 Product Details
+                            
+                            <div className="prose prose-lg max-w-none text-slate-700 space-y-8 mt-8">
+                               <h2 className="text-2xl font-bold text-brand-blue-dark mb-6 !mt-12">
+                                 Product Description
                                </h2>
-                               <div className="prose prose-lg max-w-none text-slate-700 space-y-8">
-                                    {product.description && (
-                                       <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
-                                    )}
+                                {product.description && (
+                                   <div dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                                )}
 
-                                    {product.features && product.features.length > 0 && (
-                                        <div>
-                                            <h3 className="font-bold text-xl">Key Features</h3>
-                                            <ul className="list-disc list-outside pl-5 space-y-1">
-                                                {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
-                                            </ul>
-                                        </div>
-                                    )}
-                                    
-                                    {product.uses && product.uses.length > 0 && (
-                                        <div>
-                                            <h3 className="font-bold text-xl">Common Applications</h3>
-                                            <ul className="list-disc list-outside pl-5 space-y-1">
-                                                {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
-                                            </ul>
-                                        </div>
-                                    )}
+                                {product.features && product.features.length > 0 && (
+                                    <div>
+                                        <h3 className="font-bold text-xl">Key Features</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-1">
+                                            {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
+                                        </ul>
+                                    </div>
+                                )}
+                                
+                                {product.uses && product.uses.length > 0 && (
+                                    <div>
+                                        <h3 className="font-bold text-xl">Common Applications</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-1">
+                                            {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
+                                        </ul>
+                                    </div>
+                                )}
 
-                                    {hasOptions && (
-                                        <div>
-                                            <h3 className="font-bold text-xl">Options & Customization</h3>
-                                            <div className="space-y-4 mt-4 not-prose">
-                                                {product.availableColors && product.availableColors.length > 0 && (
-                                                    <div>
-                                                        <h4 className="font-semibold text-lg mb-2 text-gray-800">Available Colors:</h4>
-                                                        <div className="flex flex-wrap gap-x-6 gap-y-3">
-                                                            {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
-                                                        </div>
+                                {hasOptions && (
+                                    <div>
+                                        <h3 className="font-bold text-xl">Options & Customization</h3>
+                                        <div className="space-y-4 mt-4 not-prose">
+                                            {product.availableColors && product.availableColors.length > 0 && (
+                                                <div>
+                                                    <h4 className="font-semibold text-lg mb-2 text-gray-800">Available Colors:</h4>
+                                                    <div className="flex flex-wrap gap-x-6 gap-y-3">
+                                                        {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
                                                     </div>
-                                                )}
-                                                {product.customizable && (
-                                                    <div>
-                                                        <h4 className="font-semibold text-lg mb-2 text-gray-800">Custom Sizes:</h4>
-                                                        <p className="text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
-                                                    </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            )}
+                                            {product.customizable && (
+                                                <div>
+                                                    <h4 className="font-semibold text-lg mb-2 text-gray-800">Custom Sizes:</h4>
+                                                    <p className="text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
+                                    </div>
+                                )}
 
-                                    {relatedIndustries.length > 0 && (
-                                        <div>
-                                            <h3 className="font-bold text-xl">Relevant Industries</h3>
-                                            <div className="flex flex-wrap gap-3 mt-4 not-prose">
-                                                {relatedIndustries.map(industry => (
-                                                    <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
-                                                        {industry.name}
-                                                    </Link>
-                                                ))}
-                                            </div>
+                                {relatedIndustries.length > 0 && (
+                                    <div>
+                                        <h3 className="font-bold text-xl">Relevant Industries</h3>
+                                        <div className="flex flex-wrap gap-3 mt-4 not-prose">
+                                            {relatedIndustries.map(industry => (
+                                                <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-4 py-2 rounded-md hover:bg-brand-accent hover:text-white transition-colors">
+                                                    {industry.name}
+                                                </Link>
+                                            ))}
                                         </div>
-                                    )}
-                               </div>
+                                    </div>
+                                )}
                            </div>
                         </div>
                     </div>
