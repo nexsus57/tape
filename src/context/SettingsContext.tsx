@@ -18,7 +18,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
     contact: {
         address: "SHA KUNDANMAL MISRIMAL,\n#52, Narayana Mudali Street,\nSowcarpet, Chennai – 600 079",
         phone1: "+91-9840647096",
-        phone2: "9841137052",
+        phone2: "+91-9841137052",
         email: "tapeindiain@yahoo.com"
     },
     socialLinks: {
