@@ -1,4 +1,5 @@
 
+
 import { useMemo, useState, type FC, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -23,7 +24,7 @@ const markdownToHtml = (text: string | undefined): string => {
       // Check if the paragraph is a heading
       if (trimmedParagraph.startsWith('### ')) {
         // More space above heading, less below to reduce gap to the question.
-        return `<h4 class="text-lg font-bold text-brand-blue-dark mb-2 mt-6">${trimmedParagraph.substring(4)}</h4>`;
+        return `<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-8">${trimmedParagraph.substring(4)}</h4>`;
       }
       
       // Process bold within the paragraph
@@ -94,6 +95,21 @@ export default function ProductPage() {
         .filter(p => p.category === product.category && p.id !== product.id)
         .slice(0, 3);
     }, [product, category, products]);
+
+    const { mainDescription, faqContent } = useMemo(() => {
+        if (!product?.description) {
+            return { mainDescription: '', faqContent: '' };
+        }
+        const faqSeparator = '### Frequently Asked Questions';
+        const parts = product.description.split(faqSeparator);
+        const mainDesc = parts[0] ? parts[0].trim() : '';
+        let faqText = '';
+        if (parts.length > 1 && parts[1]) {
+            // Re-add the separator to be processed by markdownToHtml
+            faqText = faqSeparator + parts[1];
+        }
+        return { mainDescription: mainDesc, faqContent: faqText };
+    }, [product?.description]);
 
     const faqSchema = useMemo(() => {
         if (!productId) return null;
@@ -183,7 +199,7 @@ export default function ProductPage() {
               "@type":"FAQPage",
               "mainEntity":[
                 {"@type":"Question","name":"Where can I buy anti-skid tape?","acceptedAnswer":{"@type":"Answer","text":"You can order high-quality anti-skid tape directly from Tape India. We are a Chennai-based supplier and deliver our safety grip tapes across India."}},
-                {"@type":"Question","name":"What sizes of anti-skid tape are available?","acceptedAnswer":{"@type":"Answer","text":"We supply anti-skid tape in various standard widths. We can also provide custom lengths and potentially custom widths based on your bulk order requirements."}}
+                {"@type":"Question","name":"What is an anti-skid tape?","acceptedAnswer":{"@type":"Answer","text":"We supply anti-skid tape in various standard widths. We can also provide custom lengths and potentially custom widths based on your bulk order requirements."}}
               ]
             },
             'masking-tape': {
@@ -303,10 +319,10 @@ export default function ProductPage() {
                             <p className="text-slate-600 text-lg leading-relaxed mb-6">{product.shortDescription}</p>
                             
                              <div className="space-y-6 text-slate-700">
-                               {product.description && (
+                               {mainDescription && (
                                    <div className="text-base leading-relaxed">
                                        <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
-                                       <div className="mt-4" dangerouslySetInnerHTML={{ __html: markdownToHtml(product.description) }} />
+                                       <div className="mt-4" dangerouslySetInnerHTML={{ __html: markdownToHtml(mainDescription) }} />
                                    </div>
                                 )}
 
@@ -379,6 +395,13 @@ export default function ProductPage() {
                            </div>
                         </div>
                     </div>
+
+                    {/* FAQ Section */}
+                    {faqContent && (
+                        <div className="bg-white p-6 md:p-8 rounded-xl shadow-md mt-8">
+                           <div className="text-slate-700 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownToHtml(faqContent) }} />
+                        </div>
+                    )}
                 </div>
             </main>
 
