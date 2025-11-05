@@ -1,43 +1,13 @@
 
-
-
 import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
-import { seoData } from '../data/seoData';
-
-const INITIAL_ARTICLES: BlogArticle[] = seoData
-    .filter(page => page["Page Type"] === 'Blog')
-    .map(blog => {
-        const title = blog["Page Name"];
-        const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').substring(0, 50);
-
-        return {
-            id: id,
-            title: blog.H1.split('—')[0].trim(),
-            summary: blog["Meta Description (≤160 chars)"],
-            content: `
-              <p>${blog.summary}</p>
-              <h2>${blog.H2_1 || ''}</h2>
-              <p>Details about ${blog.H2_1?.toLowerCase() || 'this topic'}.</p>
-              <h2>${blog.H2_2 || ''}</h2>
-              <p>Details about ${blog.H2_2?.toLowerCase() || 'this topic'}.</p>
-            `, // NOTE: This is a placeholder. Real content would be needed.
-            category: blog["Secondary Keywords"].split(',')[0].trim(), // Heuristic
-            tags: blog["Primary Keywords"].split(', ').slice(0, 3), // Heuristic
-            readTime: 5, // Placeholder
-            image: 'https://file.garden/aIULwzQ_QkPKQcGw/banner.webp', // Placeholder
-            author: 'Tape India Experts',
-            datePublished: new Date().toISOString().split('T')[0], // Placeholder
-            dateModified: new Date().toISOString().split('T')[0], // Placeholder
-        };
-    });
-
+import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
 
 interface BlogContextType {
   articles: BlogArticle[];
-  addArticle: (articleData: Omit<BlogArticle, 'id'>) => void;
-  updateArticle: (id: string, updatedArticle: BlogArticle) => void;
+  addArticle: (articleData: Omit<BlogArticle, 'id' | 'seo'>) => void;
+  updateArticle: (id: string, updatedArticleData: BlogArticle) => void;
   deleteArticle: (id: string) => void;
 }
 
@@ -48,12 +18,34 @@ interface BlogProviderProps {
 }
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [articles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_articles_v5', INITIAL_ARTICLES);
+  const [articles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v1', INITIAL_ARTICLES);
 
-  const addArticle = useCallback((articleData: Omit<BlogArticle, 'id'>) => {
+  const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
+    // A real implementation would fetch the full SEO data or generate it.
+    // For now, we create a placeholder SEO object.
+    const dummySeoData = {
+        "Page Type": "Blog Post",
+        "Page Name": articleData.title,
+        "Full URL": `https://tapeindia.shop/blog/${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+        "Title (≤60 chars)": articleData.title,
+        "Meta Description (≤160 chars)": articleData.summary,
+        H1: articleData.title,
+        "Primary Keywords": articleData.tags?.join(', ') || '',
+        "Secondary Keywords": '',
+        "FAQ Schema (JSON-LD)": "{}",
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}",
+        CTA: "Read More",
+        "Schema Type": "Article",
+        summary: articleData.content,
+        faqs: [],
+    };
+
     const newArticle: BlogArticle = {
       ...articleData,
-      id: `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').substring(0, 50)}`
+      id: `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`,
+      seo: dummySeoData,
     };
     setArticles(prev => [newArticle, ...prev]);
   }, [setArticles]);
@@ -66,11 +58,10 @@ export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
     setArticles(prev => prev.filter(a => a.id !== id));
   }, [setArticles]);
 
-
   const value = { articles, addArticle, updateArticle, deleteArticle };
 
   return <BlogContext.Provider value={value}>{children}</BlogContext.Provider>;
-}
+};
 
 export const useBlog = (): BlogContextType => {
   const context = useContext(BlogContext);
