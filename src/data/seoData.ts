@@ -1,7 +1,8 @@
+
 // This file is the single source of truth for all SEO and content data.
 // It is generated from the master SEO dataset to ensure scalability and consistency.
 
-import { Product, Category } from '../types';
+import { Product, Category, BlogArticle } from '../types';
 
 export interface SeoPageData {
   "Page Type": string;
@@ -206,6 +207,54 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "Combined Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"Blog\",\"name\":\"Industrial Insights – Expert Articles by Tape India\",\"url\":\"https://tapeindia.shop/blog\"},{\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What topics does the Tape India blog cover?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our blog features expert articles on adhesive technology, material science, industrial tape applications, buyer's guides, and best practices for industries like electronics, HVAC, and packaging.\"}}]}]}",
     "CTA": "Read the Latest Articles",
     "Schema Type": "Blog + FAQ"
+  },
+  {
+    "Page Type": "Blog Post",
+    "Page Name": "The Science Behind Adhesive Strength",
+    "Full URL": "https://tapeindia.shop/blog/the-science-behind-adhesive-strength",
+    "Title (≤60 chars)": "Adhesive Strength Explained | The Science Behind Tapes",
+    "Meta Description (≤160 chars)": "Understand the science of adhesive strength. Learn about peel, shear, and tensile strength and how they determine the performance of industrial tapes.",
+    "H1": "The Science Behind Adhesive Strength: What Makes Tapes Stick?",
+    "Primary Keywords": "adhesive strength, tape science, peel adhesion",
+    "Secondary Keywords": "shear strength, tensile strength, industrial tape performance",
+    "FAQ Schema (JSON-LD)": "{}",
+    "Product Schema (JSON-LD)": null,
+    "LocalBusiness Schema (JSON-LD)": "{}",
+    "Combined Schema (JSON-LD)": "{}",
+    "CTA": "Read More",
+    "Schema Type": "Article"
+  },
+  {
+    "Page Type": "Blog Post",
+    "Page Name": "Challenges in Industrial Tape Storage",
+    "Full URL": "https://tapeindia.shop/blog/challenges-in-industrial-tape-storage",
+    "Title (≤60 chars)": "Industrial Tape Storage Guide | Preserve Adhesive Quality",
+    "Meta Description (≤160 chars)": "Learn how to properly store industrial tapes. Avoid common challenges like temperature, humidity, and UV exposure to maintain adhesive integrity and performance.",
+    "H1": "Proper Storage: Overcoming Challenges to Preserve Tape Quality",
+    "Primary Keywords": "industrial tape storage, adhesive shelf life, tape preservation",
+    "Secondary Keywords": "humidity and tapes, temperature effects on adhesive, tape storage best practices",
+    "FAQ Schema (JSON-LD)": "{}",
+    "Product Schema (JSON-LD)": null,
+    "LocalBusiness Schema (JSON-LD)": "{}",
+    "Combined Schema (JSON-LD)": "{}",
+    "CTA": "Read More",
+    "Schema Type": "Article"
+  },
+  {
+    "Page Type": "Blog Post",
+    "Page Name": "A Buyer's Guide to Choosing an Industrial Tape Supplier",
+    "Full URL": "https://tapeindia.shop/blog/buyers-guide-choosing-tape-supplier-india",
+    "Title (≤60 chars)": "How to Choose an Industrial Tape Supplier in India | Buyer's Guide",
+    "Meta Description (≤160 chars)": "Your complete buyer's guide to selecting the right industrial tape supplier in India. Key factors to consider: manufacturing capability, quality control, and support.",
+    "H1": "Buyer's Guide: Choosing the Right Industrial Tape Supplier in India",
+    "Primary Keywords": "choose tape supplier, industrial tape buyer's guide, tape manufacturer india",
+    "Secondary Keywords": "b2b tape supplier, quality control tapes, oem tape manufacturer",
+    "FAQ Schema (JSON-LD)": "{}",
+    "Product Schema (JSON-LD)": null,
+    "LocalBusiness Schema (JSON-LD)": "{}",
+    "Combined Schema (JSON-LD)": "{}",
+    "CTA": "Read More",
+    "Schema Type": "Article"
   }
 ];
 
@@ -214,6 +263,9 @@ const generateSummary = (item: Omit<SeoPageData, 'summary' | 'faqs'>): string =>
     // A specific summary was requested for the homepage.
     if (item["Page Name"] === "Home") {
         return "For over 65 years, Tape India has been the trusted B2B supplier of high-performance adhesive tapes. From heavy-duty packaging tapes to precision electronics solutions, we deliver quality and reliability to industries across India. As a Chennai-based manufacturer, we supply industrial and speciality tapes nationwide, handling bulk orders and fast delivery to all major cities.";
+    }
+     if (item["Page Type"] === "Blog Post") {
+        return `An in-depth article exploring ${item["Page Name"]}. We delve into ${item["Primary Keywords"]} and how it impacts modern manufacturing and industrial applications. Learn key insights from our experts.`;
     }
     return `${item.H1}. ${item["Meta Description (≤160 chars)"]} As an ISO-certified manufacturer since 1957, we guarantee quality and reliability for all industrial applications, offering custom sizes and Pan-India delivery for bulk and OEM orders. Our commitment to excellence ensures you receive the best adhesive solutions for your specific needs.`;
 };
@@ -224,7 +276,7 @@ const generateSummary = (item: Omit<SeoPageData, 'summary' | 'faqs'>): string =>
  */
 export const seoData: SeoPageData[] = rawSeoData.map(item => {
     try {
-        const faqs = item["FAQ Schema (JSON-LD)"] ? JSON.parse(item["FAQ Schema (JSON-LD)"]).mainEntity.map((f: any) => ({ name: f.name, acceptedAnswer: { text: f.acceptedAnswer.text } })) : [];
+        const faqs = item["FAQ Schema (JSON-LD)"] && item["FAQ Schema (JSON-LD)"] !== "{}" ? JSON.parse(item["FAQ Schema (JSON-LD)"]).mainEntity.map((f: any) => ({ name: f.name, acceptedAnswer: { text: f.acceptedAnswer.text } })) : [];
         return {
             ...item,
             summary: generateSummary(item),
@@ -246,7 +298,7 @@ export const seoData: SeoPageData[] = rawSeoData.map(item => {
 // This is necessary because this relationship is not in the source SEO data.
 const productNameToCategoryId: { [key: string]: string } = {
   'Hazard Tape': 'safety-tapes', 'Floor Marking Tape': 'safety-tapes', 'Anti Skid Tape': 'safety-tapes', 'Caution Tape': 'safety-tapes', 'Barricade Tape': 'safety-tapes', 'Tamper Proof Security Packing Tape': 'safety-tapes', 'Nastro Heavy Duty Floor Marking Tape': 'safety-tapes', 'Glow In The Dark Tape': 'safety-tapes', 'Photoluminescent Film': 'safety-tapes', 'Anti Skid Tape With Centre Glow': 'safety-tapes', 'Esd Floor Marking Tape': 'safety-tapes', 'Glow In Dark Marking Tapes': 'safety-tapes', 'Heavy Duty Anti Skid Tape': 'safety-tapes', 'Anti Slip Tape For Bath And Shower': 'safety-tapes',
-  'Silver Tc Reflective Tape': 'reflective-tapes', 'Heat Transfer Reflective Tape': 'reflective-tapes', 'Vinyl Heat Transfer Reflective Film': 'reflective-tapes', 'Pvc Reflective Tape': 'reflective-tapes', 'Reflective Yarn Thread': 'reflective-tapes', 'Flame Retardant Reflective Tape': 'reflective-tapes', 'Hi Reflective Polyester Fabric': 'reflective-tapes', 'Hi Reflective Tc Fabric': 'reflective-tapes', 'Oxford Reflective Ribbon': 'reflective-tapes', 'Reflective Piping': 'reflective-tapes', 'Ordinary Reflective Polyester Fabric': 'reflective-tapes', 'Woven Reflective Ribbon': 'reflective-tapes', 'Ordinary Reflective Tc Fabric': 'reflective-tapes',
+  'Silver Tc Reflective Tape': 'reflective-tapes', 'Heat Transfer Reflective Tape': 'reflective-tapes', 'Vinyl Heat Transfer Reflective Film': 'reflective-tapes', 'Pvc Reflective Tape': 'reflective-tapes', 'Reflective Yarn Thread': 'reflective-tapes', 'Flame Retardant Reflective Tape': 'reflective-tpes', 'Hi Reflective Polyester Fabric': 'reflective-tapes', 'Hi Reflective Tc Fabric': 'reflective-tapes', 'Oxford Reflective Ribbon': 'reflective-tapes', 'Reflective Piping': 'reflective-tapes', 'Ordinary Reflective Polyester Fabric': 'reflective-tapes', 'Woven Reflective Ribbon': 'reflective-tapes', 'Ordinary Reflective Tc Fabric': 'reflective-tapes',
   '3M Double Sided Foam Tape': 'double-sided-tapes', 'Tissue Tape': 'double-sided-tapes', 'Polyester Double Sided Tape': 'double-sided-tapes', 'Vhb Tape': 'double-sided-tapes', 'Lohmann Duploflex Tape': 'double-sided-tapes', 'Pe Foam Tape': 'double-sided-tapes', 'Pet Double Sided Tape': 'double-sided-tapes', 'Transfer Tape': 'double-sided-tapes', 'Acrylic Double Sided Tape': 'double-sided-tapes', 'Double Sided Thermal Tape': 'double-sided-tapes', 'Double Sided Scrim Tape': 'double-sided-tapes', 'Eva Foam Tape': 'double-sided-tapes', 'Spacer Tapes': 'double-sided-tapes', 'Nano Magic Tape': 'double-sided-tapes', 'Hot Melt Tissue Tapes': 'double-sided-tapes', 'Double Sided Cloth Tape': 'double-sided-tapes', 'Acrylic Gel Tape': 'double-sided-tapes', 'Xlpe Foam Tapes': 'double-sided-tapes', 'Polyimide Double Sided Tape': 'double-sided-tapes',
   'Ptfe Coated Fiberglass Fabric Non Adhesive': 'teflon-ptfe-tapes', 'Ptfe Silicone Adhesive Tape': 'teflon-ptfe-tapes', 'Ptfe Coated Fiberglass Fabric With Silicone Adhesive': 'teflon-ptfe-tapes', 'Ptfe Coated Fiberglass Fabric With Silicone Adhesive Liner': 'teflon-ptfe-tapes',
   'Emi Shielding Tape': 'antistatic-esd-tapes', 'Copper Foil Tape': 'antistatic-esd-tapes', 'Conductive Grid Tape': 'antistatic-esd-tapes', 'Esd Kapton Tape': 'antistatic-esd-tapes', 'Anti Static Polyester Tape': 'antistatic-esd-tapes', 'Tin Plated Copper Tape': 'antistatic-esd-tapes',
@@ -305,11 +357,7 @@ export const ALL_PRODUCTS: Product[] = seoData
             uses: (p["Primary Keywords"].split(', ')), // Synthesize uses from keywords
             category: categoryId,
             industries: industries,
-            seo: {
-                title: p["Title (≤60 chars)"],
-                description: p["Meta Description (≤160 chars)"],
-                h1: p.H1,
-            }
+            seo: p,
         };
     });
 
@@ -334,5 +382,32 @@ export const ALL_CATEGORIES: Category[] = seoData
                 description: p["Meta Description (≤160 chars)"],
                 h1: p.H1,
             }
+        };
+    });
+    
+/**
+ * A transformed list of all blog articles, structured for use in the BlogContext.
+ * This data is derived from the `seoData` master list.
+ */
+export const ALL_BLOG_ARTICLES: BlogArticle[] = seoData
+    .filter(p => p["Page Type"] === 'Blog Post')
+    .map((p, index) => {
+        const today = new Date();
+        today.setDate(today.getDate() - (index * 10)); // Stagger dates
+        const date = today.toISOString().split('T')[0];
+
+        return {
+            id: new URL(p["Full URL"]).pathname.split('/').pop() || '',
+            title: p.H1,
+            summary: p["Meta Description (≤160 chars)"],
+            content: `<p>${p.summary}</p><p>Further details about ${p["Primary Keywords"]} will be explored in this article, providing valuable insights for professionals in the field.</p>`,
+            category: 'Industry Guides',
+            tags: p["Secondary Keywords"].split(', '),
+            readTime: 5 + (index % 3), // 5, 6, 7 minute read times
+            image: `https://file.garden/aIULwzQ_QkPKQcGw/blog-img-${(index % 3) + 1}.webp`, // Cycle through 3 placeholder images
+            author: 'Tape India Experts',
+            datePublished: date,
+            dateModified: date,
+            seo: p,
         };
     });
