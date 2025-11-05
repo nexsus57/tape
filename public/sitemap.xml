@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Static Pages -->
@@ -11,10 +10,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/industries</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://tapeindia.shop/products</loc>
     <priority>0.9</priority>
   </url>
@@ -23,44 +18,9 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/request-quote</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://tapeindia.shop/privacy-policy</loc>
     <priority>0.5</priority>
   </url>
-  
-  <!-- Blog Page and Articles -->
-  <url>
-    <loc>https://tapeindia.shop/blog</loc>
-    <priority>0.9</priority>
-  </url>
-  <!-- New Articles -->
-  <url><loc>https://tapeindia.shop/blog/the-science-behind-adhesive-strength</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/challenges-in-industrial-tape-storage</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/aerospace-defense-specialized-tapes</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/tapes-in-smart-manufacturing-industry-4.0</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/buyers-guide-choosing-tape-supplier-india</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/industrial-tape-testing-quality-durability</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/hidden-costs-of-low-quality-industrial-tapes</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/fire-resistant-flame-retardant-tapes</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/proper-tape-application-reduces-downtime</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/lifecycle-of-high-performance-industrial-tape</loc><priority>0.9</priority></url>
-  <!-- Old Articles -->
-  <url><loc>https://tapeindia.shop/blog/top-10-industrial-tapes-2025</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/copper-foil-tape-emi-shielding-grounding</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/reflective-tapes-industrial-safety-visibility</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/sticky-mats-cleanroom-industrial-environments</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/aluminum-foil-tape-hvac-insulation-guide</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/polyester-green-tape-powder-coating-guide</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/eco-friendly-adhesive-solutions-manufacturing</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/future-of-adhesive-technology-smart-tapes-iot</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/heat-resistant-tapes-electric-vehicles</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/adhesive-tapes-in-renewable-energy</loc><priority>0.9</priority></url>
-  <url><loc>https://tapeindia.shop/blog/5-common-industrial-tape-application-mistakes</loc><priority>0.9</priority></url>
-  
   <!-- Category Pages -->
   <url>
     <loc>https://tapeindia.shop/products?category=safety-tapes</loc>
@@ -86,33 +46,95 @@
     <loc>https://tapeindia.shop/products?category=antistatic-esd-tapes</loc>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Industry Pages -->
+  <!-- Blog Posts -->
   <url>
-    <loc>https://tapeindia.shop/products?industry=packaging-industry</loc>
+    <loc>https://tapeindia.shop/blog/top-10-industrial-tapes-2025</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/products?industry=hvac-industry</loc>
+    <loc>https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/products?industry=print-labels-signage-industry</loc>
+    <loc>https://tapeindia.shop/blog/copper-foil-tape-emi-shielding-grounding</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/products?industry=electronic-industry</loc>
+    <loc>https://tapeindia.shop/blog/reflective-tapes-industrial-safety-visibility</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/products?industry=reflective-safety-industry</loc>
+    <loc>https://tapeindia.shop/blog/sticky-mats-cleanroom-industrial-environments</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tapeindia.shop/products?industry=ptfe-teflon-industry</loc>
+    <loc>https://tapeindia.shop/blog/aluminum-foil-tape-hvac-insulation-guide</loc>
     <priority>0.9</priority>
   </url>
-  
+  <url>
+    <loc>https://tapeindia.shop/blog/polyester-green-tape-powder-coating-guide</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/eco-friendly-adhesive-solutions-manufacturing</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/future-of-adhesive-technology-smart-tapes-iot</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/heat-resistant-tapes-electric-vehicles</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/adhesive-tapes-in-renewable-energy</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/5-common-industrial-tape-application-mistakes</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/the-science-behind-adhesive-strength</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/challenges-in-industrial-tape-storage</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/aerospace-defense-specialized-tapes</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/tapes-in-smart-manufacturing-industry-4.0</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/buyers-guide-choosing-tape-supplier-india</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/industrial-tape-testing-quality-durability</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/hidden-costs-of-low-quality-industrial-tapes</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/fire-resistant-flame-retardant-tpes</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/proper-tape-application-reduces-downtime</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tapeindia.shop/blog/lifecycle-of-high-performance-industrial-tape</loc>
+    <priority>0.9</priority>
+  </url>
   <!-- Product Pages -->
   <url>
     <loc>https://tapeindia.shop/product/hazard-tape</loc>
