@@ -17,7 +17,7 @@ interface CategoryProviderProps {
 }
 
 export const CategoryProvider: FC<CategoryProviderProps> = ({ children }) => {
-  const [categories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v7', INITIAL_CATEGORIES);
+  const [categories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v8', INITIAL_CATEGORIES);
 
   const addCategory = useCallback((categoryData: Pick<Category, 'name' | 'subtitle' | 'icon'>) => {
     const newCategory: Category = {
