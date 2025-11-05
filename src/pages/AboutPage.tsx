@@ -3,53 +3,18 @@ import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { QualityIcon, TeamIcon, InnovationIcon, IntegrityIcon } from '../components/icons/WhyChooseUsIcons';
 import CanonicalTag from '../components/CanonicalTag';
+import { seoData } from '../data/seoData';
+import { useMemo } from 'react';
 
 export default function AboutPage() {
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "How long has Tape India been in business?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Tape India was founded as Sha Kundanmal Misrimal in Chennai in 1957. We have over 65 years of experience as a trusted tape company and supplier."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are you a tape manufacturer or just a supplier?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "We are both a manufacturer and a B2B supplier of a wide range of industrial adhesive tapes, ensuring quality control from production to delivery."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Do you manufacture tapes similar to Wonder Tape in Chennai?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, as a leading tape manufacturer in Chennai, we produce a wide variety of high-performance adhesive tapes, including products that serve as excellent alternatives to brands like Wonder Tape."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Do you supply 3M products?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes — we are a trusted supplier of 3M tapes, adhesives, and specialty products, providing Pan-India distribution for industrial needs."
-            }
-        }
-    ]
-  };
+  const aboutData = useMemo(() => seoData.find(p => p["Page Name"] === "About Us"), []);
 
   return (
     <>
       <Helmet>
-        <title>About Sha Kundanmal Misrimal | Since 1957</title>
-        <meta name="description" content="Family-run industrial tape manufacturer since 1957. ISO-grade, compliant, serving OEMs across India with custom sizes and reliable supply." />
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <title>{aboutData?.["Title (≤60 chars)"] || 'About Us | Tape India'}</title>
+        <meta name="description" content={aboutData?.["Meta Description (≤160 chars)"] || 'Learn about Tape India'} />
+        {aboutData && <script type="application/ld+json">{aboutData["Combined Schema (JSON-LD)"]}</script>}
       </Helmet>
       <CanonicalTag />
       
@@ -58,7 +23,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-5 lg:px-8 py-20 md:py-24 text-center">
             <AnimatedSection>
                 <h1 className="font-extrabold mb-4 text-white">
-                  About Sha Kundanmal Misrimal
+                  {aboutData?.H1 || 'About Sha Kundanmal Misrimal'}
                 </h1>
                 <p className="text-gray-200 max-w-4xl mx-auto">
                     For over 65 years, Tape India has been more than just a manufacturer; we are the foundational B2B partner for India’s leading industries, delivering reliability you can trust.
