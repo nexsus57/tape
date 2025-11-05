@@ -18,7 +18,7 @@ const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage'));
+const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage.tsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin components
