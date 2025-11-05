@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC, useEffect } from 'react';
+import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
@@ -18,7 +18,8 @@ interface ColorSwatchProps {
 
 const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
     let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0 shadow-inner";
-    let swatchStyle: React.CSSProperties = {};
+    // FIX: Use CSSProperties type from react import
+    let swatchStyle: CSSProperties = {};
 
     if (colors[0] === 'transparent') {
         swatchClasses += " bg-white";
@@ -51,6 +52,7 @@ export default function ProductPage() {
 
     const productSeoData = useMemo(() => {
         if (!product) return null;
+        // Match by "Page Name" which corresponds to the product name in the seoData file
         return seoData.find(p => p["Page Name"] === product.name);
     }, [product]);
 
@@ -58,6 +60,7 @@ export default function ProductPage() {
     
     useEffect(() => {
         setIsImageBroken(false);
+        window.scrollTo(0, 0);
     }, [productId]);
 
     const { categories } = useCategories();
@@ -76,6 +79,19 @@ export default function ProductPage() {
     }, [product, category, products]);
 
     if (!product || !productSeoData) {
+        // Find a product that might exist in seoData but not in products constant (edge case)
+        const seoProduct = seoData.find(p => p["Full URL"].includes(`/product/${productId}`));
+        if (seoProduct) {
+             return (
+                 <>
+                    <Helmet>
+                        <title>{seoProduct["Title (≤60 chars)"]}</title>
+                        <meta name="description" content={seoProduct["Meta Description (≤160 chars)"]} />
+                    </Helmet>
+                    <NotFoundPage message="This product is valid but is missing from the main product list." />
+                 </>
+             )
+        }
         return <NotFoundPage />;
     }
     
@@ -220,7 +236,7 @@ export default function ProductPage() {
                                       to={`/request-quote?product=${product.id}`}
                                       className="inline-block bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-base hover:bg-yellow-400 transition-colors transform hover:scale-105"
                                   >
-                                      Request a Quote
+                                      {productSeoData.CTA}
                                   </Link>
                                 </div>
                            </div>
