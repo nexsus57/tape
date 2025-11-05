@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { seoData, SeoPageData } from '../data/seoData';
+import { seoData } from '../data/seoData';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 import SeoAccordionCard from '../components/SeoAccordionCard';
