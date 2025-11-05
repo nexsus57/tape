@@ -1,5 +1,3 @@
-
-
 import { Suspense, lazy } from 'react';
 // FIX: Migrated from react-router-dom v5 to v6. Replaced Switch/Redirect with Routes/Navigate.
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -18,7 +16,6 @@ const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage.tsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin components
@@ -34,6 +31,8 @@ const AdminIndustryEditPage = lazy(() => import('./pages/admin/AdminIndustryEdit
 const AdminSettingsPage = lazy(() => import('./pages/admin/AdminSettingsPage'));
 const AdminBlogListPage = lazy(() => import('./pages/admin/AdminBlogListPage'));
 const AdminBlogEditPage = lazy(() => import('./pages/admin/AdminBlogEditPage'));
+const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage.tsx'));
+
 
 export default function App() {
   return (
@@ -58,6 +57,7 @@ export default function App() {
           <Route path="blog/new" element={<AdminBlogEditPage />} />
           <Route path="blog/edit/:slug" element={<AdminBlogEditPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
+          <Route path="seo-content-hub" element={<SeoContentHubPage />} />
         </Route>
         
         {/* Public-facing website routes with PublicLayout */}
@@ -72,7 +72,6 @@ export default function App() {
           <Route path="blog/:slug" element={<BlogPostPage />} />
           <Route path="request-quote" element={<RequestQuotePage />} />
           <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="seo-content-hub" element={<SeoContentHubPage />} />
           {/* Catch-all for any other route */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
