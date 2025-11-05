@@ -64,12 +64,24 @@ export default function HomePage() {
         ]
     };
 
+    const websiteSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://tapeindia.shop/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tapeindia.shop/products?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    };
+
   return (
     <>
       <Helmet>
-        <title>Tape India | Industrial Tape Manufacturer in Chennai</title>
-        <meta name="description" content="Tape India is a leading tape company in Chennai supplying industrial, packaging, and specialty tapes Pan-India. Get bulk quotes for your tape needs." />
+        <title>Industrial Tape Manufacturer & Wholesaler | Chennai</title>
+        <meta name="description" content="Sha Kundanmal Misrimal—industrial tape manufacturer in Chennai. Bulk orders, custom sizes, ISO-grade quality, pan-India shipping. Get a quote." />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
       </Helmet>
       <CanonicalTag />
       
@@ -88,7 +100,7 @@ export default function HomePage() {
         <div className="relative container mx-auto px-5 lg:px-8 py-20 md:py-24 text-center">
           <AnimatedSection>
             <h1 className="font-extrabold mb-5 text-white">
-              Industrial Tape Manufacturer in Chennai - Tape India
+              Industrial Tape Manufacturer & Bulk Supplier in India
             </h1>
             <p className="text-gray-200 mb-12 max-w-3xl mx-auto">
               For over 65 years, Tape India has been the trusted B2B supplier of high-performance adhesive tapes. From heavy-duty packaging tapes to precision electronics solutions, we deliver quality and reliability to industries across India. As a Chennai-based manufacturer, we supply industrial and speciality tapes nationwide, handling bulk orders and fast delivery to all major cities.
