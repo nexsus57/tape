@@ -1,4 +1,5 @@
 
+
 import { Suspense, lazy } from 'react';
 // FIX: Migrated from react-router-dom v5 to v6. Replaced Switch/Redirect with Routes/Navigate.
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -17,6 +18,7 @@ const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 // Lazy load Admin components
@@ -34,7 +36,6 @@ const AdminBlogListPage = lazy(() => import('./pages/admin/AdminBlogListPage'));
 const AdminBlogEditPage = lazy(() => import('./pages/admin/AdminBlogEditPage'));
 
 export default function App() {
-  // FIX: Removed loading logic. The useProducts and useBlog contexts use useLocalStorage and do not have a loading state.
   return (
     <Suspense fallback={<LoadingSpinner />}>
       {/* FIX: Replaced v5 `Switch` with v6 `Routes` and updated route syntax (e.g., `element` prop, nested routes). */}
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="blog/:slug" element={<BlogPostPage />} />
           <Route path="request-quote" element={<RequestQuotePage />} />
           <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="seo-content-hub" element={<SeoContentHubPage />} />
           {/* Catch-all for any other route */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
