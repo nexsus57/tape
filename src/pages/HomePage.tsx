@@ -1,5 +1,3 @@
-
-
 import { useMemo } from 'react';
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
@@ -16,11 +14,14 @@ import { type Product } from '../types';
 import CategoryCard from '../components/CategoryCard';
 import TestimonialCard from '../components/TestimonialCard';
 import CanonicalTag from '../components/CanonicalTag';
+import { seoData } from '../data/seoData';
 
 export default function HomePage() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const { settings } = useSettings();
+
+    const homeData = useMemo(() => seoData.find(p => p["Page Name"] === "Home"), []);
 
     const categoryMap = useMemo(() => {
         const map = new Map<string, string>();
@@ -32,37 +33,6 @@ export default function HomePage() {
         const productMap = new Map(products.map(p => [p.id, p]));
         return settings.popularProductIds.map(id => productMap.get(id)).filter((p): p is Product => Boolean(p));
     }, [products, settings.popularProductIds]);
-
-    const faqSchema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Are you a tape manufacturer in Chennai?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, Tape India is a leading tape manufacturer based in Chennai, serving businesses locally and across India with a wide range of industrial tapes."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do you supply tapes across India?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, we are an industrial tape supplier with Pan-India delivery. We handle bulk shipments and commercial orders to all major cities."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What types of industrial tapes do you supply?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "We supply a comprehensive range of tapes, including BOPP packaging tape, copper foil tape, reflective tapes, Kapton tape, anti-skid tapes, and many other specialty solutions."
-                }
-            }
-        ]
-    };
 
     const websiteSchema = {
       "@context": "https://schema.org",
@@ -78,9 +48,9 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Industrial Tape Manufacturer & Wholesaler | Chennai</title>
-        <meta name="description" content="Sha Kundanmal Misrimal—industrial tape manufacturer in Chennai. Bulk orders, custom sizes, ISO-grade quality, pan-India shipping. Get a quote." />
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <title>{homeData?.["Title (≤60 chars)"] || 'Industrial Tape Manufacturer & Wholesaler | Chennai'}</title>
+        <meta name="description" content={homeData?.["Meta Description (≤160 chars)"] || 'Default Description'} />
+        {homeData && <script type="application/ld+json">{homeData["Combined Schema (JSON-LD)"]}</script>}
         <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
       </Helmet>
       <CanonicalTag />
@@ -100,10 +70,10 @@ export default function HomePage() {
         <div className="relative container mx-auto px-5 lg:px-8 py-20 md:py-24 text-center">
           <AnimatedSection>
             <h1 className="font-extrabold mb-5 text-white">
-              Industrial Tape Manufacturer & Bulk Supplier in India
+              {homeData?.H1 || 'Industrial Tape Manufacturer & Bulk Supplier in India'}
             </h1>
             <p className="text-gray-200 mb-12 max-w-3xl mx-auto">
-              For over 65 years, Tape India has been the trusted B2B supplier of high-performance adhesive tapes. From heavy-duty packaging tapes to precision electronics solutions, we deliver quality and reliability to industries across India. As a Chennai-based manufacturer, we supply industrial and speciality tapes nationwide, handling bulk orders and fast delivery to all major cities.
+              {homeData?.summary || "For over 65 years, Tape India has been the trusted B2B supplier of high-performance adhesive tapes. From heavy-duty packaging tapes to precision electronics solutions, we deliver quality and reliability to industries across India. As a Chennai-based manufacturer, we supply industrial and speciality tapes nationwide, handling bulk orders and fast delivery to all major cities."}
             </p>
             <div className="flex justify-center items-center flex-col sm:flex-row gap-4">
               <Link 
@@ -116,7 +86,7 @@ export default function HomePage() {
                 to="/request-quote" 
                 className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-brand-blue-deep transition-all duration-300 w-full sm:w-auto text-lg"
               >
-                Request a Quote
+                {homeData?.CTA || 'Request a Quote'}
               </Link>
             </div>
           </AnimatedSection>
