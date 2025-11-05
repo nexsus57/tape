@@ -1,26 +1,30 @@
-
 import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import AnimatedSection from "../components/AnimatedSection";
 import { useSettings } from '../context/SettingsContext';
 import CanonicalTag from '../components/CanonicalTag';
+import { useMemo } from 'react';
+import { seoData } from '../data/seoData';
 
 export default function ContactPage() {
   const { settings } = useSettings();
   const { contact } = settings;
+  const contactData = useMemo(() => seoData.find(p => p["Page Name"] === "Contact Us"), []);
+
 
   return (
     <>
       <Helmet>
-        <title>Contact Us | Tape India | Get In Touch</title>
-        <meta name="description" content="Get in touch with Tape India. Find our address, phone number, and email. Reach out for technical support or to request a quote for your industrial tape needs." />
+        <title>{contactData?.["Title (≤60 chars)"] || 'Contact Us | Tape India'}</title>
+        <meta name="description" content={contactData?.["Meta Description (≤160 chars)"] || 'Get in touch with Tape India.'} />
+        {contactData && <script type="application/ld+json">{contactData["Combined Schema (JSON-LD)"]}</script>}
       </Helmet>
       <CanonicalTag />
       <main className="bg-white py-16 md:py-24">
         <div className="container mx-auto px-5 lg:px-8">
           <AnimatedSection>
               <div className="text-center mb-16">
-                  <h1 className="font-extrabold">Contact Us</h1>
+                  <h1 className="font-extrabold">{contactData?.H1 || 'Contact Us'}</h1>
                   <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
                       We're here to help. Reach out to us with any questions, for technical support, or to request a personalized quote.
                   </p>
