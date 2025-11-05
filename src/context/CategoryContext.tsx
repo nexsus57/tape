@@ -1,8 +1,7 @@
-
 import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Category } from '../types';
-import { CATEGORIES as INITIAL_CATEGORIES } from '../constants';
+import { ALL_CATEGORIES as INITIAL_CATEGORIES } from '../data/seoData'; // Correctly import from the new single source of truth
 
 interface CategoryContextType {
   categories: Category[];
@@ -18,7 +17,7 @@ interface CategoryProviderProps {
 }
 
 export const CategoryProvider: FC<CategoryProviderProps> = ({ children }) => {
-  const [categories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v6', INITIAL_CATEGORIES);
+  const [categories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v7', INITIAL_CATEGORIES);
 
   const addCategory = useCallback((categoryData: Pick<Category, 'name' | 'subtitle' | 'icon'>) => {
     const newCategory: Category = {
