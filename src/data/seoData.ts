@@ -40,6 +40,14 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "Title (≤60 chars)": "Industrial Tape Manufacturer India | Bulk Supplier Since 1957",
     "Meta Description (≤160 chars)": "Tape India (Sha Kundanmal Misrimal)—ISO-certified industrial tape manufacturer in India since 1957. Bulk orders, OEM/private label, custom sizes, pan-India delivery.",
     "H1": "Industrial Tape Manufacturer & Bulk Supplier in India",
+    "H2_1": "Your Adhesive Solutions Partner Since 1957",
+    "H2_2": "Why Partner with Tape India?",
+    "H2_3": "Our Popular Industrial Tapes",
+    "H2_4": "Solutions For Every Industry",
+    "H2_5": "Trusted by Industry Leaders",
+    "H3": "Decades of Experience • Unmatched Quality • Over 200+ Solutions",
+    "H4": "Explore Our Product Categories",
+    "H5": "Need Industrial Tapes in Bulk?",
     "Primary Keywords": "industrial tape manufacturer, industrial tape supplier, bulk tape india",
     "Secondary Keywords": "oem tape manufacturer, custom size tape, pan india delivery, iso certified, since 1957",
     "FAQ Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"Are you an industrial tape manufacturer in India?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes, Tape India (Sha Kundanmal Misrimal) is a leading industrial tape manufacturer based in Chennai with over 65 years of experience supplying businesses Pan-India.\"}},{\"@type\":\"Question\",\"name\":\"Do you offer bulk pricing for industrial tapes?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Absolutely. We specialize in bulk and wholesale orders for our entire range of over 200 industrial tapes. Contact us for a competitive quote.\"}},{\"@type\":\"Question\",\"name\":\"Can you provide custom-sized tapes for OEM applications?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes, we provide custom slitting and die-cutting services to meet the precise specifications of OEM and high-volume manufacturing clients.\"}}]}",
@@ -58,6 +66,9 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "H1": "About Tape India: A Legacy of Adhesion Since 1957",
     "H2_1": "Our Journey: From Local Supplier to National Manufacturer",
     "H2_2": "Our Core Values: Quality, Partnership, and Integrity",
+    "H3": "Our Mission & Vision",
+    "H4": "Partner with an Industry Leader",
+    "H5": "Commitment to Excellence",
     "Primary Keywords": "about tape india, industrial tape manufacturer history, tape company since 1957",
     "Secondary Keywords": "b2b tape supplier, oem tape solutions, sha kundanmal misrimal, made in india tapes",
     "FAQ Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"How long has Tape India been in the industrial tape business?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Tape India (Sha Kundanmal Misrimal) has been a trusted manufacturer and supplier of industrial tapes since our founding in 1957. We have over 65 years of experience serving India's manufacturing sector.\"}},{\"@type\":\"Question\",\"name\":\"What makes Tape India a reliable B2B supplier?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our reliability stems from our deep industry knowledge, commitment to ISO-grade quality, in-house manufacturing capabilities, and a focus on building long-term partnerships with our B2B clients.\"}}]}",
@@ -73,7 +84,12 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "Full URL": "https://tapeindia.shop/contact",
     "Title (≤60 chars)": "Contact Tape India | Industrial Tape Manufacturer",
     "Meta Description (≤160 chars)": "Contact Tape India for bulk orders, OEM inquiries, or technical support. Reach our Chennai office by phone, email, or visit us. We offer Pan-India support.",
-    "H1": "Contact Tape India",
+    "H1": "Contact Us",
+    "H2_1": "Get in Touch",
+    "H2_2": "Our Location",
+    "H3": "Business Hours",
+    "H4": "Need a Quote?",
+    "H5": "Connect With Us",
     "Primary Keywords": "contact tape india, tape supplier chennai, industrial tape support",
     "Secondary Keywords": "bulk tape inquiry, oem tape contact, sha kundanmal misrimal address",
     "FAQ Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"How can I get a quote for a bulk order?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"For the fastest response on bulk pricing, please use our 'Request a Quote' form. For other inquiries, you can call us at +91-9840647096 or email tapeindiain@yahoo.com.\"}},{\"@type\":\"Question\",\"name\":\"What are your business hours?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our office is open from 10:30 am to 7:00 pm on Mondays, and 10:15 am to 7:30 pm from Tuesday to Saturday. We are closed on Sundays.\"}}]}",
@@ -90,6 +106,11 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "Title (≤60 chars)": "Request a Bulk Quote | Industrial Tapes | Tape India",
     "Meta Description (≤160 chars)": "Get a competitive B2B quote for industrial tapes. Specify your requirements for custom sizes, materials, and bulk quantities. Pan-India delivery available.",
     "H1": "Request a Quote",
+    "H2_1": "Your Contact Information",
+    "H2_2": "Your Product Requirements",
+    "H3": "Tell us about your project",
+    "H4": "Get a competitive B2B quote",
+    "H5": "Our experts will get back to you",
     "Primary Keywords": "request quote industrial tape, bulk tape pricing, oem tape quote",
     "Secondary Keywords": "tape india quote, b2b tape pricing, custom tape quote",
     "FAQ Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What information do I need to provide to get an accurate quote?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"To provide the most accurate quote, please include the tape type, required dimensions (width and length), quantity, and a brief description of the application. The more details you provide, the better we can assist you.\"}},{\"@type\":\"Question\",\"name\":\"How long does it take to receive a quote?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our sales team strives to respond to all quote requests within one business day. For urgent requirements, please call us directly after submitting your form.\"}}]}",
@@ -106,6 +127,11 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "Title (≤60 chars)": "Privacy Policy | Tape India (Sha Kundanmal Misrimal)",
     "Meta Description (≤160 chars)": "Read the official Privacy Policy for Tape India (Sha Kundanmal Misrimal). Understand how we collect, use, and protect your data when you visit our website.",
     "H1": "Privacy Policy",
+    "H2_1": "Information We Collect",
+    "H2_2": "How We Use Your Information",
+    "H3": "Tracking Technologies and Cookies",
+    "H4": "Changes to This Privacy Policy",
+    "H5": "Contact Us",
     "Primary Keywords": "privacy policy tape india, data protection, website privacy",
     "Secondary Keywords": "cookie policy, data usage, gdpr india",
     "FAQ Schema (JSON-LD)": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What data do you collect?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We collect personal data you voluntarily provide through contact forms (name, email, phone) and anonymous usage data (IP address, browser type) via cookies for analytics and advertising purposes.\"}},{\"@type\":\"Question\",\"name\":\"How is my data used?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Your data is used to respond to your inquiries, improve our website experience, and deliver relevant advertising. We do not sell your personal information to third parties.\"}}]}",
@@ -115,15 +141,17 @@ const rawSeoData: Omit<SeoPageData, 'summary' | 'faqs'>[] = [
     "CTA": "Contact Us",
     "Schema Type": "WebPage"
   },
-    // This is a small subset of the full data for demonstration purposes.
-    // The logic below correctly processes the entire dataset provided.
-    ...[
-        // Add more raw data objects here if needed.
-    ]
+  ...[{"Page Type":"Industries List","Page Name":"Industries List","Full URL":"https://tapeindia.shop/industries","Title (≤60 chars)":"Industrial Tape Solutions by Industry | Tape India","Meta Description (≤160 chars)":"Tape India delivers specialized adhesive tape solutions for demanding industries like packaging, HVAC, electronics, print, and more. Find products engineered for your application.","H1":"Tapes Engineered for Your Industry","H2_1":"Packaging Industry Solutions","H2_2":"HVAC Tapes and Adhesives","H2_3":"Electronics & High-Tech Tapes","H2_4":"Print, Labels & Signage Tapes","H2_5":"Reflective & Safety Solutions","H3":"PTFE & Teflon High-Performance Tapes","H4":"Custom Solutions for Your Sector","H5":"Speak to an Industry Expert","Primary Keywords":"industrial tape applications, tapes by industry, manufacturing tape solutions","Secondary Keywords":"packaging tape, hvac tape, electronics tape, safety tape, b2b tape supplier","FAQ Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What industries does Tape India serve?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We provide specialized adhesive solutions for a wide range of sectors, including Packaging, HVAC, Electronics, Print & Signage, Reflective & Safety, and applications requiring PTFE & Teflon tapes.\"}},{\"@type\":\"Question\",\"name\":\"Can you recommend a tape for my specific industry application?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes. Our team of experts can help you select the ideal tape based on your industry, substrates, environmental conditions, and performance requirements. Contact us for a consultation.\"}}]}","Product Schema (JSON-LD)":null,"LocalBusiness Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"}","Combined Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"name\":\"Industrial Tape Solutions by Industry | Tape India\",\"url\":\"https://tapeindia.shop/industries\"},{\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What industries does Tape India serve?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We provide specialized adhesive solutions for a wide range of sectors, including Packaging, HVAC, Electronics, Print & Signage, Reflective & Safety, and applications requiring PTFE & Teflon tapes.\"}}]}]}","CTA":"Find Your Industry Solution","Schema Type":"CollectionPage + FAQ"},
+{"Page Type":"All Products List","Page Name":"All Products List","Full URL":"https://tapeindia.shop/products","Title (≤60 chars)":"All Industrial Tapes | Manufacturer & Wholesaler | Tape India","Meta Description (≤160 chars)":"Browse our complete range of over 200 industrial adhesive tapes. As a leading manufacturer in India, we offer solutions for every industry. Bulk orders welcome.","H1":"All Industrial Tapes","H2_1":"Filter by Category","H2_2":"Filter by Industry","H3":"Find Your Adhesive Solution","H4":"Can't Find What You're Looking For?","H5":"Request a Custom Quote","Primary Keywords":"all industrial tapes, tape products list, adhesive tape catalog","Secondary Keywords":"tape manufacturer india, b2b tape supplier, wholesale tape, industrial tape types","FAQ Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What types of industrial tapes do you manufacture?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We manufacture and supply over 200 types of industrial tapes, including Safety Tapes, Reflective Tapes, Double-Sided Tapes, Specialty Tapes, PTFE/Teflon Tapes, and Antistatic/ESD Tapes.\"}},{\"@type\":\"Question\",\"name\":\"How can I find the right tape for my application?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"You can use the filters on our products page to sort by category or industry. For expert assistance, contact our technical team with your application details, and we will recommend the best solution.\"}}]}","Product Schema (JSON-LD)":null,"LocalBusiness Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"}","Combined Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"name\":\"All Industrial Tapes | Manufacturer & Wholesaler | Tape India\",\"url\":\"https://tapeindia.shop/products\"},{\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What types of industrial tapes do you manufacture?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"We manufacture and supply over 200 types of industrial tapes, including Safety Tapes, Reflective Tapes, Double-Sided Tapes, Specialty Tapes, PTFE/Teflon Tapes, and Antistatic/ESD Tapes.\"}}]}]}","CTA":"View All Products","Schema Type":"CollectionPage + FAQ"},
+{"Page Type":"Blog","Page Name":"Blog","Full URL":"https://tapeindia.shop/blog","Title (≤60 chars)":"Industrial Insights – Expert Articles by Tape India","Meta Description (≤160 chars)":"Explore expert articles on industrial tapes and materials from Tape India. Learn about EMI shielding, thermal management, contamination control, and safety solutions.","H1":"Industrial Insights","H2_1":"Featured Articles","H2_2":"Latest Posts","H3":"Explore by Topic","H4":"Subscribe for Updates","H5":"From the Tape India Experts","Primary Keywords":"industrial tape blog, adhesive technology articles, tape application guides","Secondary Keywords":"tape manufacturing insights, material science blog, b2b industrial content","FAQ Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What topics does the Tape India blog cover?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our blog features expert articles on adhesive technology, material science, industrial tape applications, buyer's guides, and best practices for industries like electronics, HVAC, and packaging.\"}},{\"@type\":\"Question\",\"name\":\"Who writes the articles on the Industrial Insights blog?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our content is written by in-house experts with decades of experience in the industrial tape and adhesive manufacturing industry, ensuring you receive practical and accurate information.\"}}]}","Product Schema (JSON-LD)":null,"LocalBusiness Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"}","Combined Schema (JSON-LD)":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"Blog\",\"name\":\"Industrial Insights – Expert Articles by Tape India\",\"url\":\"https://tapeindia.shop/blog\"},{\"@type\":\"IndustrialBusiness\",\"name\":\"Tape India (Sha Kundanmal Misrimal)\",\"url\":\"https://tapeindia.shop\"},{\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"What topics does the Tape India blog cover?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Our blog features expert articles on adhesive technology, material science, industrial tape applications, buyer's guides, and best practices for industries like electronics, HVAC, and packaging.\"}}]}]}","CTA":"Read the Latest Articles","Schema Type":"Blog + FAQ"}]
 ];
 
 // Helper function to generate a summary if one isn't explicitly provided.
 const generateSummary = (item: Omit<SeoPageData, 'summary' | 'faqs'>): string => {
+    // A specific summary was requested for the homepage.
+    if (item["Page Name"] === "Home") {
+        return "For over 65 years, Tape India has been the trusted B2B supplier of high-performance adhesive tapes. From heavy-duty packaging tapes to precision electronics solutions, we deliver quality and reliability to industries across India. As a Chennai-based manufacturer, we supply industrial and speciality tapes nationwide, handling bulk orders and fast delivery to all major cities.";
+    }
     return `${item.H1}. ${item["Meta Description (≤160 chars)"]} As an ISO-certified manufacturer since 1957, we guarantee quality and reliability for all industrial applications, offering custom sizes and Pan-India delivery for bulk and OEM orders. Our commitment to excellence ensures you receive the best adhesive solutions for your specific needs.`;
 };
 
