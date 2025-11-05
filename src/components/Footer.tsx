@@ -122,7 +122,7 @@ export default function Footer() {
             <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
           </div>
           <div className="space-x-4">
-            <Link to="/seo-content-hub" className="text-gray-500 hover:text-gray-300 transition-colors">SEO Hub</Link>
+            <Link to="/admin/seo-content-hub" className="text-gray-500 hover:text-gray-300 transition-colors">SEO Hub</Link>
             <Link to="/admin/login" className="text-gray-500 hover:text-gray-300 transition-colors">Admin Login</Link>
           </div>
         </div>
