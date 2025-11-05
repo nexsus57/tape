@@ -1,30 +1,19 @@
-
-
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
-import { useIndustry } from '../context/IndustryContext';
 import { INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
+import { seoData } from '../data/seoData';
 
 interface FilterButtonProps {
     label: string;
     isActive: boolean;
     to: string;
 }
-
-// Helper to convert simple markdown to HTML
-const markdownToHtml = (text: string | undefined): string => {
-  if (!text) return '';
-  return text
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>') // Process headings first
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Then process bold
-    .replace(/\n/g, '<br />'); // Then handle line breaks
-};
 
 const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
     return (
@@ -46,52 +35,53 @@ export default function ProductsListPage() {
     const location = useLocation();
     const { products } = useProducts();
     const { categories } = useCategories();
-    const { industries: detailedIndustries } = useIndustry();
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
-    const breadcrumbTitle = useMemo(() => {
-        const categoryId = searchParams.get('category');
-        const industryId = searchParams.get('industry');
-        if (industryId) return INDUSTRIES.find(i => i.id === industryId)?.name || 'Industry';
-        if (categoryId) return categories.find(c => c.id === categoryId)?.name || 'Category';
-        return 'All Products';
-    }, [searchParams, categories]);
-    
-    const { filteredProducts, pageTitle, pageDescription, breadcrumb, pageContent, breadcrumbSchema, categoryH1 } = useMemo(() => {
+    const { 
+      filteredProducts, 
+      pageTitle, 
+      pageDescription, 
+      breadcrumb, 
+      pageContent, 
+      breadcrumbSchema, 
+      pageH1 
+    } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
         
         let prods = products;
-        let title = 'All Products';
-        let desc = `Browse our complete range of over ${products.length} industrial adhesive tapes. As a leading manufacturer in India, we supply solutions for every application.`;
-        let crumb = null;
-        let pageContent: string | null = null;
-        let catH1: string | null = null;
+        let pageData;
 
         if (industryId) {
             const industry = INDUSTRIES.find(i => i.id === industryId);
-            const industryDetail = detailedIndustries.find(i => i.id === industryId);
             if (industry) {
                 prods = products.filter(p => p.industries?.includes(industryId));
-                title = industryDetail?.seo?.title || industry.name;
-                desc = industryDetail?.seo?.description || `Explore specialized tapes for the ${industry.name} industry.`;
-                pageContent = industryDetail?.description || null;
-                crumb = { name: 'Industries', link: '/industries' };
+                pageData = seoData.find(p => p["Page Name"] === industry.name);
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
             if (category) {
                 prods = products.filter(p => p.category === categoryId);
-                title = category.seo?.title || category.name;
-                desc = category.seo?.description || `View all products in the ${category.name} category.`;
-                pageContent = category.description || null;
-                crumb = null; // Direct child of "Products"
-                catH1 = category.seo?.h1 || category.name;
+                pageData = seoData.find(p => p["Page Name"] === category.name);
             }
         }
+
+        if (!pageData) {
+            pageData = seoData.find(p => p["Page Name"] === "All Products List");
+        }
+
+        const title = pageData?.["Title (≤60 chars)"] || 'All Industrial Tapes | Tape India';
+        const desc = pageData?.["Meta Description (≤160 chars)"] || `Browse our complete range of over ${products.length} industrial adhesive tapes.`;
+        const content = pageData?.summary || null;
+        const h1 = pageData?.H1 || 'All Products';
         
+        let crumb = null;
+        if(industryId) crumb = { name: 'Industries', link: '/industries' };
+        
+        const breadcrumbTitle = pageData?.["Page Name"] || 'All Products';
+
         const listItems = [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" },
         ];
@@ -102,7 +92,7 @@ export default function ProductsListPage() {
             listItems.push({ "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" });
         }
         
-        if (breadcrumbTitle !== 'All Products') {
+        if (breadcrumbTitle !== 'All Products List') {
              const canonicalUrl = `https://tapeindia.shop${location.pathname}${location.search}`;
              listItems.push({ "@type": "ListItem", "position": listItems.length + 1, "name": breadcrumbTitle, "item": canonicalUrl });
         }
@@ -118,33 +108,12 @@ export default function ProductsListPage() {
             pageTitle: title,
             pageDescription: desc,
             breadcrumb: crumb,
-            pageContent,
+            pageContent: content,
             breadcrumbSchema: JSON.stringify(bSchema),
-            categoryH1: catH1 || breadcrumbTitle,
+            pageH1: h1,
+            breadcrumbTitle: breadcrumbTitle
         };
-    }, [searchParams, products, categories, detailedIndustries, breadcrumbTitle, location.pathname, location.search]);
-    
-    const faqSchema = useMemo(() => {
-        const categoryId = searchParams.get('category');
-        const categoryFaqs: { [key: string]: object } = {
-            'reflective-tapes': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Are you a reflective tape manufacturer?","acceptedAnswer":{"@type":"Answer","text":"Yes — as a leading reflective tape manufacturer in India, we produce and supply a wide range of reflective tapes for safety and industrial use across the country."}}
-              ]
-            },
-            'double-sided-tapes': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Is your double sided tape safe for clothes?","acceptedAnswer":{"@type":"Answer","text":"Yes — our double-sided tapes are fabric-safe and designed to leave minimal residue, making them suitable for clothing, hemming, and textile applications."}},
-                {"@type":"Question","name":"Do you offer bulk rolls for garment manufacturing?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply bulk rolls of double-sided fabric tape for garment manufacturing units, tailors, and textile businesses."}}
-              ]
-            }
-        };
-        return categoryFaqs[categoryId || ''] || null;
-    }, [searchParams]);
+    }, [searchParams, products, categories, location.pathname, location.search]);
 
     useEffect(() => {
         // Close mobile filter when route changes
@@ -157,10 +126,9 @@ export default function ProductsListPage() {
     return (
         <main className="py-16 md:py-24 bg-brand-gray min-h-[60vh]">
             <Helmet>
-                <title>{`${pageTitle} | Tape India`}</title>
+                <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
-                {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
@@ -180,20 +148,20 @@ export default function ProductsListPage() {
                             ) : (
                                 <li className="flex items-center">
                                   <Link to="/products" className="text-gray-500 hover:text-brand-blue">Products</Link>
-                                  <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                                  {(currentCategoryId || currentIndustryId) && <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>}
                                </li>
                             )}
-                            <li className="text-brand-blue-dark" aria-current="page">{breadcrumbTitle}</li>
+                            {(currentCategoryId || currentIndustryId) && <li className="text-brand-blue-dark" aria-current="page">{pageH1.split('—')[0].trim()}</li>}
                           </ol>
                         </nav>
-                        <h1 className="font-extrabold">{categoryH1}</h1>
+                        <h1 className="font-extrabold">{pageH1}</h1>
                     </div>
                 </AnimatedSection>
                 
                 {pageContent && (
                     <AnimatedSection className="delay-100">
                         <div className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-lg shadow-sm border-l-4 border-brand-accent">
-                            <div className="text-slate-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownToHtml(pageContent) }} />
+                            <div className="text-slate-600 text-lg leading-relaxed prose prose-lg" dangerouslySetInnerHTML={{ __html: pageContent }} />
                         </div>
                     </AnimatedSection>
                 )}
@@ -234,7 +202,7 @@ export default function ProductsListPage() {
                             aria-haspopup="true"
                             aria-expanded={isMobileFilterOpen}
                          >
-                            <span className="font-semibold">{breadcrumbTitle}</span>
+                            <span className="font-semibold">{pageH1.split('—')[0].trim()}</span>
                             <i className={`fas fa-chevron-down text-gray-500 transition-transform ${isMobileFilterOpen ? 'rotate-180' : ''}`}></i>
                          </button>
                          {isMobileFilterOpen && (
