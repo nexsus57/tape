@@ -79,7 +79,7 @@ export default function HomePage() {
           <img 
             src="https://file.garden/aIULwzQ_QkPKQcGw/banner.webp" 
             alt="Banner showing various industrial tapes from Tape India, a leading manufacturer and supplier in Chennai"
-            className="w-full h-full object-cover animate-ken-burns"
+            className="w-full h-full object-cover"
             loading="eager"
             aria-hidden="true"
           />
