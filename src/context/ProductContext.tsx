@@ -17,7 +17,7 @@ interface ProductProviderProps {
 }
 
 export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
-  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v9', INITIAL_PRODUCTS);
+  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v10', INITIAL_PRODUCTS);
 
   const products = useMemo(() => {
     if (!storedProducts || storedProducts.length === 0) {
