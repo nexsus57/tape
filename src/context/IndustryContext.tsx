@@ -122,7 +122,7 @@ interface IndustryProviderProps {
 }
 
 export const IndustryProvider: FC<IndustryProviderProps> = ({ children }) => {
-  const [industries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v2', INITIAL_INDUSTRIES_DETAILED);
+  const [industries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v3', INITIAL_INDUSTRIES_DETAILED);
 
   const updateIndustry = useCallback((id: string, updatedIndustryData: IndustryDetail) => {
     setIndustries(prev => prev.map(i => (i.id === id ? updatedIndustryData : i)));
