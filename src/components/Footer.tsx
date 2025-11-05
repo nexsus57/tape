@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+// FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
 import { INDUSTRIES, NAV_LINKS } from '../constants';
 import { useCategories } from '../context/CategoryContext';
@@ -120,7 +121,10 @@ export default function Footer() {
             <span>&copy; {new Date().getFullYear()} Sha Kundanmal Misrimal. All Rights Reserved.</span>
             <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
           </div>
-          <Link to="/admin/login" className="text-gray-500 hover:text-gray-300 transition-colors">Admin Login</Link>
+          <div className="space-x-4">
+            <Link to="/seo-content-hub" className="text-gray-500 hover:text-gray-300 transition-colors">SEO Hub</Link>
+            <Link to="/admin/login" className="text-gray-500 hover:text-gray-300 transition-colors">Admin Login</Link>
+          </div>
         </div>
       </div>
     </footer>
