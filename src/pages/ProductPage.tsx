@@ -1,3 +1,4 @@
+
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -50,12 +51,6 @@ export default function ProductPage() {
     const { products } = useProducts();
     const product = products.find(p => p.id === productId);
 
-    const productSeoData = useMemo(() => {
-        if (!product) return null;
-        // Match by "Page Name" which corresponds to the product name in the seoData file
-        return seoData.find(p => p["Page Name"] === product.name);
-    }, [product]);
-
     const [isImageBroken, setIsImageBroken] = useState(false);
     
     useEffect(() => {
@@ -78,7 +73,7 @@ export default function ProductPage() {
         .slice(0, 3);
     }, [product, category, products]);
 
-    if (!product || !productSeoData) {
+    if (!product) {
         // Find a product that might exist in seoData but not in products constant (edge case)
         const seoProduct = seoData.find(p => p["Full URL"].includes(`/product/${productId}`));
         if (seoProduct) {
@@ -95,9 +90,10 @@ export default function ProductPage() {
         return <NotFoundPage />;
     }
     
+    const productSeoData = product.seo;
     const pageTitle = productSeoData["Title (≤60 chars)"];
     const pageDescription = productSeoData["Meta Description (≤160 chars)"];
-    const imageAltText = product.seo?.imageAlt || pageTitle;
+    const imageAltText = pageTitle;
     const h1Text = productSeoData.H1;
 
     const hasImages = product.images && product.images.length > 0;
