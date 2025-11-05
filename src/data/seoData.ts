@@ -217,6 +217,7 @@ export const ALL_PRODUCTS: Product[] = productsSeoData.map(p => {
     const id = new URL(p["Full URL"]).pathname.split('/').pop() || slugify(p["Page Name"]);
     const constantProductData = constantProductsMap.get(id);
 
+    // If for some reason the product content is missing, create a fallback from SEO data.
     if (!constantProductData) {
         console.warn(`No content data found in constants.ts for product with ID: ${id}. Using SEO data as fallback.`);
         return {
@@ -226,21 +227,35 @@ export const ALL_PRODUCTS: Product[] = productsSeoData.map(p => {
             description: p.summary,
             features: [],
             uses: [],
-            category: 'specialty-tapes',
+            category: 'specialty-tapes', // A sensible default
+            industries: [],
             images: p["Image URL"] ? [p["Image URL"]] : [],
             seo: p,
         };
     }
 
-    // Merge: `constantProductData` is the base, `p` (SEO data) is attached.
-    // This ensures rich content from constants.ts is primary.
-    return {
-        ...constantProductData,
-        id, // Ensure ID from URL slug is used
-        seo: p, // Attach the full, enriched SEO object
-        // FIX: Explicitly merge images, prioritizing the `constants.ts` data, to ensure they always appear.
-        images: constantProductData.images?.length ? constantProductData.images : (p["Image URL"] ? [p["Image URL"]] : []),
+    // Explicitly merge data, prioritizing the rich content from constants.ts.
+    // This ensures there are no accidental overwrites.
+    const mergedProduct: Product = {
+        id: id, // Use the canonical ID from the URL
+        name: constantProductData.name,
+        shortDescription: constantProductData.shortDescription,
+        description: constantProductData.description,
+        features: constantProductData.features,
+        uses: constantProductData.uses,
+        category: constantProductData.category,
+        industries: constantProductData.industries,
+        minOrderQty: constantProductData.minOrderQty,
+        brand: constantProductData.brand,
+        color: constantProductData.color,
+        highlights: constantProductData.highlights,
+        availableColors: constantProductData.availableColors,
+        customizable: constantProductData.customizable,
+        images: constantProductData.images, // Directly assign the images array from the rich content.
+        seo: p, // Attach the full SEO object.
     };
+
+    return mergedProduct;
 });
 
 
