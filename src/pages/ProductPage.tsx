@@ -1,5 +1,3 @@
-
-
 import { useMemo, useState, type FC, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -10,32 +8,8 @@ import NotFoundPage from './NotFoundPage';
 import ProductCard from '../components/ProductCard';
 import CanonicalTag from '../components/CanonicalTag';
 import { ColorOption } from '../types';
-
-// Helper to convert simple markdown to HTML
-const markdownToHtml = (text: string | undefined): string => {
-  if (!text) return '';
-
-  return text
-    .split(/\n\n+/) // Split into paragraphs by one or more blank lines
-    .map(paragraph => {
-      const trimmedParagraph = paragraph.trim();
-      if (!trimmedParagraph) return '';
-
-      // Check if the paragraph is a heading
-      if (trimmedParagraph.startsWith('### ')) {
-        // More space above heading, less below to reduce gap to the question.
-        return `<h4 class="text-xl font-bold text-brand-blue-dark mb-4 mt-8">${trimmedParagraph.substring(4)}</h4>`;
-      }
-      
-      // Process bold within the paragraph
-      const withBold = trimmedParagraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      
-      // Add margin below regular paragraphs for spacing, and handle line breaks internally.
-      return `<p class="mb-4">${withBold.replace(/\n/g, '<br />')}</p>`;
-    })
-    .join('');
-};
-
+import { seoData } from '../data/seoData';
+import FaqAccordion from '../components/FaqAccordion';
 
 interface ColorSwatchProps {
     name: string;
@@ -75,6 +49,11 @@ export default function ProductPage() {
     const { products } = useProducts();
     const product = products.find(p => p.id === productId);
 
+    const productSeoData = useMemo(() => {
+        if (!product) return null;
+        return seoData.find(p => p["Page Name"] === product.name);
+    }, [product]);
+
     const [isImageBroken, setIsImageBroken] = useState(false);
     
     useEffect(() => {
@@ -96,171 +75,26 @@ export default function ProductPage() {
         .slice(0, 3);
     }, [product, category, products]);
 
-    const { mainDescription, faqContent } = useMemo(() => {
-        if (!product?.description) {
-            return { mainDescription: '', faqContent: '' };
-        }
-        const faqSeparator = '### Frequently Asked Questions';
-        const parts = product.description.split(faqSeparator);
-        const mainDesc = parts[0] ? parts[0].trim() : '';
-        let faqText = '';
-        if (parts.length > 1 && parts[1]) {
-            // Re-add the separator to be processed by markdownToHtml
-            faqText = faqSeparator + parts[1];
-        }
-        return { mainDescription: mainDesc, faqContent: faqText };
-    }, [product?.description]);
-
-    const faqSchema = useMemo(() => {
-        if (!productId) return null;
-
-        const productFaqs: { [key: string]: object } = {
-            'tissue-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"What is tissue cutting tape used for?","acceptedAnswer":{"@type":"Answer","text":"Tissue cutting tapes are used for bonding, lamination, and precise applications in manufacturing."}},
-                {"@type":"Question","name":"Do you provide custom widths?","acceptedAnswer":{"@type":"Answer","text":"Yes — custom slit rolls are available for tissue tapes."}},
-                {"@type":"Question","name":"Do you supply double-sided tissue tape?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply double-sided tissue tapes in standard and custom widths for industrial use, with Pan-India delivery."}}
-              ]
-            },
-            'heat-transfer-reflective-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"What is heat transfer paper used for?","acceptedAnswer":{"@type":"Answer","text":"It is used for transferring designs, logos, and images onto fabrics in garment manufacturing and textile printing."}},
-                {"@type":"Question","name":"Do you supply bulk heat transfer paper?","acceptedAnswer":{"@type":"Answer","text":"Yes — we supply bulk rolls and sheets of heat transfer paper for printing houses and textile units across India."}}
-              ]
-            },
-             '3m-double-sided-foam-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Do you supply 3M products?","acceptedAnswer":{"@type":"Answer","text":"Yes — we are a trusted supplier of 3M tapes, adhesives, and specialty products, providing Pan-India distribution for industrial needs."}}
-              ]
-            },
-            'aluminium-foil-tape': {
-                "@context":"https://schema.org",
-                "@type":"FAQPage",
-                "mainEntity":[
-                    {"@type":"Question","name":"What is aluminium foil tape used for?","acceptedAnswer":{"@type":"Answer","text":"Aluminium foil tape is primarily used for sealing HVAC ducts, various insulation applications, and for heat reflection purposes in industrial and construction settings."}}
-                ]
-            },
-            'caution-tape': {
-                "@context":"https://schema.org",
-                "@type":"FAQPage",
-                "mainEntity":[
-                    {"@type":"Question","name":"Where can I buy caution tape?","acceptedAnswer":{"@type":"Answer","text":"You can order caution tapes for hazard marking and safety directly from TapeIndia. We are a Chennai-based supplier and we deliver Pan-India."}}
-                ]
-            },
-            'glow-in-the-dark-tape': {
-                "@context":"https://schema.org",
-                "@type":"FAQPage",
-                "mainEntity":[
-                    {"@type":"Question","name":"Where can I use glow tape?","acceptedAnswer":{"@type":"Answer","text":"Glow tapes are ideal for safety marking in emergency exits, stairways, corridors, and other low-light safety zones to ensure visibility during power outages."}}
-                ]
-            },
-            'ptfe-coated-fiberglass-fabric-non-adhesive': {
-                "@context":"https://schema.org",
-                "@type":"FAQPage",
-                "mainEntity":[
-                    {"@type":"Question","name":"What is a PTFE sheet used for?","acceptedAnswer":{"@type":"Answer","text":"PTFE (Teflon) sheets are used for industrial applications requiring heat insulation, chemical resistance, and non-stick surfaces, such as gaskets and release liners."}}
-                ]
-            },
-            'copper-foil-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Where can I buy copper tape near me?","acceptedAnswer":{"@type":"Answer","text":"Tape India is a Chennai-based supplier, but we deliver copper tape and copper foil sheets Pan-India. You can order from anywhere and we will ship it to you."}},
-                {"@type":"Question","name":"What is copper tape used for?","acceptedAnswer":{"@type":"Answer","text":"Copper tape is primarily used for electrical applications such as EMI/RFI shielding, grounding circuits, and electronics repair. It is also popular for craft projects like stained glass."}}
-              ]
-            },
-            'bopp-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Are you a packaging tape manufacturer near me?","acceptedAnswer":{"@type":"Answer","text":"We are a Chennai-based BOPP packaging tape manufacturer. We offer Pan-India shipping, so we can be your supplier regardless of your location."}},
-                {"@type":"Question","name":"Do you offer wholesale cello tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we supply BOPP tape (commonly known as cello tape) at wholesale rates for bulk and commercial buyers across India."}},
-                {"@type":"Question","name":"Do you supply to nearby cities from Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes — as a manufacturer in Chennai, we supply to nearby cities and across all of India with fast dispatch for bulk orders."}}
-              ]
-            },
-            'floor-marking-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"What is Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"Floor marking tape, a type of industrial marking tape, is a durable adhesive used in warehouses, factories, and public spaces to delineate aisles, walkways, and hazardous areas. Made from robust materials like PVC, it ensures safety compliance and enhances organizational efficiency."}},
-                {"@type":"Question","name":"What are the benefits of using Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"The primary benefits include improved safety by marking hazardous zones, enhanced visibility for clear navigation, long-lasting durability against traffic and wear, and slip resistance to prevent accidents. This makes it an essential warehouse safety tape and safety line tape."}},
-                {"@type":"Question","name":"In which applications is Floor Marking Tape commonly used?","acceptedAnswer":{"@type":"Answer","text":"This tape is widely used in warehouses for aisle marking, factories for designating work zones, public spaces for crowd control, and on sports floors for boundary lines. As an adhesive tape for factories, it is indispensable for maintaining an organized and safe environment."}},
-                {"@type":"Question","name":"How do I choose the right Floor Marking Tape?","acceptedAnswer":{"@type":"Answer","text":"When selecting PVC marking tape, consider factors like width for visibility, color for coding specific areas (e.g., yellow for caution), adhesive strength for surface compatibility, and proper installation for longevity. For specialized needs, consider industrial adhesive products tailored to your environment."}}
-              ]
-            },
-            'anti-skid-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Where can I buy anti-skid tape?","acceptedAnswer":{"@type":"Answer","text":"You can order high-quality anti-skid tape directly from Tape India. We are a Chennai-based supplier and deliver our safety grip tapes across India."}},
-                {"@type":"Question","name":"What is an anti-skid tape?","acceptedAnswer":{"@type":"Answer","text":"We supply anti-skid tape in various standard widths. We can also provide custom lengths and potentially custom widths based on your bulk order requirements."}}
-              ]
-            },
-            'masking-tape': {
-              "@context":"https://schema.org",
-              "@type":"FAQPage",
-              "mainEntity":[
-                {"@type":"Question","name":"Do you manufacture masking tape in Chennai?","acceptedAnswer":{"@type":"Answer","text":"Yes — we have a manufacturing and dispatch facility in Chennai for producing high-quality masking tapes for automotive, painting, and industrial use."}},
-                {"@type":"Question","name":"Are custom widths available for masking tape?","acceptedAnswer":{"@type":"Answer","text":"Yes, we can slit masking tapes to custom widths based on your specific requirements for bulk orders."}}
-              ]
-            }
-        };
-        
-        return productFaqs[productId] || null;
-    }, [productId]);
-
-    if (!product) {
+    if (!product || !productSeoData) {
         return <NotFoundPage />;
     }
     
-    const pageTitle = product.seo?.title || `${product.name} | Tape India`;
-    const pageDescription = product.seo?.description || product.shortDescription;
-    const imageAltText = product.seo?.imageAlt || product.seo?.title || product.name;
-    const h1Text = product.seo?.h1 || product.name;
+    const pageTitle = productSeoData["Title (≤60 chars)"];
+    const pageDescription = productSeoData["Meta Description (≤160 chars)"];
+    const imageAltText = product.seo?.imageAlt || pageTitle;
+    const h1Text = productSeoData.H1;
 
     const hasImages = product.images && product.images.length > 0;
     const showPlaceholder = !hasImages || isImageBroken;
 
     const hasOptions = (product.availableColors && product.availableColors.length > 0) || product.customizable;
     
-    const productUrl = `https://tapeindia.shop/product/${product.id}`;
-
-    const productSchema = {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        "name": product.name,
-        "image": (product.images && product.images.length > 0 ? product.images[0] : []),
-        "description": pageDescription,
-        "sku": product.id,
-        "brand": {
-            "@type": "Brand",
-            "name": product.brand || 'Tape India'
-        },
-        "offers": {
-            "@type": "Offer",
-            "url": productUrl,
-            "priceCurrency": "INR",
-            "availability": "https://schema.org/InStock",
-            "seller": {
-                "@type": "Organization",
-                "name": "Tape India"
-            }
-        }
-    };
-
     return (
         <>
             <Helmet>
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
-                <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
-                {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
+                <script type="application/ld+json">{productSeoData["Combined Schema (JSON-LD)"]}</script>
             </Helmet>
             <CanonicalTag />
             
@@ -316,15 +150,12 @@ export default function ProductPage() {
                         {/* Right Column: Product Details */}
                         <div className="lg:col-span-3">
                             <h1 className="font-extrabold text-brand-blue-dark mb-3 leading-tight">{h1Text}</h1>
-                            <p className="text-slate-600 text-lg leading-relaxed mb-6">{product.shortDescription}</p>
                             
                              <div className="space-y-6 text-slate-700">
-                               {mainDescription && (
-                                   <div className="text-base leading-relaxed">
-                                       <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
-                                       <div className="mt-4" dangerouslySetInnerHTML={{ __html: markdownToHtml(mainDescription) }} />
-                                   </div>
-                                )}
+                                <div className="prose prose-lg max-w-none text-base leading-relaxed text-slate-600">
+                                   <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
+                                   <p className="mt-4">{productSeoData.summary}</p>
+                                </div>
 
                                 {product.features && product.features.length > 0 && (
                                     <div>
@@ -397,9 +228,14 @@ export default function ProductPage() {
                     </div>
 
                     {/* FAQ Section */}
-                    {faqContent && (
+                    {productSeoData.faqs && productSeoData.faqs.length > 0 && (
                         <div className="bg-white p-6 md:p-8 rounded-xl shadow-md mt-8">
-                           <div className="text-slate-700 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownToHtml(faqContent) }} />
+                           <h2 className="text-2xl font-bold text-brand-blue-dark mb-6">Frequently Asked Questions</h2>
+                           <div className="space-y-4">
+                               {productSeoData.faqs.map((faq, index) => (
+                                   <FaqAccordion key={index} question={faq.name} answer={faq.acceptedAnswer.text} />
+                               ))}
+                           </div>
                         </div>
                     )}
                 </div>
