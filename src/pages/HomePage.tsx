@@ -1,4 +1,3 @@
-
 import { useMemo } from 'react';
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
@@ -79,7 +78,7 @@ export default function HomePage() {
                         <img 
                             src="https://file.garden/aIULwzQ_QkPKQcGw/banner.webp" 
                             alt="Industrial tape manufacturing facility"
-                            className="w-full h-full object-cover object-center md:animate-ken-burns"
+                            className="w-full h-full object-cover object-center"
                         />
                         <div className="absolute inset-0 bg-brand-blue-dark/70"></div>
                     </div>
@@ -102,6 +101,32 @@ export default function HomePage() {
                         </AnimatedSection>
                     </div>
                 </header>
+
+                {/* About Us Section */}
+                <section className="py-16 md:py-24 bg-white">
+                    <div className="container mx-auto px-5 lg:px-8">
+                        <AnimatedSection>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                                <div className="order-2 lg:order-1">
+                                    <img 
+                                        src="https://file.garden/aIULwzQ_QkPKQcGw/about-us-homepage.webp" 
+                                        alt="Tape India manufacturing facility showing rolls of industrial tape"
+                                        className="rounded-lg shadow-xl w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div className="order-1 lg:order-2">
+                                    <h2 className="text-3xl font-bold mb-4 text-brand-blue-dark">Your Adhesive Solutions Partner Since 1957</h2>
+                                    <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                                        Founded as Sha Kundanmal Misrimal, Tape India has grown from a local Chennai supplier to a national leader in industrial adhesive solutions. With over 65 years of expertise, we are committed to delivering unmatched quality, reliability, and innovation to industries across India.
+                                    </p>
+                                    <Link to="/about" className="bg-brand-accent text-white font-bold py-3 px-6 rounded-md hover:bg-brand-accent-dark transition-colors text-base inline-flex items-center">
+                                        Learn More About Us <i className="fas fa-arrow-right ml-2"></i>
+                                    </Link>
+                                </div>
+                            </div>
+                        </AnimatedSection>
+                    </div>
+                </section>
 
                 {/* Popular Products Section */}
                 {popularProducts.length > 0 && (
