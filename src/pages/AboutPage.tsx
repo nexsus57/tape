@@ -1,5 +1,3 @@
-
-
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
@@ -49,8 +47,8 @@ export default function AboutPage() {
   return (
     <>
       <Helmet>
-        <title>About Tape India | Leading Tape Company in Chennai</title>
-        <meta name="description" content="Learn about Tape India, a leading tape company in Chennai since 1957. Discover our history, mission, and commitment to quality as a top tape supplier in India." />
+        <title>About Sha Kundanmal Misrimal | Since 1957</title>
+        <meta name="description" content="Family-run industrial tape manufacturer since 1957. ISO-grade, compliant, serving OEMs across India with custom sizes and reliable supply." />
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
       <CanonicalTag />
@@ -60,7 +58,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-5 lg:px-8 py-20 md:py-24 text-center">
             <AnimatedSection>
                 <h1 className="font-extrabold mb-4 text-white">
-                  A Legacy of Adhesion Since 1957
+                  About Sha Kundanmal Misrimal
                 </h1>
                 <p className="text-gray-200 max-w-4xl mx-auto">
                     For over 65 years, Tape India has been more than just a manufacturer; we are the foundational B2B partner for India’s leading industries, delivering reliability you can trust.
@@ -127,31 +125,33 @@ export default function AboutPage() {
                     </div>
                     <div className="bg-white p-8 rounded-lg shadow-sm text-center hover:shadow-xl transition-shadow duration-300 border-t-4 border-brand-accent">
                         <InnovationIcon className="h-12 w-12 mx-auto text-brand-accent mb-5" />
-                        <h3 className="mb-3">Driven by Innovation</h3>
-                        <p className="text-gray-600">Industries evolve, and so do we. We invest in R&D to stay ahead of the curve, creating next-generation products for tomorrow's challenges.</p>
+                        <h3 className="mb-3">Continuous Innovation</h3>
+                        <p className="text-gray-600">We constantly explore new materials and technologies to bring you cutting-edge adhesive solutions that drive progress.</p>
                     </div>
                     <div className="bg-white p-8 rounded-lg shadow-sm text-center hover:shadow-xl transition-shadow duration-300 border-t-4 border-brand-accent">
                         <IntegrityIcon className="h-12 w-12 mx-auto text-brand-accent mb-5" />
-                        <h3 className="mb-3">Integrity in Action</h3>
-                        <p className="text-gray-600">Trust is earned. We conduct our business with unwavering integrity and transparency to build lasting, ethical relationships.</p>
+                        <h3 className="mb-3">Integrity and Trust</h3>
+                        <p className="text-gray-600">Our business is built on a foundation of honesty and transparency. We build lasting relationships based on trust.</p>
                     </div>
                 </div>
             </AnimatedSection>
         </div>
       </main>
-      
-      {/* Call to Action Section */}
-      <section className="bg-brand-blue-dark">
-        <div className="container mx-auto px-5 lg:px-8 py-20 text-center">
-            <AnimatedSection>
-                <h2 className="text-white mb-5">Partner with an Industry Leader</h2>
-                <p className="text-blue-200 max-w-2xl mx-auto mb-10">
-                    Ready to experience the Tape India difference? Explore our extensive product range or contact our technical experts to discuss your specific requirements.
+
+      {/* CTA Section */}
+      <section className="bg-brand-gray py-16 md:py-24">
+        <div className="container mx-auto px-5 lg:px-8">
+            <AnimatedSection className="max-w-3xl mx-auto text-center">
+                <h2 className="mb-6">Partner with an Industry Leader</h2>
+                <p className="text-gray-600 mb-10">
+                    Ready to experience the Tape India difference? Contact our team today to discuss your project requirements, request a sample, or get a personalized quote.
                 </p>
-                <div className="flex justify-center items-center flex-col sm:flex-row gap-4">
-                  <Link to="/products" className="bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md hover:bg-yellow-400 transition-colors w-full sm:w-auto">View Our Products</Link>
-                  <Link to="/contact" className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-md hover:bg-white hover:text-brand-blue-dark transition-colors w-full sm:w-auto">Contact Us</Link>
-                </div>
+                <Link 
+                    to="/request-quote" 
+                    className="inline-block bg-brand-amber text-white font-bold py-3 px-8 rounded-lg hover:bg-amber-600 transition-all duration-300 transform hover:scale-105"
+                >
+                    Request a Bulk Quote
+                </Link>
             </AnimatedSection>
         </div>
       </section>
