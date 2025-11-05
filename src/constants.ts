@@ -1,3 +1,4 @@
+
 import { Product, Category, Industry, NavLinkData, Testimonial } from './types';
 
 export const NAV_LINKS: NavLinkData[] = [
@@ -82,9 +83,9 @@ export const CATEGORIES: Category[] = [
         subtitle: 'Hazard marking, floor safety, and security tapes.',
         description: "As a leading **Safety Tapes manufacturer** and **OEM tape supplier**, Tape India offers a comprehensive range of industrial-grade solutions designed to enhance workplace safety. Our selection of **heavy duty tape** includes floor marking, anti-skid, and hazard tapes, all engineered for reliability in demanding environments.\n\nWe are the trusted **Safety Tapes supplier India** relies on for **bulk** orders, offering competitive **Safety Tapes price India**-wide and fast **Pan India delivery**. Our platform makes it easy to **buy Safety Tapes online India**, ensuring you receive the **best Safety Tapes for industrial use** for applications in **electronics and automotive** sectors. As a **custom size Safety Tapes supplier**, we can also accommodate specific project requirements.\n\n### Frequently Asked Questions\n\n**Where to buy Safety Tapes in India?**\nTape India is your definitive source for high-quality **industrial tape** and **adhesive tape** solutions. Request a **Safety Tapes datasheet and specs** to understand **what is Safety Tapes used for** and find the perfect product for your needs.",
         seo: {
-            title: "Safety Tapes - Industrial Adhesive Tape | Tape India",
-            description: "Buy Safety Tapes from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datasheet.",
-            h1: "Safety Tapes for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+            title: "Safety Tapes Manufacturer & Bulk Supplier | Sha Kundanmal M…",
+            description: "Buy Safety Tapes in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+            h1: "Safety Tapes – Manufacturer & Wholesaler in India"
         }
     },
     {
@@ -162,9 +163,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp'],
     seo: {
-      title: "Hazard Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Hazard Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datasheet.",
-      h1: "Hazard Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Hazard Tape Manufacturer & Bulk Supplier | Sha Kundanmal Misrimal",
+      description: "Buy Hazard Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Hazard Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -178,9 +179,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/floor%20marking%20tape.webp'],
     seo: {
-      title: "Floor Marking Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Floor Marking Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datash...",
-      h1: "Floor Marking Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Floor Marking Tape Manufacturer & Bulk Supplier | Sha Kunda…",
+      description: "Buy Floor Marking Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Floor Marking Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -194,9 +195,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/coloured-anti-slip-tape.webp'],
     seo: {
-      title: "Anti-Skid Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Anti-Skid Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datasheet.",
-      h1: "Anti-Skid Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Anti-Skid Tape Manufacturer & Bulk Supplier | Sha Kundanmal…",
+      description: "Buy Anti-Skid Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Anti-Skid Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -210,9 +211,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/caution%20tape.webp'],
     seo: {
-      title: "Caution Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Caution Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datasheet.",
-      h1: "Caution Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Caution Tape Manufacturer & Bulk Supplier | Sha Kundanmal M…",
+      description: "Buy Caution Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Caution Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -226,9 +227,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/barricade%20tape.webp'],
     seo: {
-      title: "Barricade Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Barricade Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical datasheet.",
-      h1: "Barricade Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Barricade Tape Manufacturer & Bulk Supplier | Sha Kundanmal…",
+      description: "Buy Barricade Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Barricade Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -242,9 +243,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/tamper-proof-tape-1.webp'],
     seo: {
-      title: "Tamper Proof / Security Packing Tape - Industrial Adhesive Tape | T...",
-      description: "Buy Tamper Proof / Security Packing Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote o...",
-      h1: "Tamper Proof / Security Packing Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Tamper Proof / Security Packing Tape Manufacturer & Bulk Su…",
+      description: "Buy Tamper Proof / Security Packing Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote …",
+      h1: "Tamper Proof / Security Packing Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -258,9 +259,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/nastro%20heavy%20duty%20floor%20marking.webp'],
     seo: {
-      title: "Nastro Heavy Duty Floor Marking Tape - Industrial Adhesive Tape | T...",
-      description: "Buy Nastro Heavy Duty Floor Marking Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote o...",
-      h1: "Nastro Heavy Duty Floor Marking Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Nastro Heavy Duty Floor Marking Tape Manufacturer & Bulk Su…",
+      description: "Buy Nastro Heavy Duty Floor Marking Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote …",
+      h1: "Nastro Heavy Duty Floor Marking Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -274,9 +275,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/glowindark.webp'],
     seo: {
-      title: "Glow In The Dark Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Glow In The Dark Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical dat...",
-      h1: "Glow In The Dark Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Glow In The Dark Tape Manufacturer & Bulk Supplier | Sha Ku…",
+      description: "Buy Glow In The Dark Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Glow In The Dark Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -290,9 +291,9 @@ export const PRODUCTS: Product[] = [
     industries: ['print-labels-signage-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/Photoluminescent%20Film.webp'],
     seo: {
-      title: "Photoluminescent Film - Industrial Adhesive Tape | Tape India",
-      description: "Buy Photoluminescent Film from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical dat...",
-      h1: "Photoluminescent Film for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Photoluminescent Film Manufacturer & Bulk Supplier | Sha Ku…",
+      description: "Buy Photoluminescent Film in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Photoluminescent Film – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -306,9 +307,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/anti%20skid%20glow%20in%20dark.webp'],
     seo: {
-      title: "Anti-Skid Tape with Centre Glow - Industrial Adhesive Tape | Tape I...",
-      description: "Buy Anti-Skid Tape with Centre Glow from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or tec...",
-      h1: "Anti-Skid Tape with Centre Glow for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Anti-Skid Tape with Centre Glow Manufacturer & Bulk Supplie…",
+      description: "Buy Anti-Skid Tape with Centre Glow in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Anti-Skid Tape with Centre Glow – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -322,9 +323,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry', 'electronic-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/esd%20floor%20marking.webp'],
     seo: {
-      title: "ESD Floor Marking Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy ESD Floor Marking Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical da...",
-      h1: "ESD Floor Marking Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "ESD Floor Marking Tape Manufacturer & Bulk Supplier | Sha K…",
+      description: "Buy ESD Floor Marking Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "ESD Floor Marking Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -338,9 +339,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/glowindark%20marking.webp'],
     seo: {
-      title: "Glow in Dark Marking Tapes - Industrial Adhesive Tape | Tape India",
-      description: "Buy Glow in Dark Marking Tapes from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technica...",
-      h1: "Glow in Dark Marking Tapes for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Glow in Dark Marking Tapes Manufacturer & Bulk Supplier | S…",
+      description: "Buy Glow in Dark Marking Tapes in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Glow in Dark Marking Tapes – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -354,9 +355,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/anti%20skid.webp'],
     seo: {
-      title: "Heavy Duty Anti Skid Tape - Industrial Adhesive Tape | Tape India",
-      description: "Buy Heavy Duty Anti Skid Tape from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or technical...",
-      h1: "Heavy Duty Anti Skid Tape for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Heavy Duty Anti Skid Tape Manufacturer & Bulk Supplier | Sh…",
+      description: "Buy Heavy Duty Anti Skid Tape in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Heavy Duty Anti Skid Tape – Manufacturer & Wholesaler in India"
     }
   },
   {
@@ -370,9 +371,9 @@ export const PRODUCTS: Product[] = [
     industries: ['packaging-industry'],
     images: ['https://file.garden/aIULwzQ_QkPKQcGw/anti%20slip%20bathroom.webp'],
     seo: {
-      title: "Anti-Slip Tape for Bath and Shower - Industrial Adhesive Tape | Tap...",
-      description: "Buy Anti-Slip Tape for Bath and Shower from Tape India. Industrial-grade, bulk supply, custom sizes & Pan-India delivery from Chennai. Request bulk quote or...",
-      h1: "Anti-Slip Tape for Bath and Shower for Industrial Use — Bulk Supply & Fast Pan-India Delivery"
+      title: "Anti-Slip Tape for Bath and Shower Manufacturer & Bulk Supp…",
+      description: "Buy Anti-Slip Tape for Bath and Shower in bulk from a trusted Indian manufacturer. ISO-grade quality, custom sizes, fast pan-India delivery. Get a quote today.",
+      h1: "Anti-Slip Tape for Bath and Shower – Manufacturer & Wholesaler in India"
     }
   },
 
