@@ -1,4 +1,6 @@
 
+import { SeoPageData } from './data/seoData';
+
 export interface ColorOption {
     name: string;
     colors: string[]; // hex codes or 'transparent'
@@ -22,12 +24,7 @@ export interface Product {
   highlights?: string[];
   availableColors?: ColorOption[];
   customizable?: boolean;
-  seo?: {
-    title: string;
-    description: string;
-    h1?: string;
-    imageAlt?: string;
-  };
+  seo: SeoPageData;
 }
 
 export interface Category {
@@ -109,4 +106,5 @@ export interface BlogArticle {
   author: string;
   datePublished: string;
   dateModified: string;
+  seo: SeoPageData;
 }
