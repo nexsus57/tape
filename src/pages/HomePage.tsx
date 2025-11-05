@@ -97,7 +97,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-5 lg:px-8">
           <AnimatedSection className="max-w-4xl mx-auto text-center">
-              <h2 className="mb-6">Your Adhesive Solutions Partner Since 1957</h2>
+              <h2 className="mb-6">A Leading Industrial Tape Supplier from Chennai</h2>
               <p className="text-gray-600 mb-10">
                 Tape India is a leading manufacturer and B2B supplier of an extensive range of industrial tapes. We are committed to providing cost-effective, high-performance adhesive solutions to diverse industries across India. Our reputation is built on quality, reliability, and prompt delivery, making us the preferred choice for businesses seeking a dependable supply chain partner.
               </p>
@@ -158,7 +158,7 @@ export default function HomePage() {
                <AnimatedSection className="text-center mt-20">
                    <Link
                       to="/products"
-                      className="bg-brand-accent text-white font-bold py-4 px-10 rounded-lg text-lg hover:bg-brand-accent-dark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30"
+                      className="inline-block bg-brand-accent text-white font-bold py-4 px-10 rounded-lg text-lg hover:bg-brand-accent-dark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30"
                     >
                       View All Products
                     </Link>
@@ -170,7 +170,7 @@ export default function HomePage() {
       <section id="industries" className="py-16 md:py-24 bg-brand-gray">
         <div className="container mx-auto px-5 lg:px-8">
             <AnimatedSection className="text-center">
-                <h2 className="font-extrabold mb-6">Solutions For Every Industry</h2>
+                <h2 className="font-extrabold mb-6">Industrial Tape Solutions for Every Sector</h2>
                 <p className="text-gray-600 mb-16 max-w-3xl mx-auto">
                     We provide high-performance tapes engineered for the unique demands of packaging, electronics, HVAC, and more. Discover products tailored for your sector.
                 </p>
