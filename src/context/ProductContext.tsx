@@ -17,15 +17,17 @@ interface ProductProviderProps {
 }
 
 export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
-  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v15', INITIAL_PRODUCTS);
+  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v18', INITIAL_PRODUCTS);
 
   const products = useMemo(() => {
-    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
-    if (!storedProducts || storedProducts.length === 0) {
+    // Robustness check: Ensure stored data is a valid array. If not, or if it's an empty array
+    // (which could indicate corruption), reset to the initial data from the codebase.
+    if (!Array.isArray(storedProducts) || (storedProducts.length === 0 && INITIAL_PRODUCTS.length > 0)) {
+      setProducts(INITIAL_PRODUCTS); // Correct the corrupted value in localStorage for next load
       return INITIAL_PRODUCTS;
     }
     return storedProducts;
-  }, [storedProducts]);
+  }, [storedProducts, setProducts]);
 
   const addProduct = useCallback((productData: Omit<Product, 'id'>) => {
     const newProduct: Product = {
