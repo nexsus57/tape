@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useIndustry } from '../../context/IndustryContext';
+import { INITIAL_INDUSTRIES_DETAILED } from '../../context/IndustryContext';
 
 export default function AdminIndustriesPage() {
-    const { industries } = useIndustry();
+    const industries = INITIAL_INDUSTRIES_DETAILED;
 
     return (
          <div>
