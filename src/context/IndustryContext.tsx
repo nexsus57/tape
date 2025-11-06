@@ -121,15 +121,17 @@ interface IndustryProviderProps {
 }
 
 export const IndustryProvider: FC<IndustryProviderProps> = ({ children }) => {
-  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v5', INITIAL_INDUSTRIES_DETAILED);
+  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v7', INITIAL_INDUSTRIES_DETAILED);
 
   const industries = useMemo(() => {
-    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
-    if (!storedIndustries || storedIndustries.length === 0) {
+    // Robustness check: Ensure stored data is a valid array. If not, or if it's an empty array
+    // (which could indicate corruption), reset to the initial data from the codebase.
+    if (!Array.isArray(storedIndustries) || (storedIndustries.length === 0 && INITIAL_INDUSTRIES_DETAILED.length > 0)) {
+      setIndustries(INITIAL_INDUSTRIES_DETAILED); // Correct the corrupted value in localStorage for next load
       return INITIAL_INDUSTRIES_DETAILED;
     }
     return storedIndustries;
-  }, [storedIndustries]);
+  }, [storedIndustries, setIndustries]);
 
   const updateIndustry = useCallback((id: string, updatedIndustryData: IndustryDetail) => {
     setIndustries(prev => prev.map(i => (i.id === id ? updatedIndustryData : i)));
