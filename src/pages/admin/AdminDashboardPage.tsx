@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import StatCard from '../../components/admin/StatCard';
 import { ProductsIcon, CategoriesIcon, PlusCircleIcon, SettingsIcon, IndustryIcon } from '../../components/icons/AdminIcons';
-import { ALL_PRODUCTS, ALL_CATEGORIES } from '../../data/seoData';
-import { INITIAL_INDUSTRIES_DETAILED } from '../../constants';
+import { ALL_CATEGORIES } from '../../data/seoData';
+import { PRODUCTS, INITIAL_INDUSTRIES_DETAILED } from '../../constants';
 
 
 const AdminDashboardPage = () => {
@@ -12,7 +12,7 @@ const AdminDashboardPage = () => {
             
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <StatCard icon={ProductsIcon} title="Total Products" value={ALL_PRODUCTS.length} />
+                <StatCard icon={ProductsIcon} title="Total Products" value={PRODUCTS.length} />
                 <StatCard icon={CategoriesIcon} title="Total Categories" value={ALL_CATEGORIES.length} />
                 <StatCard icon={IndustryIcon} title="Total Industries" value={INITIAL_INDUSTRIES_DETAILED.length} />
             </div>
