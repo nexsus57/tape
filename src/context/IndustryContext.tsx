@@ -121,9 +121,10 @@ interface IndustryProviderProps {
 }
 
 export const IndustryProvider: FC<IndustryProviderProps> = ({ children }) => {
-  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v4', INITIAL_INDUSTRIES_DETAILED);
+  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v5', INITIAL_INDUSTRIES_DETAILED);
 
   const industries = useMemo(() => {
+    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
     if (!storedIndustries || storedIndustries.length === 0) {
       return INITIAL_INDUSTRIES_DETAILED;
     }
