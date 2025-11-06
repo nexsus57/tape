@@ -1,8 +1,20 @@
-
+import { useMemo } from 'react';
+import { PRODUCTS } from '../../constants';
 import { ALL_CATEGORIES } from '../../data/seoData';
 
 const AdminCategoriesPage = () => {
-    const categories = ALL_CATEGORIES;
+    const categories = useMemo(() => {
+        // Create a map of all known categories from the definitive source for easy lookup of details
+        const categoryDetailsMap = new Map(ALL_CATEGORIES.map(c => [c.id, c]));
+        // Get unique category IDs that are actually used by products
+        const uniqueCategoryIdsInUse = [...new Set(PRODUCTS.map(p => p.category))];
+        // Create the final list of categories that have products, enriching them with details
+        return uniqueCategoryIdsInUse.map(id => {
+            const details = categoryDetailsMap.get(id);
+            // Fallback for categories that might be in use but not in the ALL_CATEGORIES list
+            return details || { id, name: id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), subtitle: 'N/A', image: undefined, icon: '' };
+        }).sort((a, b) => a.name.localeCompare(b.name));
+    }, []);
 
     return (
         <div>
@@ -16,6 +28,7 @@ const AdminCategoriesPage = () => {
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Category</th>
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Slug</th>
                                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Subtitle</th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold text-admin-text-light uppercase tracking-wider">Product Count</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,14 +44,24 @@ const AdminCategoriesPage = () => {
                                     </td>
                                     <td className="px-5 py-4 text-sm text-admin-text-light">{category.id}</td>
                                     <td className="px-5 py-4 text-sm text-admin-text-light">{category.subtitle}</td>
+                                    <td className="px-5 py-4 text-sm text-admin-text-light text-center">
+                                        {PRODUCTS.filter(p => p.category === category.id).length}
+                                    </td>
                                 </tr>
                             ))}
+                            {categories.length === 0 && (
+                                <tr>
+                                    <td colSpan={4} className="text-center py-10 text-gray-500">
+                                        No categories found.
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
             </div>
             <p className="mt-4 text-sm text-admin-text-light">
-                Note: Category management is currently read-only. Data is sourced directly from the codebase.
+                Note: This list is dynamically generated from products in use. Category details are read-only.
             </p>
         </div>
     );
