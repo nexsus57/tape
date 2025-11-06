@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode, useCallback, useMemo, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Product } from '../types';
-import { ALL_PRODUCTS as INITIAL_PRODUCTS } from '../data/seoData'; // Correctly import from the new single source of truth
+import { ALL_PRODUCTS as INITIAL_PRODUCTS } from '../data/seoData';
 
 interface ProductContextType {
   products: Product[];
@@ -17,9 +17,10 @@ interface ProductProviderProps {
 }
 
 export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
-  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v14', INITIAL_PRODUCTS);
+  const [storedProducts, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v15', INITIAL_PRODUCTS);
 
   const products = useMemo(() => {
+    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
     if (!storedProducts || storedProducts.length === 0) {
       return INITIAL_PRODUCTS;
     }
