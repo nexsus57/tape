@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useCallback, FC, useMemo } from 'react';
+import { createContext, useContext, ReactNode, useCallback, FC, useMemo, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle, SeoPageData } from '../types';
 import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
@@ -19,16 +19,18 @@ interface BlogProviderProps {
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
   const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v7', INITIAL_ARTICLES);
 
-  const articles = useMemo(() => {
-    // Robustness check: Ensure stored data is a valid array and reset if corrupted.
+  useEffect(() => {
+    // Data validation: If blog data is corrupted, empty, or not an array, reset to initial data.
     if (!Array.isArray(storedArticles) || (storedArticles.length === 0 && INITIAL_ARTICLES.length > 0)) {
-        setArticles(INITIAL_ARTICLES); // Correct the corrupted value in localStorage
-        // Return a sorted copy of the initial articles
-        return [...INITIAL_ARTICLES].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+      setArticles(INITIAL_ARTICLES);
     }
-    // Always return a new sorted array to prevent state mutation and ensure consistent order.
-    return [...storedArticles].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
   }, [storedArticles, setArticles]);
+
+  const articles = useMemo(() => {
+    const validArticles = Array.isArray(storedArticles) ? storedArticles : INITIAL_ARTICLES;
+    // Always return a new sorted array to prevent state mutation and ensure consistent order.
+    return [...validArticles].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+  }, [storedArticles]);
 
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
     const newSlug = `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
@@ -59,15 +61,15 @@ export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
       seo: newSeo,
     };
 
-    setArticles(prev => [newArticle, ...prev]);
+    setArticles(prev => (Array.isArray(prev) ? [newArticle, ...prev] : [newArticle]));
   }, [setArticles]);
 
   const updateArticle = useCallback((id: string, updatedArticleData: BlogArticle) => {
-    setArticles(prev => prev.map(a => (a.id === id ? updatedArticleData : a)));
+    setArticles(prev => (Array.isArray(prev) ? prev.map(a => (a.id === id ? updatedArticleData : a)) : [updatedArticleData]));
   }, [setArticles]);
 
   const deleteArticle = useCallback((id: string) => {
-    setArticles(prev => prev.filter(a => a.id !== id));
+    setArticles(prev => (Array.isArray(prev) ? prev.filter(a => a.id !== id) : []));
   }, [setArticles]);
 
   const value = { articles, addArticle, updateArticle, deleteArticle };
