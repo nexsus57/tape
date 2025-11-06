@@ -1,13 +1,7 @@
 import type { Product, Category, BlogArticle, SeoPageData } from '../types';
 import { PRODUCTS as CONTENT_PRODUCTS } from '../constants';
 
-// FIX: Re-export SeoPageData to fix import errors in other files.
-export type { SeoPageData };
-
-// --- RAW DATA SOURCE ---
 // This is the single source of truth for SEO content, categories, and blog posts.
-// In a real CMS, this would be fetched from an API.
-
 const rawSeoData: SeoPageData[] = [
     // --- STATIC PAGES ---
     {
@@ -84,8 +78,6 @@ const rawSeoData: SeoPageData[] = [
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-
-    // --- LIST PAGES ---
     {
         "Page Type": "Product",
         "Page Name": "All Products List",
@@ -122,8 +114,6 @@ const rawSeoData: SeoPageData[] = [
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-
-    // --- CATEGORY DATA ---
     {
         id: 'safety-tapes', "Page Type": "Category List", "Page Name": "Safety Tapes", "Full URL": "https://tapeindia.shop/products?category=safety-tapes", "Title (≤60 chars)": "Safety Tapes Manufacturer | Floor Marking & Hazard Tapes", "Meta Description (≤160 chars)": "Tape India manufactures a wide range of safety tapes including floor marking, hazard warning, anti-skid, and barricade tapes for industrial safety.", "H1": "Safety Tapes", "summary": "Enhance workplace safety with our comprehensive range of industrial safety tapes. From high-visibility hazard tapes and durable floor marking solutions to anti-slip and photoluminescent tapes, we provide the tools to clearly mark dangers, direct traffic, and prevent accidents.", "Primary Keywords": "safety tapes, floor marking tape, hazard tape", "Secondary Keywords": "anti-skid tape, barricade tape supplier", "CTA": "Get a Quote", "Schema Type": "CollectionPage", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
     },
@@ -157,8 +147,6 @@ const rawSeoData: SeoPageData[] = [
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-    
-    // --- BLOG ARTICLES (Restored) ---
     { id: "top-10-industrial-tapes-2025", "Page Type": "Blog Post", "Page Name": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025", "Full URL": "https://tapeindia.shop/blog/top-10-industrial-tapes-2025", "Title (≤60 chars)": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025", "Meta Description (≤160 chars)": "Discover the essential industrial tapes for modern manufacturing. An expert review of VHB, Kapton, and other high-performance adhesive tapes from Tape India.", "H1": "Top 10 Industrial Tapes for 2025", "Primary Keywords": "top industrial tapes, VHB Tape, Kapton Tape", "Secondary Keywords": "essential adhesive tapes, vhb tape uses, kapton tape applications", "summary": "As manufacturing evolves, the demand for high-performance adhesive solutions grows. Here's our expert breakdown of the top 10 industrial tapes, including VHB and Kapton Tape, that every forward-thinking manufacturer should have in their toolkit for 2025.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
     { id: "thermal-tapes-vs-thermal-pads", "Page Type": "Blog Post", "Page Name": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution", "Full URL": "https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads", "Title (≤60 chars)": "Thermal Tapes vs. Thermal Pads: Which is Best for You?", "Meta Description (≤160 chars)": "Compare thermal tapes and thermal pads for electronics cooling. Understand the pros and cons to choose the right thermal management solution for your application.", "H1": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution", "Primary Keywords": "thermal tapes, thermal pads, Double-Sided Thermal Tape", "Secondary Keywords": "electronics cooling, heat sink tape, conductive adhesive", "summary": "Effective thermal management is crucial in modern electronics. This guide compares the benefits and applications of thermal tapes versus thermal pads, helping you decide which solution is best for ensuring optimal performance and longevity of your components.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
     { id: "copper-foil-tape-emi-shielding-grounding", "Page Type": "Blog Post", "Page Name": "A Guide to Copper Foil Tape for EMI Shielding and Grounding", "Full URL": "https://tapeindia.shop/blog/copper-foil-tape-emi-shielding-grounding", "Title (≤60 chars)": "Copper Foil Tape for EMI Shielding & Grounding | A Guide", "Meta Description (≤160 chars)": "An expert guide to using Copper Foil Tape for effective EMI shielding and electrical grounding in electronics. Learn about applications and best practices.", "H1": "A Guide to Copper Foil Tape for EMI Shielding and Grounding", "Primary Keywords": "copper foil tape, emi shielding, electrical grounding", "Secondary Keywords": "conductive tape, electronics shielding", "summary": "Electromagnetic interference (EMI) can disrupt sensitive electronics. Our comprehensive guide explores how to effectively use conductive Copper Foil Tape for robust EMI shielding and reliable electrical grounding in a variety of applications.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
@@ -186,42 +174,20 @@ const rawSeoData: SeoPageData[] = [
 
 // --- DATA PROCESSING LOGIC ---
 
-// Export the raw data for pages that need it (like the SEO hub)
 export const seoData = rawSeoData;
 
-// Process and export ALL_PRODUCTS
-// This merges the content from constants.ts with the SEO data from this file.
 export const ALL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
-    // Find the corresponding SEO data for the current product
     const productSeo = seoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
-
-    // If no SEO data is found, create a fallback
     const fallbackSeo: SeoPageData = {
-        "Page Type": "Product",
-        "Page Name": productContent.name,
-        "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
-        "Title (≤60 chars)": `${productContent.name} | Tape India`,
-        "Meta Description (≤160 chars)": productContent.shortDescription,
-        "H1": productContent.name,
-        "Primary Keywords": productContent.name,
-        "Secondary Keywords": productContent.category,
-        summary: productContent.shortDescription,
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [],
-        "Product Schema (JSON-LD)": "{}",
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}",
+        "Page Type": "Product", "Page Name": productContent.name, "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
+        "Title (≤60 chars)": `${productContent.name} | Tape India`, "Meta Description (≤160 chars)": productContent.shortDescription,
+        "H1": productContent.name, "Primary Keywords": productContent.name, "Secondary Keywords": productContent.category,
+        summary: productContent.shortDescription, "CTA": "Request a Quote", "Schema Type": "Product", faqs: [],
+        "Product Schema (JSON-LD)": "{}", "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
     };
-
-    return {
-        ...productContent,
-        seo: productSeo || fallbackSeo,
-    };
+    return { ...productContent, seo: productSeo || fallbackSeo };
 });
 
-// Process and export ALL_CATEGORIES
 export const ALL_CATEGORIES: Category[] = [
     { id: 'safety-tapes', name: 'Safety Tapes', icon: 'ShieldCheckIcon', subtitle: 'Floor marking, hazard, and anti-slip tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp' },
     { id: 'reflective-tapes', name: 'Reflective Tapes', icon: 'SunIcon', subtitle: 'High-visibility tapes for apparel and vehicles.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/silver%20tc.webp' },
@@ -231,16 +197,13 @@ export const ALL_CATEGORIES: Category[] = [
     { id: 'antistatic-esd-tapes', name: 'Antistatic & ESD Tapes', icon: 'ZapIcon', subtitle: 'For electronics manufacturing and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/kapton%20tape.webp' },
 ];
 
-// Process and export ALL_BLOG_ARTICLES
 export const ALL_BLOG_ARTICLES: BlogArticle[] = rawSeoData
     .filter(item => item["Page Type"] === "Blog Post")
     .map((item, index) => {
-        // Logic to find a related product image
         const keywords = `${item["Page Name"]} ${item["Primary Keywords"]}`.toLowerCase();
         let relatedImage = item.image || '';
 
         if (!relatedImage) {
-            // Sort products by name length descending to match longer names first
             const sortedProducts = [...ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
             const productMatch = sortedProducts.find(p => keywords.includes(p.name.toLowerCase()));
             
@@ -255,13 +218,13 @@ export const ALL_BLOG_ARTICLES: BlogArticle[] = rawSeoData
             id: item.id || `blog-post-${index}`,
             title: item["Page Name"],
             summary: item.summary,
-            content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`, // Placeholder content
+            content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`,
             category: "Industry Guides",
             tags: item["Primary Keywords"].split(', '),
-            readTime: Math.floor(Math.random() * (8 - 4 + 1)) + 4, // Random read time between 4-8 mins
+            readTime: Math.floor(Math.random() * (8 - 4 + 1)) + 4,
             image: relatedImage,
             author: "Tape India Experts",
-            datePublished: new Date(Date.now() - index * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Spread posts out
+            datePublished: new Date(Date.now() - index * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             dateModified: new Date().toISOString().split('T')[0],
             seo: item,
         }
