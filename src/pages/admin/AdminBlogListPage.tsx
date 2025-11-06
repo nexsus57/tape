@@ -1,17 +1,11 @@
 
+
 import { Link } from 'react-router-dom';
-import { useBlog } from '../../context/BlogContext';
+import { ALL_BLOG_ARTICLES } from '../../data/seoData';
 import { PlusCircleIcon } from '../../components/icons/AdminIcons';
 
 export default function AdminBlogListPage() {
-  const { articles, deleteArticle } = useBlog();
-
-  const handleDelete = (articleId: string, articleTitle: string) => {
-    if (window.confirm(`Are you sure you want to delete the article "${articleTitle}"? This action cannot be undone.`)) {
-      deleteArticle(articleId);
-      alert(`Article "${articleTitle}" deleted successfully.`);
-    }
-  };
+  const articles = ALL_BLOG_ARTICLES;
 
   return (
     <div>
@@ -56,12 +50,6 @@ export default function AdminBlogListPage() {
                   <td className="px-5 py-4 text-sm">
                     <div className="flex items-center space-x-3">
                       <Link to={`/admin/blog/edit/${article.id}`} className="text-admin-accent hover:text-admin-accent-hover font-semibold">Edit</Link>
-                      <button 
-                        onClick={() => handleDelete(article.id, article.title)} 
-                        className="text-red-500 hover:text-red-700 font-semibold"
-                      >
-                        Delete
-                      </button>
                     </div>
                   </td>
                 </tr>
