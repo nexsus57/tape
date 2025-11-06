@@ -1,7 +1,7 @@
 import { createContext, useContext, ReactNode, useCallback, FC, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Category } from '../types';
-import { ALL_CATEGORIES as INITIAL_CATEGORIES } from '../data/seoData'; // Correctly import from the new single source of truth
+import { ALL_CATEGORIES as INITIAL_CATEGORIES } from '../data/seoData';
 
 interface CategoryContextType {
   categories: Category[];
@@ -17,9 +17,10 @@ interface CategoryProviderProps {
 }
 
 export const CategoryProvider: FC<CategoryProviderProps> = ({ children }) => {
-  const [storedCategories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v9', INITIAL_CATEGORIES);
+  const [storedCategories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v10', INITIAL_CATEGORIES);
 
   const categories = useMemo(() => {
+    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
     if (!storedCategories || storedCategories.length === 0) {
       return INITIAL_CATEGORIES;
     }
