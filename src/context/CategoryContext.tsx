@@ -17,15 +17,17 @@ interface CategoryProviderProps {
 }
 
 export const CategoryProvider: FC<CategoryProviderProps> = ({ children }) => {
-  const [storedCategories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v10', INITIAL_CATEGORIES);
+  const [storedCategories, setCategories] = useLocalStorage<Category[]>('tapeindia_categories_v12', INITIAL_CATEGORIES);
 
   const categories = useMemo(() => {
-    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
-    if (!storedCategories || storedCategories.length === 0) {
+    // Robustness check: Ensure stored data is a valid array. If not, or if it's an empty array
+    // (which could indicate corruption), reset to the initial data from the codebase.
+    if (!Array.isArray(storedCategories) || (storedCategories.length === 0 && INITIAL_CATEGORIES.length > 0)) {
+      setCategories(INITIAL_CATEGORIES); // Correct the corrupted value in localStorage for next load
       return INITIAL_CATEGORIES;
     }
     return storedCategories;
-  }, [storedCategories]);
+  }, [storedCategories, setCategories]);
 
   const addCategory = useCallback((categoryData: Pick<Category, 'name' | 'subtitle' | 'icon'>) => {
     const newCategory: Category = {
