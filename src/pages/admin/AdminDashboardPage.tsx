@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import StatCard from '../../components/admin/StatCard';
 import { ProductsIcon, CategoriesIcon, PlusCircleIcon, SettingsIcon, IndustryIcon } from '../../components/icons/AdminIcons';
 import { ALL_PRODUCTS, ALL_CATEGORIES } from '../../data/seoData';
-import { INITIAL_INDUSTRIES_DETAILED } from '../../context/IndustryContext';
+import { INITIAL_INDUSTRIES_DETAILED } from '../../constants';
 
 
 const AdminDashboardPage = () => {
