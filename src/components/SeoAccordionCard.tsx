@@ -1,5 +1,6 @@
-import type { FC } from 'react';
-import { SeoPageData } from '../data/seoData';
+import type { FC, ReactNode } from 'react';
+// FIX: Import SeoPageData from its source definition in `types.ts` instead of `data/seoData.ts`
+import type { SeoPageData } from '../types';
 
 interface SeoAccordionCardProps {
     pageData: SeoPageData;
@@ -7,7 +8,8 @@ interface SeoAccordionCardProps {
     onToggle: (url: string) => void;
 }
 
-const DetailRow: FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
+// FIX: Use ReactNode type from react import
+const DetailRow: FC<{ label: string; children: ReactNode }> = ({ label, children }) => (
     <div className="py-3 px-4 grid grid-cols-4 gap-4 items-start odd:bg-gray-50">
         <dt className="text-sm font-semibold text-gray-600 col-span-1">{label}</dt>
         <dd className="text-sm text-gray-900 col-span-3">{children}</dd>
