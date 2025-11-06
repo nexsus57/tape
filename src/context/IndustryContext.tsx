@@ -1,5 +1,4 @@
-
-import { createContext, useContext, ReactNode, FC, useCallback } from 'react';
+import { createContext, useContext, ReactNode, FC, useCallback, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { IndustryDetail } from '../types';
 
@@ -122,7 +121,14 @@ interface IndustryProviderProps {
 }
 
 export const IndustryProvider: FC<IndustryProviderProps> = ({ children }) => {
-  const [industries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v3', INITIAL_INDUSTRIES_DETAILED);
+  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v4', INITIAL_INDUSTRIES_DETAILED);
+
+  const industries = useMemo(() => {
+    if (!storedIndustries || storedIndustries.length === 0) {
+      return INITIAL_INDUSTRIES_DETAILED;
+    }
+    return storedIndustries;
+  }, [storedIndustries]);
 
   const updateIndustry = useCallback((id: string, updatedIndustryData: IndustryDetail) => {
     setIndustries(prev => prev.map(i => (i.id === id ? updatedIndustryData : i)));
