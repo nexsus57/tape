@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, FC, useCallback, useMemo } from 'react';
+import { createContext, useContext, ReactNode, FC, useCallback, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { IndustryDetail } from '../types';
 
@@ -121,23 +121,23 @@ interface IndustryProviderProps {
 }
 
 export const IndustryProvider: FC<IndustryProviderProps> = ({ children }) => {
-  const [storedIndustries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v7', INITIAL_INDUSTRIES_DETAILED);
+  const [industries, setIndustries] = useLocalStorage<IndustryDetail[]>('tapeindia_industries_v7', INITIAL_INDUSTRIES_DETAILED);
 
-  const industries = useMemo(() => {
-    // Robustness check: Ensure stored data is a valid array. If not, or if it's an empty array
-    // (which could indicate corruption), reset to the initial data from the codebase.
-    if (!Array.isArray(storedIndustries) || (storedIndustries.length === 0 && INITIAL_INDUSTRIES_DETAILED.length > 0)) {
-      setIndustries(INITIAL_INDUSTRIES_DETAILED); // Correct the corrupted value in localStorage for next load
-      return INITIAL_INDUSTRIES_DETAILED;
+  useEffect(() => {
+    // Data validation: If industry data is corrupted, empty, or not an array, reset to initial data.
+    if (!Array.isArray(industries) || (industries.length === 0 && INITIAL_INDUSTRIES_DETAILED.length > 0)) {
+      setIndustries(INITIAL_INDUSTRIES_DETAILED);
     }
-    return storedIndustries;
-  }, [storedIndustries, setIndustries]);
+  }, [industries, setIndustries]);
 
   const updateIndustry = useCallback((id: string, updatedIndustryData: IndustryDetail) => {
-    setIndustries(prev => prev.map(i => (i.id === id ? updatedIndustryData : i)));
+    setIndustries(prev => (Array.isArray(prev) ? prev.map(i => (i.id === id ? updatedIndustryData : i)) : [updatedIndustryData]));
   }, [setIndustries]);
 
-  const value = { industries, updateIndustry };
+  // Ensure consumers always receive a valid array.
+  const validIndustries = Array.isArray(industries) ? industries : INITIAL_INDUSTRIES_DETAILED;
+
+  const value = { industries: validIndustries, updateIndustry };
 
   return <IndustryContext.Provider value={value}>{children}</IndustryContext.Provider>;
 };
