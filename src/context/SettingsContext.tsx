@@ -1,6 +1,6 @@
 
 
-import { createContext, useContext, ReactNode, FC } from 'react';
+import { createContext, useContext, ReactNode, FC, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Settings } from '../types';
 import { INITIAL_TESTIMONIALS } from '../constants';
@@ -18,7 +18,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
     contact: {
         address: "SHA KUNDANMAL MISRIMAL,\n#52, Narayana Mudali Street,\nSowcarpet, Chennai – 600 079",
         phone1: "+91-9840647096",
-        phone2: "+91-9841137052",
+        phone2: "9841137052",
         email: "tapeindiain@yahoo.com"
     },
     socialLinks: {
@@ -47,7 +47,18 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
-  const [settings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v1', defaultSettings);
+  const [storedSettings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v1', defaultSettings);
+
+  const settings = useMemo(() => {
+    // Robustness check: Ensure stored data is a valid object with key properties.
+    // If not, reset to default settings to prevent site-wide errors.
+    if (!storedSettings || typeof storedSettings !== 'object' || !storedSettings.contact || !storedSettings.popularProductIds) {
+        setSettings(defaultSettings); // Correct the corrupted value in localStorage
+        return defaultSettings;
+    }
+    return storedSettings;
+  }, [storedSettings, setSettings]);
+
 
   const value = { settings, setSettings };
 
