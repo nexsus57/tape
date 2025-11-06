@@ -1,8 +1,7 @@
 import { createContext, useContext, ReactNode, useCallback, FC, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import type { BlogArticle } from '../types';
+import type { BlogArticle, SeoPageData } from '../types';
 import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
-import type { SeoPageData } from '../types';
 
 interface BlogContextType {
   articles: BlogArticle[];
@@ -18,9 +17,10 @@ interface BlogProviderProps {
 }
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v4', INITIAL_ARTICLES);
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v5', INITIAL_ARTICLES);
 
   const articles = useMemo(() => {
+    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
     const articlesToLoad = (!storedArticles || storedArticles.length === 0) ? INITIAL_ARTICLES : storedArticles;
     // Always return articles sorted by most recent date
     return articlesToLoad.sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
