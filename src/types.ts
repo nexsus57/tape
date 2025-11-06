@@ -1,5 +1,43 @@
 
-import { SeoPageData } from './data/seoData';
+// --- SEO TYPE DEFINITIONS (MOVED HERE TO BREAK CIRCULAR DEPENDENCY) ---
+export interface FaqItem {
+    "@type": "Question";
+    name: string;
+    acceptedAnswer: {
+        "@type": "Answer";
+        text: string;
+    };
+}
+
+export interface SeoPageData {
+    "Page Type": "Homepage" | "Product" | "Category List" | "Industry List" | "Static" | "Blog Post" | "Blog List";
+    "Page Name": string;
+    "Full URL": string;
+    "Title (≤60 chars)": string;
+    "Meta Description (≤160 chars)": string;
+    "H1": string;
+    "H2_1"?: string;
+    "H2_2"?: string;
+    "H2_3"?: string;
+    "H2_4"?: string;
+    "H2_5"?: string;
+    "H3"?: string;
+    "H4"?: string;
+    "H5"?: string;
+    "Primary Keywords": string;
+    "Secondary Keywords": string;
+    summary: string;
+    "CTA": string;
+    "Schema Type": "WebSite" | "Product" | "CollectionPage" | "AboutPage" | "ContactPage" | "Article" | "FAQPage";
+    faqs: FaqItem[];
+    "Product Schema (JSON-LD)": string | null;
+    "LocalBusiness Schema (JSON-LD)": string;
+    "FAQ Schema (JSON-LD)": string;
+    "Combined Schema (JSON-LD)": string;
+    "id"?: string; // for products, categories, blogs
+    "image"?: string;
+}
+
 
 export interface ColorOption {
     name: string;
