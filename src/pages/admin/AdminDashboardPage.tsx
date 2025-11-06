@@ -1,25 +1,20 @@
 import { Link } from 'react-router-dom';
 import StatCard from '../../components/admin/StatCard';
 import { ProductsIcon, CategoriesIcon, PlusCircleIcon, SettingsIcon, IndustryIcon } from '../../components/icons/AdminIcons';
-import { useProducts } from '../../context/ProductContext';
-import { useCategories } from '../../context/CategoryContext';
-import { useIndustry } from '../../context/IndustryContext';
+import { ALL_PRODUCTS, ALL_CATEGORIES } from '../../data/seoData';
+import { INITIAL_INDUSTRIES_DETAILED } from '../../context/IndustryContext';
 
 
 const AdminDashboardPage = () => {
-    const { products } = useProducts();
-    const { categories } = useCategories();
-    const { industries } = useIndustry();
-
     return (
         <div>
             <h1 className="text-3xl font-bold text-admin-text mb-6">Dashboard</h1>
             
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <StatCard icon={ProductsIcon} title="Total Products" value={products.length} />
-                <StatCard icon={CategoriesIcon} title="Total Categories" value={categories.length} />
-                <StatCard icon={IndustryIcon} title="Total Industries" value={industries.length} />
+                <StatCard icon={ProductsIcon} title="Total Products" value={ALL_PRODUCTS.length} />
+                <StatCard icon={CategoriesIcon} title="Total Categories" value={ALL_CATEGORIES.length} />
+                <StatCard icon={IndustryIcon} title="Total Industries" value={INITIAL_INDUSTRIES_DETAILED.length} />
             </div>
             
             {/* Other Widgets */}
