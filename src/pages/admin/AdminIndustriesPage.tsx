@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { INITIAL_INDUSTRIES_DETAILED } from '../../context/IndustryContext';
+import { INITIAL_INDUSTRIES_DETAILED } from '../../constants';
 
 export default function AdminIndustriesPage() {
     const industries = INITIAL_INDUSTRIES_DETAILED;
