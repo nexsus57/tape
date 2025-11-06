@@ -1,12 +1,11 @@
-
-
 import { Link } from 'react-router-dom';
-import { ALL_PRODUCTS, ALL_CATEGORIES } from '../../data/seoData';
+import { PRODUCTS } from '../../constants';
+import { ALL_CATEGORIES } from '../../data/seoData';
 import { PlusCircleIcon } from '../../components/icons/AdminIcons';
 import { useMemo } from 'react';
 
 const AdminProductsListPage = () => {
-  const products = ALL_PRODUCTS;
+  const products = PRODUCTS;
   const categories = ALL_CATEGORIES;
 
   const categoryMap = useMemo(() => {
@@ -36,6 +35,7 @@ const AdminProductsListPage = () => {
           <table className="min-w-full leading-normal">
             <thead>
               <tr className="border-b-2 border-admin-border bg-gray-50">
+                <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Image</th>
                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Product Name</th>
                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Category</th>
                 <th className="px-5 py-3 text-left text-xs font-semibold text-admin-text-light uppercase tracking-wider">Description</th>
@@ -45,6 +45,13 @@ const AdminProductsListPage = () => {
             <tbody>
               {products.map((product) => (
                 <tr key={product.id} className="border-b border-admin-border hover:bg-gray-50">
+                  <td className="px-5 py-4 text-sm">
+                    {product.images && product.images.length > 0 ? (
+                      <img src={product.images[0]} alt={product.name} className="w-16 h-16 object-cover rounded-md" />
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-500 text-center">No Image</div>
+                    )}
+                  </td>
                   <td className="px-5 py-4 text-sm">
                     <p className="text-admin-text font-semibold whitespace-no-wrap">{product.name}</p>
                   </td>
@@ -63,7 +70,7 @@ const AdminProductsListPage = () => {
               ))}
               {products.length === 0 && (
                 <tr>
-                    <td colSpan={4} className="text-center py-10 text-gray-500">
+                    <td colSpan={5} className="text-center py-10 text-gray-500">
                         No products found. <Link to="/admin/products/new" className="text-admin-accent hover:underline">Add one now!</Link>
                     </td>
                 </tr>
