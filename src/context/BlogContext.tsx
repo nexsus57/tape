@@ -17,14 +17,18 @@ interface BlogProviderProps {
 }
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v5', INITIAL_ARTICLES);
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v7', INITIAL_ARTICLES);
 
   const articles = useMemo(() => {
-    // Robustness: If local storage is empty or corrupted, fall back to the initial default data.
-    const articlesToLoad = (!storedArticles || storedArticles.length === 0) ? INITIAL_ARTICLES : storedArticles;
-    // Always return articles sorted by most recent date
-    return articlesToLoad.sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
-  }, [storedArticles]);
+    // Robustness check: Ensure stored data is a valid array and reset if corrupted.
+    if (!Array.isArray(storedArticles) || (storedArticles.length === 0 && INITIAL_ARTICLES.length > 0)) {
+        setArticles(INITIAL_ARTICLES); // Correct the corrupted value in localStorage
+        // Return a sorted copy of the initial articles
+        return [...INITIAL_ARTICLES].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+    }
+    // Always return a new sorted array to prevent state mutation and ensure consistent order.
+    return [...storedArticles].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
+  }, [storedArticles, setArticles]);
 
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
     const newSlug = `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
