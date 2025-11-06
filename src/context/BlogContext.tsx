@@ -18,7 +18,7 @@ interface BlogProviderProps {
 }
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [articles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v1', INITIAL_ARTICLES);
+  const [articles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v2', INITIAL_ARTICLES);
 
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
     // A real implementation would fetch the full SEO data or generate it.
