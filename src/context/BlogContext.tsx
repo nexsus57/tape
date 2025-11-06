@@ -1,8 +1,8 @@
 import { createContext, useContext, ReactNode, useCallback, FC, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
-// FIX: Import SeoPageData to explicitly type the dummy SEO object.
-import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES, type SeoPageData } from '../data/seoData';
+import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
+import type { SeoPageData } from '../types';
 
 interface BlogContextType {
   articles: BlogArticle[];
@@ -21,40 +21,40 @@ export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
   const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v4', INITIAL_ARTICLES);
 
   const articles = useMemo(() => {
-    if (!storedArticles || storedArticles.length === 0) {
-      return INITIAL_ARTICLES;
-    }
-    return storedArticles;
+    const articlesToLoad = (!storedArticles || storedArticles.length === 0) ? INITIAL_ARTICLES : storedArticles;
+    // Always return articles sorted by most recent date
+    return articlesToLoad.sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
   }, [storedArticles]);
 
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
-    // A real implementation would fetch the full SEO data or generate it.
-    // For now, we create a placeholder SEO object.
-    // FIX: Explicitly type dummySeoData as SeoPageData to ensure its shape matches the required interface, particularly the string literal union for "Page Type".
-    const dummySeoData: SeoPageData = {
+    const newSlug = `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+
+    const newSeo: SeoPageData = {
         "Page Type": "Blog Post",
         "Page Name": articleData.title,
-        "Full URL": `https://tapeindia.shop/blog/${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-        "Title (≤60 chars)": articleData.title,
+        "Full URL": `https://tapeindia.shop/blog/${newSlug}`,
+        "Title (≤60 chars)": `${articleData.title} | Tape India Blog`,
         "Meta Description (≤160 chars)": articleData.summary,
-        H1: articleData.title,
-        "Primary Keywords": articleData.tags?.join(', ') || '',
-        "Secondary Keywords": '',
-        "FAQ Schema (JSON-LD)": "{}",
+        "H1": articleData.title,
+        "Primary Keywords": articleData.tags?.join(', ') || articleData.title,
+        "Secondary Keywords": articleData.category,
+        summary: articleData.summary,
+        "CTA": "Read More",
+        "Schema Type": "Article",
+        faqs: [],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}",
-        CTA: "Read More",
-        "Schema Type": "Article",
-        summary: articleData.content,
-        faqs: [],
+        id: newSlug,
     };
-
+    
     const newArticle: BlogArticle = {
       ...articleData,
-      id: `${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`,
-      seo: dummySeoData,
+      id: newSlug,
+      seo: newSeo,
     };
+
     setArticles(prev => [newArticle, ...prev]);
   }, [setArticles]);
 
