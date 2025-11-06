@@ -2,7 +2,8 @@
 import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
-import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
+// FIX: Import SeoPageData to explicitly type the dummy SEO object.
+import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES, type SeoPageData } from '../data/seoData';
 
 interface BlogContextType {
   articles: BlogArticle[];
@@ -23,7 +24,8 @@ export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
     // A real implementation would fetch the full SEO data or generate it.
     // For now, we create a placeholder SEO object.
-    const dummySeoData = {
+    // FIX: Explicitly type dummySeoData as SeoPageData to ensure its shape matches the required interface, particularly the string literal union for "Page Type".
+    const dummySeoData: SeoPageData = {
         "Page Type": "Blog Post",
         "Page Name": articleData.title,
         "Full URL": `https://tapeindia.shop/blog/${articleData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
