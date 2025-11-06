@@ -1,6 +1,4 @@
-
-
-import { createContext, useContext, ReactNode, useCallback, FC } from 'react';
+import { createContext, useContext, ReactNode, useCallback, FC, useMemo } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle } from '../types';
 // FIX: Import SeoPageData to explicitly type the dummy SEO object.
@@ -20,7 +18,14 @@ interface BlogProviderProps {
 }
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [articles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v3', INITIAL_ARTICLES);
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v4', INITIAL_ARTICLES);
+
+  const articles = useMemo(() => {
+    if (!storedArticles || storedArticles.length === 0) {
+      return INITIAL_ARTICLES;
+    }
+    return storedArticles;
+  }, [storedArticles]);
 
   const addArticle = useCallback((articleData: Omit<BlogArticle, 'id' | 'seo'>) => {
     // A real implementation would fetch the full SEO data or generate it.
