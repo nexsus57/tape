@@ -264,11 +264,10 @@ const rawSeoData: SeoPageData[] = [
     },
     
     // --- BLOG ARTICLES ---
-    // Placeholder data for blogs.
     {
       id: "top-10-industrial-tapes-2025",
       "Page Type": "Blog Post",
-      "Page Name": "Top 10 Industrial Tapes",
+      "Page Name": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025",
       "Full URL": "https://tapeindia.shop/blog/top-10-industrial-tapes-2025",
       "Title (≤60 chars)": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025",
       "Meta Description (≤160 chars)": "Discover the essential industrial tapes for modern manufacturing. An expert review of VHB, Kapton, and other high-performance adhesive tapes from Tape India.",
@@ -276,11 +275,59 @@ const rawSeoData: SeoPageData[] = [
       "Primary Keywords": "top industrial tapes, essential adhesive tapes",
       "Secondary Keywords": "vhb tape uses, kapton tape applications",
       "summary": "Discover the top 10 essential industrial tapes for modern manufacturing in 2025. An expert review of VHB, Kapton, and other high-performance adhesive tapes.",
+      "image": "https://file.garden/aIULwzQ_QkPKQcGw/tape-variety.webp",
       "CTA": "Read More",
       "Schema Type": "Article",
       faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
     },
-    // Add other blog posts similarly...
+    {
+      id: "thermal-tapes-vs-thermal-pads",
+      "Page Type": "Blog Post",
+      "Page Name": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution",
+      "Full URL": "https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads",
+      "Title (≤60 chars)": "Thermal Tapes vs. Thermal Pads: Which is Best for You?",
+      "Meta Description (≤160 chars)": "Compare thermal tapes and thermal pads for electronics cooling. Understand the pros and cons to choose the right thermal management solution for your application.",
+      "H1": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution",
+      "Primary Keywords": "thermal tapes, thermal pads, electronics cooling",
+      "Secondary Keywords": "heat sink tape, conductive adhesive",
+      "summary": "Compare thermal tapes and thermal pads for electronics cooling. Understand the pros and cons to choose the right thermal management solution for your application.",
+      "image": "https://file.garden/aIULwzQ_QkPKQcGw/thermal-pads.webp",
+      "CTA": "Read More",
+      "Schema Type": "Article",
+      faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+      id: "copper-foil-tape-emi-shielding-grounding",
+      "Page Type": "Blog Post",
+      "Page Name": "A Guide to Copper Foil Tape for EMI Shielding and Grounding",
+      "Full URL": "https://tapeindia.shop/blog/copper-foil-tape-emi-shielding-grounding",
+      "Title (≤60 chars)": "Copper Foil Tape for EMI Shielding & Grounding | A Guide",
+      "Meta Description (≤160 chars)": "An expert guide to using Copper Foil Tape for effective EMI shielding and electrical grounding in electronics. Learn about applications and best practices.",
+      "H1": "A Guide to Copper Foil Tape for EMI Shielding and Grounding",
+      "Primary Keywords": "copper foil tape, emi shielding, electrical grounding",
+      "Secondary Keywords": "conductive tape, electronics shielding",
+      "summary": "An expert guide to using Copper Foil Tape for effective EMI shielding and electrical grounding in electronics. Learn about applications and best practices.",
+      "image": "https://file.garden/aIULwzQ_QkPKQcGw/copper-tape-2.webp",
+      "CTA": "Read More",
+      "Schema Type": "Article",
+      faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+      id: "reflective-tapes-industrial-safety-visibility",
+      "Page Type": "Blog Post",
+      "Page Name": "Enhancing Worker Safety: The Role of Reflective Tapes",
+      "Full URL": "https://tapeindia.shop/blog/reflective-tapes-industrial-safety-visibility",
+      "Title (≤60 chars)": "How Reflective Tapes Enhance Worker Safety and Visibility",
+      "Meta Description (≤160 chars)": "Learn how different types of reflective tapes, from sew-on to adhesive PVC, play a crucial role in enhancing worker visibility and preventing accidents.",
+      "H1": "Enhancing Worker Safety: The Role of Reflective Tapes",
+      "Primary Keywords": "reflective tapes, worker safety, high visibility tape",
+      "Secondary Keywords": "safety apparel, construction safety",
+      "summary": "Learn how different types of reflective tapes, from sew-on to adhesive PVC, play a crucial role in enhancing worker visibility and preventing accidents.",
+      "image": "https://file.garden/aIULwzQ_QkPKQcGw/reflective-vest.webp",
+      "CTA": "Read More",
+      "Schema Type": "Article",
+      faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
+    }
 ];
 
 
@@ -334,17 +381,31 @@ export const ALL_CATEGORIES: Category[] = [
 // Process and export ALL_BLOG_ARTICLES
 export const ALL_BLOG_ARTICLES: BlogArticle[] = rawSeoData
     .filter(item => item["Page Type"] === "Blog Post")
-    .map((item, index) => ({
-        id: item.id || `blog-post-${index}`,
-        title: item["Page Name"],
-        summary: item.summary,
-        content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`, // Placeholder content
-        category: "Industry Guides",
-        tags: item["Primary Keywords"].split(', '),
-        readTime: 5,
-        image: item.image || `https://file.garden/aIULwzQ_QkPKQcGw/blog-placeholder-${index % 4 + 1}.webp`, // Use placeholder images
-        author: "Tape India Experts",
-        datePublished: new Date(Date.now() - index * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        dateModified: new Date().toISOString().split('T')[0],
-        seo: item,
-    }));
+    .map((item, index) => {
+        // Logic to find a related product image
+        const keywords = `${item["Page Name"]} ${item["Primary Keywords"]}`.toLowerCase();
+        let relatedImage = item.image || '';
+        if (!relatedImage) {
+            const productMatch = ALL_PRODUCTS.find(p => keywords.includes(p.name.toLowerCase()));
+            if (productMatch && productMatch.images && productMatch.images.length > 0) {
+                relatedImage = productMatch.images[0];
+            } else {
+                 relatedImage = `https://file.garden/aIULwzQ_QkPKQcGw/blog-placeholder-${index % 4 + 1}.webp`
+            }
+        }
+
+        return {
+            id: item.id || `blog-post-${index}`,
+            title: item["Page Name"],
+            summary: item.summary,
+            content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`, // Placeholder content
+            category: "Industry Guides",
+            tags: item["Primary Keywords"].split(', '),
+            readTime: 5,
+            image: relatedImage,
+            author: "Tape India Experts",
+            datePublished: new Date(Date.now() - index * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            dateModified: new Date().toISOString().split('T')[0],
+            seo: item,
+        }
+    });
