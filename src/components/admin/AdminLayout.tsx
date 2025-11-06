@@ -1,13 +1,12 @@
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
+// FIX: Imported Outlet from react-router-dom for v6 layout routing.
+import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import AdminHeader from './AdminHeader';
 import Analytics from '../Analytics';
 
-interface AdminLayoutProps {
-  children: ReactNode;
-}
-
-const AdminLayout = ({ children }: AdminLayoutProps) => {
+// FIX: Removed children prop to use Outlet for nested routes in react-router-dom v6.
+const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -20,7 +19,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
         
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-admin-bg">
           <div className="container mx-auto px-6 py-8">
-            {children}
+            <Outlet />
           </div>
         </main>
       </div>
