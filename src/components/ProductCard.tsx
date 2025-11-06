@@ -18,13 +18,14 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   }, [product.id]);
 
   const showPlaceholder = !hasImage || isImageBroken;
-  const imageAltText = product.seo?.title || product.name;
+  // FIX: Property 'title' does not exist on type 'SeoPageData'. Use 'Title (≤60 chars)' instead.
+  const imageAltText = product.seo?.["Title (≤60 chars)"] || product.name;
 
   return (
     <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
       
       <Link to={`/product/${product.id}`} className="relative w-full flex-shrink-0" aria-label={`View details for ${product.name}`}>
-        <div className="h-48 bg-white flex items-center justify-center p-2">
+        <div className="h-48 bg-white flex items-center justify-center overflow-hidden">
           {showPlaceholder ? (
             <div className="w-full h-full bg-slate-50 flex items-center justify-center p-2 text-center">
               <h3 className="font-bold text-slate-700 text-xl leading-tight group-hover:scale-105 transition-transform duration-300">
@@ -35,7 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
              <img 
                src={product.images?.[0]} 
                alt={imageAltText}
-               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                loading="lazy"
                onError={() => setIsImageBroken(true)}
                width="192"
