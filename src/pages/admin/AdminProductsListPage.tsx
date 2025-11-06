@@ -1,13 +1,13 @@
 
+
 import { Link } from 'react-router-dom';
-import { useProducts } from '../../context/ProductContext';
-import { useCategories } from '../../context/CategoryContext';
+import { ALL_PRODUCTS, ALL_CATEGORIES } from '../../data/seoData';
 import { PlusCircleIcon } from '../../components/icons/AdminIcons';
 import { useMemo } from 'react';
 
 const AdminProductsListPage = () => {
-  const { products, deleteProduct } = useProducts();
-  const { categories } = useCategories();
+  const products = ALL_PRODUCTS;
+  const categories = ALL_CATEGORIES;
 
   const categoryMap = useMemo(() => {
     return new Map(categories.map(c => [c.id, c.name]));
@@ -16,13 +16,6 @@ const AdminProductsListPage = () => {
   const getCategoryName = (categoryId: string) => {
     // If the category was deleted, this prevents a crash
     return categoryMap.get(categoryId) || 'Uncategorized';
-  };
-
-  const handleDelete = (productId: string, productName: string) => {
-    if (window.confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
-      deleteProduct(productId);
-      alert(`Product "${productName}" deleted successfully.`);
-    }
   };
 
   return (
@@ -64,12 +57,6 @@ const AdminProductsListPage = () => {
                   <td className="px-5 py-4 text-sm">
                     <div className="flex items-center space-x-3">
                       <Link to={`/admin/products/edit/${product.id}`} className="text-admin-accent hover:text-admin-accent-hover font-semibold">Edit</Link>
-                      <button 
-                        onClick={() => handleDelete(product.id, product.name)} 
-                        className="text-red-500 hover:text-red-700 font-semibold"
-                      >
-                        Delete
-                      </button>
                     </div>
                   </td>
                 </tr>
