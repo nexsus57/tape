@@ -290,6 +290,9 @@ export const ALL_CATEGORIES: Category[] = seoData
             }
         };
     });
+
+// Create a sorted list of products by name length (desc) to match longer names first.
+const sortedProductsForSearch = [...ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
     
 /**
  * A transformed list of all blog articles, structured for use in the BlogContext.
@@ -303,6 +306,21 @@ export const ALL_BLOG_ARTICLES: BlogArticle[] = seoData
         const date = today.toISOString().split('T')[0];
         const allKeywords = `${p["Primary Keywords"]}, ${p["Secondary Keywords"]}`;
 
+        // New logic to find related product image
+        let relatedImage = p["Image URL"] || 'https://file.garden/aIULwzQ_QkPKQcGw/blog-images/default-blog.webp'; // Start with default from SEO data
+        const articleTitleLower = p.H1.toLowerCase();
+        const keywordsLower = allKeywords.toLowerCase();
+
+        // Find the first product mentioned (in title or keywords) that has an image
+        const relatedProduct = sortedProductsForSearch.find(product =>
+            (articleTitleLower.includes(product.name.toLowerCase()) || keywordsLower.includes(product.name.toLowerCase())) &&
+            product.images && product.images.length > 0
+        );
+
+        if (relatedProduct) {
+            relatedImage = relatedProduct.images[0];
+        }
+
         return {
             id,
             title: p.H1,
@@ -310,7 +328,7 @@ export const ALL_BLOG_ARTICLES: BlogArticle[] = seoData
             content: `<p><strong>${p.summary}</strong></p><p>In this article, we take a closer look at ${p["Primary Keywords"]}. This is a critical area for many industries, and understanding the nuances of ${p["Secondary Keywords"]} can lead to significant improvements in efficiency and safety. Tape India, with its decades of experience, provides insights into selecting and applying the right materials for the job.</p><h2>Key Considerations for ${p["Page Name"]}</h2><p>When dealing with these materials, it's essential to consider factors such as substrate compatibility, environmental conditions, and the required bond strength. Our team of experts is always available to help you navigate these complexities.</p>`,
             category: 'Industry Guides',
             tags: allKeywords.split(',').map(t => t.trim()).filter(t => t),
-            image: p["Image URL"] || 'https://file.garden/aIULwzQ_QkPKQcGw/blog-images/default-blog.webp',
+            image: relatedImage,
             readTime: 5 + (index % 3),
             author: 'Tape India Experts',
             datePublished: date,
