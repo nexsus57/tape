@@ -197,36 +197,45 @@ export const ALL_CATEGORIES: Category[] = [
     { id: 'antistatic-esd-tapes', name: 'Antistatic & ESD Tapes', icon: 'ZapIcon', subtitle: 'For electronics manufacturing and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/kapton%20tape.webp' },
 ];
 
-export const ALL_BLOG_ARTICLES: BlogArticle[] = rawSeoData
+// Create a preliminary list of blog posts from the raw SEO data.
+const tempBlogArticles = rawSeoData
     .filter(item => item["Page Type"] === "Blog Post")
-    .map((item, index) => {
-        const keywords = `${item["Page Name"]} ${item["Primary Keywords"]}`.toLowerCase();
-        let relatedImage = item.image || '';
+    .map((item, index) => ({
+        id: item.id || `blog-post-${index}`,
+        title: item["Page Name"],
+        summary: item.summary,
+        content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`,
+        category: "Industry Guides",
+        tags: item["Primary Keywords"].split(', '),
+        readTime: Math.floor(Math.random() * (8 - 4 + 1)) + 4,
+        image: item.image || '', // Keep original image if it exists
+        author: "Tape India Experts",
+        datePublished: new Date(Date.now() - index * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        dateModified: new Date().toISOString().split('T')[0],
+        seo: item,
+    }));
 
-        if (!relatedImage) {
+// Now, create the final blog articles list, which can safely reference the fully defined ALL_PRODUCTS.
+// This breaks the circular dependency that was crashing the app.
+export const ALL_BLOG_ARTICLES: BlogArticle[] = tempBlogArticles
+    .map((article) => {
+        let finalImage = article.image;
+
+        // If no image was specified, find a related one from the product list.
+        if (!finalImage) {
+            const keywords = `${article.title} ${article.seo["Primary Keywords"]}`.toLowerCase();
             const sortedProducts = [...ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
             const productMatch = sortedProducts.find(p => keywords.includes(p.name.toLowerCase()));
             
             if (productMatch && productMatch.images && productMatch.images.length > 0) {
-                relatedImage = productMatch.images[0];
+                finalImage = productMatch.images[0];
             } else {
-                relatedImage = `https://file.garden/aIULwzQ_QkPKQcGw/blog-placeholder-${(index % 4) + 1}.webp`;
+                // Fallback to a generic, existing hero banner image if no product match is found.
+                // This avoids using non-existent placeholder URLs.
+                finalImage = `https://file.garden/aIULwzQ_QkPKQcGw/banner.webp`;
             }
         }
 
-        return {
-            id: item.id || `blog-post-${index}`,
-            title: item["Page Name"],
-            summary: item.summary,
-            content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`,
-            category: "Industry Guides",
-            tags: item["Primary Keywords"].split(', '),
-            readTime: Math.floor(Math.random() * (8 - 4 + 1)) + 4,
-            image: relatedImage,
-            author: "Tape India Experts",
-            datePublished: new Date(Date.now() - index * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            dateModified: new Date().toISOString().split('T')[0],
-            seo: item,
-        }
+        return { ...article, image: finalImage };
     })
     .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
