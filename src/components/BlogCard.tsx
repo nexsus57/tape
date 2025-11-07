@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { FC } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { BlogArticle } from '../types';
 
 interface BlogCardProps {
@@ -8,18 +8,36 @@ interface BlogCardProps {
 
 const BlogCard: FC<BlogCardProps> = ({ article }) => {
     const articleUrl = `/blog/${article.id}`;
+    const [isImageBroken, setIsImageBroken] = useState(false);
+
+    useEffect(() => {
+        setIsImageBroken(false);
+    }, [article.id]);
+
+    const showPlaceholder = !article.image || isImageBroken;
 
     return (
         <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
-            <Link to={articleUrl} className="block overflow-hidden bg-white">
-                <img
-                    src={article.image}
-                    alt={`Featured image for article titled: ${article.title}`}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
-                    loading="lazy"
-                    width="400"
-                    height="192"
-                />
+            <Link to={articleUrl} className="block bg-slate-100">
+                <div className="w-full h-48 flex items-center justify-center overflow-hidden p-2">
+                    {showPlaceholder ? (
+                         <div className="w-full h-full flex items-center justify-center text-center p-4">
+                            <h3 className="font-bold text-slate-700 text-lg leading-tight group-hover:scale-105 transition-transform duration-300">
+                                {article.title}
+                            </h3>
+                        </div>
+                    ) : (
+                        <img
+                            src={article.image}
+                            alt={`Featured image for article titled: ${article.title}`}
+                            className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                            loading="lazy"
+                            onError={() => setIsImageBroken(true)}
+                            width="400"
+                            height="192"
+                        />
+                    )}
+                </div>
             </Link>
             <div className="p-6 flex flex-col flex-grow">
                 <div className="flex justify-between items-center mb-3">
