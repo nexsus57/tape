@@ -193,7 +193,7 @@ export const ALL_CATEGORIES: Category[] = [
     { id: 'reflective-tapes', name: 'Reflective Tapes', icon: 'SunIcon', subtitle: 'High-visibility tapes for apparel and vehicles.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/silver%20tc.webp' },
     { id: 'double-sided-tapes', name: 'Double Sided Tapes', icon: 'LayersIcon', subtitle: 'For mounting, bonding, and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/vhb%20tape.webp' },
     { id: 'specialty-tapes', name: 'Specialty Tapes', icon: 'SparklesIcon', subtitle: 'Masking, duct, foil, and unique solutions.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/duct%20tape.webp' },
-    { id: 'teflon-ptfe-tapes', name: 'Teflon & PTFE Tapes', icon: 'ThermometerIcon', subtitle: 'High-temp, non-stick industrial tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/ptef%20silicone%20adhe.webp' },
+    { id: 'teflon-ptfe-tapes', name: 'Teflon & PTFE Tapes', icon: 'ThermometerIcon', subtitle: 'High-temp, non-stick industrial tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/ptfe%20silicone%20adhesive.webp' },
     { id: 'antistatic-esd-tapes', name: 'Antistatic & ESD Tapes', icon: 'ZapIcon', subtitle: 'For electronics manufacturing and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/kapton%20tape.webp' },
 ];
 
