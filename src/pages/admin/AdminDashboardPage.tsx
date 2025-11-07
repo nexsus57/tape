@@ -28,7 +28,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-admin-text mb-6">Dashboard</h1>
+      <h1 className="text-3xl font-bold text-admin-text mb-6">Dashboard Overview</h1>
       
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
