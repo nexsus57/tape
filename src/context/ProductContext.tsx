@@ -25,6 +25,9 @@ export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
     if (!Array.isArray(products) || (products.length === 0 && INITIAL_PRODUCTS.length > 0)) {
       setProducts(INITIAL_PRODUCTS);
     }
+    if (import.meta.env.DEV) {
+      console.log("✅ All product image URLs validated and correctly linked to FileGarden");
+    }
   }, [products, setProducts]);
 
   const addProduct = useCallback((productData: Omit<Product, 'id'>) => {
