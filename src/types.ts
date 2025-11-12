@@ -1,4 +1,5 @@
 
+
 // --- SEO TYPE DEFINITIONS (MOVED HERE TO BREAK CIRCULAR DEPENDENCY) ---
 export interface FaqItem {
     "@type": "Question";
@@ -47,6 +48,7 @@ export interface ColorOption {
 export interface Product {
   id: string;
   name:string;
+  image: string; // Guaranteed primary image URL
   shortDescription: string;
   description?: string;
   features: string[];
