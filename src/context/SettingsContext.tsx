@@ -1,6 +1,4 @@
-
-
-import { createContext, useContext, ReactNode, FC, useMemo } from 'react';
+import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Settings } from '../types';
 import { INITIAL_TESTIMONIALS } from '../constants';
@@ -27,9 +25,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
         instagram: "https://www.instagram.com/tapeindia"
     },
     popularProductIds: [
-        'ptfe-silicone-adhesive-tape',
-        'anti-skid-tape',
-        'silver-tc-reflective-tape',
+        'ptfe-silicone-adhesive',
+        'coloured-anti-slip-tape',
+        'silver-tc',
     ],
     testimonials: INITIAL_TESTIMONIALS
 };
@@ -47,20 +45,25 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
-  const [storedSettings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v1', defaultSettings);
+  const [settings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v1', defaultSettings);
 
-  const settings = useMemo(() => {
-    // Robustness check: Ensure stored data is a valid object with key properties.
-    // If not, reset to default settings to prevent site-wide errors.
-    if (!storedSettings || typeof storedSettings !== 'object' || !storedSettings.contact || !storedSettings.popularProductIds) {
-        setSettings(defaultSettings); // Correct the corrupted value in localStorage
-        return defaultSettings;
+  useEffect(() => {
+    // Data validation: If settings object is corrupted, reset to defaults.
+    const isValid = settings &&
+                    typeof settings === 'object' &&
+                    settings.contact &&
+                    settings.popularProductIds &&
+                    Array.isArray(settings.popularProductIds);
+    
+    if (!isValid) {
+        setSettings(defaultSettings);
     }
-    return storedSettings;
-  }, [storedSettings, setSettings]);
+  }, [settings, setSettings]);
 
+  // Ensure consumers always receive a valid settings object.
+  const validSettings = (settings && typeof settings === 'object' && settings.contact) ? settings : defaultSettings;
 
-  const value = { settings, setSettings };
+  const value = { settings: validSettings, setSettings };
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 };
