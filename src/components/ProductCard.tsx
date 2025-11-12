@@ -9,24 +9,21 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
-  const hasImage = product.images && product.images.length > 0;
-  // FIX: Property 'title' does not exist on type 'SeoPageData'. Use 'Title (≤60 chars)' instead.
   const imageAltText = product.seo?.["Title (≤60 chars)"] || product.name;
 
   return (
     <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
       
       <Link to={`/product/${product.id}`} className="relative w-full flex-shrink-0" aria-label={`View details for ${product.name}`}>
-        <div className="h-48 bg-slate-50 flex items-center justify-center overflow-hidden p-2">
+        <div className="bg-slate-50 flex items-center justify-center overflow-hidden p-2">
            <img 
-             src={product.images?.[0] || 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png'} 
+             src={product.image} 
              alt={imageAltText}
-             className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+             className="w-full h-40 object-contain group-hover:scale-105 transition-transform duration-300"
+             style={{ objectFit: "contain", borderRadius: "12px", width: "100%", height: "160px" }}
              loading="lazy"
              crossOrigin="anonymous"
              onError={(e) => (e.currentTarget.src = 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png')}
-             width="192"
-             height="192"
            />
         </div>
       </Link>
