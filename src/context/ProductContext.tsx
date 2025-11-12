@@ -1,7 +1,25 @@
 import { createContext, useContext, ReactNode, useCallback, FC, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import type { Product } from '../types';
-import { ALL_PRODUCTS as INITIAL_PRODUCTS } from '../data/seoData';
+import type { Product, SeoPageData } from '../types';
+import { PRODUCTS as CONTENT_PRODUCTS } from '../constants';
+import { seoData } from '../data/seoData';
+
+// --- MERGE LOGIC ---
+// Create the authoritative, combined product list here.
+// This logic is moved from seoData.ts to ensure this context is the single source of truth.
+const INITIAL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
+    const productSeo = seoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
+    // Define a fallback SEO object for products that might not have a specific entry in seoData.
+    const fallbackSeo: SeoPageData = {
+        "Page Type": "Product", "Page Name": productContent.name, "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
+        "Title (≤60 chars)": `${productContent.name} | Tape India`, "Meta Description (≤160 chars)": productContent.shortDescription,
+        "H1": productContent.name, "Primary Keywords": productContent.name, "Secondary Keywords": productContent.category,
+        summary: productContent.shortDescription, "CTA": "Request a Quote", "Schema Type": "Product", faqs: [],
+        "Product Schema (JSON-LD)": "{}", "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
+    };
+    // Combine the content data with the SEO data. The spread of productContent ensures `images` is preserved.
+    return { ...productContent, seo: productSeo || fallbackSeo };
+});
 
 interface ProductContextType {
   products: Product[];
