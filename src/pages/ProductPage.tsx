@@ -49,12 +49,9 @@ const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
 export default function ProductPage() {
     const { productId } = useParams<{ productId: string }>();
     const { products } = useProducts();
-    const product = products.find(p => p.id === productId);
-
-    const [isImageBroken, setIsImageBroken] = useState(false);
+    const product = products.find(p => p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '') === productId);
     
     useEffect(() => {
-        setIsImageBroken(false);
         window.scrollTo(0, 0);
     }, [productId]);
 
@@ -95,9 +92,6 @@ export default function ProductPage() {
     const pageDescription = productSeoData["Meta Description (≤160 chars)"];
     const imageAltText = pageTitle;
     const h1Text = productSeoData.H1;
-
-    const hasImages = product.images && product.images.length > 0;
-    const showPlaceholder = !hasImages || isImageBroken;
 
     const hasOptions = (product.availableColors && product.availableColors.length > 0) || product.customizable;
     
@@ -140,21 +134,15 @@ export default function ProductPage() {
                                 <div 
                                     className="relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4"
                                 >
-                                    {showPlaceholder ? (
-                                        <div className="text-center">
-                                            <h3 className="font-bold text-slate-700 text-xl">{product.name}</h3>
-                                            <p className="text-slate-500 mt-2 text-sm">Image Coming Soon</p>
-                                        </div>
-                                    ) : (
-                                        <img
-                                            src={product.images![0]}
-                                            alt={imageAltText}
-                                            className="max-w-[85%] max-h-[85%] object-contain"
-                                            onError={() => setIsImageBroken(true)}
-                                            width="300"
-                                            height="300"
-                                        />
-                                    )}
+                                    <img
+                                        src={product.images?.[0] || "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png"}
+                                        alt={imageAltText}
+                                        className="max-w-full max-h-full object-contain rounded-lg"
+                                        crossOrigin="anonymous"
+                                        onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
+                                        width="300"
+                                        height="300"
+                                    />
                                 </div>
                             </div>
                         </div>
