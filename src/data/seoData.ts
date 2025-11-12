@@ -176,8 +176,10 @@ const rawSeoData: SeoPageData[] = [
 
 export const seoData = rawSeoData;
 
-export const ALL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
-    const productSeo = seoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
+// This is now an internal constant used only for blog image fallbacks.
+// It is NOT exported. This prevents it from being used as the main product source.
+const INTERNAL_ALL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
+    const productSeo = rawSeoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
     const fallbackSeo: SeoPageData = {
         "Page Type": "Product", "Page Name": productContent.name, "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
         "Title (≤60 chars)": `${productContent.name} | Tape India`, "Meta Description (≤160 chars)": productContent.shortDescription,
@@ -187,6 +189,7 @@ export const ALL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
     };
     return { ...productContent, seo: productSeo || fallbackSeo };
 });
+
 
 export const ALL_CATEGORIES: Category[] = [
     { id: 'safety-tapes', name: 'Safety Tapes', icon: 'ShieldCheckIcon', subtitle: 'Floor marking, hazard, and anti-slip tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp' },
@@ -224,7 +227,7 @@ export const ALL_BLOG_ARTICLES: BlogArticle[] = tempBlogArticles
         // If no image was specified, find a related one from the product list.
         if (!finalImage) {
             const keywords = `${article.title} ${article.seo["Primary Keywords"]}`.toLowerCase();
-            const sortedProducts = [...ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
+            const sortedProducts = [...INTERNAL_ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
             const productMatch = sortedProducts.find(p => keywords.includes(p.name.toLowerCase()));
             
             if (productMatch && productMatch.images && productMatch.images.length > 0) {
