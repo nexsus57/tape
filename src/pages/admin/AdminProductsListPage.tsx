@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { PRODUCTS } from '../../constants';
-import { ALL_CATEGORIES } from '../../data/seoData';
+import { useProducts } from '../../context/ProductContext';
+import { useCategories } from '../../context/CategoryContext';
 import { PlusCircleIcon } from '../../components/icons/AdminIcons';
 import { useMemo } from 'react';
 
 const AdminProductsListPage = () => {
-  const products = PRODUCTS;
-  const categories = ALL_CATEGORIES;
+  const { products } = useProducts();
+  const { categories } = useCategories();
 
   const categoryMap = useMemo(() => {
     return new Map(categories.map(c => [c.id, c.name]));
@@ -46,11 +46,7 @@ const AdminProductsListPage = () => {
               {products.map((product) => (
                 <tr key={product.id} className="border-b border-admin-border hover:bg-gray-50">
                   <td className="px-5 py-4 text-sm">
-                    {product.images && product.images.length > 0 ? (
-                      <img src={product.images[0]} alt={product.name} className="w-16 h-16 object-cover rounded-md" />
-                    ) : (
-                      <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-500 text-center">No Image</div>
-                    )}
+                    <img src={product.image} alt={product.name} className="w-16 h-16 object-contain rounded-md bg-slate-100 p-1" />
                   </td>
                   <td className="px-5 py-4 text-sm">
                     <p className="text-admin-text font-semibold whitespace-no-wrap">{product.name}</p>
