@@ -1,4 +1,5 @@
 
+
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -135,7 +136,7 @@ export default function ProductPage() {
                                     className="relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4"
                                 >
                                     <img
-                                        src={product.images?.[0] || "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png"}
+                                        src={product.image}
                                         alt={imageAltText}
                                         className="max-w-full max-h-full object-contain rounded-lg"
                                         crossOrigin="anonymous"
