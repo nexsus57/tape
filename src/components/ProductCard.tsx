@@ -1,6 +1,6 @@
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
-import { type FC, useState, useEffect } from 'react';
+import { type FC } from 'react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -10,14 +10,6 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   const hasImage = product.images && product.images.length > 0;
-  const [isImageBroken, setIsImageBroken] = useState(false);
-
-  // Reset error state when the product prop changes
-  useEffect(() => {
-    setIsImageBroken(false);
-  }, [product.id]);
-
-  const showPlaceholder = !hasImage || isImageBroken;
   // FIX: Property 'title' does not exist on type 'SeoPageData'. Use 'Title (≤60 chars)' instead.
   const imageAltText = product.seo?.["Title (≤60 chars)"] || product.name;
 
@@ -26,23 +18,16 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
       
       <Link to={`/product/${product.id}`} className="relative w-full flex-shrink-0" aria-label={`View details for ${product.name}`}>
         <div className="h-48 bg-slate-50 flex items-center justify-center overflow-hidden p-2">
-          {showPlaceholder ? (
-            <div className="w-full h-full flex items-center justify-center text-center">
-              <h3 className="font-bold text-slate-700 text-xl leading-tight group-hover:scale-105 transition-transform duration-300">
-                  {product.name}
-              </h3>
-            </div>
-          ) : (
-             <img 
-               src={product.images?.[0]} 
-               alt={imageAltText}
-               className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
-               loading="lazy"
-               onError={() => setIsImageBroken(true)}
-               width="192"
-               height="192"
-             />
-          )}
+           <img 
+             src={product.images?.[0] || 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png'} 
+             alt={imageAltText}
+             className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+             loading="lazy"
+             crossOrigin="anonymous"
+             onError={(e) => (e.currentTarget.src = 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png')}
+             width="192"
+             height="192"
+           />
         </div>
       </Link>
 
