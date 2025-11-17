@@ -1,5 +1,6 @@
 
 
+
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -133,12 +134,12 @@ export default function ProductPage() {
                         <div className="lg:col-span-2">
                              <div className="sticky top-24 self-start">
                                 <div 
-                                    className="relative aspect-square w-full bg-white border border-gray-200 rounded-lg flex items-center justify-center p-4"
+                                    className="product-detail-image-container relative bg-white border border-gray-200 rounded-lg p-4"
                                 >
                                     <img
                                         src={product.image}
                                         alt={imageAltText}
-                                        className="max-w-full max-h-full object-contain rounded-lg"
+                                        className="rounded-lg"
                                         crossOrigin="anonymous"
                                         onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
                                         width="300"
