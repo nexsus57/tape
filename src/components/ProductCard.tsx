@@ -19,8 +19,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
            <img 
              src={product.image} 
              alt={imageAltText}
-             className="w-full h-40 object-contain group-hover:scale-105 transition-transform duration-300"
-             style={{ objectFit: "contain", borderRadius: "12px", width: "100%", height: "160px" }}
+             className="group-hover:scale-105 transition-transform duration-300"
+             style={{ borderRadius: "12px" }}
              loading="lazy"
              crossOrigin="anonymous"
              onError={(e) => (e.currentTarget.src = 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png')}
