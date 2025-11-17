@@ -29,6 +29,41 @@
     /* Approx 16px -> 18px */
     @apply text-base lg:text-lg;
   }
+  
+  /* GLOBAL FIX: Ensure all images are responsive and block-level by default. */
+  img {
+    @apply block max-w-full;
+  }
+}
+
+@layer components {
+  /*
+  ============================================
+  PRODUCT IMAGE LAYOUT FIXES
+  ============================================
+  Centralized CSS to ensure product images display correctly without distortion
+  across different layouts, as per user request.
+  */
+
+  /* 1. PRODUCT LISTING CARDS (Homepage, Category Pages, etc.) */
+  /* Targets the image within product cards to enforce a consistent, non-cropped view. */
+  .group > a > div > img,
+  [class*="product-card"] img,
+  [class*="card-product-image"] img,
+  [class*="ai-listing-card"] img {
+    @apply w-full h-40 object-contain object-center;
+  }
+
+  /* 2. PRODUCT DETAIL PAGE (Main Image) */
+  /* Enforces a perfect square container for the main product image. */
+  .product-detail-image-container {
+    @apply aspect-square w-full;
+  }
+  
+  /* Ensures the image fits perfectly within the square container without stretching. */
+  .product-detail-image-container img {
+    @apply w-full h-full object-contain object-center;
+  }
 }
 
 @layer utilities {
@@ -38,5 +73,16 @@
   .hide-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  /* 
+    SAFEGUARD: For any image inside a class containing "product", "card", or "item",
+    apply object-fit: contain. This prevents accidental stretching or cropping
+    of product-related images in other components.
+  */
+  [class*="product"] img,
+  [class*="card"] img,
+  [class*="item"] img {
+    @apply object-contain;
   }
 }
