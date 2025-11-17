@@ -199,7 +199,7 @@ export default function ProductPage() {
                                 )}
 
                                 {relatedIndustries.length > 0 && (
-                                    <div>
+                                    <div className="hidden lg:block">
                                         <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Relevant Industries</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {relatedIndustries.map(industry => (
