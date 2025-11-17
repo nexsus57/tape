@@ -1,7 +1,8 @@
+
 import { useState } from 'react';
 
 const WHATSAPP_NUMBERS = [
-    { name: 'Sayam', number: '918072468057' },
+    { name: 'Sayam', number: '917010530018' },
 ];
 
 export default function WhatsAppButton() {
@@ -11,7 +12,7 @@ export default function WhatsAppButton() {
     if (WHATSAPP_NUMBERS.length === 1) {
         const singleContact = WHATSAPP_NUMBERS[0];
         return (
-            <div className="fixed bottom-6 right-6 z-50">
+            <div className="hidden lg:block fixed bottom-6 right-6 z-50">
                 <a
                     href={`https://wa.me/${singleContact.number}`}
                     target="_blank"
@@ -42,7 +43,7 @@ export default function WhatsAppButton() {
                 />
             )}
 
-            <div className="fixed bottom-6 right-6 z-50">
+            <div className="hidden lg:block fixed bottom-6 right-6 z-50">
                 {/* Contact List - absolutely positioned to not affect layout flow */}
                 <div 
                     className={`absolute bottom-full right-0 mb-3 w-72 transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}
