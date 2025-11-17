@@ -2,7 +2,7 @@
 import { NavLink } from 'react-router-dom';
 import { useSearchModal } from '../context/SearchModalContext';
 
-const WHATSAPP_NUMBER = '918072468057';
+const WHATSAPP_NUMBER = '917010530018';
 
 export default function BottomNavBar() {
   const { openSearchModal } = useSearchModal();
