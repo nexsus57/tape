@@ -8,6 +8,7 @@ import Analytics from './Analytics';
 import BottomNavBar from './BottomNavBar';
 import SearchModal from './SearchModal';
 import { useSettings } from '../context/SettingsContext';
+import WhatsAppButton from './WhatsAppButton';
 
 // This component ensures the page scrolls to the top on navigation
 const ScrollToTop = () => {
@@ -120,6 +121,7 @@ const PublicLayout = () => {
       </main>
       <Footer />
       <BottomNavBar />
+      <WhatsAppButton />
     </div>
   );
 };
