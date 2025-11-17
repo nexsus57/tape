@@ -46,19 +46,22 @@ export default function ProductsListPage() {
       breadcrumb, 
       pageContent, 
       breadcrumbSchema, 
-      pageH1 
+      pageH1,
+      pageSeoData,
     } = useMemo(() => {
         const industryId = searchParams.get('industry');
         const categoryId = searchParams.get('category');
         
         let prods = products;
         let pageData;
+        let crumb = null;
 
         if (industryId) {
             const industry = INDUSTRIES.find(i => i.id === industryId);
             if (industry) {
                 prods = products.filter(p => p.industries?.includes(industryId));
                 pageData = seoData.find(p => p["Page Name"] === industry.name);
+                crumb = { name: 'Industries', link: '/industries' };
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
@@ -76,9 +79,6 @@ export default function ProductsListPage() {
         const desc = pageData?.["Meta Description (≤160 chars)"] || `Browse our complete range of over ${products.length} industrial adhesive tapes.`;
         const content = pageData?.summary || null;
         const h1 = pageData?.H1 || 'All Products';
-        
-        let crumb = null;
-        if(industryId) crumb = { name: 'Industries', link: '/industries' };
         
         const breadcrumbTitle = pageData?.["Page Name"] || 'All Products';
 
@@ -111,7 +111,7 @@ export default function ProductsListPage() {
             pageContent: content,
             breadcrumbSchema: JSON.stringify(bSchema),
             pageH1: h1,
-            breadcrumbTitle: breadcrumbTitle
+            pageSeoData: pageData
         };
     }, [searchParams, products, categories, location.pathname, location.search]);
 
@@ -129,6 +129,7 @@ export default function ProductsListPage() {
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
+                {pageSeoData && <script type="application/ld+json">{pageSeoData["Combined Schema (JSON-LD)"]}</script>}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
@@ -161,7 +162,7 @@ export default function ProductsListPage() {
                 {pageContent && (
                     <AnimatedSection className="delay-100">
                         <div className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-lg shadow-sm border-l-4 border-brand-accent">
-                            <div className="text-slate-600 text-lg leading-relaxed prose prose-lg" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                            <p className="text-slate-600 text-lg leading-relaxed">{pageContent}</p>
                         </div>
                     </AnimatedSection>
                 )}
@@ -176,20 +177,6 @@ export default function ProductsListPage() {
                                 <FilterButton label="All Products" isActive={!currentIndustryId && !currentCategoryId} to="/products" />
                                 {categories.map(cat => (
                                     <FilterButton key={cat.id} label={cat.name} isActive={currentCategoryId === cat.id} to={`/products?category=${cat.id}`} />
-                                ))}
-                            </div>
-                        </div>
-                         <div className="flex items-center gap-x-4 gap-y-2 flex-wrap">
-                            <h3 className="text-base font-bold flex-shrink-0 pr-2 text-slate-600 tracking-wider">INDUSTRY:</h3>
-                            <div className="flex flex-wrap gap-2">
-                                <Link
-                                    to="/industries"
-                                    className="px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 whitespace-nowrap border bg-white text-gray-600 border-gray-300 hover:bg-gray-100 hover:border-gray-400"
-                                >
-                                    All Industries
-                                </Link>
-                                {INDUSTRIES.map(ind => (
-                                    <FilterButton key={ind.id} label={ind.name} isActive={currentIndustryId === ind.id} to={`/products?industry=${ind.id}`} />
                                 ))}
                             </div>
                         </div>
@@ -212,10 +199,6 @@ export default function ProductsListPage() {
                                     <li className="px-4 py-2 text-xs font-bold uppercase text-gray-500 mt-2">Categories</li>
                                     {categories.map(cat => (
                                         <li key={`mob-${cat.id}`}><Link to={`/products?category=${cat.id}`} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">{cat.name}</Link></li>
-                                    ))}
-                                    <li className="px-4 py-2 text-xs font-bold uppercase text-gray-500 mt-2">Industries</li>
-                                    {INDUSTRIES.map(ind => (
-                                        <li key={`mob-${ind.id}`}><Link to={`/products?industry=${ind.id}`} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">{ind.name}</Link></li>
                                     ))}
                                  </ul>
                              </div>
