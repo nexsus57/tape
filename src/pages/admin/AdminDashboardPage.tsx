@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../context/ProductContext';
 import { useCategories } from '../../context/CategoryContext';
@@ -7,21 +8,83 @@ import { useBlog } from '../../context/BlogContext';
 import StatCard from '../../components/admin/StatCard';
 import { ProductsIcon, CategoriesIcon, IndustryIcon, BlogIcon, PlusCircleIcon, SettingsIcon, SeoIcon } from '../../components/icons/AdminIcons';
 
-// Simple Mock Chart Component using SVG
-const MockTrafficChart = () => (
-  <div className="w-full h-64 bg-white rounded-lg p-4 border border-gray-100 relative">
-    <h3 className="text-sm font-bold text-gray-500 mb-4">Traffic Overview (Last 7 Days)</h3>
-    <div className="absolute bottom-0 left-0 right-0 top-10 px-4 flex items-end justify-between gap-2">
-      {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
-         <div key={i} className="w-full bg-blue-50 rounded-t-md hover:bg-blue-100 transition-colors relative group" style={{ height: `${h}%` }}>
-             <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                 {h * 12} Views
-             </div>
-         </div>
-      ))}
+// Real Chart Component reading from LocalStorage
+const TrafficChart = () => {
+  const [data, setData] = useState<{ date: string; day: string; count: number; height: number }[]>([]);
+
+  const loadData = () => {
+     try {
+        const storageKey = 'tapeindia_analytics_daily';
+        const saved = localStorage.getItem(storageKey);
+        const rawData = saved ? JSON.parse(saved) : {};
+        
+        const last7Days = [];
+        const today = new Date();
+        let maxCount = 0;
+
+        // Generate last 7 days
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(today.getDate() - i);
+            const dateStr = d.toISOString().split('T')[0];
+            const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+            const count = rawData[dateStr] || 0;
+            if (count > maxCount) maxCount = count;
+            last7Days.push({ date: dateStr, day: dayName, count });
+        }
+
+        // Calculate relative height (percentage) for bars
+        // If maxCount is 0, avoid division by zero
+        const safeMax = maxCount === 0 ? 10 : maxCount; 
+        
+        const formattedData = last7Days.map(item => ({
+            ...item,
+            height: Math.max(5, Math.round((item.count / safeMax) * 100)) // Min 5% height for visibility
+        }));
+
+        setData(formattedData);
+     } catch (e) {
+         console.error("Error loading analytics chart", e);
+     }
+  };
+
+  useEffect(() => {
+    loadData();
+    // Listen for updates from the Analytics component
+    window.addEventListener('analyticsUpdated', loadData);
+    return () => window.removeEventListener('analyticsUpdated', loadData);
+  }, []);
+
+  return (
+    <div className="w-full h-72 bg-white rounded-lg p-6 border border-gray-100 relative flex flex-col">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-base font-bold text-gray-700">Real-Time Traffic (Last 7 Days)</h3>
+        <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full animate-pulse">
+            ● Live
+        </span>
+      </div>
+      
+      {/* Chart Area */}
+      <div className="flex-grow flex items-end justify-between gap-2 sm:gap-4">
+        {data.map((item, i) => (
+           <div key={i} className="w-full flex flex-col items-center group">
+               <div 
+                 className="w-full bg-brand-accent/10 rounded-t-md hover:bg-brand-accent transition-all duration-500 relative group-hover:shadow-lg" 
+                 style={{ height: `${item.height}%` }}
+               >
+                   {/* Tooltip */}
+                   <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                       {item.count} Views
+                       <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
+                   </div>
+               </div>
+               <span className="text-xs text-gray-400 mt-2 font-medium">{item.day}</span>
+           </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function AdminDashboardPage() {
   const { products } = useProducts();
@@ -59,9 +122,9 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content Area */}
         <div className="lg:col-span-2 space-y-8">
-           {/* Chart */}
-           <div className="bg-admin-card p-6 rounded-lg shadow-md">
-               <MockTrafficChart />
+           {/* Real Chart */}
+           <div className="bg-admin-card rounded-lg shadow-md overflow-hidden">
+               <TrafficChart />
            </div>
            
            {/* Quick Actions */}
@@ -96,15 +159,15 @@ export default function AdminDashboardPage() {
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-admin-text-light">Search Index</span>
+              <span className="text-admin-text-light">Analytics</span>
               <span className="font-bold text-green-500">
-                Active <span className="text-xs">✅</span>
+                Live Tracking <span className="text-xs">✅</span>
               </span>
             </div>
              <div className="flex items-center justify-between text-sm">
               <span className="text-admin-text-light">Sitemap</span>
               <span className="font-bold text-green-500">
-                Generated <span className="text-xs">✅</span>
+                Static (Updated) <span className="text-xs">✅</span>
               </span>
             </div>
              <div className="mt-4 text-xs text-gray-400 border-t border-admin-border pt-3">
