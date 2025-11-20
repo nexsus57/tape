@@ -12,6 +12,7 @@ import { SettingsProvider } from './context/SettingsContext';
 import { IndustryProvider } from './context/IndustryContext';
 import { SearchModalProvider } from './context/SearchModalContext';
 import { BlogProvider } from './context/BlogContext';
+import { CartProvider } from './context/CartContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -30,7 +31,9 @@ root.render(
                 <CategoryProvider>
                   <IndustryProvider>
                     <BlogProvider>
-                      <App />
+                      <CartProvider>
+                        <App />
+                      </CartProvider>
                     </BlogProvider>
                   </IndustryProvider>
                 </CategoryProvider>
