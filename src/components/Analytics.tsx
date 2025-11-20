@@ -12,8 +12,7 @@ const Analytics: FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        // Use a short timeout to allow react-helmet-async to update the document title
-        // before sending the page_view event.
+        // 1. Google Tag Manager / Analytics Event
         const timerId = setTimeout(() => {
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
@@ -22,6 +21,26 @@ const Analytics: FC = () => {
                 page_title: document.title,
             });
         }, 0);
+
+        // 2. LOCAL ANALYTICS (For Admin Dashboard)
+        // We store daily page views in localStorage to power the Admin Chart
+        try {
+            const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
+            const storageKey = 'tapeindia_analytics_daily';
+            const savedData = localStorage.getItem(storageKey);
+            const data = savedData ? JSON.parse(savedData) : {};
+            
+            // Increment today's count
+            data[today] = (data[today] || 0) + 1;
+            
+            // Save back to storage
+            localStorage.setItem(storageKey, JSON.stringify(data));
+            
+            // Dispatch a custom event so the Dashboard updates instantly if open
+            window.dispatchEvent(new Event('analyticsUpdated'));
+        } catch (e) {
+            console.error("Failed to save local analytics", e);
+        }
 
         return () => clearTimeout(timerId);
     }, [location.pathname, location.search]);
