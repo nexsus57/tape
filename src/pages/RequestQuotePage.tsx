@@ -1,37 +1,65 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+
+import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
+import { useCart } from '../context/CartContext';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 
 export default function RequestQuotePage() {
     const [searchParams] = useSearchParams();
     const { products } = useProducts();
+    const { cart, removeFromCart, clearCart, addToCart } = useCart();
 
     const [message, setMessage] = useState('');
     const [redirectUrl, setRedirectUrl] = useState('');
 
-    useEffect(() => {
-        // Formsubmit requires an absolute URL for the redirect.
-        // We construct it from the current location.
-        setRedirectUrl(`${window.location.origin}/thank-you.html`);
-    }, []);
-
+    // Handle direct link from product page query param
     useEffect(() => {
         const productId = searchParams.get('product');
         if (productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                setMessage(`I'm interested in getting a quote for: ${product.name}.\n\n`);
-            }
+            // If user came from a "Get Quote" direct link, add it to cart if not there
+            addToCart(productId);
         }
-    }, [searchParams, products]);
+    }, [searchParams, addToCart]);
+
+    useEffect(() => {
+        setRedirectUrl(`${window.location.origin}/thank-you.html`);
+    }, []);
+
+    const cartProducts = useMemo(() => {
+        return cart.map(item => {
+            const product = products.find(p => p.id === item.productId);
+            return {
+                ...item,
+                details: product
+            };
+        }).filter(item => item.details);
+    }, [cart, products]);
+
+    // Generate the message based on cart contents
+    const generatedMessage = useMemo(() => {
+        if (cartProducts.length === 0) return '';
+        let msg = "I would like to request a quote for the following items:\n\n";
+        cartProducts.forEach((item, index) => {
+            msg += `${index + 1}. ${item.details?.name} (Qty: ${item.quantity})\n`;
+        });
+        msg += "\nAdditional Requirements:\n";
+        return msg;
+    }, [cartProducts]);
+
+    useEffect(() => {
+        if (generatedMessage && !message) {
+            setMessage(generatedMessage);
+        }
+    }, [generatedMessage, message]);
 
     const formFields = [
         { name: 'name', label: 'Full Name', type: 'text', required: true, autoComplete: 'name' },
         { name: 'email', label: 'Email Address', type: 'email', required: true, autoComplete: 'email' },
         { name: 'phone', label: 'Phone Number', type: 'tel', required: true, autoComplete: 'tel' },
+        { name: 'company', label: 'Company Name', type: 'text', required: false, autoComplete: 'organization' },
     ];
 
     return (
@@ -47,63 +75,110 @@ export default function RequestQuotePage() {
                         <div className="text-center mb-12">
                             <h1 className="font-extrabold">Request a Quote</h1>
                             <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-                                Tell us about your project, and our adhesive experts will provide a customized quote to meet your needs.
+                                Review your selected items and submit your details. We offer bulk pricing for industrial orders.
                             </p>
                         </div>
                     </AnimatedSection>
-                    <AnimatedSection className="delay-100">
-                        <div className="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-lg shadow-lg">
-                             <form action="https://formsubmit.co/tapeindiain@yahoo.com" method="POST">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {formFields.map(field => (
-                                        <div key={field.name}>
-                                            <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
-                                                {field.label}<span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type={field.type}
-                                                id={field.name}
-                                                name={field.name}
-                                                autoComplete={field.autoComplete}
-                                                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition"
-                                                required
-                                            />
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Left Column: Cart Summary */}
+                        <div className="lg:col-span-1 order-2 lg:order-1">
+                            <AnimatedSection className="delay-100">
+                                <div className="bg-white p-6 rounded-lg shadow-md">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h2 className="text-xl font-bold text-brand-blue-dark">Your Basket ({cart.length})</h2>
+                                        {cart.length > 0 && (
+                                            <button onClick={clearCart} className="text-xs text-red-500 hover:underline">Clear All</button>
+                                        )}
+                                    </div>
+                                    
+                                    {cartProducts.length > 0 ? (
+                                        <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                                            {cartProducts.map((item) => (
+                                                <div key={item.productId} className="flex items-start gap-3 border-b border-gray-100 pb-3">
+                                                    <img 
+                                                        src={item.details?.image} 
+                                                        alt={item.details?.name} 
+                                                        className="w-16 h-16 object-cover rounded bg-gray-50"
+                                                    />
+                                                    <div className="flex-grow">
+                                                        <h3 className="font-semibold text-sm text-gray-800 line-clamp-2">{item.details?.name}</h3>
+                                                        <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                                                        <div className="mt-2 flex items-center gap-3">
+                                                             <Link to={`/product/${item.productId}`} className="text-xs text-brand-accent hover:underline">View</Link>
+                                                             <button onClick={() => removeFromCart(item.productId)} className="text-xs text-red-400 hover:text-red-600">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
+                                    ) : (
+                                        <div className="text-center py-8">
+                                            <p className="text-gray-500 mb-4">Your quote basket is empty.</p>
+                                            <Link to="/products" className="text-brand-accent font-bold hover:underline">Browse Products</Link>
+                                        </div>
+                                    )}
                                 </div>
-
-                                {/* FormSubmit settings */}
-                                <input type="hidden" name="_next" value={redirectUrl} />
-                                <input type="hidden" name="_honey" style={{ display: 'none' }} />
-                                <input type="hidden" name="_subject" value="New Quote Request from Website!" />
-
-                                <div className="mt-6">
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Message / Product Requirements<span className="text-red-500">*</span>
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows={6}
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition"
-                                        required
-                                        placeholder="Please describe your application, required dimensions, quantity, and any other specifications."
-                                    ></textarea>
-                                </div>
-
-                                <div className="mt-8 text-center">
-                                    <button
-                                        type="submit"
-                                        className="w-full sm:w-auto bg-brand-yellow text-brand-blue-dark font-bold py-3 px-12 rounded-lg text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
+                            </AnimatedSection>
                         </div>
-                    </AnimatedSection>
+
+                        {/* Right Column: Form */}
+                        <div className="lg:col-span-2 order-1 lg:order-2">
+                             <AnimatedSection className="delay-200">
+                                <div className="bg-white p-8 md:p-10 rounded-lg shadow-lg">
+                                     <form action="https://formsubmit.co/tapeindiain@yahoo.com" method="POST">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {formFields.map(field => (
+                                                <div key={field.name}>
+                                                    <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
+                                                        {field.label}{field.required && <span className="text-red-500">*</span>}
+                                                    </label>
+                                                    <input
+                                                        type={field.type}
+                                                        id={field.name}
+                                                        name={field.name}
+                                                        autoComplete={field.autoComplete}
+                                                        className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition"
+                                                        required={field.required}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* FormSubmit settings */}
+                                        <input type="hidden" name="_next" value={redirectUrl} />
+                                        <input type="hidden" name="_honey" style={{ display: 'none' }} />
+                                        <input type="hidden" name="_subject" value={`New Quote Request (${cart.length} items)`} />
+
+                                        <div className="mt-6">
+                                            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                                                Message / Item Details<span className="text-red-500">*</span>
+                                            </label>
+                                            <textarea
+                                                id="message"
+                                                name="message"
+                                                rows={10}
+                                                defaultValue={generatedMessage}
+                                                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition font-mono text-sm"
+                                                required
+                                                placeholder="Please describe your application, required dimensions, quantity, and any other specifications."
+                                            ></textarea>
+                                            <p className="text-xs text-gray-500 mt-1">You can edit this message to add specific dimensions (width, length) for each item.</p>
+                                        </div>
+
+                                        <div className="mt-8 text-center">
+                                            <button
+                                                type="submit"
+                                                className="w-full sm:w-auto bg-brand-yellow text-brand-blue-dark font-bold py-3 px-12 rounded-lg text-lg hover:bg-yellow-400 transition-colors transform hover:scale-105"
+                                            >
+                                                Submit Request
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </AnimatedSection>
+                        </div>
+                    </div>
                 </div>
             </main>
         </>
