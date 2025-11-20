@@ -1,7 +1,8 @@
-// FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
+
 import { Link } from 'react-router-dom';
-import { type FC } from 'react';
+import { type FC, useState } from 'react';
 import { Product } from '../types';
+import { useCart } from '../context/CartContext';
 
 interface ProductCardProps {
   product: Product;
@@ -9,7 +10,16 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
   const imageAltText = product.seo?.["Title (≤60 chars)"] || product.name;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+      e.preventDefault();
+      addToCart(product.id);
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
     <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
@@ -47,16 +57,24 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
            <div className="flex flex-col md:flex-row items-center gap-2">
                 <Link
                   to={`/product/${product.id}`}
-                  className="w-full md:flex-1 text-center bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-md text-base sm:text-sm hover:bg-slate-200 transition-colors"
+                  className="w-full md:flex-1 text-center bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-md text-sm hover:bg-slate-200 transition-colors"
                 >
                   Details
                 </Link>
-                <Link
-                  to={`/request-quote?product=${product.id}`}
-                  className="w-full md:flex-1 text-center bg-brand-accent text-white font-semibold py-3 px-4 rounded-md text-base sm:text-sm hover:bg-brand-accent-dark transition-colors"
+                <button
+                  onClick={handleAddToCart}
+                  className={`w-full md:flex-1 text-center font-semibold py-2.5 px-4 rounded-md text-sm transition-all duration-300 flex items-center justify-center ${
+                      added 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-brand-accent text-white hover:bg-brand-accent-dark'
+                  }`}
                 >
-                  Get Quote
-                </Link>
+                  {added ? (
+                      <>
+                        <i className="fas fa-check mr-2"></i> Added
+                      </>
+                  ) : 'Add to Quote'}
+                </button>
             </div>
         </div>
       </div>
