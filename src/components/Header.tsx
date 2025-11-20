@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { NAV_LINKS } from '../constants';
+
+import { useState, useEffect, useRef } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NAV_LINKS, INDUSTRIES } from '../constants';
 import SearchBar from './SearchBar';
 import { useSearchModal } from '../context/SearchModalContext';
+import { useCategories } from '../context/CategoryContext';
+import { useCart } from '../context/CartContext';
+import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { openSearchModal } = useSearchModal();
+  const { categories } = useCategories();
+  const { cartCount } = useCart();
+  const location = useLocation();
+  const megaMenuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,17 +27,21 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
-  
-  const closeMenu = () => setIsMenuOpen(false);
+      // Close menus on route change
+      setIsMenuOpen(false);
+      setIsMegaMenuOpen(false);
+  }, [location]);
+
+  const handleMouseEnter = () => {
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setIsMegaMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => {
+      setIsMegaMenuOpen(false);
+    }, 150);
+  };
 
   const navItems = NAV_LINKS.filter(l => !l.isButton);
   const ctaItem = NAV_LINKS.find(l => l.isButton);
@@ -38,26 +51,113 @@ export default function Header() {
       <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
+            <Link to="/" className="flex-shrink-0 z-50" aria-label="Tape India Home">
               <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="eager" width="56" height="56" />
             </Link>
             
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navItems.map((link) => (
-                 <NavLink 
-                    key={link.name}
-                    to={link.path}
-                    className={({ isActive }) => 
-                      `text-base font-semibold transition-colors duration-200 ${isActive ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`
-                    }
-                  >
-                  {link.name}
-                </NavLink>
-              ))}
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8 h-full">
+              {navItems.map((link) => {
+                  if (link.name === 'Products') {
+                      return (
+                          <div 
+                            key={link.name} 
+                            className="relative h-full flex items-center"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                          >
+                              <NavLink 
+                                to={link.path}
+                                className={({ isActive }) => 
+                                  `text-base font-semibold transition-colors duration-200 flex items-center ${isActive || isMegaMenuOpen ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`
+                                }
+                              >
+                                {link.name}
+                                <i className={`fas fa-chevron-down ml-1 text-xs transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}></i>
+                              </NavLink>
+
+                              {/* MEGA MENU */}
+                              <div 
+                                className={`absolute top-full left-1/2 transform -translate-x-1/2 w-[90vw] max-w-6xl bg-white shadow-2xl rounded-b-xl border-t-4 border-brand-accent transition-all duration-300 origin-top ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
+                                style={{ marginTop: '0px' }}
+                              >
+                                  <div className="flex p-8 gap-8">
+                                      {/* Categories Column */}
+                                      <div className="w-2/3 pr-8 border-r border-gray-100">
+                                          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Category</h3>
+                                          <div className="grid grid-cols-2 gap-4">
+                                              {categories.slice(0, 8).map(cat => {
+                                                  const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
+                                                  return (
+                                                      <Link key={cat.id} to={`/products?category=${cat.id}`} className="flex items-start p-3 rounded-lg hover:bg-blue-50 transition-colors group">
+                                                          <div className="mt-1 mr-3 text-brand-accent group-hover:text-brand-blue-dark transition-colors">
+                                                              <Icon className="w-5 h-5" />
+                                                          </div>
+                                                          <div>
+                                                              <span className="block font-semibold text-gray-800 group-hover:text-brand-accent">{cat.name}</span>
+                                                              <span className="text-xs text-gray-500 line-clamp-1">{cat.subtitle}</span>
+                                                          </div>
+                                                      </Link>
+                                                  );
+                                              })}
+                                          </div>
+                                          <Link to="/products" className="inline-block mt-4 text-sm font-bold text-brand-accent hover:underline">
+                                              View All Categories &rarr;
+                                          </Link>
+                                      </div>
+
+                                      {/* Industries Column */}
+                                      <div className="w-1/3">
+                                          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Industry</h3>
+                                          <ul className="space-y-2">
+                                              {INDUSTRIES.slice(0, 6).map(ind => (
+                                                  <li key={ind.id}>
+                                                      <Link to={`/products?industry=${ind.id}`} className="block text-gray-700 hover:text-brand-accent hover:translate-x-1 transition-all text-sm font-medium py-1">
+                                                          {ind.name}
+                                                      </Link>
+                                                  </li>
+                                              ))}
+                                          </ul>
+                                          <Link to="/industries" className="inline-block mt-4 text-sm font-bold text-brand-accent hover:underline">
+                                              View All Industries &rarr;
+                                          </Link>
+                                      </div>
+                                  </div>
+                                  <div className="bg-gray-50 px-8 py-4 rounded-b-xl flex justify-between items-center">
+                                      <p className="text-sm text-gray-600">Need help finding a tape?</p>
+                                      <Link to="/contact" className="text-sm font-bold text-brand-blue-dark hover:text-brand-accent">Contact our Experts &rarr;</Link>
+                                  </div>
+                              </div>
+                          </div>
+                      );
+                  }
+                  return (
+                    <NavLink 
+                        key={link.name}
+                        to={link.path}
+                        className={({ isActive }) => 
+                        `text-base font-semibold transition-colors duration-200 ${isActive ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`
+                        }
+                    >
+                    {link.name}
+                    </NavLink>
+                  );
+              })}
             </nav>
             
             <div className="hidden lg:flex items-center gap-4">
                 <SearchBar />
+                
+                {/* Quote Cart Icon */}
+                <Link to="/request-quote" className="relative p-2 text-gray-600 hover:text-brand-accent transition-colors" aria-label="View Quote Basket">
+                    <i className="fas fa-file-invoice text-xl"></i>
+                    {cartCount > 0 && (
+                        <span className="absolute top-0 right-0 bg-brand-amber text-brand-blue-dark text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full shadow-sm">
+                            {cartCount}
+                        </span>
+                    )}
+                </Link>
+
                 {ctaItem && (
                   <Link
                     to={ctaItem.path}
@@ -68,10 +168,18 @@ export default function Header() {
                 )}
             </div>
 
-            <div className="lg:hidden flex items-center">
+            <div className="lg:hidden flex items-center gap-4">
+               <Link to="/request-quote" className="relative p-2 text-gray-600" aria-label="View Quote Basket">
+                    <i className="fas fa-file-invoice text-xl"></i>
+                    {cartCount > 0 && (
+                        <span className="absolute top-0 right-0 bg-brand-amber text-brand-blue-dark text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full shadow-sm">
+                            {cartCount}
+                        </span>
+                    )}
+                </Link>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-brand-accent focus:outline-none z-50 relative p-2 -mr-2"
+                className="text-gray-700 hover:text-brand-accent focus:outline-none p-2"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
@@ -86,7 +194,7 @@ export default function Header() {
           className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${
             isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
-          onClick={closeMenu}
+          onClick={() => setIsMenuOpen(false)}
           aria-hidden="true"
         />
         
@@ -99,11 +207,11 @@ export default function Header() {
           aria-modal="true"
         >
           <div className="flex justify-between items-center p-5 border-b border-gray-100">
-             <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={closeMenu}>
-                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="eager" width="48" height="48" />
+             <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={() => setIsMenuOpen(false)}>
+                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="eager" />
              </Link>
              <button
-                onClick={closeMenu}
+                onClick={() => setIsMenuOpen(false)}
                 className="text-gray-600 hover:text-brand-accent focus:outline-none"
                 aria-label="Close menu"
               >
@@ -111,12 +219,12 @@ export default function Header() {
               </button>
           </div>
           
-          <nav className="p-4 space-y-2">
+          <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-100px)]">
             {navItems.map((link) => (
               <NavLink 
                 key={link.name} 
                 to={link.path}
-                onClick={closeMenu}
+                onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => 
                   `block px-4 py-3 rounded-md text-lg font-semibold transition-colors ${isActive ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-100'}`
                 }
@@ -128,7 +236,7 @@ export default function Header() {
                <div className="px-2 pt-4">
                  <Link 
                     to={ctaItem.path}
-                    onClick={closeMenu}
+                    onClick={() => setIsMenuOpen(false)}
                     className="block w-full text-center bg-brand-yellow text-brand-blue-dark font-bold py-3 px-4 rounded-md text-lg hover:bg-yellow-400 transition-colors"
                   >
                    {ctaItem.name}
