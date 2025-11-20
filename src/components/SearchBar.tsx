@@ -4,6 +4,32 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { Product } from '../types';
 
+// Helper for advanced search
+const calculateScore = (product: Product, query: string) => {
+    const q = query.toLowerCase();
+    const name = product.name.toLowerCase();
+    const desc = product.shortDescription.toLowerCase();
+    const cat = product.category.toLowerCase();
+    let score = 0;
+
+    if (name === q) score += 100; // Exact match
+    else if (name.startsWith(q)) score += 50; // Starts with
+    else if (name.includes(q)) score += 20; // Contains
+
+    if (cat.includes(q)) score += 10;
+    if (desc.includes(q)) score += 5;
+
+    // Split query for fuzzy-like behavior on words
+    const words = q.split(' ');
+    if (words.length > 1) {
+        words.forEach(word => {
+            if (name.includes(word)) score += 5;
+        });
+    }
+
+    return score;
+};
+
 const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Product[]>([]);
@@ -14,18 +40,20 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 
   useEffect(() => {
     if (query.trim().length > 1) {
-      const lowercasedQuery = query.toLowerCase();
-      const filtered = products.filter(product =>
-        product.name.toLowerCase().includes(lowercasedQuery) ||
-        product.shortDescription.toLowerCase().includes(lowercasedQuery)
-      );
-      setResults(filtered.slice(0, 5)); // Limit results to 5
+      const scoredProducts = products.map(p => ({
+          product: p,
+          score: calculateScore(p, query)
+      })).filter(item => item.score > 0);
+
+      // Sort by score descending
+      scoredProducts.sort((a, b) => b.score - a.score);
+      
+      setResults(scoredProducts.map(item => item.product).slice(0, 6));
     } else {
       setResults([]);
     }
   }, [query, products]);
   
-  // Handle clicks outside of the search component to close results
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -48,13 +76,16 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-        if (results.length === 1) {
+        if (results.length > 0) {
             navigate(`/product/${results[0].id}`);
+            handleReset();
+        } else {
+            // Navigate to search page (optional, using products list for now)
+            navigate(`/products`);
             handleReset();
         }
     }
   };
-
 
   return (
     <div className="relative w-full max-w-xs" ref={searchRef}>
@@ -82,16 +113,16 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                         <Link
                         to={`/product/${product.id}`}
                         onClick={handleReset}
-                        className="block px-4 py-3 hover:bg-gray-100 transition-colors"
+                        className="block px-4 py-3 hover:bg-gray-100 transition-colors group"
                         >
-                        <p className="font-semibold text-brand-blue-dark">{product.name}</p>
-                        <p className="text-sm text-gray-500 truncate">{product.shortDescription}</p>
+                        <p className="font-semibold text-brand-blue-dark group-hover:text-brand-accent">{product.name}</p>
+                        <p className="text-xs text-gray-500 truncate">{product.category.replace(/-/g, ' ')}</p>
                         </Link>
                     </li>
                     ))}
                     <li className="text-center p-2 bg-gray-50">
                         <Link to="/products" onClick={handleReset} className="text-sm font-semibold text-brand-accent hover:underline">
-                            View all products
+                            View all matching products
                         </Link>
                     </li>
                 </ul>
