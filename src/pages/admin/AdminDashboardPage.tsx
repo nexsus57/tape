@@ -34,12 +34,14 @@ const TrafficChart = () => {
         }
 
         // Calculate relative height (percentage) for bars
-        // If maxCount is 0, avoid division by zero
+        // If maxCount is 0, we set a safeMax so we don't divide by zero.
         const safeMax = maxCount === 0 ? 10 : maxCount; 
         
         const formattedData = last7Days.map(item => ({
             ...item,
-            height: Math.max(5, Math.round((item.count / safeMax) * 100)) // Min 5% height for visibility
+            // If count is 0, give it 1% height just so the bar exists but is clearly flat. 
+            // If count > 0, use calculated height but at least 5% for visibility.
+            height: item.count === 0 ? 1 : Math.max(5, Math.round((item.count / safeMax) * 100))
         }));
 
         setData(formattedData);
@@ -69,7 +71,7 @@ const TrafficChart = () => {
         {data.map((item, i) => (
            <div key={i} className="w-full flex flex-col items-center group">
                <div 
-                 className="w-full bg-brand-accent/10 rounded-t-md hover:bg-brand-accent transition-all duration-500 relative group-hover:shadow-lg" 
+                 className={`w-full rounded-t-md transition-all duration-500 relative group-hover:shadow-lg ${item.count === 0 ? 'bg-gray-100' : 'bg-brand-accent/80 hover:bg-brand-accent'}`}
                  style={{ height: `${item.height}%` }}
                >
                    {/* Tooltip */}
