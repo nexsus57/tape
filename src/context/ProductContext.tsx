@@ -22,14 +22,14 @@ const INITIAL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
     const merged = { ...productContent, seo: productSeo || fallbackSeo };
     return {
         ...merged,
-        image: merged.images?.[0]?.trim() || PLACEHOLDER_IMAGE
+        image: merged.images?.[0]?.trim() || productContent.image || PLACEHOLDER_IMAGE // Use existing image if available
     };
 });
 
 interface ProductContextType {
   products: Product[];
   addProduct: (productData: Omit<Product, 'id' | 'image'>) => void;
-  updateProduct: (id: string, updatedProduct: Omit<Product, 'image'>) => void;
+  updateProduct: (id: string, updatedProduct: Omit<Product, 'id' | 'image'>) => void;
   deleteProduct: (id: string) => void;
 }
 
@@ -49,18 +49,31 @@ export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
   }, [products, setProducts]);
 
   const addProduct = useCallback((productData: Omit<Product, 'id' | 'image'>) => {
+    const newId = `${productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`;
+    
     const newProduct: Product = {
       ...productData,
-      id: `${productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`,
-      image: productData.images?.[0]?.trim() || PLACEHOLDER_IMAGE
+      id: newId,
+      // Automatically derive the main image from the images array if present
+      image: (productData.images && productData.images.length > 0 && productData.images[0] !== '') 
+             ? productData.images[0] 
+             : PLACEHOLDER_IMAGE
     };
-    setProducts(prev => (Array.isArray(prev) ? [...prev, newProduct] : [newProduct]));
+    
+    setProducts(prev => {
+        const current = Array.isArray(prev) ? prev : [];
+        return [newProduct, ...current]; // Add new product to the top
+    });
   }, [setProducts]);
 
-  const updateProduct = useCallback((id: string, updatedProductData: Omit<Product, 'image'>) => {
+  const updateProduct = useCallback((id: string, updatedProductData: Omit<Product, 'id' | 'image'>) => {
     const finalProductData: Product = {
+        id,
         ...updatedProductData,
-        image: updatedProductData.images?.[0]?.trim() || PLACEHOLDER_IMAGE
+        // Automatically derive the main image from the images array if present
+        image: (updatedProductData.images && updatedProductData.images.length > 0 && updatedProductData.images[0] !== '')
+               ? updatedProductData.images[0]
+               : PLACEHOLDER_IMAGE
     };
     setProducts(prev => (Array.isArray(prev) ? prev.map(p => (p.id === id ? finalProductData : p)) : [finalProductData]));
   }, [setProducts]);
