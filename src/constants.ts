@@ -1,4 +1,3 @@
-
 import { Industry, NavLinkData, Testimonial, Product, Category, IndustryDetail } from './types';
 
 export const NAV_LINKS: NavLinkData[] = [
@@ -93,7 +92,7 @@ export const INITIAL_INDUSTRIES_DETAILED: IndustryDetail[] = [
             'reinforced-paper-tapes1', 'water-activated-kraft-tape', 'cloth-adhesive-tape-500x500-1', 
             'ptfe-silicone-adhesive', 'ptfe-fiberglass-with-silicone-adhesive', 
             'emi-sheliding-tape', 'copper-tape-2', 'polyimide-film-tape', 'tin-copper-tape', 
-            'air-vent-tape', 'pink-rayon', 'nitto-903-ul'
+            'air-vent-tape', 'pink-rayon'
         ],
         seo: {
             title: "Packaging Tapes Manufacturer | Carton Sealing Solutions",
@@ -144,7 +143,7 @@ export const INITIAL_INDUSTRIES_DETAILED: IndustryDetail[] = [
             'fiberglass-tape', 'nrm-foam-tape', 'pink-rayon', 'yellow-polyester', 
             'glass-cloth-tape', 'fr-grade-glass-cloth-tape', 'polyimide-tape', 'emi-sheliding-tape', 
             'copper-tape-2', 'conductive-grind-tape', 'esd-kapton', 'anti-static-polyester-tape', 
-            'double-sided-polyimide-tapes-1', 'polyimide-film-tape', 'tin-copper-tape', 'nitto-903-ul'
+            'double-sided-polyimide-tapes-1', 'polyimide-film-tape', 'tin-copper-tape'
         ],
         seo: {
             title: "Electronics Tapes | Kapton, ESD & Shielding Tapes | Tape India",
@@ -173,7 +172,7 @@ export const INITIAL_INDUSTRIES_DETAILED: IndustryDetail[] = [
         description: 'Our PTFE and Teflon tapes provide superior non-stick, high-temperature, and low-friction surfaces for demanding industrial processes like heat sealing, mold release, and conveyor applications.',
         products: [
             'ptfe-coated-fabric-non-adhesive-1', 'ptfe-silicone-adhesive', 
-            'ptfe-fiberglass-with-silicone-adhesive', 'ptfe-coated-fiberglass-fabric-with-silicone-adhesive-liner', 'nitto-903-ul'
+            'ptfe-fiberglass-with-silicone-adhesive', 'ptfe-coated-fiberglass-fabric-with-silicone-adhesive-liner'
         ],
         seo: {
             title: "PTFE & Teflon Tape Manufacturer | High-Temp Non-Stick Tapes",
@@ -360,37 +359,6 @@ export const PRODUCTS: Omit<Product, 'seo'>[] = [
     { id: 'water-activated-kraft-tape', name: 'Water Activated Kraft Paper Tape', image: 'https://file.garden/aIULwzQ_QkPKQcGw/water%20activated%20kraft%20tape.webp', shortDescription: 'Forms a strong fiber-to-fiber bond with cartons once water is applied. Tamper-proof and ideal for international shipments. Eco-friendly alternative to plastic packaging tapes.', category: 'specialty-tapes', features: ['Forms a permanent bond with cardboard', 'Tamper-evident seal', 'Recyclable and eco-friendly'], uses: ['High-security shipping', 'Sealing corrugated boxes', 'Temperature-sensitive packaging'], images: ['https://file.garden/aIULwzQ_QkPKQcGw/water%20activated%20kraft%20tape.webp'] },
 // FIX: Add required 'image' property to satisfy the Product type.
     { id: 'cloth-adhesive-tape-500x500-1', name: 'Adhesive Cloth Tape', image: 'https://file.garden/aIULwzQ_QkPKQcGw/cloth-adhesive-tape-500x500%20(1).webp', shortDescription: 'Strong cloth tape used for rough surfaces, bundling, stage setups, and industrial repairs. Bonds well to concrete, wood, and metal. Resistant to wear and easy to tear manually.', category: 'specialty-tapes', features: ['Durable cloth backing', 'Available in multiple colors', 'Conformable and easy to tear'], uses: ['Bookbinding and spine repairs', 'Color-coding cables', 'General purpose repairs'], images: ['https://file.garden/aIULwzQ_QkPKQcGw/cloth-adhesive-tape-500x500%20(1).webp'] },
-// FIX: Add required 'image' property to satisfy the Product type.
-    {
-        id: 'nitto-903-ul',
-        name: 'Nitto 903 UL PTFE Tape',
-        image: 'https://file.garden/aIULwzQ_QkPKQcGw/nitto-903-ul-tapes-1000x1000%20(1).jpg',
-        shortDescription: 'Nitto 903 UL is a high-performance PTFE adhesive tape designed for applications requiring extreme heat resistance, low friction, and excellent chemical stability. Perfect for packaging, heat sealing, insulation, and industrial machinery.',
-        description: 'Nitto 903 UL Tape is a premium-grade PTFE (Polytetrafluoroethylene) film tape coated with a high-quality silicone adhesive that delivers outstanding durability in harsh industrial environments. Known for its exceptional heat resistance and ultra-smooth non-stick surface, it is widely used in packaging, heat-sealing machines, automotive components, electrical insulation, and applications where friction reduction and chemical resistance are essential. The tape provides consistent performance under extreme temperatures, prevents material sticking during production, and ensures clean, precise operation in continuous manufacturing lines. Its superior dielectric strength makes it ideal for electrical and thermal insulation where reliability and safety are critical. Whether used for heat sealing, guiding rollers, chute linings, gaskets, or insulation wrapping, Nitto 903 UL offers long-lasting performance with minimal wear. It is designed for demanding industrial applications requiring efficiency, longevity, and premium non-stick properties.',
-        category: 'specialty-tapes',
-        features: [
-            'High temperature resistance from –60°C to +260°C',
-            'Non-stick PTFE surface prevents material adhesion',
-            'Ultra-low friction for smooth material movement',
-            'Silicone adhesive offers strong bond with clean removal',
-            'Excellent chemical resistance to oils, solvents, and acids',
-            'High dielectric strength for electrical insulation',
-            'Durable and stable under continuous mechanical stress',
-            'Long service life in industrial applications'
-        ],
-        uses: [
-            'Heat sealing machines and packaging lines',
-            'Non-stick surface for heat-sealing bars and jaws',
-            'Glide plates, guide rollers, and conveyor surfaces',
-            'Insulation wrapping for electrical and thermal applications',
-            'Lining for chutes, hoppers, and sliding surfaces',
-            'Masking in high-temperature and chemical-exposed areas',
-            'Release sheets for laminating and molding processes',
-            'Anti-friction applications in machinery and automation'
-        ],
-        industries: ['ptfe-teflon-industry'],
-        images: ['https://file.garden/aIULwzQ_QkPKQcGw/nitto-903-ul-tapes-1000x1000%20(1).jpg']
-    },
 
     // --- Teflon & PTFE Tapes ---
 // FIX: Add required 'image' property to satisfy the Product type.
