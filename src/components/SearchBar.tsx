@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
@@ -42,7 +41,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 
   // AI Search Logic
   const performAiSearch = async (searchQuery: string) => {
-    // Basic local filter first for speed
+    // Basic local filter first for instant feedback while AI loads
     const localResults = products.map(p => ({
         product: p,
         score: calculateScore(p, searchQuery)
@@ -70,7 +69,9 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                 - Auto-complete partial words ("haz" -> "hazard tape")
                 - Understand semantic meaning (e.g., "tape that shines" -> "reflective tape", "heat proof" -> "kapton/teflon")
                 - Match vague queries to correct products
-                - Return a JSON array of string IDs.
+                - Handle short queries ("copp", "gree", "ther")
+                - Rank results by relevance and confidence
+                - Return clean JSON output.
             `;
 
             const prompt = `
@@ -79,7 +80,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 
                 User Query: "${searchQuery}"
                 
-                Return only the JSON array of matching Product IDs, ranked by relevance.
+                Return ONLY a JSON array of matching Product IDs (strings). No markdown formatting.
             `;
 
             const response = await ai.models.generateContent({
@@ -95,7 +96,16 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                 contents: prompt
             });
 
-            const matchedIds = JSON.parse(response.text || '[]');
+            // Robust JSON parsing to handle potential Markdown code blocks
+            let jsonString = response.text || '[]';
+            // Strip markdown code blocks if present (e.g. ```json [ ... ] ```)
+            if (jsonString.startsWith('```json')) {
+                jsonString = jsonString.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+            } else if (jsonString.startsWith('```')) {
+                jsonString = jsonString.replace(/^```\s*/, '').replace(/\s*```$/, '');
+            }
+
+            const matchedIds = JSON.parse(jsonString);
             
             if (Array.isArray(matchedIds) && matchedIds.length > 0) {
                 // Map IDs back to full product objects
@@ -103,13 +113,13 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                     .map(id => products.find(p => p.id === id))
                     .filter((p): p is Product => !!p);
                 
-                // If AI found results, use them (or merge them if you prefer)
+                // If AI found results, update the list
                 if (aiProducts.length > 0) {
                     setResults(aiProducts.slice(0, 6));
                 }
             }
         } catch (error) {
-            console.error("AI Search failed, using local results", error);
+            console.error("AI Search failed, keeping local results", error);
         } finally {
             setIsAiLoading(false);
         }
@@ -120,7 +130,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     if (query.trim().length > 1) {
-        // Debounce API calls by 500ms
+        // Debounce API calls by 500ms to avoid rate limits
         debounceRef.current = setTimeout(() => {
             performAiSearch(query);
         }, 500);
