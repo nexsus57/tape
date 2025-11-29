@@ -1,3 +1,4 @@
+
 import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../../context/ProductContext';
@@ -122,8 +123,6 @@ const AdminProductEditPage = () => {
         };
 
         // Construct the final product object
-        // Note: We exclude 'image' (singular) here because the context derives it from 'images' (array).
-        // However, for the local state update to look correct immediately, we ensure data integrity.
         const finalProductData = {
             ...product,
             features: cleanFeatures,
