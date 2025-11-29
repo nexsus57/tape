@@ -50,6 +50,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     setResults(localResults);
 
     // If we have an API Key, try to enhance with AI
+    // NOTE: process.env.API_KEY is defined in vite.config.ts
     if (process.env.API_KEY) {
         setIsAiLoading(true);
         try {
