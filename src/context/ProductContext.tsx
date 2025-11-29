@@ -1,15 +1,32 @@
+
 import { createContext, useContext, ReactNode, useCallback, FC, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Product, SeoPageData } from '../types';
-import { PRODUCTS as CONTENT_PRODUCTS } from '../constants';
+import { PRODUCTS as CONTENT_PRODUCTS, INITIAL_INDUSTRIES_DETAILED } from '../constants';
 import { seoData } from '../data/seoData';
 
 const PLACEHOLDER_IMAGE = 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png';
 
 // --- MERGE LOGIC ---
-// Create the authoritative, combined product list here.
+
+// 1. Build a reverse map: ProductID -> Array of IndustryIDs
+const productIndustryMap = new Map<string, string[]>();
+
+INITIAL_INDUSTRIES_DETAILED.forEach(ind => {
+    ind.products.forEach(prodId => {
+        const current = productIndustryMap.get(prodId) || [];
+        // Avoid duplicates
+        if (!current.includes(ind.id)) {
+            current.push(ind.id);
+        }
+        productIndustryMap.set(prodId, current);
+    });
+});
+
+// 2. Create the authoritative, combined product list.
 const INITIAL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
     const productSeo = seoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
+    
     // Define a fallback SEO object for products that might not have a specific entry in seoData.
     const fallbackSeo: SeoPageData = {
         "Page Type": "Product", "Page Name": productContent.name, "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
@@ -18,8 +35,15 @@ const INITIAL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
         summary: productContent.shortDescription, "CTA": "Request a Quote", "Schema Type": "Product", faqs: [],
         "Product Schema (JSON-LD)": "{}", "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
     };
+
+    // Combine implicit industries (from constants/INITIAL_INDUSTRIES_DETAILED) with explicit ones (from constants/PRODUCTS)
+    const implicitIndustries = productIndustryMap.get(productContent.id) || [];
+    const explicitIndustries = productContent.industries || [];
+    const combinedIndustries = Array.from(new Set([...implicitIndustries, ...explicitIndustries]));
+
     // Combine content and SEO, then derive the guaranteed `image` property.
-    const merged = { ...productContent, seo: productSeo || fallbackSeo };
+    const merged = { ...productContent, seo: productSeo || fallbackSeo, industries: combinedIndustries };
+    
     return {
         ...merged,
         image: merged.images?.[0]?.trim() || productContent.image || PLACEHOLDER_IMAGE // Use existing image if available
@@ -40,9 +64,11 @@ interface ProductProviderProps {
 }
 
 export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
-  const [products, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v19', INITIAL_PRODUCTS);
+  // Updated key to v20 to force a refresh of the data structure in local storage for users
+  const [products, setProducts] = useLocalStorage<Product[]>('tapeindia_products_v20', INITIAL_PRODUCTS);
 
   useEffect(() => {
+    // Basic validation to reset if data is weird
     if (!Array.isArray(products) || (products.length === 0 && INITIAL_PRODUCTS.length > 0)) {
       setProducts(INITIAL_PRODUCTS);
     }
