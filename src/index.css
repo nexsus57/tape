@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,26 +40,25 @@
   ============================================
   PRODUCT IMAGE LAYOUT FIXES
   ============================================
-  Centralized CSS to ensure product images display correctly without distortion
-  across different layouts, as per user request.
   */
 
-  /* 1. PRODUCT LISTING CARDS (Homepage, Category Pages, etc.) */
-  /* Targets the image within product cards to enforce a consistent, non-cropped view. */
+  /* 1. PRODUCT LISTING CARDS */
+  /* Remove strict height for product-card to respect aspect ratio in component */
   .group > a > div > img,
-  [class*="product-card"] img,
   [class*="card-product-image"] img,
   [class*="ai-listing-card"] img {
-    @apply w-full h-40 object-contain object-center;
+    @apply w-full h-full object-contain object-center;
+  }
+
+  [class*="product-card"] img {
+    @apply w-full h-full object-contain object-center;
   }
 
   /* 2. PRODUCT DETAIL PAGE (Main Image) */
-  /* Enforces a perfect square container for the main product image. */
   .product-detail-image-container {
     @apply aspect-square w-full;
   }
   
-  /* Ensures the image fits perfectly within the square container without stretching. */
   .product-detail-image-container img {
     @apply w-full h-full object-contain object-center;
   }
@@ -76,9 +74,7 @@
   }
 
   /* 
-    SAFEGUARD: For any image inside a class containing "product", "card", or "item",
-    apply object-fit: contain. This prevents accidental stretching or cropping
-    of product-related images in other components.
+    SAFEGUARD: Prevent accidental stretching
   */
   [class*="product"] img,
   [class*="card"] img,
