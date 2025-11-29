@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { type MouseEvent, type FC } from 'react';
 import { Product } from '../types';
