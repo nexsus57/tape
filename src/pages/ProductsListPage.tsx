@@ -63,7 +63,8 @@ export default function ProductsListPage() {
             const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === industryId);
             
             if (industryDetail) {
-                // Filter products based on industry
+                // Filter products based on industry.
+                // NOTE: We check for inclusion. If no products match, 'prods' will be empty, which is correct.
                 prods = products.filter(p => p.industries?.includes(industryId));
                 
                 // Construct page data dynamically from the Industry Detail
@@ -77,6 +78,9 @@ export default function ProductsListPage() {
                     "Combined Schema (JSON-LD)": "{}" // Fallback for schema
                 };
                 crumb = { name: 'Industries', link: '/industries' };
+            } else {
+                // If ID is in URL but not found in constants, we fallback gracefully but maybe show empty?
+                // For now, if invalid industry, showing all products is a safer fallback to avoid broken pages.
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
