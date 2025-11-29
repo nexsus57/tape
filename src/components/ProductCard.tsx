@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { type MouseEvent } from 'react';
+import { type MouseEvent, type FC } from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
 
@@ -9,7 +9,7 @@ interface ProductCardProps {
   categoryName: string;
 }
 
-const ProductCard = ({ product, categoryName }: ProductCardProps) => {
+const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   const { addToCart } = useCart();
 
   const handleAddToQuote = (e: MouseEvent<HTMLButtonElement>) => {
