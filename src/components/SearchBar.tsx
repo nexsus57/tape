@@ -1,8 +1,12 @@
+
 import { useState, useEffect, useRef, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { Product } from '../types';
 import { GoogleGenAI, Type } from "@google/genai";
+
+// Declare process to satisfy TypeScript when checking process.env.API_KEY
+declare var process: any;
 
 // Local heuristic search (Fallback & Instant)
 const calculateScore = (product: Product, query: string) => {
