@@ -21,9 +21,9 @@ export default function BottomNavBar() {
           <NavLink
             key={item.name}
             to={item.path}
-            end
-            className={({ isActive }) =>
-              `inline-flex flex-col items-center justify-center font-medium group ${isActive ? activeClass : inactiveClass} hover:bg-gray-50 transition-colors`
+            end={item.path === '/'}
+            className={({ isActive }) => 
+                `inline-flex flex-col items-center justify-center font-medium group hover:bg-gray-50 transition-colors ${isActive ? activeClass : inactiveClass}`
             }
           >
             <i className={`${item.icon} text-2xl mb-1`}></i>
@@ -50,8 +50,8 @@ export default function BottomNavBar() {
         </a>
         <NavLink
           to="/request-quote"
-          className={({ isActive }) =>
-            `inline-flex flex-col items-center justify-center font-bold group ${isActive ? 'text-brand-amber' : 'text-gray-600'} bg-amber-50 hover:bg-amber-100 transition-colors`
+          className={({ isActive }) => 
+            `inline-flex flex-col items-center justify-center font-bold group hover:bg-amber-100 transition-colors ${isActive ? 'text-brand-amber bg-amber-100' : 'text-gray-600 bg-amber-50'}`
           }
         >
           <i className="fas fa-file-alt text-2xl mb-1"></i>
