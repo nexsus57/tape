@@ -1,5 +1,5 @@
+
 import { Suspense, lazy } from 'react';
-// FIX: Migrated from react-router-dom v5 to v6. Replaced Switch/Redirect with Routes/Navigate.
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import PublicLayout from './components/PublicLayout';
@@ -37,43 +37,45 @@ const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage.tsx'));
 export default function App() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
-      {/* FIX: Replaced v5 `Switch` with v6 `Routes` and updated route syntax (e.g., `element` prop, nested routes). */}
       <Routes>
         {/* Admin login is a public route */}
         <Route path="/admin/login" element={<AdminLoginPage />} />
         
         {/* All routes under /admin/ are protected and use the AdminLayout */}
-        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-          {/* FIX: Redirect from /admin to /admin/dashboard using an index route */}
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<AdminDashboardPage />} />
-          <Route path="products" element={<AdminProductsListPage />} />
-          <Route path="products/new" element={<AdminProductEditPage />} />
-          <Route path="products/edit/:productId" element={<AdminProductEditPage />} />
-          <Route path="categories" element={<AdminCategoriesPage />} />
-          <Route path="industries" element={<AdminIndustriesPage />} />
-          <Route path="industries/edit/:industryId" element={<AdminIndustryEditPage />} />
-          <Route path="blog" element={<AdminBlogListPage />} />
-          <Route path="blog/new" element={<AdminBlogEditPage />} />
-          <Route path="blog/edit/:slug" element={<AdminBlogEditPage />} />
-          <Route path="settings" element={<AdminSettingsPage />} />
-          <Route path="seo-content-hub" element={<SeoContentHubPage />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboardPage />} />
+            <Route path="products" element={<AdminProductsListPage />} />
+            <Route path="products/new" element={<AdminProductEditPage />} />
+            <Route path="products/edit/:productId" element={<AdminProductEditPage />} />
+            <Route path="categories" element={<AdminCategoriesPage />} />
+            <Route path="industries" element={<AdminIndustriesPage />} />
+            <Route path="industries/edit/:industryId" element={<AdminIndustryEditPage />} />
+            <Route path="blog" element={<AdminBlogListPage />} />
+            <Route path="blog/new" element={<AdminBlogEditPage />} />
+            <Route path="blog/edit/:slug" element={<AdminBlogEditPage />} />
+            <Route path="settings" element={<AdminSettingsPage />} />
+            <Route path="seo-content-hub" element={<SeoContentHubPage />} />
         </Route>
         
         {/* Public-facing website routes with PublicLayout */}
         <Route path="/" element={<PublicLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="industries" element={<IndustriesPage />} />
-          <Route path="products" element={<ProductsListPage />} />
-          <Route path="product/:productId" element={<ProductPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="blog" element={<BlogPage />} />
-          <Route path="blog/:slug" element={<BlogPostPage />} />
-          <Route path="request-quote" element={<RequestQuotePage />} />
-          <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-          {/* Catch-all for any other route */}
-          <Route path="*" element={<NotFoundPage />} />
+            <Route index element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="industries" element={<IndustriesPage />} />
+            <Route path="products" element={<ProductsListPage />} />
+            <Route path="product/:productId" element={<ProductPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:slug" element={<BlogPostPage />} />
+            <Route path="request-quote" element={<RequestQuotePage />} />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            {/* Catch-all for any other route */}
+            <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>
