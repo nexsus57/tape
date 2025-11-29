@@ -1,84 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import { Link } from 'react-router-dom';
+import { type FC } from 'react';
+import { Product } from '../types';
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply font-sans bg-white text-slate-800 antialiased leading-relaxed;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold text-brand-blue-dark;
-  }
-  h1 {
-    /* Approx 30px -> 36px */
-    @apply text-3xl md:text-4xl tracking-tight !leading-tight;
-  }
-  h2 {
-    /* Approx 24px -> 30px */
-    @apply text-2xl md:text-3xl !leading-snug;
-  }
-  h3 {
-    /* Approx 20px -> 24px */
-    @apply text-xl md:text-2xl !leading-normal;
-  }
-  p {
-    /* Approx 16px -> 18px */
-    @apply text-base lg:text-lg;
-  }
-  
-  /* GLOBAL FIX: Ensure all images are responsive and block-level by default. */
-  img {
-    @apply block max-w-full;
-  }
+interface ProductCardProps {
+  product: Product;
+  categoryName: string;
 }
 
-@layer components {
-  /*
-  ============================================
-  PRODUCT IMAGE LAYOUT FIXES
-  ============================================
-  */
+const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
+  return (
+    <Link
+      to={`/product/${product.id}`}
+      className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden transform hover:-translate-y-1 product-card"
+    >
+      <div className="relative overflow-hidden bg-gray-50 p-4 aspect-[4/3] flex items-center justify-center">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-110"
+          loading="lazy"
+          width="300"
+          height="300"
+          onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
+        />
+      </div>
 
-  /* 1. PRODUCT LISTING CARDS */
-  /* Remove strict height for product-card to respect aspect ratio in component */
-  .group > a > div > img,
-  [class*="card-product-image"] img,
-  [class*="ai-listing-card"] img {
-    @apply w-full h-full object-contain object-center;
-  }
+      <div className="p-5 flex flex-col flex-grow">
+        <p className="text-xs font-bold text-brand-accent uppercase tracking-wider mb-2">
+          {categoryName}
+        </p>
+        <h3 className="text-lg font-bold text-brand-blue-dark mb-3 leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
+          {product.name}
+        </h3>
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
+          {product.shortDescription}
+        </p>
 
-  [class*="product-card"] img {
-    @apply w-full h-full object-contain object-center;
-  }
+        <div className="mt-auto pt-4 border-t border-gray-100">
+            <span className="text-sm font-bold text-brand-accent group-hover:text-brand-accent-dark flex items-center">
+                View Product <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            </span>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
-  /* 2. PRODUCT DETAIL PAGE (Main Image) */
-  .product-detail-image-container {
-    @apply aspect-square w-full;
-  }
-  
-  .product-detail-image-container img {
-    @apply w-full h-full object-contain object-center;
-  }
-}
-
-@layer utilities {
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .hide-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  /* 
-    SAFEGUARD: Prevent accidental stretching
-  */
-  [class*="product"] img,
-  [class*="card"] img,
-  [class*="item"] img {
-    @apply object-contain;
-  }
-}
+export default ProductCard;
