@@ -1,13 +1,15 @@
-import { useSearchParams, useLocation, Link } from 'react-router-dom';
+
+import { useLocation, Link } from 'react-router-dom';
 import { useMemo, useState, useEffect, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
-import { INDUSTRIES } from '../constants';
+import { INDUSTRIES, INITIAL_INDUSTRIES_DETAILED } from '../constants';
 import ProductCard from '../components/ProductCard';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 import { seoData } from '../data/seoData';
+import type { SeoPageData } from '../types';
 
 interface FilterButtonProps {
     label: string;
@@ -31,12 +33,12 @@ const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
 }
 
 export default function ProductsListPage() {
-    const [searchParams] = useSearchParams();
     const location = useLocation();
     const { products } = useProducts();
     const { categories } = useCategories();
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
+    const searchParams = new URLSearchParams(location.search);
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
     const { 
@@ -53,24 +55,39 @@ export default function ProductsListPage() {
         const categoryId = searchParams.get('category');
         
         let prods = products;
-        let pageData;
+        let pageData: Partial<SeoPageData> | undefined;
         let crumb = null;
 
         if (industryId) {
-            const industry = INDUSTRIES.find(i => i.id === industryId);
-            if (industry) {
+            // FIX: Lookup detailed industry info from constants to get the correct Title and Description
+            const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === industryId);
+            
+            if (industryDetail) {
+                // Filter products based on industry
                 prods = products.filter(p => p.industries?.includes(industryId));
-                pageData = seoData.find(p => p["Page Name"] === industry.name);
+                
+                // Construct page data dynamically from the Industry Detail
+                pageData = {
+                    "Title (≤60 chars)": industryDetail.seo?.title || `${industryDetail.name} | Tape India`,
+                    "Meta Description (≤160 chars)": industryDetail.seo?.description || industryDetail.description,
+                    H1: industryDetail.name,
+                    summary: industryDetail.description,
+                    "Page Name": industryDetail.name,
+                    "Page Type": "Industry List",
+                    "Combined Schema (JSON-LD)": "{}" // Fallback for schema
+                };
                 crumb = { name: 'Industries', link: '/industries' };
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
             if (category) {
                 prods = products.filter(p => p.category === categoryId);
-                pageData = seoData.find(p => p["Page Name"] === category.name);
+                // Categories are in seoData, so we look them up there
+                pageData = seoData.find(p => p.id === categoryId || p["Page Name"] === category.name);
             }
         }
 
+        // Fallback for "All Products"
         if (!pageData) {
             pageData = seoData.find(p => p["Page Name"] === "All Products List");
         }
@@ -129,7 +146,9 @@ export default function ProductsListPage() {
                 <title>{pageTitle}</title>
                 <meta name="description" content={pageDescription} />
                 <script type="application/ld+json">{breadcrumbSchema}</script>
-                {pageSeoData && <script type="application/ld+json">{pageSeoData["Combined Schema (JSON-LD)"]}</script>}
+                {pageSeoData?.["Combined Schema (JSON-LD)"] && pageSeoData["Combined Schema (JSON-LD)"] !== "{}" && (
+                    <script type="application/ld+json">{pageSeoData["Combined Schema (JSON-LD)"]}</script>
+                )}
             </Helmet>
             <CanonicalTag />
             <div className="container mx-auto px-5 lg:px-8">
