@@ -64,8 +64,13 @@ export default function ProductsListPage() {
             
             if (industryDetail) {
                 // Filter products based on industry.
-                // NOTE: We check for inclusion. If no products match, 'prods' will be empty, which is correct.
-                prods = products.filter(p => p.industries?.includes(industryId));
+                // WE CHECK TWO SOURCES OF TRUTH:
+                // 1. industryDetail.products.includes(p.id) -> The hardcoded list in constants.ts (Definitive)
+                // 2. p.industries?.includes(industryId) -> The tag on the product object (Dynamic/User Added)
+                prods = products.filter(p => 
+                    industryDetail.products.includes(p.id) || 
+                    p.industries?.includes(industryId)
+                );
                 
                 // Construct page data dynamically from the Industry Detail
                 pageData = {
@@ -79,8 +84,7 @@ export default function ProductsListPage() {
                 };
                 crumb = { name: 'Industries', link: '/industries' };
             } else {
-                // If ID is in URL but not found in constants, we fallback gracefully but maybe show empty?
-                // For now, if invalid industry, showing all products is a safer fallback to avoid broken pages.
+                // If ID is in URL but not found in constants, we fallback gracefully
             }
         } else if (categoryId) {
             const category = categories.find(c => c.id === categoryId);
