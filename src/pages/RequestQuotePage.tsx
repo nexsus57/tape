@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
@@ -8,9 +8,12 @@ import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 
 export default function RequestQuotePage() {
-    const [searchParams] = useSearchParams();
+    const location = useLocation();
+    const history = useHistory();
     const { products } = useProducts();
     const { cart, removeFromCart, clearCart, addToCart } = useCart();
+    
+    const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     const [message, setMessage] = useState('');
     const [redirectUrl, setRedirectUrl] = useState('');
@@ -21,8 +24,16 @@ export default function RequestQuotePage() {
         if (productId) {
             // If user came from a "Get Quote" direct link, add it to cart if not there
             addToCart(productId);
+            
+            // Remove the query parameter immediately after processing.
+            const newParams = new URLSearchParams(location.search);
+            newParams.delete('product');
+            history.replace({
+                pathname: location.pathname,
+                search: newParams.toString()
+            });
         }
-    }, [searchParams, addToCart]);
+    }, [searchParams, addToCart, history, location.pathname, location.search]);
 
     useEffect(() => {
         setRedirectUrl(`${window.location.origin}/thank-you.html`);
