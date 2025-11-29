@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { type FC, useState } from 'react';
+import { type MouseEvent } from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
 
@@ -9,76 +9,65 @@ interface ProductCardProps {
   categoryName: string;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
+const ProductCard = ({ product, categoryName }: ProductCardProps) => {
   const { addToCart } = useCart();
-  const [added, setAdded] = useState(false);
-  const imageAltText = product.seo?.["Title (≤60 chars)"] || product.name;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-      e.preventDefault();
-      addToCart(product.id);
-      setAdded(true);
-      setTimeout(() => setAdded(false), 2000);
+  const handleAddToQuote = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent navigating to the product page
+    e.stopPropagation();
+    addToCart(product.id);
+    // Simple feedback
+    alert(`${product.name} added to quote basket!`);
   };
 
   return (
-    <article className="group bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 flex flex-col overflow-hidden border border-slate-200/50 h-full transform hover:-translate-y-1.5">
-      
-      <Link to={`/product/${product.id}`} className="relative w-full flex-shrink-0" aria-label={`View details for ${product.name}`}>
-        <div className="bg-slate-50 flex items-center justify-center overflow-hidden p-2">
-           <img 
-             src={product.image} 
-             alt={imageAltText}
-             className="group-hover:scale-105 transition-transform duration-300"
-             style={{ borderRadius: "12px" }}
-             loading="lazy"
-             crossOrigin="anonymous"
-             onError={(e) => (e.currentTarget.src = 'https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png')}
-           />
+    <Link
+      to={`/product/${product.id}`}
+      className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden transform hover:-translate-y-1 product-card"
+    >
+      <div className="relative overflow-hidden bg-gray-50 p-4 aspect-[4/3] flex items-center justify-center">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-contain transform transition-transform duration-500 group-hover:scale-110"
+          loading="lazy"
+          width="300"
+          height="300"
+          onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
+        />
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="bg-white/90 text-brand-blue-dark text-xs font-bold px-2 py-1 rounded shadow-sm backdrop-blur-sm">
+                View Details
+            </span>
         </div>
-      </Link>
+      </div>
 
-      <div className="p-5 flex flex-col flex-grow w-full">
-        <p className="text-brand-accent font-semibold text-sm mb-1 uppercase tracking-wide">
+      <div className="p-5 flex flex-col flex-grow">
+        <p className="text-xs font-bold text-brand-accent uppercase tracking-wider mb-2">
           {categoryName}
         </p>
-        
-        <h4 className="text-lg font-bold text-brand-blue-dark mb-2 leading-tight">
-          <Link to={`/product/${product.id}`} className="hover:text-brand-accent transition-colors duration-200 line-clamp-2">
-            {product.name}
-          </Link>
-        </h4>
-
-        <p className="text-slate-600 text-base leading-relaxed mb-4 flex-grow line-clamp-3">
+        <h3 className="text-lg font-bold text-brand-blue-dark mb-3 leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
+          {product.name}
+        </h3>
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
           {product.shortDescription}
         </p>
 
-        <div className="mt-auto pt-4 border-t border-slate-100">
-           <div className="flex flex-col md:flex-row items-center gap-2">
-                <Link
-                  to={`/product/${product.id}`}
-                  className="w-full md:flex-1 text-center bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-md text-sm hover:bg-slate-200 transition-colors"
-                >
-                  Details
-                </Link>
-                <button
-                  onClick={handleAddToCart}
-                  className={`w-full md:flex-1 text-center font-semibold py-2.5 px-4 rounded-md text-sm transition-all duration-300 flex items-center justify-center ${
-                      added 
-                      ? 'bg-green-500 text-white' 
-                      : 'bg-brand-accent text-white hover:bg-brand-accent-dark'
-                  }`}
-                >
-                  {added ? (
-                      <>
-                        <i className="fas fa-check mr-2"></i> Added
-                      </>
-                  ) : 'Add to Quote'}
-                </button>
-            </div>
+        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between gap-3">
+            <span className="text-sm font-semibold text-brand-blue-dark group-hover:underline">
+                Read More
+            </span>
+            <button
+                onClick={handleAddToQuote}
+                className="bg-brand-gray hover:bg-brand-yellow text-brand-blue-dark w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-300 shadow-sm z-10"
+                title="Add to Quote"
+                aria-label={`Add ${product.name} to quote`}
+            >
+                <i className="fas fa-plus text-xs"></i>
+            </button>
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 
