@@ -46,6 +46,12 @@ export default function Header() {
   const navItems = NAV_LINKS.filter(l => !l.isButton);
   const ctaItem = NAV_LINKS.find(l => l.isButton);
 
+  const getLinkClass = (path: string, isMegaMenu: boolean = false) => {
+      const isActive = location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
+      const activeState = isActive || isMegaMenu;
+      return `text-base font-semibold transition-colors duration-200 flex items-center ${activeState ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`;
+  };
+
   return (
     <>
       <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
@@ -66,15 +72,13 @@ export default function Header() {
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                           >
-                              <NavLink 
+                              <Link 
                                 to={link.path}
-                                className={({ isActive }) => 
-                                  `text-base font-semibold transition-colors duration-200 flex items-center ${isActive || isMegaMenuOpen ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`
-                                }
+                                className={getLinkClass(link.path, isMegaMenuOpen)}
                               >
                                 {link.name}
                                 <i className={`fas fa-chevron-down ml-1 text-xs transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}></i>
-                              </NavLink>
+                              </Link>
 
                               {/* MEGA MENU */}
                               <div 
@@ -135,8 +139,9 @@ export default function Header() {
                     <NavLink 
                         key={link.name}
                         to={link.path}
+                        end={link.path === '/'}
                         className={({ isActive }) => 
-                        `text-base font-semibold transition-colors duration-200 ${isActive ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`
+                            `text-base font-semibold transition-colors duration-200 text-gray-700 hover:text-brand-accent ${isActive ? 'text-brand-accent' : ''}`
                         }
                     >
                     {link.name}
@@ -224,9 +229,10 @@ export default function Header() {
               <NavLink 
                 key={link.name} 
                 to={link.path}
+                end={link.path === '/'}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => 
-                  `block px-4 py-3 rounded-md text-lg font-semibold transition-colors ${isActive ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-100'}`
+                    `block px-4 py-3 rounded-md text-lg font-semibold transition-colors text-gray-700 hover:bg-gray-100 ${isActive ? 'bg-blue-50 text-brand-accent' : ''}`
                 }
               >
                 {link.name}
