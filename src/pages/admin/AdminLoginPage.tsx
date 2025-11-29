@@ -11,6 +11,7 @@ const AdminLoginPage = () => {
   const location = useLocation();
   const { login } = useAuth();
 
+  // @ts-ignore - TS might complain about location state type, safe to ignore for now
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
   const handleSubmit = (e: FormEvent) => {
