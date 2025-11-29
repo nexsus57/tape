@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
-import { useLocation, Link, useHistory } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
@@ -9,10 +9,11 @@ import CanonicalTag from '../components/CanonicalTag';
 
 export default function RequestQuotePage() {
     const location = useLocation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const { products } = useProducts();
     const { cart, removeFromCart, clearCart, addToCart } = useCart();
     
+    // Memoize search params to avoid unnecessary re-creation
     const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     const [message, setMessage] = useState('');
@@ -22,18 +23,18 @@ export default function RequestQuotePage() {
     useEffect(() => {
         const productId = searchParams.get('product');
         if (productId) {
-            // If user came from a "Get Quote" direct link, add it to cart if not there
+            // If user came from a "Get Quote" direct link, add it to cart
             addToCart(productId);
             
-            // Remove the query parameter immediately after processing.
-            const newParams = new URLSearchParams(location.search);
-            newParams.delete('product');
-            history.replace({
+            // Remove the query parameter immediately after processing to prevent
+            // the effect from running again on re-renders, causing an infinite loop.
+            searchParams.delete('product');
+            navigate({
                 pathname: location.pathname,
-                search: newParams.toString()
-            });
+                search: searchParams.toString()
+            }, { replace: true });
         }
-    }, [searchParams, addToCart, history, location.pathname, location.search]);
+    }, [searchParams, addToCart, navigate, location.pathname]);
 
     useEffect(() => {
         setRedirectUrl(`${window.location.origin}/thank-you.html`);
