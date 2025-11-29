@@ -1,3 +1,4 @@
+
 import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useBlog } from '../../context/BlogContext';
@@ -13,7 +14,6 @@ const AdminBlogEditPage = () => {
     const { articles, addArticle, updateArticle } = useBlog();
     const isEditing = Boolean(slug);
 
-    // FIX: Add missing 'seo' property to the initial state to match the 'EditableArticle' type.
     const [article, setArticle] = useState<EditableArticle>({
         title: '',
         summary: '',
@@ -58,10 +58,7 @@ const AdminBlogEditPage = () => {
                 navigate('/admin/blog');
             }
         }
-    // FIX: Dependency array is changed to [slug] to prevent form state from being overwritten on every render.
-    // This fixes the bug where input fields were not editable.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug]);
+    }, [slug, articles, isEditing, navigate]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -86,7 +83,6 @@ const AdminBlogEditPage = () => {
             updateArticle(finalArticleData.id, finalArticleData as BlogArticle);
             alert('Article updated successfully!');
         } else {
-            // FIX: The 'id' property must be omitted before calling addArticle to avoid bugs.
             const { id, ...articleToAdd } = finalArticleData;
             addArticle(articleToAdd);
             alert('Article created successfully!');
