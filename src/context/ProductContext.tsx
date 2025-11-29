@@ -74,6 +74,33 @@ export const ProductProvider: FC<ProductProviderProps> = ({ children }) => {
     }
   }, [products, setProducts]);
 
+  // SELF-HEALING EFFECT: Force sync industry mappings
+  // This ensures that if we update constants.ts to assign products to industries,
+  // the user's LocalStorage data gets updated automatically.
+  useEffect(() => {
+      setProducts(currentProducts => {
+          if (!Array.isArray(currentProducts)) return INITIAL_PRODUCTS;
+
+          let hasChanges = false;
+          const updatedProducts = currentProducts.map(p => {
+              const implicitIndustries = productIndustryMap.get(p.id) || [];
+              const currentIndustries = p.industries || [];
+              
+              // Create a set of all industries this product SHOULD have
+              const targetIndustriesSet = new Set([...currentIndustries, ...implicitIndustries]);
+              
+              // If the count differs, it means we are missing some tags
+              if (targetIndustriesSet.size !== currentIndustries.length) {
+                  hasChanges = true;
+                  return { ...p, industries: Array.from(targetIndustriesSet) };
+              }
+              return p;
+          });
+
+          return hasChanges ? updatedProducts : currentProducts;
+      });
+  }, [setProducts]);
+
   const addProduct = useCallback((productData: Omit<Product, 'id' | 'image'>) => {
     const newId = `${productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`;
     
