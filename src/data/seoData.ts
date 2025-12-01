@@ -1,3 +1,4 @@
+
 import { SeoPageData, Category, BlogArticle } from '../types';
 
 export const ALL_CATEGORIES: Category[] = [
@@ -48,14 +49,6 @@ export const ALL_CATEGORIES: Category[] = [
     icon: 'ZapIcon',
     description: 'Prevent electrostatic discharge damage with our range of ESD-safe and antistatic tapes for electronics manufacturing and handling.',
     image: 'https://file.garden/aIULwzQ_QkPKQcGw/esd%20floor%20marking.webp'
-  },
-  {
-    id: 'packaging-tapes',
-    name: 'Packaging Tapes',
-    subtitle: 'Secure sealing for cartons and bundles.',
-    icon: 'PackageIcon',
-    description: 'Reliable sealing solutions for all your packaging needs, from light duty to heavy carton sealing.',
-    image: 'https://file.garden/aIULwzQ_QkPKQcGw/bopp%20tape.webp'
   }
 ];
 
@@ -119,7 +112,7 @@ export const seoData: SeoPageData[] = [
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-    {
+     {
         "Page Type": "Static",
         "Page Name": "Privacy Policy",
         "Full URL": "https://tapeindia.shop/privacy-policy",
@@ -2608,6 +2601,27 @@ export const seoData: SeoPageData[] = [
             { "@type": "Question", "name": "What is the price of XLPE Foam Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
             { "@type": "Question", "name": "Is XLPE Foam Tapes better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Insulating." } }
         ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+     {
+        id: "nitto-903-ul-tapes",
+        "Page Type": "Product",
+        "Page Name": "Nitto 903 UL Tapes",
+        "Full URL": "https://tapeindia.shop/product/nitto-903-ul-tapes",
+        "Title (≤60 chars)": "Nitto 903 UL Tapes Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Nitto 903 UL Tapes for OEMs, factories & engineering units. Bulk supply PAN-India.",
+        "H1": "Nitto 903 UL Tapes",
+        "H2_1": "Industrial-Grade Nitto 903 UL Tapes",
+        "H3": "Product Overview",
+        "Primary Keywords": "Nitto 903 UL Tapes manufacturer in India",
+        "Secondary Keywords": "",
+        "summary": "Nitto 903 UL Tapes is engineered for industrial environments requiring durability, chemical resistance, high adhesion, and superior performance across OEM, electrical, fabrication, HVAC, insulation, and assembly-line applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
         "FAQ Schema (JSON-LD)": "{}",
