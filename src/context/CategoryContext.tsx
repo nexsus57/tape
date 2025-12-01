@@ -1,5 +1,5 @@
-
-import { SeoPageData, Category, BlogArticle } from '../types';
+import type { SeoPageData } from '../types';
+import { Category, BlogArticle } from '../types';
 
 export const ALL_CATEGORIES: Category[] = [
   {
