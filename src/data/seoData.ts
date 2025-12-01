@@ -1,9 +1,67 @@
+import { SeoPageData, Category, BlogArticle } from '../types';
 
-import type { Product, Category, BlogArticle, SeoPageData } from '../types';
-import { PRODUCTS as CONTENT_PRODUCTS } from '../constants';
+export const ALL_CATEGORIES: Category[] = [
+  {
+    id: 'safety-tapes',
+    name: 'Safety Tapes',
+    subtitle: 'Floor marking, hazard, and anti-slip solutions.',
+    icon: 'ShieldCheckIcon',
+    description: 'Ensure workplace safety with our range of high-visibility hazard tapes, durable floor marking tapes, and anti-slip solutions designed for industrial environments.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp'
+  },
+  {
+    id: 'reflective-tapes',
+    name: 'Reflective Tapes',
+    subtitle: 'High visibility for safety and signage.',
+    icon: 'SunIcon',
+    description: 'Enhance visibility in low-light conditions with our premium reflective tapes. Ideal for vehicles, safety apparel, and road signage.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/silver%20tc.webp'
+  },
+  {
+    id: 'double-sided-tapes',
+    name: 'Double Sided Tapes',
+    subtitle: 'Strong bonding for mounting and assembly.',
+    icon: 'LayersIcon',
+    description: 'Versatile double-sided tapes for mounting, splicing, and bonding applications. Available in foam, tissue, and film carriers for various surfaces.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/vhb%20tape.webp'
+  },
+  {
+    id: 'specialty-tapes',
+    name: 'Specialty Tapes',
+    subtitle: 'Unique solutions for specific industrial needs.',
+    icon: 'SparklesIcon',
+    description: 'A comprehensive collection of tapes for niche applications, including masking, duct, aluminum foil, and packaging tapes.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/duct%20tape.webp'
+  },
+  {
+    id: 'teflon-ptfe-tapes',
+    name: 'Teflon & PTFE Tapes',
+    subtitle: 'High temperature and non-stick applications.',
+    icon: 'ThermometerIcon',
+    description: 'Heat-resistant and non-stick PTFE tapes for heat sealing, packaging machinery, and high-temperature insulation.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/ptef%20silicone%20adhe.webp'
+  },
+  {
+    id: 'antistatic-esd-tapes',
+    name: 'Antistatic & ESD Tapes',
+    subtitle: 'Protection for sensitive electronics.',
+    icon: 'ZapIcon',
+    description: 'Prevent electrostatic discharge damage with our range of ESD-safe and antistatic tapes for electronics manufacturing and handling.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/esd%20floor%20marking.webp'
+  },
+  {
+    id: 'packaging-tapes',
+    name: 'Packaging Tapes',
+    subtitle: 'Secure sealing for cartons and bundles.',
+    icon: 'PackageIcon',
+    description: 'Reliable sealing solutions for all your packaging needs, from light duty to heavy carton sealing.',
+    image: 'https://file.garden/aIULwzQ_QkPKQcGw/bopp%20tape.webp'
+  }
+];
 
-// This is the single source of truth for SEO content, categories, and blog posts.
-const rawSeoData: SeoPageData[] = [
+export const ALL_BLOG_ARTICLES: BlogArticle[] = [];
+
+export const seoData: SeoPageData[] = [
     // --- STATIC PAGES ---
     {
         "Page Type": "Homepage",
@@ -61,7 +119,7 @@ const rawSeoData: SeoPageData[] = [
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-     {
+    {
         "Page Type": "Static",
         "Page Name": "Privacy Policy",
         "Full URL": "https://tapeindia.shop/privacy-policy",
@@ -149,29 +207,882 @@ const rawSeoData: SeoPageData[] = [
         "Combined Schema (JSON-LD)": "{}"
     },
     { id: "top-10-industrial-tapes-2025", "Page Type": "Blog Post", "Page Name": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025", "Full URL": "https://tapeindia.shop/blog/top-10-industrial-tapes-2025", "Title (≤60 chars)": "Top 10 Industrial Tapes Every Manufacturer Needs in 2025", "Meta Description (≤160 chars)": "Discover the essential industrial tapes for modern manufacturing. An expert review of VHB, Kapton, and other high-performance adhesive tapes from Tape India.", "H1": "Top 10 Industrial Tapes for 2025", "Primary Keywords": "top industrial tapes, VHB Tape, Kapton Tape", "Secondary Keywords": "essential adhesive tapes, vhb tape uses, kapton tape applications", "summary": "As manufacturing evolves, the demand for high-performance adhesive solutions grows. Here's our expert breakdown of the top 10 industrial tapes, including VHB and Kapton Tape, that every forward-thinking manufacturer should have in their toolkit for 2025.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "thermal-tapes-vs-thermal-pads", "Page Type": "Blog Post", "Page Name": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution", "Full URL": "https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads", "Title (≤60 chars)": "Thermal Tapes vs. Thermal Pads: Which is Best for You?", "Meta Description (≤160 chars)": "Compare thermal tapes and thermal pads for electronics cooling. Understand the pros and cons to choose the right thermal management solution for your application.", "H1": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution", "Primary Keywords": "thermal tapes, thermal pads, Double-Sided Thermal Tape", "Secondary Keywords": "electronics cooling, heat sink tape, conductive adhesive", "summary": "Effective thermal management is crucial in modern electronics. This guide compares the benefits and applications of thermal tapes versus thermal pads, helping you decide which solution is best for ensuring optimal performance and longevity of your components.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "copper-foil-tape-emi-shielding-grounding", "Page Type": "Blog Post", "Page Name": "A Guide to Copper Foil Tape for EMI Shielding and Grounding", "Full URL": "https://tapeindia.shop/blog/copper-foil-tape-emi-shielding-grounding", "Title (≤60 chars)": "Copper Foil Tape for EMI Shielding & Grounding | A Guide", "Meta Description (≤160 chars)": "An expert guide to using Copper Foil Tape for effective EMI shielding and electrical grounding in electronics. Learn about applications and best practices.", "H1": "A Guide to Copper Foil Tape for EMI Shielding and Grounding", "Primary Keywords": "copper foil tape, emi shielding, electrical grounding", "Secondary Keywords": "conductive tape, electronics shielding", "summary": "Electromagnetic interference (EMI) can disrupt sensitive electronics. Our comprehensive guide explores how to effectively use conductive Copper Foil Tape for robust EMI shielding and reliable electrical grounding in a variety of applications.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "reflective-tapes-industrial-safety-visibility", "Page Type": "Blog Post", "Page Name": "Enhancing Worker Safety: The Role of Reflective Tapes", "Full URL": "https://tapeindia.shop/blog/reflective-tapes-industrial-safety-visibility", "Title (≤60 chars)": "How Reflective Tapes Enhance Worker Safety and Visibility", "Meta Description (≤160 chars)": "Learn how different types of reflective tapes, from sew-on to adhesive PVC, play a crucial role in enhancing worker visibility and preventing accidents.", "H1": "Enhancing Worker Safety: The Role of Reflective Tapes", "Primary Keywords": "reflective tapes, worker safety, Silver TC Sew-On Reflective Tape", "Secondary Keywords": "high visibility tape, safety apparel, construction safety", "summary": "In low-light conditions, visibility is paramount for worker safety. This article examines the critical role of various reflective tapes, including sew-on and heat transfer types, in manufacturing high-visibility garments that save lives.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "sticky-mats-cleanroom-industrial-environments", "Page Type": "Blog Post", "Page Name": "The Importance of Sticky Mats in Cleanrooms and Industrial Environments", "Full URL": "https://tapeindia.shop/blog/sticky-mats-cleanroom-industrial-environments", "Title (≤60 chars)": "Why Sticky Mats are Essential for Clean Environments", "Meta Description (≤160 chars)": "Discover how contamination control is simplified with the use of sticky mats at the entrances of cleanrooms, labs, and sensitive industrial areas.", "H1": "The Importance of Sticky Mats in Clean Environments", "Primary Keywords": "sticky mat, cleanroom, contamination control", "Secondary Keywords": "tacky mats, industrial cleaning", "summary": "Contamination control starts at the door. Learn how multi-layered sticky mats effectively capture dirt and particulates from footwear, playing a vital role in maintaining the cleanliness and integrity of sensitive environments like cleanrooms, laboratories, and data centers.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "aluminum-foil-tape-hvac-insulation-guide", "Page Type": "Blog Post", "Page Name": "A Practical Guide to Using Aluminum Foil Tape in HVAC and Insulation", "Full URL": "https://tapeindia.shop/blog/aluminum-foil-tape-hvac-insulation-guide", "Title (≤60 chars)": "Guide to Aluminum Foil Tape for HVAC & Insulation", "Meta Description (≤160 chars)": "Learn the best practices for applying High-Performance Aluminium Foil Tape to seal ductwork and insulation, ensuring maximum thermal efficiency and system longevity.", "H1": "A Practical Guide to Aluminum Foil Tape in HVAC", "Primary Keywords": "aluminum foil tape, hvac tape, insulation tape", "Secondary Keywords": "duct sealing, fsk tape", "summary": "Properly sealing ducts and insulation is key to HVAC efficiency. This guide covers the correct techniques for using aluminum foil tape to create airtight, durable seals that prevent energy loss, improve system performance, and provide a robust vapor barrier.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "polyester-green-tape-powder-coating-guide", "Page Type": "Blog Post", "Page Name": "Why Green Polyester Tape is the Go-To for Powder Coating", "Full URL": "https://tapeindia.shop/blog/polyester-green-tape-powder-coating-guide", "Title (≤60 chars)": "Why Green Polyester Tape is Best for Powder Coating", "Meta Description (≤160 chars)": "An in-depth look at the properties of Green Polyester Tape that make it the ideal choice for high-temperature masking during powder coating and anodizing.", "H1": "Green Polyester Tape: The Powder Coater's Choice", "Primary Keywords": "green polyester tape, powder coating, high-temperature masking", "Secondary Keywords": "anodizing tape, masking tape", "summary": "Achieving clean, sharp lines in powder coating requires a masking tape that can withstand high temperatures and remove cleanly. Discover why the unique properties of Green Polyester Tape make it the industry standard for masking applications in powder coating and other finishing processes.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "eco-friendly-adhesive-solutions-manufacturing", "Page Type": "Blog Post", "Page Name": "Eco-Friendly Adhesive Solutions in Modern Manufacturing", "Full URL": "https://tapeindia.shop/blog/eco-friendly-adhesive-solutions-manufacturing", "Title (≤60 chars)": "Eco-Friendly Adhesives in Manufacturing | Tape India", "Meta Description (≤160 chars)": "Exploring the shift towards sustainable manufacturing with eco-friendly tapes like water-activated and paper-based adhesive solutions.", "H1": "The Rise of Eco-Friendly Adhesive Solutions", "Primary Keywords": "eco-friendly tape, sustainable manufacturing, water activated kraft paper tape", "Secondary Keywords": "recyclable tape, paper tape", "summary": "Sustainability is no longer a choice but a necessity. This article explores the growing importance of eco-friendly adhesive solutions, highlighting products like Water Activated Kraft Paper Tape and other paper-based tapes that help businesses reduce their environmental impact without compromising on performance.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "future-of-adhesive-technology-smart-tapes-iot", "Page Type": "Blog Post", "Page Name": "The Future of Adhesive Technology: Smart Tapes and IoT", "Full URL": "https://tapeindia.shop/blog/future-of-adhesive-technology-smart-tapes-iot", "Title (≤60 chars)": "The Future of Adhesives: Smart Tapes & IoT", "Meta Description (≤160 chars)": "A look into the future of industrial adhesives, exploring the potential of smart tapes with integrated sensors for IoT applications in logistics and manufacturing.", "H1": "The Future: Smart Tapes and the Internet of Things", "Primary Keywords": "smart tapes, iot, adhesive technology", "Secondary Keywords": "sensor tape, future manufacturing", "summary": "Adhesive technology is evolving. We look ahead at the exciting possibilities of 'smart tapes'—adhesives integrated with sensors that can monitor temperature, stress, and humidity. Discover how these innovations are set to revolutionize logistics, construction, and the Internet of Things (IoT).", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "heat-resistant-tapes-electric-vehicles", "Page Type": "Blog Post", "Page Name": "The Critical Role of Heat-Resistant Tapes in Electric Vehicles", "Full URL": "https://tapeindia.shop/blog/heat-resistant-tpes-electric-vehicles", "Title (≤60 chars)": "Heat-Resistant Tapes in Electric Vehicles (EVs)", "Meta Description (≤160 chars)": "Exploring how high-temperature tapes like Polyimide and Glass Cloth Tapes are essential for battery manufacturing, wire harnessing, and safety in EVs.", "H1": "Heat-Resistant Tapes in Electric Vehicle Manufacturing", "Primary Keywords": "electric vehicles, heat-resistant tapes, polyimide tape", "Secondary Keywords": "ev battery, glass cloth tape", "summary": "The electric vehicle (EV) revolution relies on advanced materials. This article details the crucial role of heat-resistant tapes, such as Polyimide (Kapton) and Glass Cloth Tapes, in ensuring the safety, reliability, and performance of EV battery packs, motors, and electronic systems.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "adhesive-tapes-in-renewable-energy", "Page Type": "Blog Post", "Page Name": "Adhesive Tapes in Renewable Energy: A Bonding Force for a Greener Future", "Full URL": "https://tapeindia.shop/blog/adhesive-tapes-in-renewable-energy", "Title (≤60 chars)": "Adhesive Tapes in Renewable Energy | Solar & Wind", "Meta Description (≤160 chars)": "Learn how high-performance tapes like VHB and foil tapes are used in the assembly of solar panels and wind turbines, replacing traditional fasteners.", "H1": "Adhesive Tapes: Powering the Renewable Energy Sector", "Primary Keywords": "renewable energy, adhesive tapes, VHB tape", "Secondary Keywords": "solar panel assembly, wind turbine bonding", "summary": "High-performance adhesive tapes are unsung heroes in the renewable energy sector. Discover how products like VHB Tape and specialized foil tapes are essential for bonding solar panel components and sealing wind turbine blades, offering durability and weather resistance that traditional fasteners can't match.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "5-common-industrial-tape-application-mistakes", "Page Type": "Blog Post", "Page Name": "5 Common Industrial Tape Application Mistakes and How to Avoid Them", "Full URL": "https://tapeindia.shop/blog/5-common-industrial-tape-application-mistakes", "Title (≤60 chars)": "5 Common Industrial Tape Application Mistakes to Avoid", "Meta Description (≤160 chars)": "Avoid adhesive failure by learning the 5 most common mistakes in industrial tape application, from poor surface preparation to incorrect temperature.", "H1": "5 Common Industrial Tape Application Mistakes", "Primary Keywords": "industrial tape application, adhesive failure, surface preparation", "Secondary Keywords": "tape mistakes, adhesive bonding", "summary": "Even the best tape can fail if not applied correctly. We break down the five most common application mistakes—including improper surface preparation, incorrect temperature, and choosing the wrong tape for the job—and provide expert tips to ensure a strong, reliable bond every time.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "the-science-behind-adhesive-strength", "Page Type": "Blog Post", "Page Name": "The Science Behind Adhesive Strength: Tack, Cohesion, and Adhesion", "Full URL": "https://tapeindia.shop/blog/the-science-behind-adhesive-strength", "Title (≤60 chars)": "The Science of Adhesive Strength: Tack, Cohesion, Adhesion", "Meta Description (≤160 chars)": "Understand the key scientific principles of adhesive tapes. Learn the difference between tack, cohesion, and adhesion to select the right tape for your needs.", "H1": "The Science of Adhesive Strength Explained", "Primary Keywords": "adhesive strength, tack, cohesion, adhesion", "Secondary Keywords": "adhesive science, tape properties", "summary": "What makes a tape sticky? This article demystifies the science of adhesives by explaining the three key pillars of performance: adhesion (how well it sticks to a surface), cohesion (its internal strength), and tack (its initial stickiness). Understanding these concepts will help you choose the perfect tape for any industrial application.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "challenges-in-industrial-tape-storage", "Page Type": "Blog Post", "Page Name": "Overcoming Challenges in Industrial Tape Storage: A Guide to Shelf Life", "Full URL": "https://tapeindia.shop/blog/challenges-in-industrial-tape-storage", "Title (≤60 chars)": "A Guide to Industrial Tape Storage & Shelf Life", "Meta Description (≤160 chars)": "Maximize the performance and shelf life of your industrial tapes with our expert guide on proper storage conditions, including temperature, humidity, and light exposure.", "H1": "The Ultimate Guide to Industrial Tape Storage", "Primary Keywords": "industrial tape storage, tape shelf life, adhesive storage", "Secondary Keywords": "tape temperature, humidity control", "summary": "Improper storage can ruin even the highest quality industrial tapes. Our guide provides essential tips on controlling temperature, humidity, and UV exposure to preserve the adhesive properties and maximize the shelf life of your tape inventory, saving you time and money.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "aerospace-defense-specialized-tapes", "Page Type": "Blog Post", "Page Name": "High-Performance Tapes in Aerospace and Defense", "Full URL": "https://tapeindia.shop/blog/aerospace-defense-specialized-tapes", "Title (≤60 chars)": "High-Performance Tapes in Aerospace & Defense", "Meta Description (≤160 chars)": "Explore the critical applications of specialized tapes in the aerospace and defense industries, from flame-retardant tapes to high-strength bonding solutions.", "H1": "Specialized Tapes in Aerospace and Defense", "Primary Keywords": "aerospace tapes, defense applications, flame retardant tape", "Secondary Keywords": "high-performance tape, aircraft assembly", "summary": "The aerospace and defense sectors demand the highest standards of performance and reliability. This article delves into the critical role of specialized adhesive tapes, including flame-retardant tapes, high-strength bonding VHB Tapes, and surface protection films, in aircraft assembly, maintenance, and component protection.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "tapes-in-smart-manufacturing-industry-4.0", "Page Type": "Blog Post", "Page Name": "The Role of Tapes in Smart Manufacturing and Industry 4.0", "Full URL": "https://tapeindia.shop/blog/tapes-in-smart-manufacturing-industry-4.0", "Title (≤60 chars)": "Tapes in Smart Manufacturing (Industry 4.0)", "Meta Description (≤160 chars)": "Discover how advanced adhesive tapes are enabling automation and efficiency in smart factories, from temporary component holding to permanent assembly.", "H1": "Adhesive Tapes in the Era of Industry 4.0", "Primary Keywords": "smart manufacturing, industry 4.0, automation tapes", "Secondary Keywords": "factory automation, adhesive assembly", "summary": "As factories become smarter, the materials they use must evolve. Learn how specialized industrial tapes are facilitating Industry 4.0 by enabling automated assembly processes, providing temporary fixation for robotic handling, and offering reliable bonding solutions that streamline production and reduce costs.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "buyers-guide-choosing-tape-supplier-india", "Page Type": "Blog Post", "Page Name": "Buyer's Guide: Choosing the Right Industrial Tape Supplier in India", "Full URL": "https://tapeindia.shop/blog/buyers-guide-choosing-tape-supplier-india", "Title (≤60 chars)": "How to Choose an Industrial Tape Supplier in India", "Meta Description (≤160 chars)": "A comprehensive buyer's guide for businesses in India on how to select a reliable industrial tape supplier, focusing on quality, inventory, and technical support.", "H1": "Choosing the Right Industrial Tape Supplier in India", "Primary Keywords": "industrial tape supplier, choose tape supplier, b2b tapes india", "Secondary Keywords": "adhesive tape manufacturer, quality control", "summary": "Your choice of tape supplier can significantly impact your operations. This buyer's guide outlines the key criteria to consider when selecting a partner in India, from product quality and certifications to inventory management, technical expertise, and delivery capabilities.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "industrial-tape-testing-quality-durability", "Page Type": "Blog Post", "Page Name": "Behind the Bond: How Industrial Tapes Are Tested for Quality and Durability", "Full URL": "https://tapeindia.shop/blog/industrial-tape-testing-quality-durability", "Title (≤60 chars)": "How Industrial Tapes Are Tested for Quality", "Meta Description (≤160 chars)": "An inside look at the rigorous testing methods used to ensure the quality and durability of industrial tapes, including peel adhesion, shear strength, and tensile tests.", "H1": "How Industrial Tapes Are Tested for Quality", "Primary Keywords": "industrial tape testing, quality control, peel adhesion", "Secondary Keywords": "shear strength, tensile strength", "summary": "What guarantees an industrial tape's performance? This article takes you behind the scenes into the quality control lab, explaining the standard testing methods—such as peel adhesion, shear strength, and tensile tests—that ensure every roll meets the demanding specifications required for industrial use.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "hidden-costs-of-low-quality-industrial-tapes", "Page Type": "Blog Post", "Page Name": "The Hidden Costs of Low-Quality Industrial Tapes", "Full URL": "https://tapeindia.shop/blog/hidden-costs-of-low-quality-industrial-tapes", "Title (≤60 chars)": "The Hidden Costs of Low-Quality Industrial Tapes", "Meta Description (≤160 chars)": "Discover how choosing cheap, low-quality industrial tapes can lead to higher long-term costs through product damage, rework, and operational downtime.", "H1": "The Hidden Costs of Using Low-Quality Tapes", "Primary Keywords": "low-quality tape, adhesive failure, operational downtime", "Secondary Keywords": "product damage, tape cost", "summary": "Saving a few rupees on tape might seem smart, but it can lead to significant hidden costs. We explore how low-quality adhesives can result in packaging failure, product damage, production line stoppages, and rework, ultimately costing your business far more than the initial savings.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "fire-resistant-flame-retardant-tpes", "Page Type": "Blog Post", "Page Name": "Understanding the Difference: Fire-Resistant vs. Flame-Retardant Tapes", "Full URL": "https://tapeindia.shop/blog/fire-resistant-flame-retardant-tpes", "Title (≤60 chars)": "Fire-Resistant vs. Flame-Retardant Tapes Explained", "Meta Description (≤160 chars)": "Learn the crucial difference between fire-resistant and flame-retardant tapes and discover which type is right for your high-temperature, critical safety applications.", "H1": "Fire-Resistant vs. Flame-Retardant Tapes", "Primary Keywords": "flame retardant tape, fire-resistant tape, safety tapes", "Secondary Keywords": "high-temperature tape, fr grade", "summary": "The terms are often used interchangeably, but they mean very different things. This article clarifies the distinction between fire-resistant and flame-retardant tapes, helping you understand their unique properties and select the correct product for applications where fire safety is paramount.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "proper-tape-application-reduces-downtime", "Page Type": "Blog Post", "Page Name": "How Proper Tape Application Reduces Manufacturing Downtime", "Full URL": "https://tapeindia.shop/blog/proper-tape-application-reduces-downtime", "Title (≤60 chars)": "How Proper Tape Application Reduces Downtime", "Meta Description (≤160 chars)": "A practical guide showing how training staff on proper industrial tape application techniques can prevent adhesive failures and significantly reduce costly downtime.", "H1": "Reducing Downtime with Proper Tape Application", "Primary Keywords": "reduce downtime, tape application, manufacturing efficiency", "Secondary Keywords": "adhesive training, process improvement", "summary": "Unscheduled downtime is a manufacturer's worst enemy. We demonstrate how investing in simple training on proper tape application—from surface preparation to applying correct pressure—can drastically reduce adhesive failures, prevent line stoppages, and boost overall operational efficiency.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    { id: "lifecycle-of-high-performance-industrial-tape", "Page Type": "Blog Post", "Page Name": "From Polymer to Product: The Lifecycle of a High-Performance Industrial Tape", "Full URL": "https://tapeindia.shop/blog/lifecycle-of-high-performance-industrial-tape", "Title (≤60 chars)": "The Lifecycle of a High-Performance Industrial Tape", "Meta Description (≤160 chars)": "Follow the journey of an industrial tape from raw material sourcing and adhesive coating to quality control and final application in the factory.", "H1": "The Lifecycle of an Industrial Tape", "Primary Keywords": "tape manufacturing, adhesive coating, industrial tape lifecycle", "Secondary Keywords": "how tape is made, quality control", "summary": "Ever wondered how a roll of high-performance industrial tape is made? This article follows the complete lifecycle, from the selection of raw polymers and the complex adhesive coating process to rigorous quality control testing and its final journey to the factory floor. Gain a new appreciation for the technology in every roll.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
-    
-    // --- ADDED PRODUCTS FROM PDF ---
+    { id: "thermal-tapes-vs-thermal-pads", "Page Type": "Blog Post", "Page Name": "Thermal Tapes vs. Thermal Pads: Choosing the Right Solution", "Full URL": "https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads", "Title (≤60 chars)": "Thermal Tapes vs. Thermal Pads: Which is Best for You?", "Meta Description (≤160 chars)": "Compare thermal tapes and thermal pads to find the best heat dissipation solution for your electronics. Expert guide from Tape India.", "H1": "Thermal Tapes vs. Thermal Pads", "Primary Keywords": "thermal tapes vs thermal pads, heat dissipation", "Secondary Keywords": "thermal management solutions, conductive tapes", "summary": "Effective thermal management is critical for electronics. In this guide, we compare the pros and cons of thermal conductive tapes versus thermal pads, helping you choose the right solution for heat sinks, LEDs, and power modules.", "CTA": "Read More", "Schema Type": "Article", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
+
+    // --- EXISTING SPECIALTY / ADVANCED PRODUCTS ---
+    {
+        id: "green-polyster",
+        "Page Type": "Product",
+        "Page Name": "Green Polyester Tape",
+        "Full URL": "https://tapeindia.shop/product/green-polyster",
+        "Title (≤60 chars)": "Green Polyester Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Green Polyester Tape for OEMs, factories & engineering units. High-temp masking for powder coating. Bulk supply PAN-India.",
+        "H1": "Green Polyester Tape",
+        "H2_1": "Industrial-Grade Green Polyester Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Green Polyester Tape manufacturer in India",
+        "Secondary Keywords": "Green Polyester Tape supplier India, Industrial Green Polyester Tape, Powder coating masking tape, High temperature green tape",
+        "summary": "Green Polyester Tape is engineered for industrial environments requiring durability, chemical resistance, high adhesion, and superior performance across OEM, electrical, fabrication, HVAC, insulation, and assembly-line applications. Excellent for powder coating masking.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Green Polyester Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Ideally used for powder coating masking, anodizing, and high-temperature electrical insulation." }},
+             { "@type": "Question", "name": "Is Green Polyester Tape heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it withstands high temperatures up to 204°C." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "green-polyster-with-liner",
+        "Page Type": "Product",
+        "Page Name": "Green Polyester Tape with Liner",
+        "Full URL": "https://tapeindia.shop/product/green-polyster-with-liner",
+        "Title (≤60 chars)": "Green Polyester Tape with Liner Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Green Polyester Tape with Liner for die-cutting and precision masking. High-temp resistant. Bulk supply PAN-India.",
+        "H1": "Green Polyester Tape with Liner",
+        "H2_1": "Industrial-Grade Green Polyester Tape with Liner",
+        "H3": "Product Overview",
+        "Primary Keywords": "Green Polyester Tape with Liner manufacturer in India",
+        "Secondary Keywords": "Die-cut masking tape, green tape with liner, powder coating tape",
+        "summary": "Green Polyester Tape with Liner is engineered for industrial environments requiring durability, chemical resistance, high adhesion, and superior performance. The liner allows for easy die-cutting into custom shapes for precision masking applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is the benefit of the liner on Green Polyester Tape?", "acceptedAnswer": { "@type": "Answer", "text": "The liner protects the adhesive and allows the tape to be die-cut into specific shapes for precise masking." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "thermal-condu-pads",
+        "Page Type": "Product",
+        "Page Name": "Thermal Conductive Pads",
+        "Full URL": "https://tapeindia.shop/product/thermal-condu-pads",
+        "Title (≤60 chars)": "Thermal Conductive Pads Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Thermal Conductive Pads for electronics cooling and heat dissipation. Efficient heat transfer. Bulk supply PAN-India.",
+        "H1": "Thermal Conductive Pads",
+        "H2_1": "Industrial-Grade Thermal Conductive Pads",
+        "H3": "Product Overview",
+        "Primary Keywords": "Thermal Conductive Pads manufacturer in India",
+        "Secondary Keywords": "Thermal pads supplier, heat sink pads, gap filler pads, silicone thermal pads",
+        "summary": "Thermal Conductive Pads are engineered for industrial environments requiring durability and efficient heat transfer. Used in electronics, LEDs, and power modules to bridge the gap between heat-generating components and heat sinks.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What are Thermal Conductive Pads used for?", "acceptedAnswer": { "@type": "Answer", "text": "They transfer heat from electronic components to heat sinks to prevent overheating." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "surface-protection-tape",
+        "Page Type": "Product",
+        "Page Name": "PE Surface Protection Film",
+        "Full URL": "https://tapeindia.shop/product/surface-protection-tape",
+        "Title (≤60 chars)": "PE Surface Protection Film Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade PE Surface Protection Film for scratch protection on metals, plastics, and glass. Residue-free removal. Bulk supply PAN-India.",
+        "H1": "PE Surface Protection Film",
+        "H2_1": "Industrial-Grade PE Surface Protection Film",
+        "H3": "Product Overview",
+        "Primary Keywords": "PE Surface Protection Film manufacturer in India",
+        "Secondary Keywords": "Surface protection tape, protective film for metal, scratch guard tape",
+        "summary": "PE Surface Protection Film is engineered for industrial environments to protect surfaces from scratches, dirt, and abrasion during manufacturing, transport, and installation. Removes cleanly without residue.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Does PE Surface Protection Film leave residue?", "acceptedAnswer": { "@type": "Answer", "text": "No, it is designed to remove cleanly without leaving any adhesive residue." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "green-powder-coating-tape-500x500-1",
+        "Page Type": "Product",
+        "Page Name": "Powder Coated Tape",
+        "Full URL": "https://tapeindia.shop/product/green-powder-coating-tape-500x500-1",
+        "Title (≤60 chars)": "Powder Coated Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Powder Coated Tape for high-temperature masking in powder coating processes. Clean removal. Bulk supply PAN-India.",
+        "H1": "Powder Coated Tape",
+        "H2_1": "Industrial-Grade Powder Coated Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Powder Coated Tape manufacturer in India",
+        "Secondary Keywords": "Powder coating masking tape, high temp masking tape, green masking tape",
+        "summary": "Powder Coated Tape is engineered for industrial environments requiring durability and high temperature resistance. Specifically designed for masking applications in powder coating lines where clean removal after baking is essential.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What makes Powder Coated Tape special?", "acceptedAnswer": { "@type": "Answer", "text": "It can withstand the high curing temperatures of powder coating ovens without melting or leaving residue." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "lamination-tape",
+        "Page Type": "Product",
+        "Page Name": "Lamination Tape",
+        "Full URL": "https://tapeindia.shop/product/lamination-tape",
+        "Title (≤60 chars)": "Lamination Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Lamination Tape for splicing, bonding, and protective lamination. High clarity and adhesion. Bulk supply PAN-India.",
+        "H1": "Lamination Tape",
+        "H2_1": "Industrial-Grade Lamination Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Lamination Tape manufacturer in India",
+        "Secondary Keywords": "Adhesive lamination tape, clear lamination tape, industrial laminating film",
+        "summary": "Lamination Tape is engineered for industrial environments requiring durability, high adhesion, and clarity. Used for protecting documents, splicing films, and laminating various materials in manufacturing.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Lamination Tape clear?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it offers high optical clarity for invisible bonding and protection." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "foil-scrim-kraft-tape",
+        "Page Type": "Product",
+        "Page Name": "Aluminium Foil Scrim Kraft Tape (FSK)",
+        "Full URL": "https://tapeindia.shop/product/foil-scrim-kraft-tape",
+        "Title (≤60 chars)": "Aluminium Foil Scrim Kraft Tape (FSK) Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade FSK Tape (Foil-Scrim-Kraft) for HVAC duct sealing and insulation. Vapor barrier protection. Bulk supply PAN-India.",
+        "H1": "Aluminium Foil Scrim Kraft Tape (FSK)",
+        "H2_1": "Industrial-Grade Aluminium Foil Scrim Kraft Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Aluminium Foil Scrim Kraft Tape (FSK) manufacturer in India",
+        "Secondary Keywords": "FSK tape supplier, HVAC insulation tape, reinforced foil tape",
+        "summary": "Aluminium Foil Scrim Kraft Tape (FSK) is engineered for industrial environments requiring durability and moisture resistance. It acts as a superior vapor barrier for duct wrapping and HVAC insulation systems.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is FSK Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sealing seams in foil-faced insulation and HVAC ductwork." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "aluminium-pet",
+        "Page Type": "Product",
+        "Page Name": "Aluminium PET Tape (Alupet)",
+        "Full URL": "https://tapeindia.shop/product/aluminium-pet",
+        "Title (≤60 chars)": "Aluminium PET Tape (Alupet) Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Aluminium PET Tape (Alupet) for insulation, shielding, and cable wrapping. High tensile strength. Bulk supply PAN-India.",
+        "H1": "Aluminium PET Tape (Alupet)",
+        "H2_1": "Industrial-Grade Aluminium PET Tape (Alupet)",
+        "H3": "Product Overview",
+        "Primary Keywords": "Aluminium PET Tape (Alupet) manufacturer in India",
+        "Secondary Keywords": "Alupet tape supplier, aluminium polyester tape, shielding tape",
+        "summary": "Aluminium PET Tape (Alupet) is engineered for industrial environments requiring durability, chemical resistance, and high tensile strength. Combines the conductivity of aluminium with the strength of polyester film.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Alupet Tape?", "acceptedAnswer": { "@type": "Answer", "text": "It is a laminate of aluminium foil and polyester film, used for insulation and shielding." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "butyl",
+        "Page Type": "Product",
+        "Page Name": "Aluminium Butyl Tape",
+        "Full URL": "https://tapeindia.shop/product/butyl",
+        "Title (≤60 chars)": "Aluminium Butyl Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Aluminium Butyl Tape for waterproofing, roofing, and sealing repairs. All-weather adhesion. Bulk supply PAN-India.",
+        "H1": "Aluminium Butyl Tape",
+        "H2_1": "Industrial-Grade Aluminium Butyl Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Aluminium Butyl Tape manufacturer in India",
+        "Secondary Keywords": "Waterproof butyl tape, roofing tape, flashing tape, sealant tape",
+        "summary": "Aluminium Butyl Tape is engineered for industrial environments requiring extreme durability and waterproofing. Ideal for roofing repairs, sealing joints, and protecting against moisture ingress in all weather conditions.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Aluminium Butyl Tape waterproof?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it provides an immediate and permanent waterproof seal." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "fiberglass-tape",
+        "Page Type": "Product",
+        "Page Name": "Fiber Glass Cloth Tape",
+        "Full URL": "https://tapeindia.shop/product/fiberglass-tape",
+        "Title (≤60 chars)": "Fiber Glass Cloth Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Fiber Glass Cloth Tape for high-temp insulation and electrical applications. Strong and heat resistant. Bulk supply PAN-India.",
+        "H1": "Fiber Glass Cloth Tape",
+        "H2_1": "Industrial-Grade Fiber Glass Cloth Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Fiber Glass Cloth Tape manufacturer in India",
+        "Secondary Keywords": "Glass cloth tape, high heat tape, electrical insulation tape",
+        "summary": "Fiber Glass Cloth Tape is engineered for industrial environments requiring durability and high temperature resistance. Used for electrical insulation, motor winding, and high-heat sealing applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Fiber Glass Cloth Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High-temperature insulation in motors, transformers, and cables." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "nrm-foam-tape",
+        "Page Type": "Product",
+        "Page Name": "NBR Foam Tapes",
+        "Full URL": "https://tapeindia.shop/product/nrm-foam-tape",
+        "Title (≤60 chars)": "NBR Foam Tapes Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade NBR Foam Tapes for HVAC insulation, gasketing, and oil resistance. Flexible and durable. Bulk supply PAN-India.",
+        "H1": "NBR Foam Tapes",
+        "H2_1": "Industrial-Grade NBR Foam Tapes",
+        "H3": "Product Overview",
+        "Primary Keywords": "NBR Foam Tapes manufacturer in India",
+        "Secondary Keywords": "Nitrile foam tape, oil resistant foam tape, HVAC insulation tape",
+        "summary": "NBR Foam Tapes are engineered for industrial environments requiring durability and oil resistance. Ideal for HVAC insulation, gasketing, and sealing applications where resistance to oils and fuels is needed.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is NBR Foam Tape oil resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, NBR (Nitrile) foam offers excellent resistance to oils and fuels." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "air-vent-tape",
+        "Page Type": "Product",
+        "Page Name": "Air Vent Tape",
+        "Full URL": "https://tapeindia.shop/product/air-vent-tape",
+        "Title (≤60 chars)": "Air Vent Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Air Vent Tape for allowing airflow while blocking moisture and dust. Ideal for polycarbonate sheets. Bulk supply PAN-India.",
+        "H1": "Air Vent Tape",
+        "H2_1": "Industrial-Grade Air Vent Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Air Vent Tape manufacturer in India",
+        "Secondary Keywords": "Breather tape, polycarbonate tape, ventilation tape",
+        "summary": "Air Vent Tape is engineered for industrial environments requiring breathable sealing. It allows air and moisture vapor to escape while blocking dust and dirt, perfect for sealing multi-wall polycarbonate sheets.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Air Vent Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sealing the ends of polycarbonate sheets to allow condensation to drain while keeping out dirt." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "pink-rayon",
+        "Page Type": "Product",
+        "Page Name": "Pink Rayon Tape",
+        "Full URL": "https://tapeindia.shop/product/pink-rayon",
+        "Title (≤60 chars)": "Pink Rayon Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Pink Rayon Tape for coil winding, holding, and electrical insulation. Strong and conformable. Bulk supply PAN-India.",
+        "H1": "Pink Rayon Tape",
+        "H2_1": "Industrial-Grade Pink Rayon Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Pink Rayon Tape manufacturer in India",
+        "Secondary Keywords": "Rayon tape supplier, coil holding tape, electrical rayon tape",
+        "summary": "Pink Rayon Tape is engineered for industrial environments requiring durability and conformability. Widely used in electrical applications for coil winding, holding, and insulation tasks.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Pink Rayon Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Holding windings in motors, transformers, and relays." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "yellow-polyester",
+        "Page Type": "Product",
+        "Page Name": "Yellow Polyester Tape",
+        "Full URL": "https://tapeindia.shop/product/yellow-polyester",
+        "Title (≤60 chars)": "Yellow Polyester Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Yellow Polyester Tape for insulation and masking. High dielectric strength. Bulk supply PAN-India.",
+        "H1": "Yellow Polyester Tape",
+        "H2_1": "Industrial-Grade Yellow Polyester Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Yellow Polyester Tape manufacturer in India",
+        "Secondary Keywords": "Yellow insulation tape, mylar tape yellow, electrical tape",
+        "summary": "Yellow Polyester Tape is engineered for industrial environments requiring durability, chemical resistance, and electrical insulation. Offers a thin but strong backing for coil wrapping and masking.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Yellow Polyester Tape electrical grade?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it offers excellent electrical insulation properties." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "aluminium-fr-grade",
+        "Page Type": "Product",
+        "Page Name": "Aluminium Glass Tape (FR Grade)",
+        "Full URL": "https://tapeindia.shop/product/aluminium-fr-grade",
+        "Title (≤60 chars)": "Aluminium Glass Tape (FR Grade) Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Aluminium Glass Tape (FR Grade) for high-heat insulation and flame retardancy. Bulk supply PAN-India.",
+        "H1": "Aluminium Glass Tape (FR Grade)",
+        "H2_1": "Industrial-Grade Aluminium Glass Tape (FR Grade)",
+        "H3": "Product Overview",
+        "Primary Keywords": "Aluminium Glass Tape (FR Grade) manufacturer in India",
+        "Secondary Keywords": "Flame retardant aluminium tape, glass cloth foil tape, FR tape",
+        "summary": "Aluminium Glass Tape (FR Grade) is engineered for industrial environments requiring durability, heat reflection, and flame resistance. Combines aluminium foil with glass cloth for superior thermal protection.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What does FR Grade mean?", "acceptedAnswer": { "@type": "Answer", "text": "FR stands for Flame Retardant, meaning the tape resists burning and slows fire spread." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "red-pvc-non-adhesive-tape",
+        "Page Type": "Product",
+        "Page Name": "PVC Pipe Wrapping Tape (Without Adhesive)",
+        "Full URL": "https://tapeindia.shop/product/red-pvc-non-adhesive-tape",
+        "Title (≤60 chars)": "PVC Pipe Wrapping Tape (No Adhesive) Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Non-Adhesive PVC Pipe Wrapping Tape for protecting pipes and cables. Dry vinyl tape. Bulk supply PAN-India.",
+        "H1": "PVC Pipe Wrapping Tape (Without Adhesive)",
+        "H2_1": "Industrial-Grade PVC Pipe Wrapping Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "PVC Pipe Wrapping Tape (Without Adhesive) manufacturer in India",
+        "Secondary Keywords": "Non-adhesive PVC tape, dry vinyl tape, pipe protection tape",
+        "summary": "PVC Pipe Wrapping Tape (Without Adhesive) is engineered for industrial environments requiring durability and protection. It wraps tightly around pipes and cables to protect against corrosion and abrasion without leaving sticky residue.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "How does Non-Adhesive PVC Tape stick?", "acceptedAnswer": { "@type": "Answer", "text": "It is applied by stretching and overlapping; the tension holds it in place." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "glass-cloth-tape",
+        "Page Type": "Product",
+        "Page Name": "Glass Cloth Tape",
+        "Full URL": "https://tapeindia.shop/product/glass-cloth-tape",
+        "Title (≤60 chars)": "Glass Cloth Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Glass Cloth Tape for high-temperature masking and electrical insulation. Abrasion resistant. Bulk supply PAN-India.",
+        "H1": "Glass Cloth Tape",
+        "H2_1": "Industrial-Grade Glass Cloth Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Glass Cloth Tape manufacturer in India",
+        "Secondary Keywords": "High temp glass tape, fiberglass adhesive tape, plasma spray masking tape",
+        "summary": "Glass Cloth Tape is engineered for industrial environments requiring durability, extreme heat resistance, and high tensile strength. Ideal for plasma spray masking, coil insulation, and sealing.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What makes Glass Cloth Tape strong?", "acceptedAnswer": { "@type": "Answer", "text": "The woven fiberglass backing provides exceptional tensile strength and heat resistance." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "fr-grade-glass-cloth-tape",
+        "Page Type": "Product",
+        "Page Name": "Glass Cloth Tape (FR Grade)",
+        "Full URL": "https://tapeindia.shop/product/fr-grade-glass-cloth-tape",
+        "Title (≤60 chars)": "Glass Cloth Tape (FR Grade) Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Glass Cloth Tape (FR Grade) for flame retardant insulation and aerospace applications. Bulk supply PAN-India.",
+        "H1": "Glass Cloth Tape (FR Grade)",
+        "H2_1": "Industrial-Grade Glass Cloth Tape (FR Grade)",
+        "H3": "Product Overview",
+        "Primary Keywords": "Glass Cloth Tape (FR Grade) manufacturer in India",
+        "Secondary Keywords": "Flame retardant glass tape, FR fiberglass tape, aerospace tape",
+        "summary": "Glass Cloth Tape (FR Grade) is engineered for industrial environments requiring durability, flame resistance, and high performance. Meets stringent safety standards for aerospace, marine, and automotive industries.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is this tape suitable for aerospace?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the FR grade meets many flame retardancy requirements for aerospace applications." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "filament-tape",
+        "Page Type": "Product",
+        "Page Name": "Filament Tapes",
+        "Full URL": "https://tapeindia.shop/product/filament-tape",
+        "Title (≤60 chars)": "Filament Tapes Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Filament Tapes for heavy-duty bundling, strapping, and palletizing. High tensile strength. Bulk supply PAN-India.",
+        "H1": "Filament Tapes",
+        "H2_1": "Industrial-Grade Filament Tapes",
+        "H3": "Product Overview",
+        "Primary Keywords": "Filament Tapes manufacturer in India",
+        "Secondary Keywords": "Strapping tape, fiberglass reinforced tape, bundling tape",
+        "summary": "Filament Tapes are engineered for industrial environments requiring durability and extreme holding power. Reinforced with fiberglass filaments to prevent snapping under heavy loads during transport and shipping.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Why is Filament Tape so strong?", "acceptedAnswer": { "@type": "Answer", "text": "It is reinforced with continuous glass yarn filaments that provide high tensile strength." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "ez-application-tape",
+        "Page Type": "Product",
+        "Page Name": "EZ Application Tape",
+        "Full URL": "https://tapeindia.shop/product/ez-application-tape",
+        "Title (≤60 chars)": "EZ Application Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade EZ Application Tape for vinyl transfer and graphic installation. Easy release and application. Bulk supply PAN-India.",
+        "H1": "EZ Application Tape",
+        "H2_1": "Industrial-Grade EZ Application Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "EZ Application Tape manufacturer in India",
+        "Secondary Keywords": "Vinyl transfer tape, application tape for signage, graphic transfer tape",
+        "summary": "EZ Application Tape is engineered for industrial environments requiring precision graphic transfer. Ensures vinyl decals and signs are transferred smoothly and accurately without bubbles or tearing.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is EZ Application Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Transferring cut vinyl graphics and lettering to substrates." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "kraft-paper-tape",
+        "Page Type": "Product",
+        "Page Name": "Kraft Paper Tape",
+        "Full URL": "https://tapeindia.shop/product/kraft-paper-tape",
+        "Title (≤60 chars)": "Kraft Paper Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Kraft Paper Tape for eco-friendly carton sealing and packaging. Strong adhesion. Bulk supply PAN-India.",
+        "H1": "Kraft Paper Tape",
+        "H2_1": "Industrial-Grade Kraft Paper Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Kraft Paper Tape manufacturer in India",
+        "Secondary Keywords": "Brown paper tape, eco-friendly packaging tape, self-adhesive paper tape",
+        "summary": "Kraft Paper Tape is engineered for industrial environments requiring sustainable packaging solutions. It offers strong adhesion to cardboard and is recyclable, making it an eco-friendly choice for shipping.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Kraft Paper Tape eco-friendly?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is made from renewable paper resources and is often recyclable." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "reinforced-paper-tapes1",
+        "Page Type": "Product",
+        "Page Name": "Reinforcement Kraft Paper Tape",
+        "Full URL": "https://tapeindia.shop/product/reinforced-paper-tapes1",
+        "Title (≤60 chars)": "Reinforcement Kraft Paper Tape Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Reinforcement Kraft Paper Tape for heavy-duty carton sealing. Fiberglass reinforced. Bulk supply PAN-India.",
+        "H1": "Reinforcement Kraft Paper Tape",
+        "H2_1": "Industrial-Grade Reinforcement Kraft Paper Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Reinforcement Kraft Paper Tape manufacturer in India",
+        "Secondary Keywords": "Reinforced paper tape, heavy duty paper tape, security packaging tape",
+        "summary": "Reinforcement Kraft Paper Tape is engineered for industrial environments requiring extra strength. Reinforced with fiberglass strands, it provides a secure, tamper-evident seal for heavy cartons.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Why use Reinforced Kraft Paper Tape?", "acceptedAnswer": { "@type": "Answer", "text": "It offers significantly higher tensile strength than standard paper tape for heavy loads." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "water-activated-kraft-tape",
+        "Page Type": "Product",
+        "Page Name": "Water Activated Kraft Paper Tape",
+        "Full URL": "https://tapeindia.shop/product/water-activated-kraft-tape",
+        "Title (≤60 chars)": "Water Activated Kraft Paper Tape Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Water Activated Kraft Paper Tape (Gummed Tape) for pilfer-proof packaging. Bulk supply PAN-India.",
+        "H1": "Water Activated Kraft Paper Tape",
+        "H2_1": "Industrial-Grade Water Activated Kraft Paper Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Water Activated Kraft Paper Tape manufacturer in India",
+        "Secondary Keywords": "Gummed paper tape, water activated tape, pilfer proof tape",
+        "summary": "Water Activated Kraft Paper Tape is engineered for industrial environments requiring maximum security. The adhesive activates with water to bond instantly with the carton fibers, creating a tamper-evident seal.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "How do you apply Water Activated Tape?", "acceptedAnswer": { "@type": "Answer", "text": "It requires a dispenser that wets the adhesive side with water before application." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "cloth-adhesive-tape-500x500-1",
+        "Page Type": "Product",
+        "Page Name": "Adhesive Cloth Tape",
+        "Full URL": "https://tapeindia.shop/product/cloth-adhesive-tape-500x500-1",
+        "Title (≤60 chars)": "Adhesive Cloth Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Adhesive Cloth Tape for binding, repairing, and color coding. Strong and durable. Bulk supply PAN-India.",
+        "H1": "Adhesive Cloth Tape",
+        "H2_1": "Industrial-Grade Adhesive Cloth Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Adhesive Cloth Tape manufacturer in India",
+        "Secondary Keywords": "Cloth binding tape, book binding tape, heavy duty cloth tape",
+        "summary": "Adhesive Cloth Tape is engineered for industrial environments requiring durability and flexibility. Ideal for book binding, cable bundling, and general repair where a strong cloth backing is needed.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Adhesive Cloth Tape waterproof?", "acceptedAnswer": { "@type": "Answer", "text": "Many varieties are water-resistant, but check specific product details for waterproof ratings." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "ptfe-coated-fabric-non-adhesive-1",
+        "Page Type": "Product",
+        "Page Name": "Non-Adhesive PTFE Coated Fiberglass Fabric",
+        "Full URL": "https://tapeindia.shop/product/ptfe-coated-fabric-non-adhesive-1",
+        "Title (≤60 chars)": "Non-Adhesive PTFE Coated Fiberglass Fabric | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Non-Adhesive PTFE Coated Fiberglass Fabric for heat sealing and conveyor belts. High temp resistant. Bulk supply PAN-India.",
+        "H1": "Non-Adhesive PTFE Coated Fiberglass Fabric",
+        "H2_1": "Industrial-Grade Non-Adhesive PTFE Fabric",
+        "H3": "Product Overview",
+        "Primary Keywords": "Non-Adhesive PTFE Coated Fiberglass Fabric manufacturer in India",
+        "Secondary Keywords": "Teflon cloth, PTFE fabric sheet, heat sealing cloth",
+        "summary": "Non-Adhesive PTFE Coated Fiberglass Fabric is engineered for industrial environments requiring durability, chemical resistance, and extreme heat resistance. Ideal for conveyor belts and release sheets in heat sealing applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is PTFE Coated Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "It is used as a non-stick release sheet in high-temperature applications like heat sealing." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "ptfe-silicone-adhesive",
+        "Page Type": "Product",
+        "Page Name": "PTFE (Teflon) Coated Tape with Silicone Adhesive",
+        "Full URL": "https://tapeindia.shop/product/ptfe-silicone-adhesive",
+        "Title (≤60 chars)": "PTFE (Teflon) Tape with Silicone Adhesive | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade PTFE (Teflon) Coated Tape with Silicone Adhesive. High temp, non-stick, low friction. Bulk supply PAN-India.",
+        "H1": "PTFE (Teflon) Coated Tape with Silicone Adhesive",
+        "H2_1": "Industrial-Grade PTFE Tape with Silicone Adhesive",
+        "H3": "Product Overview",
+        "Primary Keywords": "PTFE (Teflon) Coated Tape with Silicone Adhesive manufacturer in India",
+        "Secondary Keywords": "Teflon tape with adhesive, PTFE adhesive tape, high temp teflon tape",
+        "summary": "PTFE (Teflon) Coated Tape with Silicone Adhesive is engineered for industrial environments requiring durability, chemical resistance, and non-stick properties. The silicone adhesive ensures clean removal even after exposure to high temperatures.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is PTFE tape the same as Teflon tape?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, PTFE (Polytetrafluoroethylene) is the generic name for the material often branded as Teflon." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "ptfe-fiberglass-with-silicone-adhesive",
+        "Page Type": "Product",
+        "Page Name": "PTFE Coated Fiberglass Fabric with Silicone Adhesive",
+        "Full URL": "https://tapeindia.shop/product/ptfe-fiberglass-with-silicone-adhesive",
+        "Title (≤60 chars)": "PTFE Fiberglass Tape with Silicone Adhesive | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade PTFE Coated Fiberglass Fabric with Silicone Adhesive. Reinforced for strength and heat resistance. Bulk supply PAN-India.",
+        "H1": "PTFE Coated Fiberglass Fabric with Silicone Adhesive",
+        "H2_1": "Industrial-Grade PTFE Fiberglass Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "PTFE Coated Fiberglass Fabric with Silicone Adhesive manufacturer in India",
+        "Secondary Keywords": "Reinforced teflon tape, fiberglass ptfe tape, heat sealer tape",
+        "summary": "PTFE Coated Fiberglass Fabric with Silicone Adhesive is engineered for industrial environments requiring durability and dimensional stability. The fiberglass reinforcement prevents stretching under heat and tension.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Why use fiberglass reinforced PTFE tape?", "acceptedAnswer": { "@type": "Answer", "text": "It provides greater tensile strength and dimensional stability compared to pure PTFE film tape." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "ptfe-coated-fiberglass-fabric-with-silicone-adhesive-liner",
+        "Page Type": "Product",
+        "Page Name": "PTFE Coated Fiberglass Fabric with Liner",
+        "Full URL": "https://tapeindia.shop/product/ptfe-coated-fiberglass-fabric-with-silicone-adhesive-liner",
+        "Title (≤60 chars)": "PTFE Fiberglass Tape with Liner Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade PTFE Coated Fiberglass Fabric with Liner for easy die-cutting and application. High temp resistant. Bulk supply PAN-India.",
+        "H1": "PTFE Coated Fiberglass Fabric with Liner",
+        "H2_1": "Industrial-Grade PTFE Fiberglass Tape with Liner",
+        "H3": "Product Overview",
+        "Primary Keywords": "PTFE Coated Fiberglass Fabric with Liner manufacturer in India",
+        "Secondary Keywords": "Teflon tape with liner, die-cut ptfe tape, non-stick industrial tape",
+        "summary": "PTFE Coated Fiberglass Fabric with Liner is engineered for industrial environments requiring precision application. The liner protects the adhesive and facilitates die-cutting into custom shapes for machinery and heat sealing bars.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is the purpose of the liner on PTFE tape?", "acceptedAnswer": { "@type": "Answer", "text": "It preserves the adhesive and allows the tape to be pre-cut into shapes before application." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "polyimide-tape",
+        "Page Type": "Product",
+        "Page Name": "High-Temperature Kapton Polyimide Tape (Antistatic)",
+        "Full URL": "https://tapeindia.shop/product/polyimide-tape",
+        "Title (≤60 chars)": "Antistatic Kapton Polyimide Tape Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade High-Temperature Kapton Polyimide Tape (Antistatic) for ESD sensitive electronics. Heat resistant. Bulk supply PAN-India.",
+        "H1": "High-Temperature Kapton Polyimide Tape (Antistatic)",
+        "H2_1": "Industrial-Grade Antistatic Polyimide Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "High-Temperature Kapton Polyimide Tape (Antistatic) manufacturer in India",
+        "Secondary Keywords": "Antistatic kapton tape, ESD polyimide tape, PCB masking tape",
+        "summary": "High-Temperature Kapton Polyimide Tape (Antistatic) is engineered for industrial environments requiring durability and ESD protection. Essential for masking PCBs during wave soldering where static discharge could damage components.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Antistatic Polyimide Tape?", "acceptedAnswer": { "@type": "Answer", "text": "It is a polyimide tape treated to reduce static charge build-up, safe for sensitive electronics." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "emi-sheliding-tape",
+        "Page Type": "Product",
+        "Page Name": "EMI Shielding Tape",
+        "Full URL": "https://tapeindia.shop/product/emi-shielding-tape",
+        "Title (≤60 chars)": "EMI Shielding Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade EMI Shielding Tape for blocking electromagnetic interference in electronics. Conductive and reliable. Bulk supply PAN-India.",
+        "H1": "EMI Shielding Tape",
+        "H2_1": "Industrial-Grade EMI Shielding Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "EMI Shielding Tape manufacturer in India",
+        "Secondary Keywords": "EMI tape, shielding foil tape, conductive shielding tape",
+        "summary": "EMI Shielding Tape is engineered for industrial environments requiring durability and signal protection. Blocks electromagnetic interference to ensure the smooth operation of sensitive electronic devices.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "How does EMI Shielding Tape work?", "acceptedAnswer": { "@type": "Answer", "text": "It creates a conductive cage around components that blocks external electromagnetic signals." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "copper-tape-2",
+        "Page Type": "Product",
+        "Page Name": "Conductive Copper Foil Tape for EMI Shielding",
+        "Full URL": "https://tapeindia.shop/product/copper-tape-2",
+        "Title (≤60 chars)": "Conductive Copper Foil Tape Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Conductive Copper Foil Tape for EMI shielding and grounding. Excellent conductivity. Bulk supply PAN-India.",
+        "H1": "Conductive Copper Foil Tape for EMI Shielding",
+        "H2_1": "Industrial-Grade Conductive Copper Foil Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Conductive Copper Foil Tape for EMI Shielding manufacturer in India",
+        "Secondary Keywords": "Copper shielding tape, conductive adhesive copper tape, grounding tape",
+        "summary": "Conductive Copper Foil Tape for EMI Shielding is engineered for industrial environments requiring durability and electrical conductivity. Used for grounding, shielding, and even slug repellent applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is the adhesive conductive on Copper Foil Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, our conductive copper tape allows current to flow through the adhesive layer." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "conductive-grind-tape",
+        "Page Type": "Product",
+        "Page Name": "ESD Conductive Grid Tape",
+        "Full URL": "https://tapeindia.shop/product/conductive-grind-tape",
+        "Title (≤60 chars)": "ESD Conductive Grid Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade ESD Conductive Grid Tape for static-sensitive packaging. Anti-static grid pattern. Bulk supply PAN-India.",
+        "H1": "ESD Conductive Grid Tape",
+        "H2_1": "Industrial-Grade ESD Conductive Grid Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "ESD Conductive Grid Tape manufacturer in India",
+        "Secondary Keywords": "Anti-static grid tape, ESD packaging tape, clear grid tape",
+        "summary": "ESD Conductive Grid Tape is engineered for industrial environments requiring durability and static protection. The conductive grid pattern dissipates static charges, making it ideal for sealing ESD bags and boxes.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is ESD Grid Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sealing static shielding bags and securing components in EPA zones." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "esd-kapton",
+        "Page Type": "Product",
+        "Page Name": "ESD Kapton Tape",
+        "Full URL": "https://tapeindia.shop/product/esd-kapton",
+        "Title (≤60 chars)": "ESD Kapton Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade ESD Kapton Tape for high-temp anti-static masking. Protects sensitive electronics. Bulk supply PAN-India.",
+        "H1": "ESD Kapton Tape",
+        "H2_1": "Industrial-Grade ESD Kapton Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "ESD Kapton Tape manufacturer in India",
+        "Secondary Keywords": "Anti-static polyimide tape, ESD masking tape, high heat ESD tape",
+        "summary": "ESD Kapton Tape is engineered for industrial environments requiring durability, heat resistance, and low static generation. Essential for PCB manufacturing where standard Kapton tape might generate harmful static charges.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is the difference between Kapton and ESD Kapton?", "acceptedAnswer": { "@type": "Answer", "text": "ESD Kapton is treated to minimize static discharge upon removal, protecting sensitive chips." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "anti-static-polyester-tape",
+        "Page Type": "Product",
+        "Page Name": "Anti-Static Polyester Tape",
+        "Full URL": "https://tapeindia.shop/product/anti-static-polyester-tape",
+        "Title (≤60 chars)": "Anti-Static Polyester Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Anti-Static Polyester Tape for general purpose ESD protection. Clear/colored options. Bulk supply PAN-India.",
+        "H1": "Anti-Static Polyester Tape",
+        "H2_1": "Industrial-Grade Anti-Static Polyester Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Anti-Static Polyester Tape manufacturer in India",
+        "Secondary Keywords": "ESD polyester tape, anti-static adhesive tape, cleanroom tape",
+        "summary": "Anti-Static Polyester Tape is engineered for industrial environments requiring durability and static control. Used for general purpose taping in cleanrooms and electronic assembly areas.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Can I use Anti-Static tape in a cleanroom?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is designed to minimize contamination and static generation suitable for cleanrooms." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "double-sided-polyimide-tapes-1",
+        "Page Type": "Product",
+        "Page Name": "Polyimide Double-Sided Tape",
+        "Full URL": "https://tapeindia.shop/product/double-sided-polyimide-tapes-1",
+        "Title (≤60 chars)": "Polyimide Double-Sided Tape Manufacturer | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Polyimide Double-Sided Tape for high-temp bonding. Silicone adhesive both sides. Bulk supply PAN-India.",
+        "H1": "Polyimide Double-Sided Tape",
+        "H2_1": "Industrial-Grade Polyimide Double-Sided Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Polyimide Double-Sided Tape manufacturer in India",
+        "Secondary Keywords": "Double sided kapton tape, high temp bonding tape, polyimide adhesive tape",
+        "summary": "Polyimide Double-Sided Tape is engineered for industrial environments requiring durability and high-temperature bonding. Features silicone adhesive on both sides of a Kapton film carrier.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "What is Double-Sided Polyimide Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Bonding electronic components that operate at high temperatures." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "polyimide-film-tape",
+        "Page Type": "Product",
+        "Page Name": "Polyimide Film Tape",
+        "Full URL": "https://tapeindia.shop/product/polyimide-film-tape",
+        "Title (≤60 chars)": "Polyimide Film Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Polyimide Film Tape for electrical insulation and heat resistance. High dielectric strength. Bulk supply PAN-India.",
+        "H1": "Polyimide Film Tape",
+        "H2_1": "Industrial-Grade Polyimide Film Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Polyimide Film Tape manufacturer in India",
+        "Secondary Keywords": "Kapton film tape, amber tape, heat resistant insulation tape",
+        "summary": "Polyimide Film Tape is engineered for industrial environments requiring durability, chemical resistance, and electrical insulation at high temperatures. A standard for the electronics industry.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Is Polyimide Film Tape the same as Kapton?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, Polyimide is the material, Kapton is a popular brand name for it." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "tin-copper-tape",
+        "Page Type": "Product",
+        "Page Name": "Tin-Plated Copper Tape",
+        "Full URL": "https://tapeindia.shop/product/tin-copper-tape",
+        "Title (≤60 chars)": "Tin-Plated Copper Tape Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Tin-Plated Copper Tape for corrosion-resistant shielding and grounding. Solderable. Bulk supply PAN-India.",
+        "H1": "Tin-Plated Copper Tape",
+        "H2_1": "Industrial-Grade Tin-Plated Copper Tape",
+        "H3": "Product Overview",
+        "Primary Keywords": "Tin-Plated Copper Tape manufacturer in India",
+        "Secondary Keywords": "Tinned copper foil tape, solderable copper tape, corrosion resistant tape",
+        "summary": "Tin-Plated Copper Tape is engineered for industrial environments requiring durability and corrosion resistance. The tin plating protects the copper from oxidation while maintaining excellent conductivity and solderability.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [
+             { "@type": "Question", "name": "Why use Tin-Plated Copper Tape?", "acceptedAnswer": { "@type": "Answer", "text": "It resists corrosion better than bare copper and is easier to solder." }}
+        ],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
+    {
+        id: "nitto-903-ul-tapes",
+        "Page Type": "Product",
+        "Page Name": "Nitto 903 UL Tapes",
+        "Full URL": "https://tapeindia.shop/product/nitto-903-ul-tapes",
+        "Title (≤60 chars)": "Nitto 903 UL Tapes Manufacturer & Supplier | TapeIndia",
+        "Meta Description (≤160 chars)": "Industrial-grade Nitto 903 UL Tapes for OEMs, factories & engineering units. Bulk supply PAN-India.",
+        "H1": "Nitto 903 UL Tapes",
+        "H2_1": "Industrial-Grade Nitto 903 UL Tapes",
+        "H3": "Product Overview",
+        "Primary Keywords": "Nitto 903 UL Tapes manufacturer in India",
+        "Secondary Keywords": "",
+        "summary": "Nitto 903 UL Tapes is engineered for industrial environments requiring durability, chemical resistance, high adhesion, and superior performance across OEM, electrical, fabrication, HVAC, insulation, and assembly-line applications.",
+        "CTA": "Request a Quote",
+        "Schema Type": "Product",
+        faqs: [],
+        "Product Schema (JSON-LD)": null,
+        "LocalBusiness Schema (JSON-LD)": "{}",
+        "FAQ Schema (JSON-LD)": "{}",
+        "Combined Schema (JSON-LD)": "{}"
+    },
     {
         id: "hazardtape",
         "Page Type": "Product",
@@ -189,17 +1100,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Hazard Warning & Safety Stripe Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Hazard Warning & Safety Stripe Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "It is used for marking physical hazards, aisle marking in warehouses, indicating safety equipment locations, and construction site warnings." }},
-            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is engineered for heavy-duty industrial environments, ensuring long-term durability and high adhesion." }},
-            { "@type": "Question", "name": "What sizes are available in Hazard Warning & Safety Stripe Tape?", "acceptedAnswer": { "@type": "Answer", "text": "We offer various sizes and custom options. Contact us for bulk order details." }},
-            { "@type": "Question", "name": "What material is Hazard Warning & Safety Stripe Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "It is made from PVC/PE/Composite Film with a High Bond Industrial Adhesive." }},
-            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is resistant to abrasion, chemicals, temperature changes, and mechanical stress." }},
-            { "@type": "Question", "name": "How long does Hazard Warning & Safety Stripe Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "It offers a long service life suitable for continuous factory use." }},
-            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is chemical and abrasion resistant with a temperature range of -10°C to 80°C." }},
-            { "@type": "Question", "name": "Where can I buy Hazard Warning & Safety Stripe Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "You can buy directly from TapeIndia, a leading manufacturer and supplier in India." }},
-            { "@type": "Question", "name": "Who manufactures Hazard Warning & Safety Stripe Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures high-quality Hazard Warning & Safety Stripe Tapes in India." }},
-            { "@type": "Question", "name": "What is the price of Hazard Warning & Safety Stripe Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Please contact us for the latest wholesale price list." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Hazard Warning & Safety Stripe Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "It is used for marking hazards, restricted areas, and safety zones in industrial environments." } },
+            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is designed to withstand heavy foot traffic and industrial conditions." } },
+            { "@type": "Question", "name": "What sizes are available in Hazard Warning & Safety Stripe Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Available in standard widths like 2 inch, 3 inch, and custom sizes upon request." } },
+            { "@type": "Question", "name": "What material is Hazard Warning & Safety Stripe Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "It is typically made from durable PVC or PE materials with a strong adhesive." } },
+            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it offers high resistance to abrasion and wear, making it suitable for factories." } },
+            { "@type": "Question", "name": "How long does Hazard Warning & Safety Stripe Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Lifespan depends on traffic and conditions but is designed for long-term industrial use." } },
+            { "@type": "Question", "name": "Is Hazard Warning & Safety Stripe Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "It offers good resistance to common chemicals and standard industrial temperatures." } },
+            { "@type": "Question", "name": "Where can I buy Hazard Warning & Safety Stripe Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "You can buy it directly from TapeIndia, a leading manufacturer and supplier." } },
+            { "@type": "Question", "name": "Who manufactures Hazard Warning & Safety Stripe Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a premier manufacturer of Hazard Warning & Safety Stripe Tape in India." } },
+            { "@type": "Question", "name": "What is the price of Hazard Warning & Safety Stripe Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Price varies by width and order volume. Contact us for a bulk quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -223,17 +1134,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Heavy-Duty Floor Marking Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Heavy-Duty Floor Marking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "It is used for OEM manufacturing units, heavy industries, warehousing, logistics, and assembly lines." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is designed to withstand forklifts, heavy machinery, and continuous foot traffic." }},
-            { "@type": "Question", "name": "What sizes are available in Heavy-Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "We provide standard and custom sizes for bulk orders." }},
-            { "@type": "Question", "name": "What material is Heavy-Duty Floor Marking Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "It is constructed from PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it offers OEM-grade durability and strong adhesive performance." }},
-            { "@type": "Question", "name": "How long does Heavy-Duty Floor Marking Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "It has a long service life and is chemical and abrasion resistant." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it operates in a temperature range of -10°C to 80°C and resists chemicals." }},
-            { "@type": "Question", "name": "Where can I buy Heavy-Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia supplies Heavy-Duty Floor Marking Tape across India." }},
-            { "@type": "Question", "name": "Who manufactures Heavy-Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a trusted manufacturer of Heavy-Duty Floor Marking Tape." }},
-            { "@type": "Question", "name": "What is the price of Heavy-Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us for a quote based on your quantity requirements." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Heavy-Duty Floor Marking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Marking aisles, lanes, and safety zones in warehouses and factories." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it withstands forklift traffic and industrial wear." } },
+            { "@type": "Question", "name": "What sizes are available in Heavy-Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Commonly available in 2 inch, 3 inch, and 4 inch widths." } },
+            { "@type": "Question", "name": "What material is Heavy-Duty Floor Marking Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Made from tough PVC or vinyl for durability." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, specifically engineered for long-lasting performance in factories." } },
+            { "@type": "Question", "name": "How long does Heavy-Duty Floor Marking Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Designed for long service life even in high-traffic areas." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Floor Marking Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Resistant to many industrial chemicals and standard temperatures." } },
+            { "@type": "Question", "name": "Where can I buy Heavy-Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia supplies Heavy-Duty Floor Marking Tape across India." } },
+            { "@type": "Question", "name": "Who manufactures Heavy-Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a trusted manufacturer of industrial floor marking tapes." } },
+            { "@type": "Question", "name": "What is the price of Heavy-Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Please request a quote for current bulk pricing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -257,17 +1168,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Heavy-Duty Anti-Skid & Anti-Slip Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Heavy-Duty Anti-Skid & Anti-Slip Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "It prevents slips and falls in factories, warehouses, and on ramps/stairs." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it supports industrial safety compliance and reduces operational hazards." }},
-            { "@type": "Question", "name": "What sizes are available in Heavy-Duty Anti-Skid & Anti-Slip Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Custom and standard sizes are available." }},
-            { "@type": "Question", "name": "What material is Heavy-Duty Anti-Skid & Anti-Slip Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film with a High Bond Industrial Adhesive." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is designed for long service life and high visibility." }},
-            { "@type": "Question", "name": "How long does Heavy-Duty Anti-Skid & Anti-Slip Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "It is built for durability with minimal maintenance requirements." }},
-            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it resists chemicals and functions between -10°C to 80°C." }},
-            { "@type": "Question", "name": "Where can I buy Heavy-Duty Anti-Skid & Anti-Slip Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a premier supplier for bulk orders in India." }},
-            { "@type": "Question", "name": "Who manufactures Heavy-Duty Anti-Skid & Anti-Slip Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures this tape for OEMs and industrial clients." }},
-            { "@type": "Question", "name": "What is the price of Heavy-Duty Anti-Skid & Anti-Slip Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us for pricing details." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Heavy-Duty Anti-Skid & Anti-Slip Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Preventing slips and falls on ramps, stairs, and walkways." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, perfect for oily or wet industrial floors." } },
+            { "@type": "Question", "name": "What sizes are available in Heavy-Duty Anti-Skid & Anti-Slip Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Available in rolls and die-cut shapes to fit various needs." } },
+            { "@type": "Question", "name": "What material is Heavy-Duty Anti-Skid & Anti-Slip Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Abrasive particles bonded to a durable carrier film." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, extremely durable and wear-resistant." } },
+            { "@type": "Question", "name": "How long does Heavy-Duty Anti-Skid & Anti-Slip Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Long-lasting performance even under heavy foot traffic." } },
+            { "@type": "Question", "name": "Is Heavy-Duty Anti-Skid & Anti-Slip Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Resistant to water, oils, and many chemicals." } },
+            { "@type": "Question", "name": "Where can I buy Heavy-Duty Anti-Skid & Anti-Slip Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Contact TapeIndia for high-quality anti-skid tapes." } },
+            { "@type": "Question", "name": "Who manufactures Heavy-Duty Anti-Skid & Anti-Slip Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures and supplies anti-slip tapes." } },
+            { "@type": "Question", "name": "What is the price of Heavy-Duty Anti-Skid & Anti-Slip Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Get a custom quote for bulk orders today." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -291,17 +1202,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Non-Adhesive Caution & Warning Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Non-Adhesive Caution & Warning Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "It is used to cordon off areas, ensuring safety in construction sites and factories." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is durable and offers high visibility for industrial safety." }},
-            { "@type": "Question", "name": "What sizes are available in Non-Adhesive Caution & Warning Tape?", "acceptedAnswer": { "@type": "Answer", "text": "We offer various widths and lengths." }},
-            { "@type": "Question", "name": "What material is Non-Adhesive Caution & Warning Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "It is made from PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is suitable for continuous factory use and is abrasion resistant." }},
-            { "@type": "Question", "name": "How long does Non-Adhesive Caution & Warning Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "It has a long service life." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "It is resistant to chemicals and functions in various temperatures (-10°C to 80°C)." }},
-            { "@type": "Question", "name": "Where can I buy Non-Adhesive Caution & Warning Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Available directly from TapeIndia." }},
-            { "@type": "Question", "name": "Who manufactures Non-Adhesive Caution & Warning Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a leading manufacturer." }},
-            { "@type": "Question", "name": "What is the price of Non-Adhesive Caution & Warning Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire for our best bulk pricing." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Non-Adhesive Caution & Warning Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Cordoning off hazardous areas and construction sites." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, highly visible and durable for temporary barriers." } },
+            { "@type": "Question", "name": "What sizes are available in Non-Adhesive Caution & Warning Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard widths usually around 3 inches." } },
+            { "@type": "Question", "name": "What material is Non-Adhesive Caution & Warning Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Typically polyethylene (PE) for flexibility and strength." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, resistant to tearing and weather conditions." } },
+            { "@type": "Question", "name": "How long does Non-Adhesive Caution & Warning Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Reusable and lasts well in outdoor conditions." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Caution & Warning Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Resistant to moisture and basic environmental factors." } },
+            { "@type": "Question", "name": "Where can I buy Non-Adhesive Caution & Warning Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia offers bulk supplies of caution tape." } },
+            { "@type": "Question", "name": "Who manufactures Non-Adhesive Caution & Warning Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a reliable source for warning tapes." } },
+            { "@type": "Question", "name": "What is the price of Non-Adhesive Caution & Warning Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Competitive pricing for bulk rolls. Contact us." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -325,17 +1236,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Non-Adhesive Barricade Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Non-Adhesive Barricade Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Used for cordoning off hazardous areas and construction sites." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, highly suitable for heavy industries and safety marking." }},
-            { "@type": "Question", "name": "What sizes are available in Non-Adhesive Barricade Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Available in multiple sizes for different applications." }},
-            { "@type": "Question", "name": "What material is Non-Adhesive Barricade Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Made from durable PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, offering OEM-grade durability." }},
-            { "@type": "Question", "name": "How long does Non-Adhesive Barricade Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Designed for a long service life." }},
-            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, resistant to chemicals and abrasion." }},
-            { "@type": "Question", "name": "Where can I buy Non-Adhesive Barricade Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Buy from TapeIndia for quality assurance." }},
-            { "@type": "Question", "name": "Who manufactures Non-Adhesive Barricade Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures this tape in bulk." }},
-            { "@type": "Question", "name": "What is the price of Non-Adhesive Barricade Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Get a quote for the best price." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Non-Adhesive Barricade Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Creating visual barriers around danger zones or restricted areas." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, widely used in construction and industrial safety." } },
+            { "@type": "Question", "name": "What sizes are available in Non-Adhesive Barricade Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Various lengths and widths available for site safety." } },
+            { "@type": "Question", "name": "What material is Non-Adhesive Barricade Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Durable plastic film, usually polyethylene." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, withstands wind and weather." } },
+            { "@type": "Question", "name": "How long does Non-Adhesive Barricade Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Depends on exposure, but generally durable." } },
+            { "@type": "Question", "name": "Is Non-Adhesive Barricade Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Resistant to water and sunlight." } },
+            { "@type": "Question", "name": "Where can I buy Non-Adhesive Barricade Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Purchase from TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Non-Adhesive Barricade Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures barricade tapes." } },
+            { "@type": "Question", "name": "What is the price of Non-Adhesive Barricade Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire for wholesale rates." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -359,17 +1270,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Tamper-Proof Security Packing Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Tamper-Proof Security Packing Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "For securing packages and providing evidence of tampering." }},
-            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, essential for logistics and secure warehousing." }},
-            { "@type": "Question", "name": "What sizes are available in Tamper-Proof Security Packing Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard industrial sizes available." }},
-            { "@type": "Question", "name": "What material is Tamper-Proof Security Packing Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film with High Bond Adhesive." }},
-            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, robust and reliable." }},
-            { "@type": "Question", "name": "How long does Tamper-Proof Security Packing Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "It provides a long service life." }},
-            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, resistant to environmental factors." }},
-            { "@type": "Question", "name": "Where can I buy Tamper-Proof Security Packing Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is your go-to supplier." }},
-            { "@type": "Question", "name": "Who manufactures Tamper-Proof Security Packing Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia manufactures this security tape." }},
-            { "@type": "Question", "name": "What is the price of Tamper-Proof Security Packing Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Request a quote for pricing." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Tamper-Proof Security Packing Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Securing shipments and indicating if a package has been opened." } },
+            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, essential for secure supply chains." } },
+            { "@type": "Question", "name": "What sizes are available in Tamper-Proof Security Packing Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard packaging tape widths." } },
+            { "@type": "Question", "name": "What material is Tamper-Proof Security Packing Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Polyester or similar film with a void adhesive." } },
+            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, strong carrier prevents accidental tearing." } },
+            { "@type": "Question", "name": "How long does Tamper-Proof Security Packing Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Permanent adhesive bond." } },
+            { "@type": "Question", "name": "Is Tamper-Proof Security Packing Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Resistant to tampering methods like heat or solvents." } },
+            { "@type": "Question", "name": "Where can I buy Tamper-Proof Security Packing Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia supplies security packing tapes." } },
+            { "@type": "Question", "name": "Who manufactures Tamper-Proof Security Packing Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Tamper-Proof Security Packing Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact for pricing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -393,17 +1304,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Nastro Heavy Duty Floor Marking Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Nastro Heavy Duty Floor Marking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Ideal for marking in high-traffic industrial zones." }},
-            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, built for demanding use." }},
-            { "@type": "Question", "name": "What sizes are available in Nastro Heavy Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Custom and standard options." }},
-            { "@type": "Question", "name": "What material is Nastro Heavy Duty Floor Marking Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, offers exceptional resistance." }},
-            { "@type": "Question", "name": "How long does Nastro Heavy Duty Floor Marking Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Long service life ensured." }},
-            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, chemical and abrasion resistant." }},
-            { "@type": "Question", "name": "Where can I buy Nastro Heavy Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Available at TapeIndia." }},
-            { "@type": "Question", "name": "Who manufactures Nastro Heavy Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "What is the price of Nastro Heavy Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us for a quote." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Nastro Heavy Duty Floor Marking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Superior floor marking in high-traffic zones." } },
+            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, built for severe industrial wear." } },
+            { "@type": "Question", "name": "What sizes are available in Nastro Heavy Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Available in various widths." } },
+            { "@type": "Question", "name": "What material is Nastro Heavy Duty Floor Marking Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Reinforced PVC." } },
+            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Extremely durable." } },
+            { "@type": "Question", "name": "How long does Nastro Heavy Duty Floor Marking Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Years of service life." } },
+            { "@type": "Question", "name": "Is Nastro Heavy Duty Floor Marking Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Where can I buy Nastro Heavy Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Nastro Heavy Duty Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Nastro Heavy Duty Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire for a quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -427,17 +1338,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Glow in the Dark Tape designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Glow in the Dark Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Safety marking that remains visible in low light." }},
-            { "@type": "Question", "name": "Is Glow in the Dark Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, enhances workflow visibility and safety." }},
-            { "@type": "Question", "name": "What sizes are available in Glow in the Dark Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Various sizes available." }},
-            { "@type": "Question", "name": "What material is Glow in the Dark Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Glow in the Dark Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, tough and reliable." }},
-            { "@type": "Question", "name": "How long does Glow in the Dark Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Long-lasting glow and material." }},
-            { "@type": "Question", "name": "Is Glow in the Dark Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "Where can I buy Glow in the Dark Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "Who manufactures Glow in the Dark Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "What is the price of Glow in the Dark Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire for price." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Glow in the Dark Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Emergency exits and pathway marking in low light." } },
+            { "@type": "Question", "name": "Is Glow in the Dark Tape suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, essential for safety compliance." } },
+            { "@type": "Question", "name": "What sizes are available in Glow in the Dark Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard roll sizes." } },
+            { "@type": "Question", "name": "What material is Glow in the Dark Tape made from?", "acceptedAnswer": { "@type": "Answer", "text": "Photoluminescent vinyl." } },
+            { "@type": "Question", "name": "Is Glow in the Dark Tape durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "How long does Glow in the Dark Tape last?", "acceptedAnswer": { "@type": "Answer", "text": "Recharges indefinitely with light exposure." } },
+            { "@type": "Question", "name": "Is Glow in the Dark Tape chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Moderate resistance." } },
+            { "@type": "Question", "name": "Where can I buy Glow in the Dark Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Glow in the Dark Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Glow in the Dark Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact for pricing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -461,17 +1372,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Photoluminescent Film designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Photoluminescent Film used for?", "acceptedAnswer": { "@type": "Answer", "text": "For creating glow-in-the-dark safety signage and markings." }},
-            { "@type": "Question", "name": "Is Photoluminescent Film suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, highly durable." }},
-            { "@type": "Question", "name": "What sizes are available in Photoluminescent Film?", "acceptedAnswer": { "@type": "Answer", "text": "Contact for size options." }},
-            { "@type": "Question", "name": "What material is Photoluminescent Film made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Photoluminescent Film durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "How long does Photoluminescent Film last?", "acceptedAnswer": { "@type": "Answer", "text": "Long service life." }},
-            { "@type": "Question", "name": "Is Photoluminescent Film chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "Where can I buy Photoluminescent Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "Who manufactures Photoluminescent Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "What is the price of Photoluminescent Film?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Photoluminescent Film used for?", "acceptedAnswer": { "@type": "Answer", "text": "Making safety signs and labels." } },
+            { "@type": "Question", "name": "Is Photoluminescent Film suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes are available in Photoluminescent Film?", "acceptedAnswer": { "@type": "Answer", "text": "Sheets and rolls." } },
+            { "@type": "Question", "name": "What material is Photoluminescent Film made from?", "acceptedAnswer": { "@type": "Answer", "text": "Glow-in-the-dark polymer." } },
+            { "@type": "Question", "name": "Is Photoluminescent Film durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "How long does Photoluminescent Film last?", "acceptedAnswer": { "@type": "Answer", "text": "Long-term glow capability." } },
+            { "@type": "Question", "name": "Is Photoluminescent Film chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Standard resistance." } },
+            { "@type": "Question", "name": "Where can I buy Photoluminescent Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Photoluminescent Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Photoluminescent Film?", "acceptedAnswer": { "@type": "Answer", "text": "Call for a quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -482,7 +1393,7 @@ const rawSeoData: SeoPageData[] = [
         id: "anti-skid-glow-in-dark",
         "Page Type": "Product",
         "Page Name": "Anti-Skid Tape with Centre Glow",
-        "Full URL": "https://tapeindia.shop/product/anti-skid-tape-with-centre-glow",
+        "Full URL": "https://tapeindia.shop/product/anti-skid-glow-in-dark",
         "Title (≤60 chars)": "Anti-Skid Tape with Centre Glow Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Anti-Skid Tape with Centre Glow for OEMs & factories. Bulk supply, PAN-India shipping.",
         "H1": "Anti-Skid Tape with Centre Glow",
@@ -495,26 +1406,23 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Industrial-grade Anti-Skid Tape with Centre Glow designed for OEMs, factories, and heavy-duty environments. High durability, strong adhesion, and safety compliance. Ideal for manufacturing units, warehouses, and industrial buyers requiring reliable performance and bulk supply.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Anti-Skid Tape with Centre Glow used for?", "acceptedAnswer": { "@type": "Answer", "text": "Prevents slips while providing visibility in dark conditions." }},
-            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "What sizes are available in Anti-Skid Tape with Centre Glow?", "acceptedAnswer": { "@type": "Answer", "text": "Standard sizes available." }},
-            { "@type": "Question", "name": "What material is Anti-Skid Tape with Centre Glow made from?", "acceptedAnswer": { "@type": "Answer", "text": "PVC/PE/Composite Film." }},
-            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "How long does Anti-Skid Tape with Centre Glow last?", "acceptedAnswer": { "@type": "Answer", "text": "Long lasting." }},
-            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." }},
-            { "@type": "Question", "name": "Where can I buy Anti-Skid Tape with Centre Glow in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "Who manufactures Anti-Skid Tape with Centre Glow in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." }},
-            { "@type": "Question", "name": "What is the price of Anti-Skid Tape with Centre Glow?", "acceptedAnswer": { "@type": "Answer", "text": "Ask for quote." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Anti-Skid Tape with Centre Glow used for?", "acceptedAnswer": { "@type": "Answer", "text": "Slip prevention on stairs with added visibility in dark." } },
+            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow suitable for industrial environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes are available in Anti-Skid Tape with Centre Glow?", "acceptedAnswer": { "@type": "Answer", "text": "Standard widths." } },
+            { "@type": "Question", "name": "What material is Anti-Skid Tape with Centre Glow made from?", "acceptedAnswer": { "@type": "Answer", "text": "Anti-slip grit with a photoluminescent strip." } },
+            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow durable for factory use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "How long does Anti-Skid Tape with Centre Glow last?", "acceptedAnswer": { "@type": "Answer", "text": "Durable grit surface." } },
+            { "@type": "Question", "name": "Is Anti-Skid Tape with Centre Glow chemical or heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Good resistance." } },
+            { "@type": "Question", "name": "Where can I buy Anti-Skid Tape with Centre Glow in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Anti-Skid Tape with Centre Glow in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Anti-Skid Tape with Centre Glow?", "acceptedAnswer": { "@type": "Answer", "text": "Request a quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
     },
-
-    // --- NEW PRODUCTS FROM PDF (Reflective, Foam, Specialty) ---
-    
     {
         id: "esd-floor-marking",
         "Page Type": "Product",
@@ -532,14 +1440,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "ESD Floor Marking Tape designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is ESD Floor Marking Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Used for marking EPA boundaries in electronics manufacturing to prevent static buildup." }},
-            { "@type": "Question", "name": "What sizes are available for ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Available in standard industrial widths." }},
-            { "@type": "Question", "name": "Is ESD Floor Marking Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, resistant to chemicals and abrasion." }},
-            { "@type": "Question", "name": "Can ESD Floor Marking Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is OEM-grade and suitable for production environments." }},
-            { "@type": "Question", "name": "What materials are used for ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Industrial PVC / PET / Film with high bond adhesive." }},
-            { "@type": "Question", "name": "How durable is ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "High industrial durability designed for long operational life." }},
-            { "@type": "Question", "name": "Where to buy ESD Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia is a leading manufacturer and supplier." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is ESD Floor Marking Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Marking ESD safe zones." } },
+            { "@type": "Question", "name": "What sizes are available for ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard widths." } },
+            { "@type": "Question", "name": "Is ESD Floor Marking Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Can ESD Floor Marking Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Antistatic PVC." } },
+            { "@type": "Question", "name": "How durable is ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "High durability." } },
+            { "@type": "Question", "name": "Where to buy ESD Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of ESD Floor Marking Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Get quote." } },
+            { "@type": "Question", "name": "Who manufactures ESD Floor Marking Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is ESD Floor Marking Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -563,9 +1474,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Glow in Dark Marking Tapes designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Glow in Dark Marking Tapes used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Used for safety marking that requires visibility in low-light conditions or power outages." }},
-            { "@type": "Question", "name": "How durable is Glow in Dark Marking Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Designed for high industrial durability and long operational life." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Glow in Dark Marking Tapes used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Safety marking." } },
+            { "@type": "Question", "name": "What sizes are available for Glow in Dark Marking Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Various." } },
+            { "@type": "Question", "name": "Is Glow in Dark Marking Tapes heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Moderate." } },
+            { "@type": "Question", "name": "Can Glow in Dark Marking Tapes be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Glow in Dark Marking Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Vinyl." } },
+            { "@type": "Question", "name": "How durable is Glow in Dark Marking Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Durable." } },
+            { "@type": "Question", "name": "Where to buy Glow in Dark Marking Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Glow in Dark Marking Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Ask us." } },
+            { "@type": "Question", "name": "Who manufactures Glow in Dark Marking Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Glow in Dark Marking Tapes suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -589,9 +1508,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Heavy Duty Anti-Skid Tape designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Heavy Duty Anti-Skid Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Prevents slips on ramps, stairs, and machinery in heavy industrial environments." }},
-            { "@type": "Question", "name": "How durable is Heavy Duty Anti-Skid Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Extremely durable, resistant to heavy foot traffic and industrial wear." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Heavy Duty Anti-Skid Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Preventing slips." } },
+            { "@type": "Question", "name": "What sizes are available for Heavy Duty Anti-Skid Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls and cleats." } },
+            { "@type": "Question", "name": "Is Heavy Duty Anti-Skid Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Can Heavy Duty Anti-Skid Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Heavy Duty Anti-Skid Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Grit surface." } },
+            { "@type": "Question", "name": "How durable is Heavy Duty Anti-Skid Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Very durable." } },
+            { "@type": "Question", "name": "Where to buy Heavy Duty Anti-Skid Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Heavy Duty Anti-Skid Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us." } },
+            { "@type": "Question", "name": "Who manufactures Heavy Duty Anti-Skid Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Heavy Duty Anti-Skid Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -615,9 +1542,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Anti-Slip Tape for Bath and Shower designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Anti-Slip Tape for Bath and Shower used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Used in wet areas like locker rooms, showers, and swimming pool surrounds to prevent slipping." }},
-            { "@type": "Question", "name": "How durable is Anti-Slip Tape for Bath and Shower?", "acceptedAnswer": { "@type": "Answer", "text": "Waterproof and mold-resistant, designed for long-term adhesion in wet conditions." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Anti-Slip Tape for Bath and Shower used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Wet areas." } },
+            { "@type": "Question", "name": "What sizes are available for Anti-Slip Tape for Bath and Shower?", "acceptedAnswer": { "@type": "Answer", "text": "Standard." } },
+            { "@type": "Question", "name": "Is Anti-Slip Tape for Bath and Shower heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Water resistant." } },
+            { "@type": "Question", "name": "Can Anti-Slip Tape for Bath and Shower be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Anti-Slip Tape for Bath and Shower?", "acceptedAnswer": { "@type": "Answer", "text": "Textured vinyl." } },
+            { "@type": "Question", "name": "How durable is Anti-Slip Tape for Bath and Shower?", "acceptedAnswer": { "@type": "Answer", "text": "Durable." } },
+            { "@type": "Question", "name": "Where to buy Anti-Slip Tape for Bath and Shower in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Anti-Slip Tape for Bath and Shower?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
+            { "@type": "Question", "name": "Who manufactures Anti-Slip Tape for Bath and Shower in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Anti-Slip Tape for Bath and Shower suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -641,9 +1576,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Silver TC Sew-On Reflective Tape designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Silver TC Sew-On Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Primarily used in the manufacturing of safety vests, uniforms, and industrial PPE for high visibility." }},
-            { "@type": "Question", "name": "How durable is Silver TC Sew-On Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Washable and abrasion-resistant, ensuring long-lasting reflectivity." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Silver TC Sew-On Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Safety clothing." } },
+            { "@type": "Question", "name": "What sizes are available for Silver TC Sew-On Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "1inch, 2inch." } },
+            { "@type": "Question", "name": "Is Silver TC Sew-On Reflective Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Washable." } },
+            { "@type": "Question", "name": "Can Silver TC Sew-On Reflective Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Silver TC Sew-On Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "TC fabric." } },
+            { "@type": "Question", "name": "How durable is Silver TC Sew-On Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "High." } },
+            { "@type": "Question", "name": "Where to buy Silver TC Sew-On Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Silver TC Sew-On Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact." } },
+            { "@type": "Question", "name": "Who manufactures Silver TC Sew-On Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Silver TC Sew-On Reflective Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -667,9 +1610,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Heat Transfer Reflective Film designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Heat Transfer Reflective Film used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Applied to fabrics via heat press for safety apparel, sportswear, and branded uniforms." }},
-             { "@type": "Question", "name": "Is Heat Transfer Reflective Film suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it bonds strongly to textiles and withstands industrial washing." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Heat Transfer Reflective Film used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Branding on fabrics." } },
+            { "@type": "Question", "name": "What sizes are available for Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Is Heat Transfer Reflective Film heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Heat applied." } },
+            { "@type": "Question", "name": "Can Heat Transfer Reflective Film be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "PU/PET." } },
+            { "@type": "Question", "name": "How durable is Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Durable." } },
+            { "@type": "Question", "name": "Where to buy Heat Transfer Reflective Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Ask." } },
+            { "@type": "Question", "name": "Who manufactures Heat Transfer Reflective Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Heat Transfer Reflective Film suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -693,9 +1644,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Vinyl Heat Transfer Reflective Film designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Vinyl Heat Transfer Reflective Film used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Used for flexible, stretchable reflective markings on safety gear and athletic wear." }},
-             { "@type": "Question", "name": "How durable is Vinyl Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Offers excellent wash durability and flexibility." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Vinyl Heat Transfer Reflective Film used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Logos." } },
+            { "@type": "Question", "name": "What sizes are available for Vinyl Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Sheets." } },
+            { "@type": "Question", "name": "Is Vinyl Heat Transfer Reflective Film heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Can Vinyl Heat Transfer Reflective Film be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Vinyl Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Vinyl." } },
+            { "@type": "Question", "name": "How durable is Vinyl Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Good." } },
+            { "@type": "Question", "name": "Where to buy Vinyl Heat Transfer Reflective Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Vinyl Heat Transfer Reflective Film?", "acceptedAnswer": { "@type": "Answer", "text": "Call us." } },
+            { "@type": "Question", "name": "Who manufactures Vinyl Heat Transfer Reflective Film in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Vinyl Heat Transfer Reflective Film suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -719,9 +1678,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "PVC Reflective Tape designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is PVC Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Marking vehicles, machinery, and rigid surfaces for high visibility." }},
-            { "@type": "Question", "name": "How durable is PVC Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Weather and solvent resistant, suitable for outdoor use." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is PVC Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Vehicle marking." } },
+            { "@type": "Question", "name": "What sizes are available for PVC Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Is PVC Reflective Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Weather resistant." } },
+            { "@type": "Question", "name": "Can PVC Reflective Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for PVC Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "PVC." } },
+            { "@type": "Question", "name": "How durable is PVC Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Very durable." } },
+            { "@type": "Question", "name": "Where to buy PVC Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of PVC Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire." } },
+            { "@type": "Question", "name": "Who manufactures PVC Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is PVC Reflective Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -745,9 +1712,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Reflective Yarn & Thread designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Reflective Yarn & Thread used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Woven into fabrics, shoelaces, and safety gear for enhanced visibility." }},
-             { "@type": "Question", "name": "How durable is Reflective Yarn & Thread?", "acceptedAnswer": { "@type": "Answer", "text": "High tensile strength and washable." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Reflective Yarn & Thread used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Weaving." } },
+            { "@type": "Question", "name": "What sizes are available for Reflective Yarn & Thread?", "acceptedAnswer": { "@type": "Answer", "text": "Spools." } },
+            { "@type": "Question", "name": "Is Reflective Yarn & Thread heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Can Reflective Yarn & Thread be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Reflective Yarn & Thread?", "acceptedAnswer": { "@type": "Answer", "text": "Polyester." } },
+            { "@type": "Question", "name": "How durable is Reflective Yarn & Thread?", "acceptedAnswer": { "@type": "Answer", "text": "Durable." } },
+            { "@type": "Question", "name": "Where to buy Reflective Yarn & Thread in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Reflective Yarn & Thread?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us." } },
+            { "@type": "Question", "name": "Who manufactures Reflective Yarn & Thread in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Reflective Yarn & Thread suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -771,9 +1746,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Flame Retardant Reflective Tape designed for OEMs and heavy industrial usage. Offering high durability, strong adhesion, and long-term performance, this tape is ideal for manufacturing units, engineering facilities, and safety marking applications.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Flame Retardant Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Used in firefighting gear, welding apparel, and oil/gas industry workwear." }},
-            { "@type": "Question", "name": "Is Flame Retardant Reflective Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it withstands high heat and meets safety standards." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Flame Retardant Reflective Tape used for in industry?", "acceptedAnswer": { "@type": "Answer", "text": "Firefighter gear." } },
+            { "@type": "Question", "name": "What sizes are available for Flame Retardant Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Standard." } },
+            { "@type": "Question", "name": "Is Flame Retardant Reflective Tape heat or chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Fire resistant." } },
+            { "@type": "Question", "name": "Can Flame Retardant Reflective Tape be used in OEM production lines?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What materials are used for Flame Retardant Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "FR Cotton." } },
+            { "@type": "Question", "name": "How durable is Flame Retardant Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "High." } },
+            { "@type": "Question", "name": "Where to buy Flame Retardant Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the cost of Flame Retardant Reflective Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
+            { "@type": "Question", "name": "Who manufactures Flame Retardant Reflective Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Flame Retardant Reflective Tape suitable for heavy-duty operations?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -797,9 +1780,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Hi-Reflective Polyester Fabric is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Hi-Reflective Polyester Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Used for manufacturing high-visibility jackets, vests, bags, and safety accessories." }},
-             { "@type": "Question", "name": "Is Hi-Reflective Polyester Fabric washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, designed to withstand washing and industrial use." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Hi-Reflective Polyester Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Safety vests." } },
+            { "@type": "Question", "name": "Is Hi-Reflective Polyester Fabric suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Hi-Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "EN 20471." } },
+            { "@type": "Question", "name": "Where to buy Hi-Reflective Polyester Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Hi-Reflective Polyester Fabric durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Hi-Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Is Hi-Reflective Polyester Fabric washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Washable." } },
+            { "@type": "Question", "name": "Which industries use Hi-Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Garment." } },
+            { "@type": "Question", "name": "Who manufactures Hi-Reflective Polyester Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Hi-Reflective Polyester Fabric per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Contact us." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -823,9 +1814,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Hi-Reflective TC Fabric is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Hi-Reflective TC Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Ideal for workwear uniforms, boiler suits, and heavy-duty safety garments." }},
-            { "@type": "Question", "name": "Is Hi-Reflective TC Fabric suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it offers a balance of durability and breathability for industrial wear." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Hi-Reflective TC Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Workwear." } },
+            { "@type": "Question", "name": "Is Hi-Reflective TC Fabric suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Hi-Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "TC backing." } },
+            { "@type": "Question", "name": "Where to buy Hi-Reflective TC Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Hi-Reflective TC Fabric durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Hi-Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Custom." } },
+            { "@type": "Question", "name": "Is Hi-Reflective TC Fabric washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Hi-Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Textile." } },
+            { "@type": "Question", "name": "Who manufactures Hi-Reflective TC Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Hi-Reflective TC Fabric per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Get quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -849,9 +1848,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Oxford Reflective Ribbon is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Oxford Reflective Ribbon used for?", "acceptedAnswer": { "@type": "Answer", "text": "Used for trimming and reinforcing seams on bags, jackets, and safety gear." }},
-             { "@type": "Question", "name": "Is Oxford Reflective Ribbon durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the Oxford weave provides enhanced durability and strength." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Oxford Reflective Ribbon used for?", "acceptedAnswer": { "@type": "Answer", "text": "Trims." } },
+            { "@type": "Question", "name": "Is Oxford Reflective Ribbon suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Oxford Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Oxford cloth." } },
+            { "@type": "Question", "name": "Where to buy Oxford Reflective Ribbon in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Oxford Reflective Ribbon durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Oxford Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Widths vary." } },
+            { "@type": "Question", "name": "Is Oxford Reflective Ribbon washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Oxford Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Fashion." } },
+            { "@type": "Question", "name": "Who manufactures Oxford Reflective Ribbon in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Oxford Reflective Ribbon per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Ask us." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -875,8 +1882,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Reflective Piping is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Reflective Piping used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sewn into seams of bags, jackets, and sportswear to add visibility." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Reflective Piping used for?", "acceptedAnswer": { "@type": "Answer", "text": "Seams." } },
+            { "@type": "Question", "name": "Is Reflective Piping suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Reflective Piping?", "acceptedAnswer": { "@type": "Answer", "text": "Piping cord." } },
+            { "@type": "Question", "name": "Where to buy Reflective Piping in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Reflective Piping durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Reflective Piping?", "acceptedAnswer": { "@type": "Answer", "text": "Standard." } },
+            { "@type": "Question", "name": "Is Reflective Piping washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Reflective Piping?", "acceptedAnswer": { "@type": "Answer", "text": "Sportswear." } },
+            { "@type": "Question", "name": "Who manufactures Reflective Piping in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Reflective Piping per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -900,8 +1916,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Ordinary Reflective Polyester Fabric is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Ordinary Reflective Polyester Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "A cost-effective solution for general purpose safety vests and promotional items." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Ordinary Reflective Polyester Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "General safety." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective Polyester Fabric suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Ordinary Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Polyester base." } },
+            { "@type": "Question", "name": "Where to buy Ordinary Reflective Polyester Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective Polyester Fabric durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Ordinary Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective Polyester Fabric washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Ordinary Reflective Polyester Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Uniforms." } },
+            { "@type": "Question", "name": "Who manufactures Ordinary Reflective Polyester Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Ordinary Reflective Polyester Fabric per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -925,8 +1950,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Woven Reflective Ribbon is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Woven Reflective Ribbon used for?", "acceptedAnswer": { "@type": "Answer", "text": "Used for branding, lanyards, and high-end garment accents." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Woven Reflective Ribbon used for?", "acceptedAnswer": { "@type": "Answer", "text": "Accents." } },
+            { "@type": "Question", "name": "Is Woven Reflective Ribbon suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Woven Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Woven." } },
+            { "@type": "Question", "name": "Where to buy Woven Reflective Ribbon in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Woven Reflective Ribbon durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Woven Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Various." } },
+            { "@type": "Question", "name": "Is Woven Reflective Ribbon washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Woven Reflective Ribbon?", "acceptedAnswer": { "@type": "Answer", "text": "Apparel." } },
+            { "@type": "Question", "name": "Who manufactures Woven Reflective Ribbon in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Woven Reflective Ribbon per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Call us." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -950,8 +1984,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Ordinary Reflective TC Fabric is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Ordinary Reflective TC Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Economical choice for standard workwear and safety vests." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Ordinary Reflective TC Fabric used for?", "acceptedAnswer": { "@type": "Answer", "text": "Cost effective safety." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective TC Fabric suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Ordinary Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "TC blend." } },
+            { "@type": "Question", "name": "Where to buy Ordinary Reflective TC Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective TC Fabric durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Ordinary Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Is Ordinary Reflective TC Fabric washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "Which industries use Ordinary Reflective TC Fabric?", "acceptedAnswer": { "@type": "Answer", "text": "Workwear." } },
+            { "@type": "Question", "name": "Who manufactures Ordinary Reflective TC Fabric in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Ordinary Reflective TC Fabric per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Get price." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -975,9 +2018,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "3M Double-Sided Foam Tape is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is 3M Double-Sided Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Mounting emblems, trims, signage, and panels in automotive and electronics." }},
-             { "@type": "Question", "name": "Is 3M Double-Sided Foam Tape suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it provides strong bonding and vibration damping." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is 3M Double-Sided Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Bonding." } },
+            { "@type": "Question", "name": "Is 3M Double-Sided Foam Tape suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of 3M Double-Sided Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Foam carrier." } },
+            { "@type": "Question", "name": "Where to buy 3M Double-Sided Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is 3M Double-Sided Foam Tape durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for 3M Double-Sided Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Various." } },
+            { "@type": "Question", "name": "Is 3M Double-Sided Foam Tape washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Heat resistant." } },
+            { "@type": "Question", "name": "Which industries use 3M Double-Sided Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Auto, Signage." } },
+            { "@type": "Question", "name": "Who manufactures 3M Double-Sided Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "3M/TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of 3M Double-Sided Foam Tape per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Ask." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1001,9 +2052,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Double-Sided Tissue Tape is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Double-Sided Tissue Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Splicing paper/films, lamination, and general purpose mounting." }},
-             { "@type": "Question", "name": "Is Double-Sided Tissue Tape suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, hand-tearable and easy to apply." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Double-Sided Tissue Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Lamination." } },
+            { "@type": "Question", "name": "Is Double-Sided Tissue Tape suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Double-Sided Tissue Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Tissue carrier." } },
+            { "@type": "Question", "name": "Where to buy Double-Sided Tissue Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Double-Sided Tissue Tape durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Double-Sided Tissue Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Slit rolls." } },
+            { "@type": "Question", "name": "Is Double-Sided Tissue Tape washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "No." } },
+            { "@type": "Question", "name": "Which industries use Double-Sided Tissue Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Paper, Print." } },
+            { "@type": "Question", "name": "Who manufactures Double-Sided Tissue Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Double-Sided Tissue Tape per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1027,8 +2086,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Polyester Double Sided Tape is engineered for OEMs, textile manufacturers, and industrial buyers seeking high durability and consistent performance. Ideal for reflective clothing, textile production, industrial assembly and safety gear manufacturing.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Polyester Double Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High tensile strength splicing, mounting, and lamination." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Polyester Double Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Splicing." } },
+            { "@type": "Question", "name": "Is Polyester Double Sided Tape suitable for industrial applications?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What are the specifications of Polyester Double Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "PET film." } },
+            { "@type": "Question", "name": "Where to buy Polyester Double Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Is Polyester Double Sided Tape durable for OEM manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes and variants exist for Polyester Double Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Custom." } },
+            { "@type": "Question", "name": "Is Polyester Double Sided Tape washable / heat resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Heat resistant." } },
+            { "@type": "Question", "name": "Which industries use Polyester Double Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Printing." } },
+            { "@type": "Question", "name": "Who manufactures Polyester Double Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Polyester Double Sided Tape per meter / roll?", "acceptedAnswer": { "@type": "Answer", "text": "Call." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1052,9 +2120,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "VHB (Very High Bond) Double-Sided Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is VHB (Very High Bond) Double-Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Replacing screws and rivets in metal, glass, and plastic bonding." }},
-            { "@type": "Question", "name": "How strong is VHB (Very High Bond) Double-Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Extremely strong, creating a permanent seal." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is VHB (Very High Bond) Double-Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Structural bonding replacing mechanical fasteners." } },
+            { "@type": "Question", "name": "How strong is VHB (Very High Bond) Double-Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Extremely strong, often stronger than rivets." } },
+            { "@type": "Question", "name": "Is VHB (Very High Bond) Double-Sided Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can VHB (Very High Bond) Double-Sided Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Metal, glass, plastics." } },
+            { "@type": "Question", "name": "Is VHB (Very High Bond) Double-Sided Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, highly resistant." } },
+            { "@type": "Question", "name": "What sizes does VHB (Very High Bond) Double-Sided Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Various thicknesses and widths." } },
+            { "@type": "Question", "name": "Where to buy VHB (Very High Bond) Double-Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures VHB (Very High Bond) Double-Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of VHB (Very High Bond) Double-Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact for bulk pricing." } },
+            { "@type": "Question", "name": "Is VHB (Very High Bond) Double-Sided Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Often yes, for aesthetics and sealing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1078,8 +2154,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Lohmann DuploFLEX Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Lohmann DuploFLEX Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Specialized for flexographic plate mounting in the printing industry." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Lohmann DuploFLEX Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Flexographic plate mounting." } },
+            { "@type": "Question", "name": "How strong is Lohmann DuploFLEX Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Designed for precise printing hold." } },
+            { "@type": "Question", "name": "Is Lohmann DuploFLEX Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, in printing." } },
+            { "@type": "Question", "name": "What surfaces can Lohmann DuploFLEX Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Printing cylinders and plates." } },
+            { "@type": "Question", "name": "Is Lohmann DuploFLEX Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Solvent resistant." } },
+            { "@type": "Question", "name": "What sizes does Lohmann DuploFLEX Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Various foam densities." } },
+            { "@type": "Question", "name": "Where to buy Lohmann DuploFLEX Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Lohmann DuploFLEX Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "Distributed by TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Lohmann DuploFLEX Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Ask." } },
+            { "@type": "Question", "name": "Is Lohmann DuploFLEX Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "N/A, specific for printing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1103,8 +2188,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "PE Foam Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is PE Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Cushioning, sealing, and vibration damping." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is PE Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Gap filling and mounting." } },
+            { "@type": "Question", "name": "How strong is PE Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Good general purpose strength." } },
+            { "@type": "Question", "name": "Is PE Foam Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, for light to medium loads." } },
+            { "@type": "Question", "name": "What surfaces can PE Foam Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Most rough surfaces." } },
+            { "@type": "Question", "name": "Is PE Foam Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Moderate." } },
+            { "@type": "Question", "name": "What sizes does PE Foam Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Various thicknesses." } },
+            { "@type": "Question", "name": "Where to buy PE Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures PE Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of PE Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
+            { "@type": "Question", "name": "Is PE Foam Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "For lightweight mounting, yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1128,8 +2222,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "PET Double-Sided Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is PET Double-Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Mounting nameplates and splicing films where high tensile strength is needed." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is PET Double-Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Splicing and thin bonding." } },
+            { "@type": "Question", "name": "How strong is PET Double-Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "High tensile strength." } },
+            { "@type": "Question", "name": "Is PET Double-Sided Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can PET Double-Sided Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Smooth surfaces." } },
+            { "@type": "Question", "name": "Is PET Double-Sided Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes does PET Double-Sided Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Thin films." } },
+            { "@type": "Question", "name": "Where to buy PET Double-Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures PET Double-Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of PET Double-Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire." } },
+            { "@type": "Question", "name": "Is PET Double-Sided Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "For invisible bonding, yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1153,8 +2256,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Transfer Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Transfer Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Precision lamination for electronics and overlays." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Transfer Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Laminating foams and graphics." } },
+            { "@type": "Question", "name": "How strong is Transfer Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Very high tack." } },
+            { "@type": "Question", "name": "Is Transfer Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can Transfer Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Textured and smooth." } },
+            { "@type": "Question", "name": "Is Transfer Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes does Transfer Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Where to buy Transfer Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Transfer Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Transfer Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Call us." } },
+            { "@type": "Question", "name": "Is Transfer Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "For lamination, yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1178,8 +2290,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Acrylic Double Sided Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Acrylic Double Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High-strength transparent bonding for glass, metal, and plastics." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Acrylic Double Sided Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High strength bonding." } },
+            { "@type": "Question", "name": "How strong is Acrylic Double Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Excellent." } },
+            { "@type": "Question", "name": "Is Acrylic Double Sided Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can Acrylic Double Sided Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Metals, glass." } },
+            { "@type": "Question", "name": "Is Acrylic Double Sided Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, very." } },
+            { "@type": "Question", "name": "What sizes does Acrylic Double Sided Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Custom." } },
+            { "@type": "Question", "name": "Where to buy Acrylic Double Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Acrylic Double Sided Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Acrylic Double Sided Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Get quote." } },
+            { "@type": "Question", "name": "Is Acrylic Double Sided Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, for sleek finishes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1203,8 +2324,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Double-Sided Thermal Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Double-Sided Thermal Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Bonding heat sinks to electronic components for heat dissipation." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Double-Sided Thermal Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Heat sink attachment." } },
+            { "@type": "Question", "name": "How strong is Double-Sided Thermal Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Mechanically strong." } },
+            { "@type": "Question", "name": "Is Double-Sided Thermal Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, in electronics." } },
+            { "@type": "Question", "name": "What surfaces can Double-Sided Thermal Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Chips and sinks." } },
+            { "@type": "Question", "name": "Is Double-Sided Thermal Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Heat conductive." } },
+            { "@type": "Question", "name": "What sizes does Double-Sided Thermal Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Die cuts." } },
+            { "@type": "Question", "name": "Where to buy Double-Sided Thermal Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Double-Sided Thermal Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Double-Sided Thermal Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact." } },
+            { "@type": "Question", "name": "Is Double-Sided Thermal Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Replaces screws and grease." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1228,8 +2358,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Double-Sided Scrim Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Double-Sided Scrim Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Carpet laying, insulation joints, and construction bonding." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Double-Sided Scrim Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Carpet laying, foam bonding." } },
+            { "@type": "Question", "name": "How strong is Double-Sided Scrim Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Reinforced strength." } },
+            { "@type": "Question", "name": "Is Double-Sided Scrim Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can Double-Sided Scrim Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Rough surfaces." } },
+            { "@type": "Question", "name": "Is Double-Sided Scrim Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Moderate." } },
+            { "@type": "Question", "name": "What sizes does Double-Sided Scrim Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Where to buy Double-Sided Scrim Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Double-Sided Scrim Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Double-Sided Scrim Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Call." } },
+            { "@type": "Question", "name": "Is Double-Sided Scrim Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "For flooring, yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1253,8 +2392,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "EVA Foam Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is EVA Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Cost-effective sealing, cushioning, and mounting." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is EVA Foam Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Cushioning." } },
+            { "@type": "Question", "name": "How strong is EVA Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Good shock absorption." } },
+            { "@type": "Question", "name": "Is EVA Foam Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "For light mounting." } },
+            { "@type": "Question", "name": "What surfaces can EVA Foam Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Various." } },
+            { "@type": "Question", "name": "Is EVA Foam Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Basic." } },
+            { "@type": "Question", "name": "What sizes does EVA Foam Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Pads, rolls." } },
+            { "@type": "Question", "name": "Where to buy EVA Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures EVA Foam Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of EVA Foam Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire." } },
+            { "@type": "Question", "name": "Is EVA Foam Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "For vibration damping, yes." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1265,7 +2413,7 @@ const rawSeoData: SeoPageData[] = [
         id: "spacer-tape",
         "Page Type": "Product",
         "Page Name": "Spacer Tapes",
-        "Full URL": "https://tapeindia.shop/product/spacer-tapes",
+        "Full URL": "https://tapeindia.shop/product/spacer-tape",
         "Title (≤60 chars)": "Spacer Tapes Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Spacer Tapes for OEM, manufacturing & assembly applications. Bulk supply PAN-India.",
         "H1": "Spacer Tapes",
@@ -1278,8 +2426,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Spacer Tapes engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Spacer Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "Maintaining gap thickness in structural glazing systems." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Spacer Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "Structural glazing." } },
+            { "@type": "Question", "name": "How strong is Spacer Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Holds glass distance." } },
+            { "@type": "Question", "name": "Is Spacer Tapes suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, in facades." } },
+            { "@type": "Question", "name": "What surfaces can Spacer Tapes stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Glass, aluminum." } },
+            { "@type": "Question", "name": "Is Spacer Tapes heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Weather resistant." } },
+            { "@type": "Question", "name": "What sizes does Spacer Tapes come in?", "acceptedAnswer": { "@type": "Answer", "text": "Specific thickness." } },
+            { "@type": "Question", "name": "Where to buy Spacer Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Spacer Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Spacer Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Call." } },
+            { "@type": "Question", "name": "Is Spacer Tapes better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Essential for glazing." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1290,7 +2447,7 @@ const rawSeoData: SeoPageData[] = [
         id: "silicone-tape",
         "Page Type": "Product",
         "Page Name": "Nano Magic Tape",
-        "Full URL": "https://tapeindia.shop/product/nano-magic-tape",
+        "Full URL": "https://tapeindia.shop/product/silicone-tape",
         "Title (≤60 chars)": "Nano Magic Tape Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Nano Magic Tape for OEM, manufacturing & assembly applications. Bulk supply PAN-India.",
         "H1": "Nano Magic Tape",
@@ -1303,8 +2460,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Nano Magic Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Nano Magic Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Reusable, residue-free mounting for temporary fixtures." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Nano Magic Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Reusable mounting." } },
+            { "@type": "Question", "name": "How strong is Nano Magic Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Strong grip." } },
+            { "@type": "Question", "name": "Is Nano Magic Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "For temporary fixtures." } },
+            { "@type": "Question", "name": "What surfaces can Nano Magic Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Smooth." } },
+            { "@type": "Question", "name": "Is Nano Magic Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "No." } },
+            { "@type": "Question", "name": "What sizes does Nano Magic Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Where to buy Nano Magic Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Nano Magic Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Nano Magic Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Inquire." } },
+            { "@type": "Question", "name": "Is Nano Magic Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Reusable." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1315,7 +2481,7 @@ const rawSeoData: SeoPageData[] = [
         id: "hot-melt-tissue-tape",
         "Page Type": "Product",
         "Page Name": "Hot Melt Tissue Tapes",
-        "Full URL": "https://tapeindia.shop/product/hot-melt-tissue-tapes",
+        "Full URL": "https://tapeindia.shop/product/hot-melt-tissue-tape",
         "Title (≤60 chars)": "Hot Melt Tissue Tapes Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Hot Melt Tissue Tapes for OEM, manufacturing & assembly applications. Bulk supply PAN-India.",
         "H1": "Hot Melt Tissue Tapes",
@@ -1328,8 +2494,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Hot Melt Tissue Tapes engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Hot Melt Tissue Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "Instant high-tack bonding for foam, leather, and packaging." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Hot Melt Tissue Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "Foam lamination." } },
+            { "@type": "Question", "name": "How strong is Hot Melt Tissue Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "High tack." } },
+            { "@type": "Question", "name": "Is Hot Melt Tissue Tapes suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can Hot Melt Tissue Tapes stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Paper, plastic, foam." } },
+            { "@type": "Question", "name": "Is Hot Melt Tissue Tapes heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "No." } },
+            { "@type": "Question", "name": "What sizes does Hot Melt Tissue Tapes come in?", "acceptedAnswer": { "@type": "Answer", "text": "Log rolls." } },
+            { "@type": "Question", "name": "Where to buy Hot Melt Tissue Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Hot Melt Tissue Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Hot Melt Tissue Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
+            { "@type": "Question", "name": "Is Hot Melt Tissue Tapes better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Faster production." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1340,7 +2515,7 @@ const rawSeoData: SeoPageData[] = [
         id: "double-coated-cloth-tape-581",
         "Page Type": "Product",
         "Page Name": "Double Sided Cloth Tape",
-        "Full URL": "https://tapeindia.shop/product/double-sided-cloth-tape",
+        "Full URL": "https://tapeindia.shop/product/double-coated-cloth-tape-581",
         "Title (≤60 chars)": "Double Sided Cloth Tape Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Double Sided Cloth Tape for OEM, manufacturing & assembly applications. Bulk supply PAN-India.",
         "H1": "Double Sided Cloth Tape",
@@ -1353,8 +2528,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Double Sided Cloth Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Double Sided Cloth Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Carpet installation and mounting on rough surfaces." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Double Sided Cloth Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Carpet holding, stereo mounting." } },
+            { "@type": "Question", "name": "How strong is Double Sided Cloth Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Very strong." } },
+            { "@type": "Question", "name": "Is Double Sided Cloth Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What surfaces can Double Sided Cloth Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Rough." } },
+            { "@type": "Question", "name": "Is Double Sided Cloth Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Moderate." } },
+            { "@type": "Question", "name": "What sizes does Double Sided Cloth Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Various." } },
+            { "@type": "Question", "name": "Where to buy Double Sided Cloth Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Double Sided Cloth Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Double Sided Cloth Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Call." } },
+            { "@type": "Question", "name": "Is Double Sided Cloth Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Temporary hold." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1365,7 +2549,7 @@ const rawSeoData: SeoPageData[] = [
         id: "aacrylic-gel-tape-1",
         "Page Type": "Product",
         "Page Name": "Acrylic Gel Tape",
-        "Full URL": "https://tapeindia.shop/product/acrylic-gel-tape",
+        "Full URL": "https://tapeindia.shop/product/aacrylic-gel-tape-1",
         "Title (≤60 chars)": "Acrylic Gel Tape Manufacturer & Supplier | TapeIndia",
         "Meta Description (≤160 chars)": "Industrial-grade Acrylic Gel Tape for OEM, manufacturing & assembly applications. Bulk supply PAN-India.",
         "H1": "Acrylic Gel Tape",
@@ -1378,8 +2562,17 @@ const rawSeoData: SeoPageData[] = [
         "summary": "Acrylic Gel Tape engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Acrylic Gel Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Heavy-duty transparent bonding for signage and automotive trim." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is Acrylic Gel Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Clear bonding." } },
+            { "@type": "Question", "name": "How strong is Acrylic Gel Tape?", "acceptedAnswer": { "@type": "Answer", "text": "VHB equivalent." } },
+            { "@type": "Question", "name": "Is Acrylic Gel Tape suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, structural." } },
+            { "@type": "Question", "name": "What surfaces can Acrylic Gel Tape stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Glass, metal." } },
+            { "@type": "Question", "name": "Is Acrylic Gel Tape heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Yes." } },
+            { "@type": "Question", "name": "What sizes does Acrylic Gel Tape come in?", "acceptedAnswer": { "@type": "Answer", "text": "Rolls." } },
+            { "@type": "Question", "name": "Where to buy Acrylic Gel Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures Acrylic Gel Tape in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of Acrylic Gel Tape?", "acceptedAnswer": { "@type": "Answer", "text": "Contact." } },
+            { "@type": "Question", "name": "Is Acrylic Gel Tape better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Invisible bond." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
@@ -1403,462 +2596,21 @@ const rawSeoData: SeoPageData[] = [
         "summary": "XLPE Foam Tapes engineered for high-strength industrial bonding across OEM assembly lines, fabrication units and engineering applications. Offers exceptional adhesion, vibration resistance and long-term durability for metal, plastic, foam and composite bonding.",
         "CTA": "Request a Quote",
         "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is XLPE Foam Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "HVAC insulation, sealing, and cushioning." }}
+        "faqs": [
+            { "@type": "Question", "name": "What is XLPE Foam Tapes used for?", "acceptedAnswer": { "@type": "Answer", "text": "Insulation." } },
+            { "@type": "Question", "name": "How strong is XLPE Foam Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Durable." } },
+            { "@type": "Question", "name": "Is XLPE Foam Tapes suitable for heavy-duty industrial bonding?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, for HVAC." } },
+            { "@type": "Question", "name": "What surfaces can XLPE Foam Tapes stick to?", "acceptedAnswer": { "@type": "Answer", "text": "Metals." } },
+            { "@type": "Question", "name": "Is XLPE Foam Tapes heat/chemical resistant?", "acceptedAnswer": { "@type": "Answer", "text": "Chemical resistant." } },
+            { "@type": "Question", "name": "What sizes does XLPE Foam Tapes come in?", "acceptedAnswer": { "@type": "Answer", "text": "Sheets/rolls." } },
+            { "@type": "Question", "name": "Where to buy XLPE Foam Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "Who manufactures XLPE Foam Tapes in India?", "acceptedAnswer": { "@type": "Answer", "text": "TapeIndia." } },
+            { "@type": "Question", "name": "What is the price of XLPE Foam Tapes?", "acceptedAnswer": { "@type": "Answer", "text": "Quote." } },
+            { "@type": "Question", "name": "Is XLPE Foam Tapes better than traditional fasteners?", "acceptedAnswer": { "@type": "Answer", "text": "Insulating." } }
         ],
         "Product Schema (JSON-LD)": null,
         "LocalBusiness Schema (JSON-LD)": "{}",
         "FAQ Schema (JSON-LD)": "{}",
         "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "masking-tape",
-        "Page Type": "Product",
-        "Page Name": "Masking Tape",
-        "Full URL": "https://tapeindia.shop/product/masking-tape",
-        "Title (≤60 chars)": "Masking Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Masking Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Masking Tape",
-        "H2_1": "Industrial-Grade Masking Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Masking Tape manufacturer in India",
-        "Secondary Keywords": "Masking Tape supplier India, Industrial Masking Tape, Masking Tape wholesale manufacturer, Masking Tape OEM grade, Masking Tape for factories, Masking Tape for manufacturing units, TapeIndia Masking Tape, Masking Tape industrial distributor, Masking Tape bulk supplier, high durability Masking Tape",
-        "summary": "Masking Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-            { "@type": "Question", "name": "What is Masking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Painting, powder coating masking, and general purpose labeling." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "bopp-tape",
-        "Page Type": "Product",
-        "Page Name": "BOPP Tape",
-        "Full URL": "https://tapeindia.shop/product/bopp-tape",
-        "Title (≤60 chars)": "BOPP Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade BOPP Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "BOPP Tape",
-        "H2_1": "Industrial-Grade BOPP Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "BOPP Tape manufacturer in India",
-        "Secondary Keywords": "BOPP Tape supplier India, Industrial BOPP Tape, BOPP Tape wholesale manufacturer, BOPP Tape OEM grade, BOPP Tape for factories, BOPP Tape for manufacturing units, TapeIndia BOPP Tape, BOPP Tape industrial distributor, BOPP Tape bulk supplier, high durability BOPP Tape",
-        "summary": "BOPP Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is BOPP Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Carton sealing and packaging logistics." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "aluminum-foil-2-tape",
-        "Page Type": "Product",
-        "Page Name": "High-Performance Aluminium Foil Tape",
-        "Full URL": "https://tapeindia.shop/product/aluminum-foil-2-tape",
-        "Title (≤60 chars)": "High-Performance Aluminium Foil Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade High-Performance Aluminium Foil Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "High-Performance Aluminium Foil Tape",
-        "H2_1": "Industrial-Grade High-Performance Aluminium Foil Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "High-Performance Aluminium Foil Tape manufacturer in India",
-        "Secondary Keywords": "High-Performance Aluminium Foil Tape supplier India, Industrial High-Performance Aluminium Foil Tape, High-Performance Aluminium Foil Tape wholesale manufacturer, High-Performance Aluminium Foil Tape OEM grade, High-Performance Aluminium Foil Tape for factories, High-Performance Aluminium Foil Tape for manufacturing units, TapeIndia High-Performance Aluminium Foil Tape, High-Performance Aluminium Foil Tape industrial distributor, High-Performance Aluminium Foil Tape bulk supplier, high durability High-Performance Aluminium Foil Tape",
-        "summary": "High-Performance Aluminium Foil Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is High-Performance Aluminium Foil Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "HVAC duct sealing, thermal insulation, and EMI shielding." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "kapton-tape",
-        "Page Type": "Product",
-        "Page Name": "High-Temperature Kapton Polyimide Tape",
-        "Full URL": "https://tapeindia.shop/product/kapton-tape",
-        "Title (≤60 chars)": "High-Temperature Kapton Polyimide Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade High-Temperature Kapton Polyimide Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "High-Temperature Kapton Polyimide Tape",
-        "H2_1": "Industrial-Grade High-Temperature Kapton Polyimide Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "High-Temperature Kapton Polyimide Tape manufacturer in India",
-        "Secondary Keywords": "High-Temperature Kapton Polyimide Tape supplier India, Industrial High-Temperature Kapton Polyimide Tape, High-Temperature Kapton Polyimide Tape wholesale manufacturer, High-Temperature Kapton Polyimide Tape OEM grade, High-Temperature Kapton Polyimide Tape for factories, High-Temperature Kapton Polyimide Tape for manufacturing units, TapeIndia High-Temperature Kapton Polyimide Tape, High-Temperature Kapton Polyimide Tape industrial distributor, High-Temperature Kapton Polyimide Tape bulk supplier, high durability High-Temperature Kapton Polyimide Tape",
-        "summary": "High-Temperature Kapton Polyimide Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is High-Temperature Kapton Polyimide Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High-temp masking in PCB manufacturing and electrical insulation." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "duct-tape",
-        "Page Type": "Product",
-        "Page Name": "Heavy-Duty Cloth Duct Tape",
-        "Full URL": "https://tapeindia.shop/product/duct-tape",
-        "Title (≤60 chars)": "Heavy-Duty Cloth Duct Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Heavy-Duty Cloth Duct Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Heavy-Duty Cloth Duct Tape",
-        "H2_1": "Industrial-Grade Heavy-Duty Cloth Duct Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Heavy-Duty Cloth Duct Tape manufacturer in India",
-        "Secondary Keywords": "Heavy-Duty Cloth Duct Tape supplier India, Industrial Heavy-Duty Cloth Duct Tape, Heavy-Duty Cloth Duct Tape wholesale manufacturer, Heavy-Duty Cloth Duct Tape OEM grade, Heavy-Duty Cloth Duct Tape for factories, Heavy-Duty Cloth Duct Tape for manufacturing units, TapeIndia Heavy-Duty Cloth Duct Tape, Heavy-Duty Cloth Duct Tape industrial distributor, Heavy-Duty Cloth Duct Tape bulk supplier, high durability Heavy-Duty Cloth Duct Tape",
-        "summary": "Heavy-Duty Cloth Duct Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Heavy-Duty Cloth Duct Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "General purpose repair, bundling, and sealing." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "high-sealing-tape",
-        "Page Type": "Product",
-        "Page Name": "High Temperature Sealing Tape",
-        "Full URL": "https://tapeindia.shop/product/high-sealing-tape",
-        "Title (≤60 chars)": "High Temperature Sealing Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade High Temperature Sealing Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "High Temperature Sealing Tape",
-        "H2_1": "Industrial-Grade High Temperature Sealing Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "High Temperature Sealing Tape manufacturer in India",
-        "Secondary Keywords": "High Temperature Sealing Tape supplier India, Industrial High Temperature Sealing Tape, High Temperature Sealing Tape wholesale manufacturer, High Temperature Sealing Tape OEM grade, High Temperature Sealing Tape for factories, High Temperature Sealing Tape for manufacturing units, TapeIndia High Temperature Sealing Tape, High Temperature Sealing Tape industrial distributor, High Temperature Sealing Tape bulk supplier, high durability High Temperature Sealing Tape",
-        "summary": "High Temperature Sealing Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is High Temperature Sealing Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sealing high-heat ducts and equipment." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "paper-tape",
-        "Page Type": "Product",
-        "Page Name": "Paper Tape",
-        "Full URL": "https://tapeindia.shop/product/paper-tape",
-        "Title (≤60 chars)": "Paper Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Paper Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Paper Tape",
-        "H2_1": "Industrial-Grade Paper Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Paper Tape manufacturer in India",
-        "Secondary Keywords": "Paper Tape supplier India, Industrial Paper Tape, Paper Tape wholesale manufacturer, Paper Tape OEM grade, Paper Tape for factories, Paper Tape for manufacturing units, TapeIndia Paper Tape, Paper Tape industrial distributor, Paper Tape bulk supplier, high durability Paper Tape",
-        "summary": "Paper Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Paper Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Eco-friendly packaging and sealing." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "silicone-tape-2",
-        "Page Type": "Product",
-        "Page Name": "Silicone Tape",
-        "Full URL": "https://tapeindia.shop/product/silicone-tape",
-        "Title (≤60 chars)": "Silicone Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Silicone Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Silicone Tape",
-        "H2_1": "Industrial-Grade Silicone Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Silicone Tape manufacturer in India",
-        "Secondary Keywords": "Silicone Tape supplier India, Industrial Silicone Tape, Silicone Tape wholesale manufacturer, Silicone Tape OEM grade, Silicone Tape for factories, Silicone Tape for manufacturing units, TapeIndia Silicone Tape, Silicone Tape industrial distributor, Silicone Tape bulk supplier, high durability Silicone Tape",
-        "summary": "Silicone Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Silicone Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High-temp masking and splicing silicone-coated papers." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "polyester-tape",
-        "Page Type": "Product",
-        "Page Name": "Single-sided polyester tape",
-        "Full URL": "https://tapeindia.shop/product/polyester-tape",
-        "Title (≤60 chars)": "Single-sided polyester tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Single-sided polyester tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Single-sided polyester tape",
-        "H2_1": "Industrial-Grade Single-sided polyester tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Single-sided polyester tape manufacturer in India",
-        "Secondary Keywords": "Single-sided polyester tape supplier India, Industrial Single-sided polyester tape, Single-sided polyester tape wholesale manufacturer, Single-sided polyester tape OEM grade, Single-sided polyester tape for factories, Single-sided polyester tape for manufacturing units, TapeIndia Single-sided polyester tape, Single-sided polyester tape industrial distributor, Single-sided polyester tape bulk supplier, high durability Single-sided polyester tape",
-        "summary": "Single-sided polyester tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Single-sided polyester tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Splicing, electrical insulation, and high-temp masking." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "pvc-pipe-tape-1",
-        "Page Type": "Product",
-        "Page Name": "PVC Pipe Wrapping Tape",
-        "Full URL": "https://tapeindia.shop/product/pvc-pipe-wrapping-tape",
-        "Title (≤60 chars)": "PVC Pipe Wrapping Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade PVC Pipe Wrapping Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "PVC Pipe Wrapping Tape",
-        "H2_1": "Industrial-Grade PVC Pipe Wrapping Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "PVC Pipe Wrapping Tape manufacturer in India",
-        "Secondary Keywords": "PVC Pipe Wrapping Tape supplier India, Industrial PVC Pipe Wrapping Tape, PVC Pipe Wrapping Tape wholesale manufacturer, PVC Pipe Wrapping Tape OEM grade, PVC Pipe Wrapping Tape for factories, PVC Pipe Wrapping Tape for manufacturing units, TapeIndia PVC Pipe Wrapping Tape, PVC Pipe Wrapping Tape industrial distributor, PVC Pipe Wrapping Tape bulk supplier, high durability PVC Pipe Wrapping Tape",
-        "summary": "PVC Pipe Wrapping Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is PVC Pipe Wrapping Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Corrosion protection and insulation for pipes." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "bag-sealing-tape",
-        "Page Type": "Product",
-        "Page Name": "Bag Sealing Tape",
-        "Full URL": "https://tapeindia.shop/product/bag-sealing-tape",
-        "Title (≤60 chars)": "Bag Sealing Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Bag Sealing Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Bag Sealing Tape",
-        "H2_1": "Industrial-Grade Bag Sealing Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Bag Sealing Tape manufacturer in India",
-        "Secondary Keywords": "Bag Sealing Tape supplier India, Industrial Bag Sealing Tape, Bag Sealing Tape wholesale manufacturer, Bag Sealing Tape OEM grade, Bag Sealing Tape for factories, Bag Sealing Tape for manufacturing units, TapeIndia Bag Sealing Tape, Bag Sealing Tape industrial distributor, Bag Sealing Tape bulk supplier, high durability Bag Sealing Tape",
-        "summary": "Bag Sealing Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Bag Sealing Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Sealing plastic bags in food and retail packaging." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "acetate-cloth-tape-white-19mm-x-66m-crop",
-        "Page Type": "Product",
-        "Page Name": "Acetate Cloth Tape",
-        "Full URL": "https://tapeindia.shop/product/acetate-cloth-tape",
-        "Title (≤60 chars)": "Acetate Cloth Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Acetate Cloth Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Acetate Cloth Tape",
-        "H2_1": "Industrial-Grade Acetate Cloth Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Acetate Cloth Tape manufacturer in India",
-        "Secondary Keywords": "Acetate Cloth Tape supplier India, Industrial Acetate Cloth Tape, Acetate Cloth Tape wholesale manufacturer, Acetate Cloth Tape OEM grade, Acetate Cloth Tape for factories, Acetate Cloth Tape for manufacturing units, TapeIndia Acetate Cloth Tape, Acetate Cloth Tape industrial distributor, Acetate Cloth Tape bulk supplier, high durability Acetate Cloth Tape",
-        "summary": "Acetate Cloth Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Acetate Cloth Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Electrical insulation, coil wrapping, and wire harnessing." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "stickymat",
-        "Page Type": "Product",
-        "Page Name": "Sticky Mat",
-        "Full URL": "https://tapeindia.shop/product/sticky-mat",
-        "Title (≤60 chars)": "Sticky Mat Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Sticky Mat for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Sticky Mat",
-        "H2_1": "Industrial-Grade Sticky Mat",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Sticky Mat manufacturer in India",
-        "Secondary Keywords": "Sticky Mat supplier India, Industrial Sticky Mat, Sticky Mat wholesale manufacturer, Sticky Mat OEM grade, Sticky Mat for factories, Sticky Mat for manufacturing units, TapeIndia Sticky Mat, Sticky Mat industrial distributor, Sticky Mat bulk supplier, high durability Sticky Mat",
-        "summary": "Sticky Mat is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Sticky Mat used for?", "acceptedAnswer": { "@type": "Answer", "text": "Contamination control at entrances of cleanrooms and labs." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "fine-line-masking-tape",
-        "Page Type": "Product",
-        "Page Name": "Fine Line Masking Tape",
-        "Full URL": "https://tapeindia.shop/product/fine-line-masking-tape",
-        "Title (≤60 chars)": "Fine Line Masking Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Fine Line Masking Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Fine Line Masking Tape",
-        "H2_1": "Industrial-Grade Fine Line Masking Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Fine Line Masking Tape manufacturer in India",
-        "Secondary Keywords": "Fine Line Masking Tape supplier India, Industrial Fine Line Masking Tape, Fine Line Masking Tape wholesale manufacturer, Fine Line Masking Tape OEM grade, Fine Line Masking Tape for factories, Fine Line Masking Tape for manufacturing units, TapeIndia Fine Line Masking Tape, Fine Line Masking Tape industrial distributor, Fine Line Masking Tape bulk supplier, high durability Fine Line Masking Tape",
-        "summary": "Fine Line Masking Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Fine Line Masking Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "Precision paint masking for sharp lines in automotive and industrial painting." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    {
-        id: "mica-tape",
-        "Page Type": "Product",
-        "Page Name": "Mica Tape",
-        "Full URL": "https://tapeindia.shop/product/mica-tape",
-        "Title (≤60 chars)": "Mica Tape Manufacturer & Supplier | TapeIndia",
-        "Meta Description (≤160 chars)": "Industrial-grade Mica Tape for OEMs, factories & engineering applications. Bulk orders PAN-India.",
-        "H1": "Mica Tape",
-        "H2_1": "Industrial-Grade Mica Tape",
-        "H3": "Overview for Manufacturing & OEM Applications",
-        "H4": "Engineered for Durability, Stability & Industrial Performance",
-        "H5": "Trusted by OEMs, Factories & Heavy Industrial Units",
-        "Primary Keywords": "Mica Tape manufacturer in India",
-        "Secondary Keywords": "Mica Tape supplier India, Industrial Mica Tape, Mica Tape wholesale manufacturer, Mica Tape OEM grade, Mica Tape for factories, Mica Tape for manufacturing units, TapeIndia Mica Tape, Mica Tape industrial distributor, Mica Tape bulk supplier, high durability Mica Tape",
-        "summary": "Mica Tape is designed for OEMs and industrial buyers requiring durable, high-performance tape for insulation, masking, bonding, protection and manufacturing applications. Ensures long-term reliability under demanding industrial operations.",
-        "CTA": "Request a Quote",
-        "Schema Type": "Product",
-        faqs: [
-             { "@type": "Question", "name": "What is Mica Tape used for?", "acceptedAnswer": { "@type": "Answer", "text": "High-temperature electrical insulation for motors and cables." }}
-        ],
-        "Product Schema (JSON-LD)": null,
-        "LocalBusiness Schema (JSON-LD)": "{}",
-        "FAQ Schema (JSON-LD)": "{}",
-        "Combined Schema (JSON-LD)": "{}"
-    },
-    
-    // NEW SEO ENTRY
-    { id: "nitto-903-ul-tapes", "Page Type": "Product", "Page Name": "Nitto 903 UL Tapes", "Full URL": "https://tapeindia.shop/product/nitto-903-ul-tapes", "Title (≤60 chars)": "Nitto 903 UL Tape | PTFE Teflon Tape | Tape India", "Meta Description (≤160 chars)": "Nitto 903 UL is a premium PTFE Teflon tape designed for high-temperature, non-stick, and industrial heat-sealing applications.", "H1": "Nitto 903 UL Tapes", "Primary Keywords": "Nitto 903 UL Tape, PTFE Teflon tape, High temperature PTFE tape, Non-stick Teflon tape, Industrial PTFE tape, Silicone adhesive PTFE tape", "Secondary Keywords": "PTFE Teflon tape for heat sealing machines, High temperature non-stick PTFE tape, Industrial Teflon tape for packaging equipment, Silicone adhesive PTFE tape for industrial use, PTFE insulation tape for high-heat applications", "summary": "Nitto 903 UL Tape is a high-performance PTFE (Teflon) film tape with a strong silicone adhesive that provides exceptional non-stick, low-friction, and high-temperature resistance for industrial use. Its smooth PTFE surface prevents sticking of melted materials, making it ideal for heat sealing bars, packaging machines, and sliding surfaces.\nWith excellent chemical resistance, high dielectric strength, and stability from –60°C to +260°C, this tape performs reliably in continuous industrial operations. It is perfect for insulation, release applications, and areas requiring friction reduction and clean performance.", "CTA": "Request a Quote", "Schema Type": "Product", faqs: [], "Product Schema (JSON-LD)": null, "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}" },
+    }
 ];
-
-
-// --- DATA PROCESSING LOGIC ---
-
-export const seoData = rawSeoData;
-
-// This is now an internal constant used only for blog image fallbacks.
-// It is NOT exported. This prevents it from being used as the main product source.
-const INTERNAL_ALL_PRODUCTS: Product[] = CONTENT_PRODUCTS.map(productContent => {
-    const productSeo = rawSeoData.find(seo => seo["Page Type"] === 'Product' && seo.id === productContent.id);
-    const fallbackSeo: SeoPageData = {
-        "Page Type": "Product", "Page Name": productContent.name, "Full URL": `https://tapeindia.shop/product/${productContent.id}`,
-        "Title (≤60 chars)": `${productContent.name} | Tape India`, "Meta Description (≤160 chars)": productContent.shortDescription,
-        "H1": productContent.name, "Primary Keywords": productContent.name, "Secondary Keywords": productContent.category,
-        summary: productContent.shortDescription, "CTA": "Request a Quote", "Schema Type": "Product", faqs: [],
-        "Product Schema (JSON-LD)": "{}", "LocalBusiness Schema (JSON-LD)": "{}", "FAQ Schema (JSON-LD)": "{}", "Combined Schema (JSON-LD)": "{}"
-    };
-    return { ...productContent, seo: productSeo || fallbackSeo };
-});
-
-
-export const ALL_CATEGORIES: Category[] = [
-    { id: 'safety-tapes', name: 'Safety Tapes', icon: 'ShieldCheckIcon', subtitle: 'Floor marking, hazard, and anti-slip tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/hazardtape.webp' },
-    { id: 'reflective-tapes', name: 'Reflective Tapes', icon: 'SunIcon', subtitle: 'High-visibility tapes for apparel and vehicles.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/silver%20tc.webp' },
-    { id: 'double-sided-tapes', name: 'Double Sided Tapes', icon: 'LayersIcon', subtitle: 'For mounting, bonding, and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/vhb%20tape.webp' },
-    { id: 'specialty-tapes', name: 'Specialty Tapes', icon: 'SparklesIcon', subtitle: 'Masking, duct, foil, and unique solutions.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/duct%20tape.webp' },
-    { id: 'teflon-ptfe-tapes', name: 'Teflon & PTFE Tapes', icon: 'ThermometerIcon', subtitle: 'High-temp, non-stick industrial tapes.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/ptfe%20silicone%20adhesive.webp' },
-    { id: 'antistatic-esd-tapes', name: 'Antistatic & ESD Tapes', icon: 'ZapIcon', subtitle: 'For electronics manufacturing and assembly.', image: 'https://file.garden/aIULwzQ_QkPKQcGw/kapton%20tape.webp' },
-];
-
-// Create a preliminary list of blog posts from the raw SEO data.
-const tempBlogArticles = rawSeoData
-    .filter(item => item["Page Type"] === "Blog Post")
-    .map((item, index) => ({
-        id: item.id || `blog-post-${index}`,
-        title: item["Page Name"],
-        summary: item.summary,
-        content: `<h2>${item["H1"]}</h2><p>${item.summary}</p><p>More content coming soon...</p>`,
-        category: "Industry Guides",
-        tags: item["Primary Keywords"].split(', '),
-        readTime: Math.floor(Math.random() * (8 - 4 + 1)) + 4,
-        image: item.image || '', // Keep original image if it exists
-        author: "Tape India Experts",
-        datePublished: new Date(Date.now() - index * 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        dateModified: new Date().toISOString().split('T')[0],
-        seo: item,
-    }));
-
-// Now, create the final blog articles list, which can safely reference the fully defined ALL_PRODUCTS.
-// This breaks the circular dependency that was crashing the app.
-export const ALL_BLOG_ARTICLES: BlogArticle[] = tempBlogArticles
-    .map((article) => {
-        let finalImage = article.image;
-
-        // If no image was specified, find a related one from the product list.
-        if (!finalImage) {
-            const keywords = `${article.title} ${article.seo["Primary Keywords"]}`.toLowerCase();
-            const sortedProducts = [...INTERNAL_ALL_PRODUCTS].sort((a, b) => b.name.length - a.name.length);
-            const productMatch = sortedProducts.find(p => keywords.includes(p.name.toLowerCase()));
-            
-            if (productMatch && productMatch.images && productMatch.images.length > 0) {
-                finalImage = productMatch.images[0];
-            } else {
-                // Fallback to a generic, existing hero banner image if no product match is found.
-                // This avoids using non-existent placeholder URLs.
-                finalImage = `https://file.garden/aIULwzQ_QkPKQcGw/banner.webp`;
-            }
-        }
-
-        return { ...article, image: finalImage };
-    })
-    .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
