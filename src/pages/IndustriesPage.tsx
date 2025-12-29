@@ -1,4 +1,4 @@
-\
+
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useIndustry } from '../context/IndustryContext';
@@ -88,4 +88,3 @@ export default function IndustriesPage() {
     </>
   );
 }
-
