@@ -1,80 +1,91 @@
-import { useMemo } from 'react';
+\
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useIndustry } from '../context/IndustryContext';
-import { useProducts } from '../context/ProductContext';
 import AnimatedSection from '../components/AnimatedSection';
+import CanonicalTag from '../components/CanonicalTag';
+import IndustryCard from '../components/IndustryCard';
 
 export default function IndustriesPage() {
-  const { products } = useProducts();
   const { industries } = useIndustry();
-
-  const productMap = useMemo(() => {
-    return new Map(products.map(p => [p.id, p]));
-  }, [products]);
-  
-  const MAX_PRODUCTS_VISIBLE = 9;
 
   return (
     <>
       <Helmet>
-        <title>Industrial Tape Solutions for All Major Industries | Tape India</title>
-        <meta name="description" content="Tape India delivers specialized adhesive tape solutions for demanding industries like packaging, HVAC, electronics, print, and more. Find products engineered for your application." />
-        <link rel="canonical" href="https://tapeindia.shop/industries" />
+        <title>Industries We Serve | Tape India</title>
+        <meta name="description" content="Discover our specialized adhesive tape solutions tailored for Packaging, HVAC, Electronics, Print & Label, Safety, and PTFE industries." />
       </Helmet>
-      <main className="bg-brand-gray py-16 md:py-24">
-        <div className="container mx-auto px-5 lg:px-8">
-          <AnimatedSection>
-            <div className="text-center mb-12 lg:mb-16">
-              <h1 className="font-extrabold text-brand-blue-dark">
-                Tapes Engineered for Your Industry
+      <CanonicalTag />
+      
+      <main className="bg-gray-50 min-h-screen">
+        {/* Hero Header */}
+        <header className="bg-brand-blue-deep text-white py-16 md:py-24">
+          <div className="container mx-auto px-5 lg:px-8">
+            <AnimatedSection className="text-center">
+              <h1 className="font-extrabold text-white mb-6">
+                Industries We Serve
               </h1>
-              <p className="mt-4 text-gray-600 max-w-3xl mx-auto">
-                We deliver specialized adhesive tape solutions across a wide range of demanding sectors. Find the right products engineered for your specific application, from heavy-duty packaging to precision electronics.
+              <p className="text-blue-100 max-w-3xl mx-auto text-lg md:text-xl">
+                We provide engineered adhesive solutions for diverse industrial sectors. Explore our specialized product ranges designed to meet the unique challenges of your industry.
               </p>
-            </div>
-          </AnimatedSection>
-          
-          <AnimatedSection className="delay-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {industries.map((industry) => (
-                <article key={industry.id} className="bg-white rounded-xl shadow-md p-8 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 border border-slate-200/50">
-                  <h2 className="text-brand-blue-dark mb-3 text-2xl">{industry.name}</h2>
-                  <p className="text-slate-600 leading-relaxed mb-6 flex-grow">{industry.description}</p>
+            </AnimatedSection>
+          </div>
+        </header>
 
-                  <div className="border-t border-slate-200 pt-6 mt-auto">
-                    <h3 className="font-semibold text-brand-blue mb-4">Key Products:</h3>
-                    <div className="flex flex-wrap gap-2">
-                        {industry.products.slice(0, MAX_PRODUCTS_VISIBLE).map(productId => {
-                            const product = productMap.get(productId);
-                            return product ? (
-                                <Link 
-                                    key={productId}
-                                    to={`/product/${product.id}`} 
-                                    className="text-sm bg-slate-100 text-slate-700 font-medium px-3 py-1 rounded-full hover:bg-brand-accent hover:text-white transition-colors"
-                                >
-                                    {product.name}
-                                </Link>
-                            ) : null;
-                        })}
-                    </div>
-                    {industry.products.length > MAX_PRODUCTS_VISIBLE && (
-                        <div className="mt-6 text-center md:text-right">
-                            <Link 
-                                to={`/products?industry=${industry.id}`} 
-                                className="inline-block bg-brand-accent text-white font-bold py-2 px-5 rounded-md hover:bg-brand-accent-dark transition-colors text-sm"
-                            >
-                                View All Products &rarr;
-                            </Link>
-                        </div>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </AnimatedSection>
+        <div className="container mx-auto px-5 lg:px-8 py-16 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {industries.map((industry, index) => (
+               <AnimatedSection key={industry.id} delay={index % 2 === 0 ? "delay-0" : "delay-100"}>
+                  <IndustryCard industry={{
+                      ...industry,
+                      // Mapping back to the simple Industry type expected by IndustryCard
+                      // Note: We use the ID to map colors/icons in IndustryCard if needed, or we could enrich this object
+                      // For now, we reuse the existing IndustryCard component which handles icon mapping internally based on ID or prop
+                      subtitle: industry.description.split('.')[0] + '.', // Use first sentence of description as subtitle
+                      icon: industry.id === 'packaging-industry' ? 'BoxIcon' : 
+                            industry.id === 'hvac-industry' ? 'WindIcon' :
+                            industry.id === 'electronic-industry' ? 'CpuIcon' :
+                            industry.id === 'print-labels-signage-industry' ? 'LayersIcon' :
+                            industry.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon',
+                      gradientClasses: industry.id === 'packaging-industry' ? 'from-amber-500 via-orange-600 to-red-700' :
+                                       industry.id === 'hvac-industry' ? 'from-cyan-500 via-cyan-600 to-blue-700' :
+                                       industry.id === 'print-labels-signage-industry' ? 'from-slate-500 via-slate-600 to-slate-700' :
+                                       industry.id === 'electronic-industry' ? 'from-blue-600 via-blue-700 to-indigo-800' :
+                                       industry.id === 'reflective-safety-industry' ? 'from-yellow-400 via-yellow-500 to-orange-500' :
+                                       'from-green-500 via-green-600 to-teal-700'
+                  }} />
+               </AnimatedSection>
+            ))}
+          </div>
         </div>
+
+        {/* Bottom CTA */}
+        <section className="bg-brand-gray py-20">
+          <div className="container mx-auto px-5 lg:px-8 text-center">
+             <AnimatedSection>
+                <h2 className="mb-6">Need a Custom Solution?</h2>
+                <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg">
+                  If your industry isn't listed or you have specific requirements, our technical team can help you find or develop the right adhesive tape.
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                   <Link 
+                     to="/contact" 
+                     className="bg-brand-blue-deep text-white font-bold py-3 px-8 rounded-lg hover:bg-brand-blue-dark transition-all"
+                   >
+                     Contact Experts
+                   </Link>
+                   <Link 
+                     to="/request-quote" 
+                     className="bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-lg hover:bg-yellow-400 transition-all"
+                   >
+                     Request Bulk Quote
+                   </Link>
+                </div>
+             </AnimatedSection>
+          </div>
+        </section>
       </main>
     </>
   );
 }
+
