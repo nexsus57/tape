@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@google/genai": "latest",
+    "@orama/orama": "^2.0.16",
+    "fuse.js": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
