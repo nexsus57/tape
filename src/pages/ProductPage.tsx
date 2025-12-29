@@ -1,6 +1,4 @@
 
-
-
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -65,12 +63,40 @@ export default function ProductPage() {
         return INDUSTRIES.filter(ind => product.industries?.includes(ind.id));
     }, [product]);
     
+    // --- SMART RELATED PRODUCTS ALGORITHM (Weighted Scoring) ---
     const relatedProducts = useMemo(() => {
-      if (!product || !category) return [];
-      return products
-        .filter(p => p.category === product.category && p.id !== product.id)
-        .slice(0, 3);
-    }, [product, category, products]);
+      if (!product) return [];
+      
+      const candidates = products.filter(p => p.id !== product.id);
+      
+      const scoredCandidates = candidates.map(p => {
+          let score = 0;
+          
+          // 1. Category Match (Base relevance - 10 pts)
+          if (p.category === product.category) score += 10;
+          
+          // 2. Industry Overlap (Context relevance - 5 pts per shared industry)
+          const commonIndustries = p.industries?.filter(ind => product.industries?.includes(ind));
+          if (commonIndustries && commonIndustries.length > 0) {
+              score += (commonIndustries.length * 5);
+          }
+
+          // 3. Name/Keyword Similarity (Specific relevance - 2 pts per shared significant word)
+          const pTokens = p.name.toLowerCase().split(/[\s-]+/);
+          const currentTokens = product.name.toLowerCase().split(/[\s-]+/);
+          // Filter only meaningful words > 3 chars
+          const commonTokens = pTokens.filter(t => t.length > 3 && currentTokens.includes(t));
+          score += (commonTokens.length * 2);
+
+          return { product: p, score };
+      });
+
+      // Sort by Score Descending
+      scoredCandidates.sort((a, b) => b.score - a.score);
+
+      // Return top 3 highest scored products
+      return scoredCandidates.slice(0, 3).map(item => item.product);
+    }, [product, products]);
 
     if (!product) {
         // Find a product that might exist in seoData but not in products constant (edge case)
@@ -247,7 +273,7 @@ export default function ProductPage() {
             {relatedProducts.length > 0 && (
                 <section className="py-16 md:py-24 bg-brand-gray">
                     <div className="container mx-auto px-5 lg:px-8">
-                        <h2 className="text-3xl font-bold mb-12 text-center text-brand-blue-dark">Related Products in {category?.name}</h2>
+                        <h2 className="text-3xl font-bold mb-12 text-center text-brand-blue-dark">You Might Also Need</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {relatedProducts.map(p => (
                                <ProductCard key={p.id} product={p} categoryName={category?.name || ''} />
