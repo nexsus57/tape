@@ -35,7 +35,7 @@ export default function IndustriesPage() {
         <div className="container mx-auto px-5 lg:px-8 py-16 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {industries.map((industry, index) => (
-               <AnimatedSection key={industry.id} delay={index % 2 === 0 ? "delay-0" : "delay-100"}>
+               <AnimatedSection key={industry.id} delay={index % 2 === 0 ? "delay-0" : "delay-100"} className="h-full">
                   <IndustryCard industry={{
                       ...industry,
                       // Mapping back to the simple Industry type expected by IndustryCard
