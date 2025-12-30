@@ -1,11 +1,16 @@
 
-import { NavLink } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useSearchModal } from '../context/SearchModalContext';
 
 const WHATSAPP_NUMBER = '917010530018';
 
 export default function BottomNavBar() {
   const { openSearchModal } = useSearchModal();
+  const pathname = usePathname();
+  
   const navItems = [
     { name: 'Home', path: '/', icon: 'fas fa-home' },
     { name: 'Products', path: '/products', icon: 'fas fa-tape' },
@@ -17,19 +22,19 @@ export default function BottomNavBar() {
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-40 h-20">
       <div className="grid grid-cols-5 h-full max-w-lg mx-auto">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            end={item.path === '/'}
-            className={({ isActive }) => 
-                `inline-flex flex-col items-center justify-center font-medium group hover:bg-gray-50 transition-colors ${isActive ? activeClass : inactiveClass}`
-            }
-          >
-            <i className={`${item.icon} text-2xl mb-1`}></i>
-            <span className="text-xs">{item.name}</span>
-          </NavLink>
-        ))}
+        {navItems.map((item) => {
+          const isActive = pathname === item.path || (item.path !== '/' && pathname?.startsWith(item.path));
+          return (
+            <Link
+              key={item.name}
+              href={item.path}
+              className={`inline-flex flex-col items-center justify-center font-medium group hover:bg-gray-50 transition-colors ${isActive ? activeClass : inactiveClass}`}
+            >
+              <i className={`${item.icon} text-2xl mb-1`}></i>
+              <span className="text-xs">{item.name}</span>
+            </Link>
+          );
+        })}
         <button
           onClick={openSearchModal}
           className="inline-flex flex-col items-center justify-center font-medium group text-gray-500 hover:bg-gray-50 transition-colors"
@@ -48,15 +53,13 @@ export default function BottomNavBar() {
           <i className="fab fa-whatsapp text-2xl mb-1"></i>
           <span className="text-xs">WhatsApp</span>
         </a>
-        <NavLink
-          to="/request-quote"
-          className={({ isActive }) => 
-            `inline-flex flex-col items-center justify-center font-bold group hover:bg-amber-100 transition-colors ${isActive ? 'text-brand-amber bg-amber-100' : 'text-gray-600 bg-amber-50'}`
-          }
+        <Link
+          href="/request-quote"
+          className={`inline-flex flex-col items-center justify-center font-bold group hover:bg-amber-100 transition-colors ${pathname === '/request-quote' ? 'text-brand-amber bg-amber-100' : 'text-gray-600 bg-amber-50'}`}
         >
           <i className="fas fa-file-alt text-2xl mb-1"></i>
           <span className="text-xs">Get Quote</span>
-        </NavLink>
+        </Link>
       </div>
     </nav>
   );
