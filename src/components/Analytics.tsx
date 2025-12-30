@@ -1,5 +1,8 @@
-import { useEffect, FC } from 'react';
-import { useLocation } from 'react-router-dom';
+
+'use client';
+
+import { useEffect, FC, Suspense } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 // To satisfy TypeScript, we can declare dataLayer on the window object.
 declare global {
@@ -8,22 +11,24 @@ declare global {
   }
 }
 
-const Analytics: FC = () => {
-    const location = useLocation();
+const AnalyticsContent: FC = () => {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         // 1. Google Tag Manager / Analytics Event
+        const url = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
+        
         const timerId = setTimeout(() => {
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'page_view',
-                page_path: location.pathname + location.search,
+                page_path: url,
                 page_title: document.title,
             });
         }, 0);
 
         // 2. LOCAL ANALYTICS (For Admin Dashboard)
-        // We store daily page views in localStorage to power the Admin Chart
         try {
             const today = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
             const storageKey = 'tapeindia_analytics_daily';
@@ -43,9 +48,18 @@ const Analytics: FC = () => {
         }
 
         return () => clearTimeout(timerId);
-    }, [location.pathname, location.search]);
+    }, [pathname, searchParams]);
 
-    return null; // This component does not render anything
+    return null;
+};
+
+// Wrap in Suspense because useSearchParams causes client-side de-opt
+const Analytics: FC = () => {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsContent />
+    </Suspense>
+  );
 };
 
 export default Analytics;
