@@ -1,25 +1,21 @@
 
 import { useState, FormEvent } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 
 const AdminLoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
   const { login } = useAuth();
-
-  // @ts-ignore - TS might complain about location state type, safe to ignore for now
-  const from = location.state?.from?.pathname || '/admin/dashboard';
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setError('');
 
     if (login(username, password)) {
-      navigate(from, { replace: true });
+      router.replace('/admin/dashboard');
     } else {
       setError('Invalid username or password.');
     }
