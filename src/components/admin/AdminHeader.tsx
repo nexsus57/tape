@@ -1,49 +1,79 @@
 
-import { useState } from 'react';
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from '../../context/AuthContext';
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { DashboardIcon, ProductsIcon, CategoriesIcon, SettingsIcon, IndustryIcon, BlogIcon, SeoIcon } from '../icons/AdminIcons';
 
-interface AdminHeaderProps {
+interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 }
 
-const AdminHeader = ({ sidebarOpen, setSidebarOpen }: AdminHeaderProps) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const pathname = usePathname();
+  const navLinkClass = "flex items-center mt-4 py-2 px-6 text-gray-300 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 rounded-md transition-colors duration-200";
+  const activeNavLinkClass = "bg-gray-700 bg-opacity-50 text-white";
 
-  const handleLogout = () => {
-    logout();
-    navigate('/admin/login');
-  };
+  const navLinks = [
+    { to: '/admin/dashboard', icon: DashboardIcon, text: 'Dashboard' },
+    { to: '/admin/products', icon: ProductsIcon, text: 'Products' },
+    { to: '/admin/categories', icon: CategoriesIcon, text: 'Categories' },
+    { to: '/admin/industries', icon: IndustryIcon, text: 'Industries' },
+    { to: '/admin/blog', icon: BlogIcon, text: 'Blog' },
+    { to: '/admin/seo-content-hub', icon: SeoIcon, text: 'SEO Hub' },
+  ];
+  
+  const bottomLinks = [
+      { to: '/admin/settings', icon: SettingsIcon, text: 'Site Settings'}
+  ]
 
   return (
-    <header className="flex justify-between items-center px-6 py-4 bg-admin-card border-b border-admin-border">
-      <div className="flex items-center">
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-admin-text-light focus:outline-none lg:hidden">
-          <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 6H20M4 12H20M4 18H11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-          </svg>
-        </button>
-      </div>
-
-      <div className="flex items-center">
-        <div className="relative">
-          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="relative flex items-center justify-center h-8 w-8 rounded-full bg-admin-accent text-white shadow focus:outline-none">
-            <i className="fas fa-user"></i>
-          </button>
-          
-          <div onClick={() => setDropdownOpen(false)} className={`fixed inset-0 h-full w-full z-10 ${dropdownOpen ? '' : 'hidden'}`}></div>
-
-          <div className={`absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-20 ${dropdownOpen ? 'block' : 'hidden'}`}>
-            <Link to="/" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-admin-accent hover:text-white">View Site</Link>
-            <button onClick={handleLogout} className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-admin-accent hover:text-white">Logout</button>
-          </div>
+    <>
+      <div className={`${sidebarOpen ? 'block' : 'hidden'} fixed inset-0 bg-black opacity-50 z-20 lg:hidden`} onClick={() => setSidebarOpen(false)}></div>
+      
+      <div className={`fixed inset-y-0 left-0 bg-admin-sidebar w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0 z-30 transition-transform duration-300 ease-in-out flex flex-col`}>
+        <div className="flex items-center justify-center h-20 border-b border-gray-700 flex-shrink-0">
+            <Link href="/admin" className="text-white text-2xl font-bold">
+                Tape India
+            </Link>
         </div>
+
+        <nav className="mt-6 px-2 flex-grow">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.to;
+            return (
+                <Link
+                key={link.to}
+                href={link.to}
+                onClick={() => setSidebarOpen(false)}
+                className={`${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
+                >
+                <link.icon className="h-6 w-6" />
+                <span className="mx-3">{link.text}</span>
+                </Link>
+            );
+          })}
+        </nav>
+        
+        <nav className="px-2 pb-4 flex-shrink-0">
+             {bottomLinks.map((link) => {
+                const isActive = pathname === link.to;
+                return (
+                    <Link
+                    key={link.to}
+                    href={link.to}
+                    onClick={() => setSidebarOpen(false)}
+                    className={`${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
+                    >
+                    <link.icon className="h-6 w-6" />
+                    <span className="mx-3">{link.text}</span>
+                    </Link>
+                );
+            })}
+        </nav>
       </div>
-    </header>
+    </>
   );
 };
 
-export default AdminHeader;
+export default Sidebar;
