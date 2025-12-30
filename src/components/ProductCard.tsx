@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { type FC, type MouseEvent } from 'react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
@@ -22,7 +22,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      href={`/product/${product.id}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden transform hover:-translate-y-1 product-card"
     >
       <div className="relative overflow-hidden bg-gray-50 p-4 aspect-[4/3] flex items-center justify-center">
