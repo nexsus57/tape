@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NAV_LINKS, INDUSTRIES } from '../constants';
 import SearchBar from './SearchBar';
-import { useSearchModal } from '../context/SearchModalContext';
 import { useCategories } from '../context/CategoryContext';
 import { useCart } from '../context/CartContext';
 import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
@@ -15,7 +14,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { openSearchModal } = useSearchModal();
+  // Unused hook removed
   const { categories } = useCategories();
   const { cartCount } = useCart();
   const pathname = usePathname();
