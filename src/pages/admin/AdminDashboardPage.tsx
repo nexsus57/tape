@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useProducts } from '../../context/ProductContext';
 import { useCategories } from '../../context/CategoryContext';
 import { useIndustry } from '../../context/IndustryContext';
@@ -14,6 +14,8 @@ const TrafficChart = () => {
 
   const loadData = () => {
      try {
+        if (typeof window === 'undefined') return;
+        
         const storageKey = 'tapeindia_analytics_daily';
         const saved = localStorage.getItem(storageKey);
         const rawData = saved ? JSON.parse(saved) : {};
@@ -33,14 +35,10 @@ const TrafficChart = () => {
             last7Days.push({ date: dateStr, day: dayName, count });
         }
 
-        // Calculate relative height (percentage) for bars
-        // If maxCount is 0, we set a safeMax so we don't divide by zero.
         const safeMax = maxCount === 0 ? 10 : maxCount; 
         
         const formattedData = last7Days.map(item => ({
             ...item,
-            // If count is 0, give it 1% height just so the bar exists but is clearly flat. 
-            // If count > 0, use calculated height but at least 5% for visibility.
             height: item.count === 0 ? 1 : Math.max(5, Math.round((item.count / safeMax) * 100))
         }));
 
@@ -52,7 +50,6 @@ const TrafficChart = () => {
 
   useEffect(() => {
     loadData();
-    // Listen for updates from the Analytics component
     window.addEventListener('analyticsUpdated', loadData);
     return () => window.removeEventListener('analyticsUpdated', loadData);
   }, []);
@@ -112,31 +109,27 @@ export default function AdminDashboardPage() {
     <div>
       <h1 className="text-3xl font-bold text-admin-text mb-6">Dashboard Overview</h1>
       
-      {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         {stats.map(stat => (
-          <Link to={stat.link} key={stat.title} className="hover:scale-105 transform transition-transform duration-200">
+          <Link href={stat.link} key={stat.title} className="hover:scale-105 transform transition-transform duration-200">
             <StatCard icon={stat.icon} title={stat.title} value={stat.value} />
           </Link>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content Area */}
         <div className="lg:col-span-2 space-y-8">
-           {/* Real Chart */}
            <div className="bg-admin-card rounded-lg shadow-md overflow-hidden">
                <TrafficChart />
            </div>
            
-           {/* Quick Actions */}
            <div className="bg-admin-card p-6 rounded-lg shadow-md">
               <h2 className="text-xl font-semibold text-admin-text mb-4">Quick Actions</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {quickActions.map(action => (
                   <Link
                     key={action.text}
-                    to={action.link}
+                    href={action.link}
                     target={action.external ? '_blank' : undefined}
                     rel={action.external ? 'noopener noreferrer' : undefined}
                     className="flex items-center p-4 bg-gray-50 hover:bg-admin-accent hover:text-white rounded-lg transition-colors group"
@@ -150,7 +143,6 @@ export default function AdminDashboardPage() {
            </div>
         </div>
         
-        {/* Sidebar Status */}
         <div className="bg-admin-card p-6 rounded-lg shadow-md h-fit">
           <h2 className="text-xl font-semibold text-admin-text mb-4">System Status</h2>
           <div className="space-y-3">
