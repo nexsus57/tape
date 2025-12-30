@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -10,26 +11,24 @@ export default {
         'pattern-circles': "url('https://www.transparenttextures.com/patterns/circles-and-roundabouts.png')",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Poppins', 'sans-serif'],
+        sans: ['var(--font-inter)', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'sans-serif'],
       },
       colors: {
-        'brand-blue': '#1A2B3C', // A slightly less saturated, more slate-like dark blue
-        'brand-blue-dark': '#111D2A', // Darker version
-        'brand-blue-deep': '#003366', // Deep industrial blue
-        'brand-yellow': '#F5C518', // A slightly richer, more modern yellow
-        'brand-amber': '#F59E0B', // Vibrant amber for CTAs
-        'brand-gray': '#F1F5F9', // slate-100
-        'brand-accent': '#2563EB', // blue-600
-        'brand-accent-dark': '#1D4ED8', // blue-700
-        
-        // Admin Panel Colors
-        'admin-bg': '#F1F5F9', // Light gray background
-        'admin-sidebar': '#1E293B', // Dark slate
+        'brand-blue': '#1A2B3C',
+        'brand-blue-dark': '#111D2A',
+        'brand-blue-deep': '#003366',
+        'brand-yellow': '#F5C518',
+        'brand-amber': '#F59E0B',
+        'brand-gray': '#F1F5F9',
+        'brand-accent': '#2563EB',
+        'brand-accent-dark': '#1D4ED8',
+        'admin-bg': '#F1F5F9',
+        'admin-sidebar': '#1E293B',
         'admin-card': '#FFFFFF',
-        'admin-text': '#334155', // Dark text
-        'admin-text-light': '#64748B', // Lighter text
-        'admin-accent': '#3B82F6', // Blue accent
+        'admin-text': '#334155',
+        'admin-text-light': '#64748B',
+        'admin-accent': '#3B82F6',
         'admin-accent-hover': '#2563EB',
         'admin-border': '#E2E8F0',
       },
