@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
+import React, { useState, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { create, insertMultiple, search as oramaSearch } from '@orama/orama';
