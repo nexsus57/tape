@@ -1,6 +1,9 @@
 
+'use client';
+
 import React, { useState, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Fuse from 'fuse.js';
 import { create, insertMultiple, search as oramaSearch } from '@orama/orama';
 import { useProducts } from '../context/ProductContext';
@@ -29,7 +32,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const { products } = useProducts();
   const { addToCart } = useCart();
   const { settings } = useSettings();
-  const navigate = useNavigate();
+  const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -183,7 +186,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     setQuery('');
     setResults([]);
     setIsFocused(false);
-    navigate(`/product/${product.id}`);
+    router.push(`/product/${product.id}`);
     onResultClick?.();
   };
 
@@ -202,7 +205,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
         // Fallback: Go to listing page with query
         saveRecentSearch(query);
         setIsFocused(false);
-        navigate(`/products?q=${encodeURIComponent(query)}`);
+        router.push(`/products?q=${encodeURIComponent(query)}`);
         onResultClick?.();
       }
     } else if (e.key === 'Escape') {
@@ -298,7 +301,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                   {popularProductsList.map(product => (
                     <li key={product.id}>
                         <Link 
-                            to={`/product/${product.id}`}
+                            href={`/product/${product.id}`}
                             onClick={() => { setIsFocused(false); onResultClick?.(); }}
                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group transition-colors"
                         >
@@ -369,7 +372,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
               
               <li className="bg-gray-50 p-2 text-center">
                  <Link 
-                    to={`/products?q=${encodeURIComponent(query)}`}
+                    href={`/products?q=${encodeURIComponent(query)}`}
                     onClick={() => { setIsFocused(false); onResultClick?.(); }}
                     className="text-xs font-bold text-brand-accent hover:underline uppercase tracking-wider block w-full"
                  >
