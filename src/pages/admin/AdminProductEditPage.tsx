@@ -1,6 +1,7 @@
 
 import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useProducts } from '../../context/ProductContext';
 import { useCategories } from '../../context/CategoryContext';
 import { INDUSTRIES } from '../../constants';
@@ -9,8 +10,9 @@ import type { Product } from '../../types';
 type EditableProduct = Omit<Product, 'id'> & { id?: string };
 
 const AdminProductEditPage = () => {
-    const { productId } = useParams<{ productId: string }>();
-    const navigate = useNavigate();
+    const params = useParams();
+    const productId = params?.productId as string;
+    const router = useRouter();
     const { products, addProduct, updateProduct } = useProducts();
     const { categories } = useCategories();
     const isEditing = Boolean(productId);
@@ -60,10 +62,10 @@ const AdminProductEditPage = () => {
                     images: existingProduct.images?.length ? existingProduct.images : [''],
                 });
             } else {
-                navigate('/admin/products');
+                router.push('/admin/products');
             }
         }
-    }, [productId, products, isEditing, navigate]);
+    }, [productId, products, isEditing, router]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -104,12 +106,10 @@ const AdminProductEditPage = () => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         
-        // Filter out empty strings from arrays
         const cleanFeatures = (product.features || []).filter(f => f && f.trim() !== '');
         const cleanUses = (product.uses || []).filter(u => u && u.trim() !== '');
         const cleanImages = (product.images || []).filter(i => i && i.trim() !== '');
 
-        // Auto-generate SEO data if missing (Critical for new products)
         const generatedSeo = {
             ...product.seo,
             "Page Name": product.name,
@@ -122,7 +122,6 @@ const AdminProductEditPage = () => {
             "Full URL": `https://tapeindia.shop/product/${product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
         };
 
-        // Construct the final product object
         const finalProductData = {
             ...product,
             features: cleanFeatures,
@@ -132,7 +131,6 @@ const AdminProductEditPage = () => {
             seo: generatedSeo
         };
 
-        // Remove derived 'image' property before sending to context functions which expect Omit<Product, 'image'>
         const { image, ...dataForContext } = finalProductData;
 
         if (isEditing && finalProductData.id) {
@@ -145,7 +143,7 @@ const AdminProductEditPage = () => {
             alert('Product created successfully!');
         }
         
-        navigate('/admin/products');
+        router.push('/admin/products');
     };
 
     const pageTitle = isEditing ? 'Edit Product' : 'Add New Product';
@@ -171,7 +169,6 @@ const AdminProductEditPage = () => {
                             <textarea id="description" name="description" value={product.description || ''} onChange={handleInputChange} rows={6} className="w-full p-2 border border-admin-border rounded-md focus:ring-admin-accent focus:border-admin-accent"></textarea>
                         </section>
                         
-                        {/* Images Section */}
                         <section>
                             <label className="block text-sm font-medium text-admin-text-light mb-2">Product Images (URLs)</label>
                             {(product.images || []).map((item, index) => (
@@ -190,7 +187,6 @@ const AdminProductEditPage = () => {
                             <p className="text-xs text-gray-400 mt-1">The first image will be used as the main product thumbnail.</p>
                         </section>
 
-                        {/* Features & Uses */}
                         {['features', 'uses'].map(field => (
                             <section key={field}>
                                 <label className="block text-sm font-medium text-admin-text-light mb-2 capitalize">{field}</label>
@@ -205,7 +201,6 @@ const AdminProductEditPage = () => {
                         ))}
                     </div>
 
-                    {/* Sidebar/Metadata */}
                     <div className="space-y-6">
                          <div className="bg-admin-card p-6 rounded-lg shadow-md space-y-4">
                             <h3 className="text-lg font-semibold text-admin-text mb-4">Organize</h3>
@@ -254,7 +249,7 @@ const AdminProductEditPage = () => {
                 </div>
 
                  <div className="flex justify-end space-x-4 mt-6">
-                    <Link to="/admin/products" className="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Cancel</Link>
+                    <Link href="/admin/products" className="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Cancel</Link>
                     <button type="submit" className="bg-admin-accent text-white font-bold py-2 px-4 rounded-md hover:bg-admin-accent-hover transition-colors">
                         {isEditing ? 'Save Changes' : 'Publish Product'}
                     </button>
