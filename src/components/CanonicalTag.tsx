@@ -1,31 +1,42 @@
+
+'use client';
+
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 interface CanonicalTagProps {
-  stripQuery?: boolean;
-  pathOverride?: string; // optional override, e.g. "/about"
+    /**
+     * If true, query parameters will be stripped from the canonical URL.
+     * This is useful for product pages where query params are often for tracking.
+     */
+    stripQuery?: boolean;
 }
 
-const CanonicalTag = ({ stripQuery = false, pathOverride }: CanonicalTagProps) => {
-  const location = useLocation();
-
-  // Force the canonical domain to the live domain (do NOT use window.location.host)
-  const BASE = 'https://tapeindia.shop';
-
-  // Use explicit override when provided, otherwise derive from current location
-  let path = pathOverride ?? location.pathname;
-
-  if (!stripQuery && !pathOverride) {
-    path += location.search;
+const CanonicalTag = ({ stripQuery = false }: CanonicalTagProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  let path = pathname;
+  
+  // Reconstruct path with query if needed
+  if (!stripQuery) {
+      const queryString = searchParams.toString();
+      if (queryString) {
+          path += `?${queryString}`;
+      }
+  }
+  
+  // Ensure homepage path is just "/"
+  if (path === '//') {
+      path = '/';
   }
 
-  // Normalize: empty or double-slash -> '/'
-  if (!path || path === '//' ) path = '/';
+  // Handle trailing slashes for paths other than the root
+  if (path !== '/' && path.endsWith('/') && !path.includes('?')) {
+    path = path.slice(0, -1);
+  }
 
-  // Remove trailing slash for non-root paths
-  if (path !== '/' && path.endsWith('/')) path = path.slice(0, -1);
-
-  const canonicalUrl = `${BASE}${path}`;
+  const canonicalUrl = `https://tapeindia.shop${path}`;
 
   return (
     <Helmet>
