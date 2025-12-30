@@ -14,7 +14,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  // Unused hook removed
+  
   const { categories } = useCategories();
   const { cartCount } = useCart();
   const pathname = usePathname();
