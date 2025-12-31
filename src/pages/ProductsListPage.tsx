@@ -1,5 +1,4 @@
 
-
 import { useLocation, Link } from 'react-router-dom';
 import { useMemo, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -40,6 +39,15 @@ export default function ProductsListPage() {
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
+    // 1. Single Source of Truth: Derive state directly from URL
+    // Default 'category' to 'all' if missing to satisfy "Default Category State MUST be 'all'"
+    const searchParams = new URLSearchParams(location.search);
+    const rawCategory = searchParams.get('category');
+    const activeCategory = rawCategory || 'all'; 
+    const activeIndustry = searchParams.get('industry');
+    const activeTag = searchParams.get('tag');
+    const searchQuery = searchParams.get('q');
+
     const { 
       filteredProducts, 
       pageTitle, 
@@ -49,22 +57,21 @@ export default function ProductsListPage() {
       pageH1,
       pageSeoData,
     } = useMemo(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const industryId = searchParams.get('industry');
-        const categoryId = searchParams.get('category');
-        const searchQuery = searchParams.get('q');
-        const tagQuery = searchParams.get('tag'); // Support for strict tag filtering
-        
-        let prods = products;
+        let prods = [];
         let pageData: Partial<SeoPageData> | undefined;
 
-        if (industryId) {
-            const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === industryId);
-            
+        // 3. Products must render ONLY after data exists
+        // If products are not loaded yet, return empty (or full list if using optimistic loading)
+        // We use 'products' from context which should be populated.
+        const availableProducts = products || [];
+
+        // 4. Logic Execution
+        if (activeIndustry) {
+            const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === activeIndustry);
             if (industryDetail) {
-                prods = products.filter(p => 
+                prods = availableProducts.filter(p => 
                     industryDetail.products.includes(p.id) || 
-                    p.industries?.includes(industryId)
+                    p.industries?.includes(activeIndustry)
                 );
                 
                 pageData = {
@@ -76,38 +83,57 @@ export default function ProductsListPage() {
                     "Page Type": "Industry List",
                     "Combined Schema (JSON-LD)": "{}" 
                 };
+            } else {
+                prods = availableProducts; // Fallback
             }
-        } else if (categoryId) {
-            const category = categories.find(c => c.id === categoryId);
-            if (category) {
-                prods = products.filter(p => p.category === categoryId);
-                pageData = seoData.find(p => p.id === categoryId || p["Page Name"] === category.name);
-            }
-        } else if (tagQuery) {
+        } else if (activeTag) {
              // Strict Tag Filtering
-             const normalizedTag = tagQuery.toUpperCase().replace(/-/g, ' ');
-             prods = products.filter(p => 
+             const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
+             prods = availableProducts.filter(p => 
                  p.tags?.some(t => t.toUpperCase().includes(normalizedTag))
              );
              pageData = {
-                 "Title (≤60 chars)": `${tagQuery.replace(/-/g, ' ')} Tapes | Tape India`,
-                 "Meta Description (≤160 chars)": `Explore our range of ${tagQuery.replace(/-/g, ' ')} tapes. High-quality industrial solutions.`,
-                 H1: `${tagQuery.replace(/-/g, ' ')} Solutions`,
-                 summary: `Browse our curated collection of ${tagQuery.replace(/-/g, ' ')} tapes designed for specific industrial applications.`,
+                 "Title (≤60 chars)": `${activeTag.replace(/-/g, ' ')} Tapes | Tape India`,
+                 "Meta Description (≤160 chars)": `Explore our range of ${activeTag.replace(/-/g, ' ')} tapes. High-quality industrial solutions.`,
+                 H1: `${activeTag.replace(/-/g, ' ')} Solutions`,
+                 summary: `Browse our curated collection of ${activeTag.replace(/-/g, ' ')} tapes designed for specific industrial applications.`,
              };
         } else if (searchQuery) {
-             const q = searchQuery.toLowerCase();
-             prods = products.filter(p => 
-                 p.name.toLowerCase().includes(q) || 
-                 p.shortDescription.toLowerCase().includes(q) ||
-                 p.tags?.some(t => t.toLowerCase().includes(q)) // Search tags too
-             );
+             const q = searchQuery.trim().toLowerCase();
+             const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+             const regex = new RegExp(`\\b${safeQ}\\b`, 'i');
+
+             prods = availableProducts.filter(p => {
+                 const hasTagMatch = p.tags?.some(t => t.toLowerCase().includes(q));
+                 if (hasTagMatch) return true;
+                 const nameMatch = regex.test(p.name);
+                 const descMatch = regex.test(p.shortDescription);
+                 const looseMatch = q.length > 3 && (p.name.toLowerCase().includes(q) || p.shortDescription.toLowerCase().includes(q));
+                 return nameMatch || descMatch || looseMatch;
+             });
+
              pageData = {
                  "Title (≤60 chars)": `Search Results for "${searchQuery}" | Tape India`,
                  "Meta Description (≤160 chars)": `Search results for ${searchQuery} - Tape India`,
                  H1: `Search Results: "${searchQuery}"`,
                  summary: `Showing results for "${searchQuery}"`,
              };
+        } else {
+            // 2. “All Products” MUST be explicitly handled in logic
+            // If category is 'all' (default), show ALL products.
+            if (activeCategory === 'all') {
+                prods = availableProducts;
+            } else {
+                // Otherwise filter by category
+                const category = categories.find(c => c.id === activeCategory);
+                if (category) {
+                    prods = availableProducts.filter(p => p.category === activeCategory);
+                    pageData = seoData.find(p => p.id === activeCategory || p["Page Name"] === category.name);
+                } else {
+                    // Fallback if category ID is invalid but URL has it
+                    prods = availableProducts;
+                }
+            }
         }
 
         if (!pageData) {
@@ -119,7 +145,6 @@ export default function ProductsListPage() {
         const h1 = pageData?.H1 || 'All Products';
         const content = pageData?.summary || '';
         
-        // Breadcrumb Schema
         const breadcrumbList = [
              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" },
              { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" }
@@ -140,12 +165,7 @@ export default function ProductsListPage() {
             pageH1: h1,
             pageSeoData: pageData
         };
-    }, [location.search, products, categories]);
-
-    const searchParams = new URLSearchParams(location.search);
-    const activeCategory = searchParams.get('category');
-    const activeIndustry = searchParams.get('industry');
-    const activeTag = searchParams.get('tag');
+    }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
 
     return (
         <>
@@ -169,7 +189,7 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
-                <div className="container mx-auto px-5 lg:px-8 py-8">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     {/* Filters */}
                     <AnimatedSection className="mb-8">
                         <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -178,8 +198,9 @@ export default function ProductsListPage() {
                                 <div className="flex gap-2">
                                     <FilterButton 
                                         label="All Products" 
-                                        isActive={!activeCategory && !activeIndustry && !activeTag} 
-                                        to="/products" 
+                                        // Explicit check: Active if category is 'all' AND no other filters are present
+                                        isActive={activeCategory === 'all' && !activeIndustry && !activeTag && !searchQuery} 
+                                        to="/products?category=all" 
                                     />
                                     {categories.map(cat => (
                                         <FilterButton 
@@ -197,7 +218,7 @@ export default function ProductsListPage() {
                     {/* Products Grid */}
                     <AnimatedSection delay="delay-100">
                         {filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
                                 {filteredProducts.map(product => (
                                     <ProductCard 
                                         key={product.id} 
@@ -208,11 +229,17 @@ export default function ProductsListPage() {
                             </div>
                         ) : (
                             <div className="text-center py-20">
-                                <h3 className="text-xl font-bold text-gray-700">No products found.</h3>
-                                <p className="text-gray-500 mt-2">Try adjusting your filters or search criteria.</p>
-                                <Link to="/products" className="mt-4 inline-block text-brand-accent font-semibold hover:underline">
-                                    View All Products
-                                </Link>
+                                <h3 className="text-xl font-bold text-gray-700">
+                                    {products.length === 0 ? 'Loading Products...' : 'No products found.'}
+                                </h3>
+                                {products.length > 0 && (
+                                    <>
+                                        <p className="text-gray-500 mt-2">Try adjusting your filters or search criteria.</p>
+                                        <Link to="/products?category=all" className="mt-4 inline-block text-brand-accent font-semibold hover:underline">
+                                            View All Products
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         )}
                     </AnimatedSection>
