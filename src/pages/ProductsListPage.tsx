@@ -1,13 +1,13 @@
 
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useMemo, FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { INITIAL_INDUSTRIES_DETAILED, PRODUCTS as STATIC_PRODUCTS, INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
-import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
+import AnimatedSection from '../components/AnimatedSection';
 import { seoData } from '../data/seoData';
 import type { SeoPageData } from '../types';
 
@@ -15,20 +15,17 @@ interface FilterButtonProps {
     label: string;
     isActive: boolean;
     to: string;
-    variant?: 'default' | 'industry';
+    onClick?: () => void;
 }
 
-const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to, variant = 'default' }) => {
-    const activeClass = variant === 'industry' 
-        ? 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md' 
-        : 'bg-brand-accent text-white border-brand-accent shadow-md';
-    
-    const inactiveClass = 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 hover:border-gray-400';
+const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
+    const activeClass = 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md';
+    const inactiveClass = 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300';
 
     return (
         <Link
             to={to}
-            className={`px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
+            className={`px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
                 isActive ? activeClass : inactiveClass
             }`}
         >
@@ -42,21 +39,20 @@ export default function ProductsListPage() {
     const { products: contextProducts } = useProducts();
     const { categories } = useCategories();
 
-    // 1. IMMEDIATE RENDER FIX: Use static products as fallback if context is hydrating.
-    // This ensures the page is NEVER blank on first load.
-    const products = contextProducts.length > 0 ? contextProducts : (STATIC_PRODUCTS as any[]);
+    // 1. IMMEDIATE RENDER FIX: Use static products as fallback immediately.
+    // This ensures the page is NEVER blank on first load, solving the "doesn't pre-load" issue.
+    const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
     const searchParams = new URLSearchParams(location.search);
-    const rawCategory = searchParams.get('category');
-    const activeCategory = rawCategory; 
+    const activeCategory = searchParams.get('category'); 
     const activeIndustry = searchParams.get('industry');
     const activeTag = searchParams.get('tag');
     const searchQuery = searchParams.get('q');
 
-    // Determine if we are in "All" mode (no specific filters active)
-    const isAllActive = !activeCategory && !activeIndustry && !activeTag && !searchQuery;
+    // "All" is active if no specific filters are set OR explicitly 'all'
+    const isAllActive = (!activeCategory && !activeIndustry && !activeTag && !searchQuery) || activeCategory === 'all';
 
     const { 
       filteredProducts, 
@@ -70,11 +66,9 @@ export default function ProductsListPage() {
         let prods = [];
         let pageData: Partial<SeoPageData> | undefined;
 
-        // Base pool of products
+        // Ensure we have a pool of products to filter
         const availableProducts = products || [];
 
-        // --- FILTERING LOGIC ---
-        
         if (activeIndustry) {
             // Industry Filter
             const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === activeIndustry);
@@ -91,7 +85,7 @@ export default function ProductsListPage() {
                     summary: industryDetail.description,
                 };
             } else {
-                // Fallback if industry ID not found in details but exists in URL
+                // Fallback Industry Logic
                 prods = availableProducts.filter(p => p.industries?.includes(activeIndustry));
                 const simpleInd = INDUSTRIES.find(i => i.id === activeIndustry);
                 pageData = {
@@ -120,15 +114,18 @@ export default function ProductsListPage() {
              // Search Filter
              const q = searchQuery.trim().toLowerCase();
              const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+             // Strict word boundary for short queries to avoid partial matches like 'emi' in 'premium'
              const regex = new RegExp(`\\b${safeQ}\\b`, 'i');
 
              prods = availableProducts.filter(p => {
                  const hasTagMatch = p.tags?.some(t => t.toLowerCase().includes(q));
                  if (hasTagMatch) return true;
+                 
                  const nameMatch = regex.test(p.name);
-                 const descMatch = regex.test(p.shortDescription);
-                 const looseMatch = q.length > 3 && (p.name.toLowerCase().includes(q) || p.shortDescription.toLowerCase().includes(q));
-                 return nameMatch || descMatch || looseMatch;
+                 // Fallback for longer queries where partial match is desirable
+                 const looseMatch = q.length > 3 && p.name.toLowerCase().includes(q);
+                 
+                 return nameMatch || looseMatch;
              });
 
              pageData = {
@@ -194,63 +191,51 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
+                {/* SINGLE UNIFIED FILTER BAR */}
+                <div className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-200 py-3 shadow-sm transition-all">
+                    <div className="container mx-auto px-4 overflow-x-auto hide-scrollbar">
+                        <div className="flex items-center gap-2 min-w-max">
+                            {/* All Products */}
+                            <FilterButton 
+                                label="All Products" 
+                                isActive={isAllActive} 
+                                to="/products?category=all" 
+                            />
+                            
+                            <div className="w-px h-6 bg-gray-300 mx-2"></div>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Industries</span>
+
+                            {/* Industries */}
+                            {INDUSTRIES.map(ind => (
+                                <FilterButton 
+                                    key={ind.id} 
+                                    label={ind.name} 
+                                    isActive={activeIndustry === ind.id} 
+                                    to={`/products?industry=${ind.id}`}
+                                />
+                            ))}
+
+                            <div className="w-px h-6 bg-gray-300 mx-2"></div>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Categories</span>
+
+                            {/* Categories */}
+                            {categories.map(cat => (
+                                <FilterButton 
+                                    key={cat.id} 
+                                    label={cat.name} 
+                                    isActive={activeCategory === cat.id} 
+                                    to={`/products?category=${cat.id}`} 
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    
-                    {/* --- FILTER BARS --- */}
-                    <AnimatedSection className="space-y-8 mb-12">
-                        
-                        {/* 1. Industry View Bar */}
-                        <div className="w-full">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Browse by Industry</h3>
-                            <div className="w-full overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
-                                <div className="flex flex-nowrap md:flex-wrap gap-3 md:justify-center">
-                                    <FilterButton 
-                                        label="All Industries" 
-                                        isActive={isAllActive} 
-                                        to="/products"
-                                        variant="industry"
-                                    />
-                                    {INDUSTRIES.map(ind => (
-                                        <FilterButton 
-                                            key={ind.id} 
-                                            label={ind.name} 
-                                            isActive={activeIndustry === ind.id} 
-                                            to={`/products?industry=${ind.id}`}
-                                            variant="industry"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 2. Category View Bar */}
-                        <div className="w-full border-t border-gray-200 pt-6">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Browse by Category</h3>
-                            <div className="w-full overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
-                                <div className="flex flex-nowrap md:flex-wrap gap-3 md:justify-center">
-                                    <FilterButton 
-                                        label="All Categories" 
-                                        isActive={isAllActive} 
-                                        to="/products" 
-                                    />
-                                    {categories.map(cat => (
-                                        <FilterButton 
-                                            key={cat.id} 
-                                            label={cat.name} 
-                                            isActive={activeCategory === cat.id} 
-                                            to={`/products?category=${cat.id}`} 
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                    </AnimatedSection>
-
-                    {/* --- PRODUCT GRID --- */}
-                    <AnimatedSection delay="delay-100">
+                    {/* PRODUCT GRID - Removed AnimatedSection wrapper to ensure immediate visual rendering on navigation */}
+                    <div className="min-h-[50vh]">
                         {filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8 animate-fade-in">
                                 {filteredProducts.map(product => (
                                     <ProductCard 
                                         key={product.id} 
@@ -260,7 +245,7 @@ export default function ProductsListPage() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center py-24 bg-white rounded-xl shadow-sm border border-gray-100">
+                            <div className="text-center py-24 bg-white rounded-xl shadow-sm border border-gray-100 animate-fade-in">
                                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
                                     <i className="fas fa-search text-gray-400 text-2xl"></i>
                                 </div>
@@ -268,14 +253,14 @@ export default function ProductsListPage() {
                                     {products.length === 0 ? 'Loading Products...' : 'No products found'}
                                 </h3>
                                 <p className="text-gray-500 mt-2 max-w-md mx-auto">
-                                    We couldn't find any products matching your selection. Try selecting "All Industries" or "All Categories".
+                                    We couldn't find any products matching your selection. Try selecting "All Products".
                                 </p>
-                                <Link to="/products" className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
+                                <Link to="/products?category=all" className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
                                     Clear Filters
                                 </Link>
                             </div>
                         )}
-                    </AnimatedSection>
+                    </div>
                 </div>
             </main>
         </>
