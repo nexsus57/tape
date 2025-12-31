@@ -1,3 +1,4 @@
+
 import { useMemo } from 'react';
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
@@ -141,7 +142,7 @@ export default function HomePage() {
 
       {/* Popular Products Section */}
       <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-5 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <AnimatedSection className="text-center">
                   <h2 className="font-extrabold mb-6">Our Popular Industrial Tapes</h2>
                   <p className="text-slate-600 mb-16 max-w-3xl mx-auto">
@@ -149,7 +150,7 @@ export default function HomePage() {
                   </p>
               </AnimatedSection>
               <AnimatedSection className="delay-200">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
                       {popularProducts.slice(0, 6).map(product => (
                           <ProductCard key={product.id} product={product} categoryName={categoryMap.get(product.category) || ''} />
                       ))}
@@ -195,7 +196,7 @@ export default function HomePage() {
       
       {/* Product Categories Section */}
       <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-5 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <AnimatedSection className="text-center">
                   <h2 className="font-bold mb-6">Explore Our Product Categories</h2>
                   <p className="text-gray-600 mb-16 max-w-3xl mx-auto">
@@ -203,7 +204,7 @@ export default function HomePage() {
                   </p>
               </AnimatedSection>
               <AnimatedSection className="delay-200">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
                     {categories.map(category => (
                         <CategoryCard key={category.id} category={category} />
                     ))}
