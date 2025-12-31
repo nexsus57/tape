@@ -1,5 +1,6 @@
 
 
+
 // --- SEO TYPE DEFINITIONS (MOVED HERE TO BREAK CIRCULAR DEPENDENCY) ---
 export interface FaqItem {
     "@type": "Question";
@@ -56,6 +57,7 @@ export interface Product {
   uses: string[];
   category: string;
   industries?: string[];
+  tags?: string[]; // Added tags field for strict search filtering
   // New optional fields for detailed view
   minOrderQty?: string;
   brand?: string;
