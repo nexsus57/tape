@@ -1,6 +1,6 @@
 
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import type { ReactNode } from 'react';
+import { type ReactNode, type FC } from 'react';
 
 interface AnimatedSectionProps {
   children?: ReactNode;
@@ -8,7 +8,7 @@ interface AnimatedSectionProps {
   delay?: string;
 }
 
-export default function AnimatedSection({ children, className = '', delay = 'delay-0' }: AnimatedSectionProps) {
+const AnimatedSection: FC<AnimatedSectionProps> = ({ children, className = '', delay = 'delay-0' }) => {
   const [ref, isIntersecting] = useIntersectionObserver<HTMLDivElement>({ threshold: 0.1, triggerOnce: true });
 
   return (
@@ -20,3 +20,5 @@ export default function AnimatedSection({ children, className = '', delay = 'del
     </div>
   );
 };
+
+export default AnimatedSection;
