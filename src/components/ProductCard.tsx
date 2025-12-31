@@ -59,11 +59,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
             </span>
             <button
                 onClick={handleAddToQuote}
-                className="bg-brand-gray hover:bg-brand-yellow text-brand-blue-dark w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full transition-colors duration-300 shadow-sm z-10"
-                title="Add to Quote"
+                className="bg-brand-yellow text-brand-blue-dark text-xs font-bold px-3 py-2 rounded hover:bg-yellow-400 transition-colors duration-300 shadow-sm z-10 whitespace-nowrap"
                 aria-label={`Add ${product.name} to quote`}
             >
-                <i className="fas fa-plus text-[10px] sm:text-xs"></i>
+                Add to Quote
             </button>
         </div>
       </div>
