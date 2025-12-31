@@ -25,7 +25,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
       to={`/product/${product.id}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden transform hover:-translate-y-1 product-card"
     >
-      <div className="relative overflow-hidden bg-gray-50 p-4 aspect-[4/3] flex items-center justify-center">
+      <div className="relative overflow-hidden bg-gray-50 p-2 sm:p-4 aspect-[4/3] flex items-center justify-center">
         <img
           src={product.image}
           alt={product.name}
@@ -35,35 +35,35 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
           height="300"
           onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
         />
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block">
             <span className="bg-white/90 text-brand-blue-dark text-xs font-bold px-2 py-1 rounded shadow-sm backdrop-blur-sm">
-                View Details
+                View
             </span>
         </div>
       </div>
 
-      <div className="p-5 flex flex-col flex-grow">
-        <p className="text-xs font-bold text-brand-accent uppercase tracking-wider mb-2">
+      <div className="p-3 sm:p-5 flex flex-col flex-grow">
+        <p className="text-[10px] sm:text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 sm:mb-2 line-clamp-1">
           {categoryName}
         </p>
-        <h3 className="text-lg font-bold text-brand-blue-dark mb-3 leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
+        <h3 className="text-sm sm:text-lg font-bold text-brand-blue-dark mb-2 leading-tight sm:leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
           {product.name}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
+        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3 flex-grow">
           {product.shortDescription}
         </p>
 
-        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between gap-3">
-            <span className="text-sm font-bold text-brand-accent group-hover:text-brand-accent-dark flex items-center">
-                View Product
+        <div className="mt-auto pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+            <span className="text-xs sm:text-sm font-bold text-brand-accent group-hover:text-brand-accent-dark flex items-center">
+                Details <span className="hidden sm:inline">&nbsp;&rarr;</span>
             </span>
             <button
                 onClick={handleAddToQuote}
-                className="bg-brand-gray hover:bg-brand-yellow text-brand-blue-dark w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-300 shadow-sm z-10"
+                className="bg-brand-gray hover:bg-brand-yellow text-brand-blue-dark w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full transition-colors duration-300 shadow-sm z-10"
                 title="Add to Quote"
                 aria-label={`Add ${product.name} to quote`}
             >
-                <i className="fas fa-plus text-xs"></i>
+                <i className="fas fa-plus text-[10px] sm:text-xs"></i>
             </button>
         </div>
       </div>
