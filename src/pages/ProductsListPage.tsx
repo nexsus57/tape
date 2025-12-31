@@ -15,17 +15,20 @@ interface FilterButtonProps {
     label: string;
     isActive: boolean;
     to: string;
-    onClick?: () => void;
+    variant?: 'default' | 'industry';
 }
 
-const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to }) => {
-    const activeClass = 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md';
-    const inactiveClass = 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300';
+const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to, variant = 'default' }) => {
+    const activeClass = variant === 'industry'
+        ? 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-sm'
+        : 'bg-brand-accent text-white border-brand-accent shadow-sm';
+    
+    const inactiveClass = 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300';
 
     return (
         <Link
             to={to}
-            className={`px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
+            className={`px-3 py-1.5 text-xs sm:text-sm font-bold rounded-full transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
                 isActive ? activeClass : inactiveClass
             }`}
         >
@@ -191,48 +194,51 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
-                {/* SINGLE UNIFIED FILTER BAR */}
-                <div className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-200 py-3 shadow-sm transition-all">
-                    <div className="container mx-auto px-4 overflow-x-auto hide-scrollbar">
-                        <div className="flex items-center gap-2 min-w-max">
-                            {/* All Products */}
-                            <FilterButton 
-                                label="All Products" 
-                                isActive={isAllActive} 
-                                to="/products?category=all" 
-                            />
-                            
-                            <div className="w-px h-6 bg-gray-300 mx-2"></div>
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Industries</span>
-
-                            {/* Industries */}
-                            {INDUSTRIES.map(ind => (
+                {/* STICKY FILTER BAR */}
+                <div className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 py-3 shadow-sm transition-all">
+                    <div className="container mx-auto px-4 flex flex-col gap-3">
+                        
+                        {/* ROW 1: CATEGORIES */}
+                        <div className="flex items-center overflow-x-auto hide-scrollbar">
+                            <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-3 flex-shrink-0 w-16">Categories</span>
+                            <div className="flex gap-2 min-w-max">
                                 <FilterButton 
-                                    key={ind.id} 
-                                    label={ind.name} 
-                                    isActive={activeIndustry === ind.id} 
-                                    to={`/products?industry=${ind.id}`}
+                                    label="All Products" 
+                                    isActive={isAllActive} 
+                                    to="/products?category=all" 
                                 />
-                            ))}
-
-                            <div className="w-px h-6 bg-gray-300 mx-2"></div>
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Categories</span>
-
-                            {/* Categories */}
-                            {categories.map(cat => (
-                                <FilterButton 
-                                    key={cat.id} 
-                                    label={cat.name} 
-                                    isActive={activeCategory === cat.id} 
-                                    to={`/products?category=${cat.id}`} 
-                                />
-                            ))}
+                                {categories.map(cat => (
+                                    <FilterButton 
+                                        key={cat.id} 
+                                        label={cat.name} 
+                                        isActive={activeCategory === cat.id} 
+                                        to={`/products?category=${cat.id}`} 
+                                    />
+                                ))}
+                            </div>
                         </div>
+
+                        {/* ROW 2: INDUSTRIES */}
+                        <div className="flex items-center overflow-x-auto hide-scrollbar border-t border-gray-100 pt-2">
+                            <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mr-3 flex-shrink-0 w-16">Industries</span>
+                            <div className="flex gap-2 min-w-max">
+                                {INDUSTRIES.map(ind => (
+                                    <FilterButton 
+                                        key={ind.id} 
+                                        label={ind.name} 
+                                        isActive={activeIndustry === ind.id} 
+                                        to={`/products?industry=${ind.id}`}
+                                        variant="industry"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    {/* PRODUCT GRID - Removed AnimatedSection wrapper to ensure immediate visual rendering on navigation */}
+                    {/* PRODUCT GRID - Immediate rendering (no Animation delay) */}
                     <div className="min-h-[50vh]">
                         {filteredProducts.length > 0 ? (
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8 animate-fade-in">
