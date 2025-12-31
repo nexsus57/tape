@@ -132,7 +132,7 @@ export default function HomePage() {
                 </div>
                 <div className="bg-white p-8 rounded-lg shadow-sm text-center border-t-4 border-brand-accent hover:shadow-xl transition-shadow duration-300">
                   <RangeIcon className="h-12 w-12 mx-auto text-brand-accent mb-5" />
-                  <h3 className="mb-3">Over {products.length} Solutions</h3>
+                  <h3 className="mb-3">Over 250+ Solutions</h3>
                   <p className="text-gray-600">Our extensive product range caters to diverse industries, ensuring you find the perfect tape for any application.</p>
                 </div>
               </div>
