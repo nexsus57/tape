@@ -26,6 +26,26 @@
   <url><loc>https://tapeindia.shop/products?industry=reflective-safety-industry</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://tapeindia.shop/products?industry=ptfe-teflon-industry</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
 
+  <!-- Tag Pages (High Intent Search Terms) -->
+  <url><loc>https://tapeindia.shop/products?tag=heat-resistant</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=high-temperature</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=emi-shielding</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=esd</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=anti-static</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=hvac</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=duct-sealing</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=anti-slip</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=safety-marking</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=glow-in-the-dark</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=reflective</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=foam</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=packaging</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=masking</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=thermal-management</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=waterproof</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=surface-protection</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://tapeindia.shop/products?tag=pipe-sealing</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+
   <!-- Blog Posts -->
   <url><loc>https://tapeindia.shop/blog/top-10-industrial-tapes-2025</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://tapeindia.shop/blog/thermal-tapes-vs-thermal-pads</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
