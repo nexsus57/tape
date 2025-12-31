@@ -272,9 +272,9 @@ export default function ProductPage() {
             {/* Related Products Section */}
             {relatedProducts.length > 0 && (
                 <section className="py-16 md:py-24 bg-brand-gray">
-                    <div className="container mx-auto px-5 lg:px-8">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <h2 className="text-3xl font-bold mb-12 text-center text-brand-blue-dark">You Might Also Need</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
                             {relatedProducts.map(p => (
                                <ProductCard key={p.id} product={p} categoryName={category?.name || ''} />
                             ))}
