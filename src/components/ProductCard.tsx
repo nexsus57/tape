@@ -13,15 +13,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   const { addToCart } = useCart();
 
   const handleAddToQuote = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); // Prevent navigating to the product page
+    e.preventDefault(); 
     e.stopPropagation();
     addToCart(product.id);
-    // Simple feedback
     alert(`${product.name} added to quote basket!`);
   };
 
-  // Determine what to show as "Specs". Prioritize tags for short keywords.
-  // Fallback to features if tags are empty. Limit to max 2 items for cleaner UI.
   const specs = (product.tags && product.tags.length > 0) 
     ? product.tags.slice(0, 2) 
     : (product.features ? product.features.slice(0, 2) : []);
@@ -31,7 +28,6 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
       to={`/product/${product.id}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden transform hover:-translate-y-1 product-card"
     >
-      {/* Image Section - Uniform Background */}
       <div className="relative overflow-hidden bg-white p-6 sm:p-8 aspect-[4/3] flex items-center justify-center border-b border-gray-50">
         <img
           src={product.image}
@@ -42,29 +38,19 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
           height="300"
           onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
         />
-        {/* Mobile Quick View Badge - Removed to reduce clutter */}
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block">
-            <span className="bg-white/90 text-brand-blue-dark text-[10px] font-bold px-2 py-1 rounded shadow-sm backdrop-blur-sm border border-gray-100">
-                View
-            </span>
-        </div>
       </div>
 
-      {/* Content Section */}
       <div className="p-5 flex flex-col flex-grow">
-        {/* Category Label */}
         <div className="mb-1.5">
              <span className="inline-block text-[10px] font-bold text-gray-400 uppercase tracking-widest">
               {categoryName}
             </span>
         </div>
 
-        {/* Title */}
         <h3 className="text-sm sm:text-base font-bold text-brand-blue-dark mb-2 leading-snug group-hover:text-brand-accent transition-colors line-clamp-2">
           {product.name}
         </h3>
 
-        {/* Quick Specs Row - Limited to 2 items */}
         {specs.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4 mt-auto"> 
                 {specs.map((spec, i) => (
@@ -75,7 +61,6 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
             </div>
         )}
 
-        {/* Action Footer */}
         <div className={`mt-auto pt-3 border-t border-gray-50 flex items-center justify-between gap-3 ${specs.length === 0 ? 'mt-auto' : ''}`}>
             <button
                 onClick={handleAddToQuote}
