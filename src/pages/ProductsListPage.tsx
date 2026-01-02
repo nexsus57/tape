@@ -162,17 +162,24 @@ export default function ProductsListPage() {
              };
         } else if (searchQuery) {
              const q = searchQuery.trim().toLowerCase();
+             // Escape special regex characters
              const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-             const regex = new RegExp(`\\b${safeQ}\\b`, 'i');
+             const regex = new RegExp(safeQ, 'i');
 
              prods = availableProducts.filter(p => {
-                 const hasTagMatch = p.tags?.some(t => t.toLowerCase().includes(q));
-                 if (hasTagMatch) return true;
+                 // Check Tags
+                 if (p.tags?.some(t => t.toLowerCase().includes(q))) return true;
+                 // Check Name
+                 if (regex.test(p.name)) return true;
+                 // Check Uses/Applications
+                 if (p.uses?.some(u => u.toLowerCase().includes(q))) return true;
+                 // Check Category Name (loose match)
+                 if (p.category.includes(q)) return true;
                  
-                 const nameMatch = regex.test(p.name);
-                 const looseMatch = q.length > 3 && p.name.toLowerCase().includes(q);
-                 
-                 return nameMatch || looseMatch;
+                 // Fallback: Check if description contains the word
+                 if (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) return true;
+
+                 return false;
              });
 
              pageData = {
@@ -395,7 +402,7 @@ export default function ProductsListPage() {
                                     {products.length === 0 ? 'Loading Products...' : 'No products found'}
                                 </h3>
                                 <p className="text-gray-500 mt-2 max-w-md mx-auto px-4">
-                                    We couldn't find any products matching your selection. Try clearing filters.
+                                    We couldn't find any products matching your selection. Try clearing filters or using broader terms.
                                 </p>
                                 <button onClick={clearAllFilters} className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
                                     Clear Filters
