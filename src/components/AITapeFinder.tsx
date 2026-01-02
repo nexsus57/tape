@@ -136,8 +136,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     // 1. Try Rule-Based Matching First (Instant)
     const localResult = performLocalSearch(query);
     if (localResult) {
-        // Simulate a tiny delay for "thinking" feel, or just show immediately. 
-        // Showing immediately is better for UX.
         setTimeout(() => {
             setResult(localResult);
             setLoading(false);
@@ -156,35 +154,37 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       const inventory = products.map(p => ({
         id: p.id,
         name: p.name,
-        keywords: `${p.category} ${p.industries?.join(' ')}`
+        category: p.category,
+        description: p.shortDescription,
+        uses: p.uses,
+        features: p.features
       }));
 
       const prompt = `
-        You are Tape India's Expert AI Consultant.
+        You are Tape India's Senior Technical Adhesive Engineer. You have 30 years of experience in industrial applications.
         User Query: "${query}"
 
-        Task: Recommend products from the inventory below based on the User Query.
-        
-        CRITICAL RULES:
-        1. FIRST, check the "Categorization Rules" below. If the User Query matches a Tag/Concept, you MUST strictly recommend ONLY the products listed for that Tag in the rules.
-        2. IF the query does not match a strict Tag, use your general knowledge to find the best matches from the Inventory.
-        3. Return JSON format only.
+        Task: Analyze the technical requirements of the user's query (temperature, surface energy, environmental exposure, substrate) and recommend the absolute best products from the inventory.
 
-        Categorization Rules:
+        Context:
+        The user might use non-technical terms. Translate "hot" to thermal resistance, "sticky" to tack/adhesion levels, "outside" to UV/weather resistance.
+
+        Categorization Rules to Respect:
         ${CATEGORY_RULES}
 
-        Inventory (ID : Name):
+        Inventory (ID : Data):
         ${JSON.stringify(inventory)}
 
         Output Format (JSON):
         {
-          "reasoning": "A concise, professional explanation (max 2 sentences) of why these tapes are recommended.",
+          "reasoning": "Write as a Senior Engineer. Be concise but technical. Explain WHY the selected tapes work for this specific application (e.g., mention 'silicone adhesive for high temp' or 'acrylic for UV stability'). Do not sound like a generic chatbot.",
           "productIds": ["exact_id_from_inventory", ...]
         }
       `;
 
+      // Use Gemini 3 Pro Preview for smarter, deeper reasoning
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-latest',
+        model: 'gemini-3-pro-preview',
         contents: prompt,
         config: { responseMimeType: 'application/json' }
       });
@@ -195,7 +195,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         if (data.productIds && data.productIds.length > 0) {
             setResult(data);
         } else {
-            // AI returned valid JSON but no products? Fallback to broad search.
             throw new Error("No products returned by AI");
         }
       } else {
@@ -205,7 +204,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       console.warn("AI Search failed, falling back to basic search:", error);
       
       // 3. Final Fallback: Aggressive Local Search
-      // Split query into words and try to match ANY word
       const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
       const fallbackMatches = products.filter(p => 
           words.some(w => 
@@ -257,7 +255,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
             </div>
             <div>
                 <h2 className="text-xl font-bold leading-none">Tape India AI Expert</h2>
-                <p className="text-xs text-blue-200 mt-1">Powered by Gemini 2.5 Flash</p>
+                <p className="text-xs text-blue-200 mt-1">Powered by Gemini 3 Pro</p>
             </div>
           </div>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors text-2xl leading-none">&times;</button>
