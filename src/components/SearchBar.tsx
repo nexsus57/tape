@@ -35,14 +35,16 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const fuse = useMemo(() => {
     return new Fuse(products, {
       keys: [
-        { name: 'name', weight: 0.6 },
-        { name: 'id', weight: 0.3 },
-        { name: 'category', weight: 0.2 },
-        { name: 'tags', weight: 0.2 }, 
-        { name: 'industries', weight: 0.1 },
-        { name: 'shortDescription', weight: 0.05 }
+        { name: 'name', weight: 0.7 },
+        { name: 'tags', weight: 0.6 }, // Increased weight for Tags (Intent)
+        { name: 'uses', weight: 0.5 }, // Added Uses for problem-based search
+        { name: 'category', weight: 0.4 },
+        { name: 'industries', weight: 0.3 },
+        { name: 'features', weight: 0.2 },
+        { name: 'id', weight: 0.2 },
+        { name: 'shortDescription', weight: 0.1 }
       ],
-      threshold: 0.3,
+      threshold: 0.4, // Slightly increased threshold to allow fuzzier matches
       ignoreLocation: true,
       includeScore: true,
     });
@@ -59,6 +61,8 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
           description: 'string',
           category: 'string',
           industries: 'string[]',
+          tags: 'string[]', // Added schema support
+          uses: 'string[]'  // Added schema support
         },
       });
 
@@ -68,6 +72,8 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
         description: p.shortDescription || '',
         category: p.category,
         industries: p.industries || [],
+        tags: p.tags || [],
+        uses: p.uses || []
       }));
 
       await insertMultiple(db, records);
@@ -107,7 +113,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 
     combinedResults = [...fuseMatches];
 
-    const isDescriptive = q.split(' ').length >= 4;
+    const isDescriptive = q.split(' ').length >= 3;
     const needsMoreResults = fuseMatches.length < 3;
 
     if ((needsMoreResults || isDescriptive) && oramaDb) {
