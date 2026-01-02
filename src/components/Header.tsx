@@ -59,13 +59,14 @@ export default function Header() {
     <>
       <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 lg:h-20">
-            <Link to="/" className="flex-shrink-0 z-50" aria-label="Tape India Home">
+          <div className="flex items-center justify-between lg:justify-start h-14 lg:h-20 gap-4 lg:gap-0">
+            {/* Logo */}
+            <Link to="/" className="flex-shrink-0 z-50 mr-8" aria-label="Tape India Home">
               <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-9 lg:h-14 w-auto" loading="eager" width="56" height="56" />
             </Link>
             
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8 h-full">
+            {/* Desktop Navigation - Moved to Left Group */}
+            <nav className="hidden lg:flex items-center space-x-6 mr-4 xl:mr-8">
               {navItems.map((link) => {
                   if (link.name === 'Products') {
                       return (
@@ -83,10 +84,10 @@ export default function Header() {
                                 <i className={`fas fa-chevron-down ml-1 text-xs transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}></i>
                               </Link>
 
-                              {/* MEGA MENU */}
+                              {/* MEGA MENU - Updated Positioning (Left Aligned to avoid overflow) */}
                               <div 
-                                className={`absolute top-full left-1/2 transform -translate-x-1/2 w-[90vw] max-w-6xl bg-white shadow-2xl rounded-b-xl border-t-4 border-brand-accent transition-all duration-300 origin-top ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
-                                style={{ marginTop: '0px' }}
+                                className={`absolute top-full -left-4 transform w-[85vw] max-w-5xl bg-white shadow-2xl rounded-b-xl border-t-4 border-brand-accent transition-all duration-300 origin-top-left ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
+                                style={{ marginTop: '20px' }} // Added offset for better hover bridge
                               >
                                   <div className="flex p-8 gap-8">
                                       <div className="w-2/3 pr-8 border-r border-gray-100">
@@ -150,13 +151,17 @@ export default function Header() {
                   );
               })}
             </nav>
-            
-            {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-4">
+
+            {/* Central Search Bar */}
+            <div className="hidden lg:block flex-1 max-w-2xl mx-auto px-4">
                 <SearchBar />
+            </div>
+            
+            {/* Desktop Actions - Right */}
+            <div className="hidden lg:flex items-center gap-3 xl:gap-4 ml-auto flex-shrink-0">
                 <button
                   onClick={() => setIsAIFinderOpen(true)}
-                  className="flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-accent text-white px-4 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-sm whitespace-nowrap"
+                  className="flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-accent text-white px-3 py-2 xl:px-4 xl:py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-xs xl:text-sm whitespace-nowrap"
                 >
                   <AIIcon className="w-4 h-4 text-brand-yellow" />
                   <span>AI Finder</span>
@@ -172,15 +177,15 @@ export default function Header() {
                 {ctaItem && (
                   <Link
                     to={ctaItem.path}
-                    className="bg-brand-yellow text-brand-blue-dark font-bold py-2.5 px-6 rounded-md text-base hover:bg-yellow-400 transition-colors transform hover:scale-105 whitespace-nowrap"
+                    className="bg-brand-yellow text-brand-blue-dark font-bold py-2 px-4 xl:py-2.5 xl:px-6 rounded-md text-sm xl:text-base hover:bg-yellow-400 transition-colors transform hover:scale-105 whitespace-nowrap"
                   >
                     {ctaItem.name}
                   </Link>
                 )}
             </div>
 
-            {/* Mobile Actions */}
-            <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile Actions (Right aligned on mobile) */}
+            <div className="lg:hidden flex items-center gap-2 ml-auto">
                <button
                   onClick={() => setIsAIFinderOpen(true)}
                   className="p-2 text-brand-blue-deep flex items-center gap-1 bg-blue-50 rounded-full px-3"
