@@ -12,64 +12,129 @@ interface AITapeFinderProps {
   onClose: () => void;
 }
 
-// Intent Mapping Rules for Immediate Response
+// Helper to check text matches
+const matches = (text: string, terms: string[]) => {
+    const lower = text.toLowerCase();
+    return terms.some(term => lower.includes(term));
+};
+
+// Intent Mapping Rules with Scoring System
+// Score > 0 implies relevance. Higher is better.
 const INTENT_RULES = [
   {
-    keywords: ['heat', 'high temp', 'thermal', 'flame', 'fire', 'burn', 'oven', 'plasma'],
-    match: (p: Product) => 
-      p.tags?.some(t => ['HEAT RESISTANT', 'HIGH TEMPERATURE'].includes(t)) || 
-      p.category === 'teflon-ptfe-tapes' ||
-      p.name.toLowerCase().includes('glass cloth'),
+    id: 'heat',
+    keywords: ['heat', 'high temp', 'thermal', 'flame', 'fire', 'burn', 'oven', 'plasma', 'powder coat'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const q = query.toLowerCase();
+        const n = p.name.toLowerCase();
+        
+        // 1. Tag Relevance
+        if (p.tags?.some(t => ['HEAT RESISTANT', 'HIGH TEMPERATURE'].includes(t))) score += 20;
+        
+        // 2. Exact Name Matches
+        if (matches(n, ['polyimide', 'kapton', 'glass cloth', 'teflon', 'ptfe'])) score += 15;
+        
+        // 3. Category Context
+        if (p.category === 'teflon-ptfe-tapes') score += 10;
+        
+        // 4. Query Specifics
+        if (q.includes('powder') && n.includes('green')) score += 30; // Green polyester for powder coating
+        if (q.includes('sealing') && n.includes('sealing')) score += 15;
+
+        return score;
+    },
     reasoning: "Based on your need for heat resistance, we recommend our High-Temperature PTFE, Glass Cloth, or Polyimide tapes."
   },
   {
-    keywords: ['slip', 'skid', 'floor', 'walkway', 'stair', 'traction'],
-    match: (p: Product) => 
-      p.tags?.some(t => ['ANTI-SLIP', 'ANTI-SKID', 'FLOOR SAFETY'].includes(t)) || 
-      p.category === 'safety-tapes',
+    id: 'safety',
+    keywords: ['slip', 'skid', 'floor', 'walkway', 'stair', 'traction', 'hazard', 'warning', 'barrier'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const q = query.toLowerCase();
+        const n = p.name.toLowerCase();
+
+        if (p.tags?.some(t => ['ANTI-SLIP', 'ANTI-SKID', 'FLOOR SAFETY', 'SAFETY MARKING'].includes(t))) score += 20;
+        if (p.category === 'safety-tapes') score += 10;
+
+        // Specific handling for "Anti Slip" vs "Marking"
+        if (q.includes('slip') || q.includes('skid')) {
+            if (n.includes('anti-slip') || n.includes('anti-skid')) score += 25;
+            else score -= 5; // Demote generic floor marking if user wants anti-slip
+        }
+        
+        if (q.includes('mark') || q.includes('line')) {
+            if (n.includes('floor marking') || n.includes('hazard')) score += 25;
+        }
+
+        return score;
+    },
     reasoning: "For floor safety and traction, our Anti-Skid and Safety Marking tapes are the best choice."
   },
   {
-    keywords: ['emi', 'shield', 'interference', 'signal', 'conductive', 'copper', 'static', 'esd'],
-    match: (p: Product) => 
-      p.tags?.some(t => ['EMI SHIELDING', 'EMI', 'RFI', 'ESD'].includes(t)) || 
-      p.category === 'antistatic-esd-tapes',
+    id: 'emi',
+    keywords: ['emi', 'shield', 'interference', 'signal', 'conductive', 'copper', 'static', 'esd', 'grounding'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const q = query.toLowerCase();
+        const n = p.name.toLowerCase();
+
+        // Base Tag Matches
+        if (p.tags?.some(t => ['EMI SHIELDING', 'EMI', 'RFI'].includes(t))) score += 20;
+        if (p.tags?.some(t => ['ESD', 'ANTI-STATIC'].includes(t))) score += 10;
+        
+        // Critical: Conductive logic
+        const wantsConductive = q.includes('conductive') || q.includes('shield') || q.includes('copper');
+        const isMetal = n.includes('copper') || n.includes('foil') || n.includes('shield');
+        const isPlastic = n.includes('polyimide') || n.includes('kapton') || n.includes('polyester');
+
+        if (wantsConductive) {
+            if (isMetal) score += 40; // Massive boost for actual conductive tapes
+            if (isPlastic) score -= 20; // Penalize plastic tapes for conductive queries
+        }
+
+        // Critical: ESD logic
+        if (q.includes('static') || q.includes('esd')) {
+            if (n.includes('esd') || n.includes('anti-static')) score += 30;
+            if (n.includes('copper')) score += 5; // Copper is also good for ESD grounding
+        }
+
+        return score;
+    },
     reasoning: "For electronics, shielding, or static control, we recommend our EMI Shielding and ESD tapes."
   },
   {
-    keywords: ['water', 'leak', 'seal', 'pipe', 'plumbing', 'moisture', 'outdoor'],
-    match: (p: Product) => 
-      p.tags?.some(t => ['PIPE SEALING', 'LEAK REPAIR', 'WATERPROOF'].includes(t)) || 
-      p.name.toLowerCase().includes('butyl') || 
-      p.name.toLowerCase().includes('silicone'),
+    id: 'waterproof',
+    keywords: ['water', 'leak', 'seal', 'pipe', 'plumbing', 'moisture', 'outdoor', 'roof'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const n = p.name.toLowerCase();
+        
+        if (p.tags?.some(t => ['PIPE SEALING', 'LEAK REPAIR', 'WATERPROOF'].includes(t))) score += 20;
+        if (n.includes('butyl') || n.includes('silicone') || n.includes('repair')) score += 25;
+        
+        return score;
+    },
     reasoning: "These tapes are specialized for waterproofing, sealing leaks, and protecting pipes."
   },
   {
-    keywords: ['pack', 'box', 'carton', 'ship', 'parcel'],
-    match: (p: Product) => 
-      p.tags?.some(t => ['PACKAGING', 'SEALING'].includes(t)) || 
-      p.category === 'specialty-tapes' && p.name.toLowerCase().includes('tape'),
+    id: 'packaging',
+    keywords: ['pack', 'box', 'carton', 'ship', 'parcel', 'strap'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const n = p.name.toLowerCase();
+        
+        if (p.tags?.some(t => ['PACKAGING', 'SEALING'].includes(t))) score += 20;
+        if (n.includes('bopp') || n.includes('filament') || n.includes('kraft')) score += 15;
+        
+        return score;
+    },
     reasoning: "For secure packaging and shipping, these are our most reliable adhesive solutions."
   }
 ];
 
-// The Strict Categorization Rules provided (Keeping for AI context if needed)
-const CATEGORY_RULES = `
-🔌 TAG: EMI SHIELDING / EMI / RFI
-Show ONLY: EMI Shielding Tape, Conductive Copper Foil Tape, Tin-Plated Copper Tape, ESD Conductive Grid Tape, ESD Kapton Tape, Anti-Static Polyester Tape
-
-⚡ TAG: ESD / ANTI-STATIC / STATIC CONTROL
-Show ONLY: ESD Floor Marking Tape, ESD Conductive Grid Tape, ESD Kapton Tape, Anti-Static Polyester Tape, Sticky Mat
-
-🔥 TAG: HEAT RESISTANT / HIGH TEMPERATURE
-Show ONLY: High-Temperature Kapton Polyimide Tape, Polyimide Film Tape, Polyimide Double-Sided Tape, Teflon & PTFE Tapes, PTFE Coated Tape with Silicone Adhesive, PTFE Coated Fiberglass Fabric, PTFE Coated Fiberglass Fabric with Silicone Adhesive, PTFE Coated Fiberglass Fabric with Liner, Glass Cloth Tape, Aluminium Glass Tape (FR Grade), Mica Tape, High Temperature Sealing Tape, Nitto 903 UL Tapes
-
-❄️ TAG: HVAC / DUCT SEALING / THERMAL INSULATION
-Show ONLY: High-Performance Aluminium Foil Tape, Aluminium Foil Scrim Kraft Tape (FSK), Aluminium PET Tape (Alupet), Aluminium Butyl Tape, Air Vent Tape, Fiber Glass Cloth Tape, Glass Cloth Tape, Aluminium Glass Tape (FR Grade)
-
-🚧 TAG: ANTI-SLIP / ANTI-SKID / FLOOR SAFETY
-Show ONLY: Heavy-Duty Anti-Skid & Anti-Slip Tape, Heavy Duty Anti-Skid Tape, Anti-Skid Tape with Centre Glow, Anti-Slip Tape for Bath and Shower
-`;
+// Keeping rules for context, but using weighted logic now
+const CATEGORY_RULES = `...`; 
 
 export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
   const { products } = useProducts();
@@ -97,26 +162,62 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
   const performLocalSearch = (searchQuery: string): { productIds: string[], reasoning: string } | null => {
       const lowerQuery = searchQuery.toLowerCase();
       
-      // 1. Check Intent Rules First
+      // 1. Identify Intent Rule with highest potential
+      // We run all rules and see which one produces the best top scores
+      let bestRuleResult = { rule: null as any, products: [] as any[], totalScore: 0 };
+
       for (const rule of INTENT_RULES) {
           if (rule.keywords.some(k => lowerQuery.includes(k))) {
-              const matches = products.filter(rule.match).map(p => p.id).slice(0, 6);
-              if (matches.length > 0) {
-                  return {
-                      productIds: matches,
-                      reasoning: rule.reasoning
+              // Calculate scores for all products under this rule
+              const scoredProducts = products.map(p => ({
+                  id: p.id,
+                  score: rule.score(p, lowerQuery)
+              }));
+
+              // Filter out irrelevant (<=0 score) and sort desc
+              const topProducts = scoredProducts
+                  .filter(sp => sp.score > 0)
+                  .sort((a, b) => b.score - a.score)
+                  .slice(0, 6);
+
+              // Calculate "confidence" of this rule
+              const totalScore = topProducts.reduce((sum, p) => sum + p.score, 0);
+
+              if (totalScore > bestRuleResult.totalScore) {
+                  bestRuleResult = {
+                      rule: rule,
+                      products: topProducts.map(p => p.id),
+                      totalScore: totalScore
                   };
               }
           }
       }
 
-      // 2. Fallback: Generic Keyword Match
-      const genericMatches = products.filter(p => 
-          p.name.toLowerCase().includes(lowerQuery) || 
-          p.category.replace(/-/g, ' ').includes(lowerQuery) ||
-          p.uses?.some(u => u.toLowerCase().includes(lowerQuery)) ||
-          p.tags?.some(t => t.toLowerCase().includes(lowerQuery))
-      ).map(p => p.id).slice(0, 6);
+      // If we found a good rule match
+      if (bestRuleResult.rule && bestRuleResult.products.length > 0) {
+          return {
+              productIds: bestRuleResult.products,
+              reasoning: bestRuleResult.rule.reasoning
+          };
+      }
+
+      // 2. Fallback: Generic Keyword Match (Simple scoring)
+      const genericMatches = products.map(p => {
+          let score = 0;
+          const n = p.name.toLowerCase();
+          const c = p.category.replace(/-/g, ' ');
+          
+          if (n.includes(lowerQuery)) score += 10;
+          if (c.includes(lowerQuery)) score += 5;
+          if (p.uses?.some(u => u.toLowerCase().includes(lowerQuery))) score += 3;
+          if (p.tags?.some(t => t.toLowerCase().includes(lowerQuery))) score += 5;
+          
+          return { id: p.id, score };
+      })
+      .filter(sp => sp.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6)
+      .map(sp => sp.id);
 
       if (genericMatches.length > 0) {
           return {
@@ -133,13 +234,16 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     setLoading(true);
     setResult(null);
 
-    // 1. Try Rule-Based Matching First (Instant)
+    // 1. Try Weighted Rule-Based Matching First (Instant)
     const localResult = performLocalSearch(query);
+    
+    // If local result is strong, use it. 
+    // "Strong" implies we found specific products.
     if (localResult) {
         setTimeout(() => {
             setResult(localResult);
             setLoading(false);
-        }, 600);
+        }, 400);
         return;
     }
 
@@ -150,7 +254,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
 
       const ai = new GoogleGenAI({ apiKey });
       
-      // Simplify inventory for token efficiency
       const inventory = products.map(p => ({
         id: p.id,
         name: p.name,
@@ -161,28 +264,25 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       }));
 
       const prompt = `
-        You are Tape India's Senior Technical Adhesive Engineer. You have 30 years of experience in industrial applications.
+        You are Tape India's Senior Technical Adhesive Engineer.
         User Query: "${query}"
 
-        Task: Analyze the technical requirements of the user's query (temperature, surface energy, environmental exposure, substrate) and recommend the absolute best products from the inventory.
-
-        Context:
-        The user might use non-technical terms. Translate "hot" to thermal resistance, "sticky" to tack/adhesion levels, "outside" to UV/weather resistance.
-
-        Categorization Rules to Respect:
-        ${CATEGORY_RULES}
-
-        Inventory (ID : Data):
+        Task: Analyze technical requirements (temp, substrate, etc.) and recommend best products.
+        
+        Strict Rules:
+        - If query mentions "EMI" or "Shielding", prioritize "Copper Tape" or "EMI Shielding Tape". Do NOT recommend standard Kapton tape for EMI unless specified.
+        - If query mentions "Conductive", prioritize conductive tapes.
+        
+        Inventory:
         ${JSON.stringify(inventory)}
 
         Output Format (JSON):
         {
-          "reasoning": "Write as a Senior Engineer. Be concise but technical. Explain WHY the selected tapes work for this specific application (e.g., mention 'silicone adhesive for high temp' or 'acrylic for UV stability'). Do not sound like a generic chatbot.",
-          "productIds": ["exact_id_from_inventory", ...]
+          "reasoning": "Technical explanation.",
+          "productIds": ["id1", "id2", "id3"]
         }
       `;
 
-      // Use Gemini 3 Pro Preview for smarter, deeper reasoning
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-preview',
         contents: prompt,
@@ -203,7 +303,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     } catch (error) {
       console.warn("AI Search failed, falling back to basic search:", error);
       
-      // 3. Final Fallback: Aggressive Local Search
+      // 3. Final Fallback
       const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
       const fallbackMatches = products.filter(p => 
           words.some(w => 
@@ -255,7 +355,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
             </div>
             <div>
                 <h2 className="text-xl font-bold leading-none">Tape India AI Expert</h2>
-                <p className="text-xs text-blue-200 mt-1">Powered by Gemini 3 Pro</p>
+                <p className="text-xs text-blue-200 mt-1">Intelligent Product Matcher</p>
             </div>
           </div>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors text-2xl leading-none">&times;</button>
