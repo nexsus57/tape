@@ -18,8 +18,75 @@ const matches = (text: string, terms: string[]) => {
     return terms.some(term => lower.includes(term));
 };
 
-// Intent Mapping Rules with Scoring System
-// Score > 0 implies relevance. Higher is better.
+// --- SYSTEM INSTRUCTION: UNIVERSAL TAPE INTELLIGENCE ---
+const SYSTEM_INSTRUCTION = `
+System Instruction: Industrial Tape Recommendation Logic
+
+You are acting as an industrial applications engineer, not a generic assistant.
+Your job is to recommend the most technically appropriate tape, based on application effectiveness, not just keyword matching.
+
+🔑 CORE PRINCIPLE (VERY IMPORTANT)
+Many tapes may partially satisfy a requirement, but only one is optimal for a given application.
+Do NOT treat similar materials as equal.
+Always rank tapes based on industry-standard suitability.
+
+🧱 MATERIAL & APPLICATION PRIORITY RULES
+1️⃣ EMI / CONDUCTIVITY / SHIELDING
+Primary: Copper Foil Tape
+Best for EMI shielding, grounding, RFI suppression
+Secondary: Aluminium Foil Tape
+Conductive but mainly for HVAC / thermal use
+Rule:
+If EMI performance matters → Copper always ranks higher than Aluminium
+
+2️⃣ HIGH TEMPERATURE / SOLDERING / MASKING
+Primary: Polyimide (Kapton) Tape
+Secondary: PTFE / Teflon Tape (only when non-stick is required)
+Rule:
+Heat resistance ≠ non-stick ≠ electrical insulation — choose based on process
+
+3️⃣ NON-STICK / SEALING / HEAT CONTACT SURFACES
+Primary: PTFE / Teflon Tape
+Rule:
+If release, anti-stick, or sealing jaws are mentioned → PTFE wins
+
+4️⃣ ESD / STATIC PROTECTION
+Primary: Antistatic / ESD Tape
+Rule:
+EMI shielding ≠ ESD protection — never confuse these
+
+5️⃣ SAFETY / FLOOR / GRIP
+Primary: Anti-Slip Safety Tape
+Secondary: Reflective Safety Tape (only if visibility is requested)
+
+6️⃣ VISIBILITY / MARKING / SIGNAGE
+Primary: Reflective Tape
+Rule:
+Visibility problems ≠ slip resistance
+
+7️⃣ HVAC / DUCT / INSULATION
+Primary: Aluminium Foil Tape
+Rule:
+HVAC sealing ≠ EMI shielding
+
+🧠 DECISION LOGIC (MANDATORY)
+Identify the core problem (EMI, heat, static, safety, sealing, visibility)
+Select the most effective tape, not just a compatible one
+Rank results as:
+Best / Recommended
+Alternatives (if applicable)
+Clearly explain why one tape is better than others
+
+❌ STRICT PROHIBITIONS
+Do NOT show “No exact matches” if a related tape exists
+Do NOT treat conductive, insulating, heat-resistant, and antistatic tapes as interchangeable
+Do NOT recommend secondary materials as primary solutions
+
+🎯 GOAL
+Sound like a real industrial expert and always guide the user to the best-performing tape for their application, across all tape categories, not just copper
+`;
+
+// Intent Mapping Rules with Scoring System (Local Optimization)
 const INTENT_RULES = [
   {
     id: 'heat',
@@ -29,17 +96,10 @@ const INTENT_RULES = [
         const q = query.toLowerCase();
         const n = p.name.toLowerCase();
         
-        // 1. Tag Relevance
         if (p.tags?.some(t => ['HEAT RESISTANT', 'HIGH TEMPERATURE'].includes(t))) score += 20;
-        
-        // 2. Exact Name Matches
         if (matches(n, ['polyimide', 'kapton', 'glass cloth', 'teflon', 'ptfe'])) score += 15;
-        
-        // 3. Category Context
         if (p.category === 'teflon-ptfe-tapes') score += 10;
-        
-        // 4. Query Specifics
-        if (q.includes('powder') && n.includes('green')) score += 30; // Green polyester for powder coating
+        if (q.includes('powder') && n.includes('green')) score += 30; 
         if (q.includes('sealing') && n.includes('sealing')) score += 15;
 
         return score;
@@ -57,10 +117,9 @@ const INTENT_RULES = [
         if (p.tags?.some(t => ['ANTI-SLIP', 'ANTI-SKID', 'FLOOR SAFETY', 'SAFETY MARKING'].includes(t))) score += 20;
         if (p.category === 'safety-tapes') score += 10;
 
-        // Specific handling for "Anti Slip" vs "Marking"
         if (q.includes('slip') || q.includes('skid')) {
             if (n.includes('anti-slip') || n.includes('anti-skid')) score += 25;
-            else score -= 5; // Demote generic floor marking if user wants anti-slip
+            else score -= 5;
         }
         
         if (q.includes('mark') || q.includes('line')) {
@@ -79,29 +138,32 @@ const INTENT_RULES = [
         const q = query.toLowerCase();
         const n = p.name.toLowerCase();
 
-        // Base Tag Matches
-        if (p.tags?.some(t => ['EMI SHIELDING', 'EMI', 'RFI'].includes(t))) score += 20;
-        if (p.tags?.some(t => ['ESD', 'ANTI-STATIC'].includes(t))) score += 10;
+        if (p.tags?.some(t => ['EMI SHIELDING', 'EMI', 'RFI'].includes(t))) score += 10;
+        if (p.tags?.some(t => ['ESD', 'ANTI-STATIC'].includes(t))) score += 5;
         
-        // Critical: Conductive logic
-        const wantsConductive = q.includes('conductive') || q.includes('shield') || q.includes('copper');
-        const isMetal = n.includes('copper') || n.includes('foil') || n.includes('shield');
+        const isCopper = n.includes('copper');
+        const isAluminium = n.includes('aluminium') || n.includes('aluminum');
+        const isConductiveFabric = n.includes('emi shielding') && !isCopper && !isAluminium;
         const isPlastic = n.includes('polyimide') || n.includes('kapton') || n.includes('polyester');
 
-        if (wantsConductive) {
-            if (isMetal) score += 40; // Massive boost for actual conductive tapes
-            if (isPlastic) score -= 20; // Penalize plastic tapes for conductive queries
+        const wantsEMI = q.includes('emi') || q.includes('shield') || q.includes('interference');
+        const wantsConductive = q.includes('conductive') || q.includes('grounding');
+
+        if (wantsEMI || wantsConductive) {
+            if (isCopper) score += 60; // Priority 1
+            else if (isConductiveFabric) score += 40; // Priority 2
+            else if (isAluminium) score += 5; // Priority 3 (Secondary)
+            else if (isPlastic) score -= 30; // Penalty
         }
 
-        // Critical: ESD logic
         if (q.includes('static') || q.includes('esd')) {
-            if (n.includes('esd') || n.includes('anti-static')) score += 30;
-            if (n.includes('copper')) score += 5; // Copper is also good for ESD grounding
+            if (n.includes('esd') || n.includes('anti-static')) score += 40;
+            if (isCopper) score += 15;
         }
 
         return score;
     },
-    reasoning: "For electronics, shielding, or static control, we recommend our EMI Shielding and ESD tapes."
+    reasoning: "For EMI shielding and grounding, Copper Foil Tape is the industry standard due to its superior conductivity. Aluminium is a secondary option."
   },
   {
     id: 'waterproof',
@@ -133,9 +195,6 @@ const INTENT_RULES = [
   }
 ];
 
-// Keeping rules for context, but using weighted logic now
-const CATEGORY_RULES = `...`; 
-
 export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
   const { products } = useProducts();
   const { categories } = useCategories();
@@ -159,28 +218,24 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
+  // High-Speed Local Matching for obvious queries
   const performLocalSearch = (searchQuery: string): { productIds: string[], reasoning: string } | null => {
       const lowerQuery = searchQuery.toLowerCase();
       
-      // 1. Identify Intent Rule with highest potential
-      // We run all rules and see which one produces the best top scores
       let bestRuleResult = { rule: null as any, products: [] as any[], totalScore: 0 };
 
       for (const rule of INTENT_RULES) {
           if (rule.keywords.some(k => lowerQuery.includes(k))) {
-              // Calculate scores for all products under this rule
               const scoredProducts = products.map(p => ({
                   id: p.id,
                   score: rule.score(p, lowerQuery)
               }));
 
-              // Filter out irrelevant (<=0 score) and sort desc
               const topProducts = scoredProducts
                   .filter(sp => sp.score > 0)
                   .sort((a, b) => b.score - a.score)
                   .slice(0, 6);
 
-              // Calculate "confidence" of this rule
               const totalScore = topProducts.reduce((sum, p) => sum + p.score, 0);
 
               if (totalScore > bestRuleResult.totalScore) {
@@ -193,7 +248,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           }
       }
 
-      // If we found a good rule match
       if (bestRuleResult.rule && bestRuleResult.products.length > 0) {
           return {
               productIds: bestRuleResult.products,
@@ -201,17 +255,14 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           };
       }
 
-      // 2. Fallback: Generic Keyword Match (Simple scoring)
       const genericMatches = products.map(p => {
           let score = 0;
           const n = p.name.toLowerCase();
           const c = p.category.replace(/-/g, ' ');
-          
           if (n.includes(lowerQuery)) score += 10;
           if (c.includes(lowerQuery)) score += 5;
           if (p.uses?.some(u => u.toLowerCase().includes(lowerQuery))) score += 3;
           if (p.tags?.some(t => t.toLowerCase().includes(lowerQuery))) score += 5;
-          
           return { id: p.id, score };
       })
       .filter(sp => sp.score > 0)
@@ -237,9 +288,12 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     // 1. Try Weighted Rule-Based Matching First (Instant)
     const localResult = performLocalSearch(query);
     
-    // If local result is strong, use it. 
-    // "Strong" implies we found specific products.
-    if (localResult) {
+    // If local result is very strong (e.g. clearly EMI copper), use it.
+    // If the user query is complex, we prefer AI.
+    // We judge "complex" by length or lack of strong local signals.
+    const isComplexQuery = query.split(' ').length > 4; 
+    
+    if (localResult && !isComplexQuery) {
         setTimeout(() => {
             setResult(localResult);
             setLoading(false);
@@ -247,7 +301,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         return;
     }
 
-    // 2. If no rules match, try AI
+    // 2. AI Expert System
     try {
       const apiKey = process.env.API_KEY;
       if (!apiKey) throw new Error("API Key missing");
@@ -264,21 +318,16 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       }));
 
       const prompt = `
-        You are Tape India's Senior Technical Adhesive Engineer.
         User Query: "${query}"
 
-        Task: Analyze technical requirements (temp, substrate, etc.) and recommend best products.
-        
-        Strict Rules:
-        - If query mentions "EMI" or "Shielding", prioritize "Copper Tape" or "EMI Shielding Tape". Do NOT recommend standard Kapton tape for EMI unless specified.
-        - If query mentions "Conductive", prioritize conductive tapes.
-        
+        Task: Apply the System Instructions to the provided Inventory to find the best matches.
+
         Inventory:
         ${JSON.stringify(inventory)}
 
         Output Format (JSON):
         {
-          "reasoning": "Technical explanation.",
+          "reasoning": "Technical explanation following the decision logic.",
           "productIds": ["id1", "id2", "id3"]
         }
       `;
@@ -286,7 +335,10 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-preview',
         contents: prompt,
-        config: { responseMimeType: 'application/json' }
+        config: { 
+            responseMimeType: 'application/json',
+            systemInstruction: SYSTEM_INSTRUCTION
+        }
       });
 
       const text = response.text;
@@ -295,7 +347,9 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         if (data.productIds && data.productIds.length > 0) {
             setResult(data);
         } else {
-            throw new Error("No products returned by AI");
+            // If AI returns empty but we had local results, fallback to local
+            if (localResult) setResult(localResult);
+            else throw new Error("No products returned by AI");
         }
       } else {
           throw new Error("Empty response from AI");
@@ -303,26 +357,30 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     } catch (error) {
       console.warn("AI Search failed, falling back to basic search:", error);
       
-      // 3. Final Fallback
-      const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
-      const fallbackMatches = products.filter(p => 
-          words.some(w => 
-              p.name.toLowerCase().includes(w) || 
-              p.category.includes(w) ||
-              p.tags?.some(t => t.toLowerCase().includes(w))
-          )
-      ).map(p => p.id).slice(0, 6);
-
-      if (fallbackMatches.length > 0) {
-          setResult({ 
-            productIds: fallbackMatches, 
-            reasoning: "We couldn't connect to our expert system, but here are some related products based on your keywords." 
-          });
+      if (localResult) {
+          setResult(localResult);
       } else {
-          setResult({
-              productIds: [],
-              reasoning: "We couldn't find an exact match. Please try browsing our categories or contact our experts directly."
-          });
+          // Final Fallback: Aggressive Local Search
+          const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
+          const fallbackMatches = products.filter(p => 
+              words.some(w => 
+                  p.name.toLowerCase().includes(w) || 
+                  p.category.includes(w) ||
+                  p.tags?.some(t => t.toLowerCase().includes(w))
+              )
+          ).map(p => p.id).slice(0, 6);
+
+          if (fallbackMatches.length > 0) {
+              setResult({ 
+                productIds: fallbackMatches, 
+                reasoning: "We couldn't connect to our expert system, but here are some related products based on your keywords." 
+              });
+          } else {
+              setResult({
+                  productIds: [],
+                  reasoning: "We couldn't find an exact match. Please try browsing our categories or contact our experts directly."
+              });
+          }
       }
     } finally {
       setLoading(false);
@@ -354,8 +412,8 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
                 <AIIcon className="w-6 h-6 text-brand-yellow" />
             </div>
             <div>
-                <h2 className="text-xl font-bold leading-none">Tape India AI Expert</h2>
-                <p className="text-xs text-blue-200 mt-1">Intelligent Product Matcher</p>
+                <h2 className="text-xl font-bold leading-none text-white">Tape India AI Expert</h2>
+                <p className="text-xs text-blue-100 mt-1">Powered by Gemini 3.0</p>
             </div>
           </div>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors text-2xl leading-none">&times;</button>
