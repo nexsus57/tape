@@ -7,12 +7,15 @@ import { useSearchModal } from '../context/SearchModalContext';
 import { useCategories } from '../context/CategoryContext';
 import { useCart } from '../context/CartContext';
 import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
+import { AIIcon } from './icons/AIIcon';
+import AITapeFinder from './AITapeFinder';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { openSearchModal } = useSearchModal();
+  const [isAIFinderOpen, setIsAIFinderOpen] = useState(false); // State for AI Modal
+  
   const { categories } = useCategories();
   const { cartCount } = useCart();
   const location = useLocation();
@@ -30,6 +33,7 @@ export default function Header() {
       // Close menus on route change
       setIsMenuOpen(false);
       setIsMegaMenuOpen(false);
+      setIsAIFinderOpen(false);
   }, [location]);
 
   const handleMouseEnter = () => {
@@ -56,9 +60,9 @@ export default function Header() {
     <>
       <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-14 lg:h-20">
             <Link to="/" className="flex-shrink-0 z-50" aria-label="Tape India Home">
-              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-14 w-auto" loading="eager" width="56" height="56" />
+              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-10 lg:h-14 w-auto" loading="eager" width="56" height="56" />
             </Link>
             
             {/* Desktop Navigation */}
@@ -150,10 +154,18 @@ export default function Header() {
               })}
             </nav>
             
+            {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-4">
                 <SearchBar />
                 
-                {/* Quote Cart Icon */}
+                <button
+                  onClick={() => setIsAIFinderOpen(true)}
+                  className="flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-accent text-white px-4 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-sm whitespace-nowrap"
+                >
+                  <AIIcon className="w-4 h-4 text-brand-yellow" />
+                  <span>AI Finder</span>
+                </button>
+
                 <Link to="/request-quote" className="relative p-2 text-gray-600 hover:text-brand-accent transition-colors" aria-label="View Quote Basket">
                     <i className="fas fa-file-invoice text-xl"></i>
                     {cartCount > 0 && (
@@ -173,25 +185,31 @@ export default function Header() {
                 )}
             </div>
 
-            <div className="lg:hidden flex items-center gap-4">
-               <Link to="/request-quote" className="relative p-2 text-gray-600" aria-label="View Quote Basket">
-                    <i className="fas fa-file-invoice text-xl"></i>
-                    {cartCount > 0 && (
-                        <span className="absolute top-0 right-0 bg-brand-amber text-brand-blue-dark text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full shadow-sm">
-                            {cartCount}
-                        </span>
-                    )}
-                </Link>
+            {/* Mobile Actions */}
+            <div className="lg:hidden flex items-center gap-3">
+               <button
+                  onClick={() => setIsAIFinderOpen(true)}
+                  className="p-2 text-brand-accent"
+                  aria-label="Open AI Finder"
+               >
+                  <AIIcon className="w-5 h-5" />
+               </button>
+
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 hover:text-brand-accent focus:outline-none p-2"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
-                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Mobile Sticky Search Bar */}
+        <div className="lg:hidden px-4 pb-3 pt-1 border-b border-gray-100 bg-white">
+            <SearchBar />
         </div>
 
         {/* Mobile Menu Overlay */}
@@ -252,6 +270,9 @@ export default function Header() {
           </nav>
         </div>
       </header>
+
+      {/* AI TAPE FINDER MODAL */}
+      <AITapeFinder isOpen={isAIFinderOpen} onClose={() => setIsAIFinderOpen(false)} />
     </>
   );
 }
