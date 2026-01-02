@@ -1,6 +1,6 @@
 
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { useMemo, FC } from 'react';
+import { useMemo, FC, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
@@ -14,37 +14,71 @@ import type { SeoPageData } from '../types';
 interface FilterButtonProps {
     label: string;
     isActive: boolean;
-    to: string;
+    onClick: () => void;
     variant?: 'default' | 'industry';
 }
 
-const FilterButton: FC<FilterButtonProps> = ({ label, isActive, to, variant = 'default' }) => {
+const FilterButton: FC<FilterButtonProps> = ({ label, isActive, onClick, variant = 'default' }) => {
     const activeClass = variant === 'industry'
-        ? 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md ring-2 ring-brand-blue-deep/20'
-        : 'bg-brand-accent text-white border-brand-accent shadow-md ring-2 ring-brand-accent/20';
+        ? 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md'
+        : 'bg-brand-accent text-white border-brand-accent shadow-md';
     
-    const inactiveClass = 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900';
+    const inactiveClass = 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50';
 
     return (
-        <Link
-            to={to}
+        <button
+            onClick={onClick}
             className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
                 isActive ? activeClass : inactiveClass
             }`}
         >
             {label}
-        </Link>
+        </button>
     );
 }
+
+const ProductSkeleton = () => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col h-full animate-pulse">
+    <div className="bg-gray-100 aspect-[4/3] w-full rounded-t-xl"></div>
+    <div className="p-5 space-y-3 flex-grow">
+        <div className="h-3 bg-gray-100 rounded w-1/4"></div>
+        <div className="h-4 bg-gray-100 rounded w-3/4"></div>
+        <div className="h-4 bg-gray-100 rounded w-1/2"></div>
+        <div className="flex gap-2 mt-4">
+            <div className="h-6 bg-gray-100 rounded w-16"></div>
+            <div className="h-6 bg-gray-100 rounded w-16"></div>
+        </div>
+        <div className="h-8 bg-gray-200 rounded w-full mt-4"></div>
+    </div>
+  </div>
+);
+
+const COMMON_USE_CASES = [
+    { label: 'High Heat', tag: 'High Temperature' },
+    { label: 'Waterproof', tag: 'Waterproof' },
+    { label: 'Electrical', tag: 'Insulation' },
+    { label: 'Anti-Slip', tag: 'Anti-Slip' },
+    { label: 'Packaging', tag: 'Packaging' },
+    { label: 'EMI Shielding', tag: 'EMI' },
+];
 
 export default function ProductsListPage() {
     const location = useLocation();
     const navigate = useNavigate();
     const { products: contextProducts } = useProducts();
     const { categories } = useCategories();
+    const [isLoading, setIsLoading] = useState(true);
+    const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
 
-    // 1. IMMEDIATE RENDER FIX: Use static products as fallback immediately.
+    // Immediate fallback to static products
     const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
+
+    useEffect(() => {
+        // Simulate a short loading state for interaction feedback or data fetching simulation
+        setIsLoading(true);
+        const timer = setTimeout(() => setIsLoading(false), 300);
+        return () => clearTimeout(timer);
+    }, [location.search]);
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
     
@@ -54,11 +88,23 @@ export default function ProductsListPage() {
     const activeTag = searchParams.get('tag');
     const searchQuery = searchParams.get('q');
 
-    // "All Products" is active if no specific category is set (or explicitly 'all')
-    const isAllCategoriesActive = !activeCategory || activeCategory === 'all';
-    
-    // "All Industries" is active if no specific industry is set.
-    const isAllIndustriesActive = !activeIndustry;
+    const handleFilterChange = (key: string, value: string | null) => {
+        const newParams = new URLSearchParams(location.search);
+        if (value) {
+            newParams.set(key, value);
+        } else {
+            newParams.delete(key);
+        }
+        // If changing category, usually keep industry? Or reset? 
+        // Current UX allows intersection.
+        navigate({ search: newParams.toString() });
+        if (key === 'industry') setIsIndustrySheetOpen(false);
+    };
+
+    const clearAllFilters = () => {
+        navigate({ search: '' });
+        setIsIndustrySheetOpen(false);
+    };
 
     const { 
       filteredProducts, 
@@ -72,20 +118,16 @@ export default function ProductsListPage() {
         let prods = [];
         let pageData: Partial<SeoPageData> | undefined;
 
-        // Ensure we have a pool of products to filter
         const availableProducts = products || [];
 
         if (activeIndustry) {
-            // Industry Filter
             const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === activeIndustry);
             if (industryDetail) {
-                // Filter by industry first
                 prods = availableProducts.filter(p => 
                     industryDetail.products.includes(p.id) || 
                     p.industries?.includes(activeIndustry)
                 );
                 
-                // If category is also active, filter further (Intersection)
                 if (activeCategory && activeCategory !== 'all') {
                     prods = prods.filter(p => p.category === activeCategory);
                 }
@@ -107,7 +149,6 @@ export default function ProductsListPage() {
                 }
             }
         } else if (activeCategory && activeCategory !== 'all') {
-            // Category Filter Only (No Industry)
             const category = categories.find(c => c.id === activeCategory);
             prods = availableProducts.filter(p => p.category === activeCategory);
             
@@ -115,7 +156,6 @@ export default function ProductsListPage() {
                 pageData = seoData.find(p => p.id === activeCategory || p["Page Name"] === category.name);
             }
         } else if (activeTag) {
-             // Tag Filter
              const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
              prods = availableProducts.filter(p => 
                  p.tags?.some(t => t.toUpperCase().includes(normalizedTag))
@@ -125,7 +165,6 @@ export default function ProductsListPage() {
                  "Title (≤60 chars)": `${activeTag.replace(/-/g, ' ')} Tapes | Tape India`,
              };
         } else if (searchQuery) {
-             // Search Filter
              const q = searchQuery.trim().toLowerCase();
              const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
              const regex = new RegExp(`\\b${safeQ}\\b`, 'i');
@@ -145,11 +184,9 @@ export default function ProductsListPage() {
                  "Title (≤60 chars)": `Search: ${searchQuery} | Tape India`,
              };
         } else {
-            // Default: Show All
             prods = availableProducts;
         }
 
-        // Fallback SEO Data
         if (!pageData) {
             pageData = seoData.find(p => p["Page Name"] === "All Products List");
         }
@@ -181,22 +218,6 @@ export default function ProductsListPage() {
         };
     }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
 
-    // Helper to generate URL for "All Industries" button (preserves category if set)
-    const allIndustriesUrl = useMemo(() => {
-        if (activeCategory && activeCategory !== 'all') {
-            return `/products?category=${activeCategory}`;
-        }
-        return '/products';
-    }, [activeCategory]);
-
-    // Helper to generate URL for "All Products" (Categories) button (preserves industry if set)
-    const allCategoriesUrl = useMemo(() => {
-        if (activeIndustry) {
-            return `/products?industry=${activeIndustry}`;
-        }
-        return '/products?category=all';
-    }, [activeIndustry]);
-
     return (
         <>
             <Helmet>
@@ -209,8 +230,17 @@ export default function ProductsListPage() {
             </Helmet>
             <CanonicalTag />
 
-            <main className="bg-gray-50 min-h-screen">
-                <div className="bg-brand-blue-deep text-white py-12 md:py-16">
+            <main className="bg-gray-50 min-h-screen pb-20">
+                {/* Mobile Header Title */}
+                <div className="bg-white border-b border-gray-100 py-4 px-4 lg:hidden">
+                    <h1 className="text-xl font-extrabold text-brand-blue-dark">{pageH1}</h1>
+                    {activeIndustry || activeTag ? (
+                        <button onClick={clearAllFilters} className="text-xs text-brand-accent mt-1 font-medium">Clear Filters</button>
+                    ) : null}
+                </div>
+
+                {/* Desktop Hero */}
+                <div className="hidden lg:block bg-brand-blue-deep text-white py-12 md:py-16">
                     <div className="container mx-auto px-5 lg:px-8 text-center">
                         <AnimatedSection>
                             <h1 className="font-extrabold mb-4 text-white capitalize">{pageH1}</h1>
@@ -219,38 +249,34 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
-                {/* STICKY FILTER BAR */}
-                <div className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all">
+                {/* Sticky Filter Bar (Desktop) */}
+                <div className="hidden lg:block sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all">
                     <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                        
-                        {/* ROW 1: CATEGORIES */}
-                        <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
-                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap md:w-20 pt-2 md:pt-0">Categories</span>
-                            <div className="flex items-center gap-2 overflow-x-auto w-full md:flex-wrap md:justify-start hide-scrollbar pb-1">
+                        <div className="flex items-center gap-3">
+                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap w-20">Categories</span>
+                            <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
                                 <FilterButton 
                                     label="All Products" 
-                                    isActive={isAllCategoriesActive} 
-                                    to={allCategoriesUrl} 
+                                    isActive={!activeCategory || activeCategory === 'all'} 
+                                    onClick={() => handleFilterChange('category', null)} 
                                 />
                                 {categories.map(cat => (
                                     <FilterButton 
                                         key={cat.id} 
                                         label={cat.name} 
                                         isActive={activeCategory === cat.id} 
-                                        to={`/products?category=${cat.id}${activeIndustry ? `&industry=${activeIndustry}` : ''}`} 
+                                        onClick={() => handleFilterChange('category', cat.id)} 
                                     />
                                 ))}
                             </div>
                         </div>
-
-                        {/* ROW 2: INDUSTRIES */}
-                        <div className="flex flex-col md:flex-row items-start md:items-center gap-3 border-t border-gray-100 pt-4 md:border-none md:pt-0">
-                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap md:w-20 pt-2 md:pt-0">Industries</span>
-                            <div className="flex items-center gap-2 overflow-x-auto w-full md:flex-wrap md:justify-start hide-scrollbar pb-1">
+                        <div className="flex items-center gap-3">
+                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap w-20">Industries</span>
+                            <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
                                 <FilterButton 
                                     label="All Industries" 
-                                    isActive={isAllIndustriesActive} 
-                                    to={allIndustriesUrl}
+                                    isActive={!activeIndustry} 
+                                    onClick={() => handleFilterChange('industry', null)}
                                     variant="industry"
                                 />
                                 {INDUSTRIES.map(ind => (
@@ -258,20 +284,105 @@ export default function ProductsListPage() {
                                         key={ind.id} 
                                         label={ind.name} 
                                         isActive={activeIndustry === ind.id} 
-                                        to={`/products?industry=${ind.id}${activeCategory ? `&category=${activeCategory}` : ''}`}
+                                        onClick={() => handleFilterChange('industry', ind.id)}
                                         variant="industry"
                                     />
                                 ))}
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    {/* PRODUCT GRID - Immediate rendering (no Animation delay) */}
+                {/* MOBILE FILTERS STRUCTURE */}
+                <div className="lg:hidden sticky top-[115px] z-20 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200 shadow-sm pt-2 pb-2">
+                    <div className="px-4 space-y-3">
+                        {/* 1. Category Chips (Horizontal Scroll) */}
+                        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+                            <button 
+                                onClick={() => handleFilterChange('category', null)}
+                                className={`px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap border ${!activeCategory || activeCategory === 'all' ? 'bg-brand-accent text-white border-brand-accent' : 'bg-white text-gray-600 border-gray-200'}`}
+                            >
+                                All
+                            </button>
+                            {categories.map(cat => (
+                                <button 
+                                    key={cat.id}
+                                    onClick={() => handleFilterChange('category', cat.id)}
+                                    className={`px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap border ${activeCategory === cat.id ? 'bg-brand-accent text-white border-brand-accent' : 'bg-white text-gray-600 border-gray-200'}`}
+                                >
+                                    {cat.name}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* 2. Filter Button & Use Case Trigger */}
+                        <div className="flex justify-between items-center gap-4">
+                            <button 
+                                onClick={() => setIsIndustrySheetOpen(true)}
+                                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-colors ${activeIndustry ? 'bg-brand-blue-deep text-white shadow-md' : 'bg-white text-gray-700 border border-gray-200 shadow-sm'}`}
+                            >
+                                <i className="fas fa-filter"></i>
+                                {activeIndustry ? INDUSTRIES.find(i => i.id === activeIndustry)?.name : 'Filter by Industry'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* "What are you trying to solve?" - Use Case Chips */}
+                <div className="lg:hidden px-4 py-4 bg-gray-50">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">What are you trying to solve?</p>
+                    <div className="flex flex-wrap gap-2">
+                        {COMMON_USE_CASES.map(useCase => (
+                            <button
+                                key={useCase.tag}
+                                onClick={() => handleFilterChange('tag', useCase.tag)}
+                                className={`px-3 py-1 text-xs font-medium rounded border ${activeTag === useCase.tag ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200'}`}
+                            >
+                                {useCase.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Industry Bottom Sheet (Mobile) */}
+                {isIndustrySheetOpen && (
+                    <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsIndustrySheetOpen(false)}></div>
+                        <div className="relative bg-white rounded-t-2xl max-h-[80vh] overflow-y-auto animate-slide-up shadow-2xl">
+                            <div className="p-4 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                                <h3 className="text-lg font-bold text-gray-800">Select Industry</h3>
+                                <button onClick={() => setIsIndustrySheetOpen(false)} className="text-gray-500 text-2xl">&times;</button>
+                            </div>
+                            <div className="p-4 space-y-2">
+                                <button 
+                                    onClick={() => handleFilterChange('industry', null)}
+                                    className={`w-full text-left px-4 py-3 rounded-lg font-medium ${!activeIndustry ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-50'}`}
+                                >
+                                    All Industries
+                                </button>
+                                {INDUSTRIES.map(ind => (
+                                    <button 
+                                        key={ind.id}
+                                        onClick={() => handleFilterChange('industry', ind.id)}
+                                        className={`w-full text-left px-4 py-3 rounded-lg font-medium flex items-center gap-3 ${activeIndustry === ind.id ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-50'}`}
+                                    >
+                                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${ind.gradientClasses}`}></div>
+                                        {ind.name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    {/* PRODUCT GRID */}
                     <div className="min-h-[50vh]">
-                        {filteredProducts.length > 0 ? (
+                        {isLoading ? (
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
+                                {[1, 2, 3, 4, 5, 6].map(i => <ProductSkeleton key={i} />)}
+                            </div>
+                        ) : filteredProducts.length > 0 ? (
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8 animate-fade-in">
                                 {filteredProducts.map(product => (
                                     <ProductCard 
@@ -289,12 +400,12 @@ export default function ProductsListPage() {
                                 <h3 className="text-xl font-bold text-gray-700">
                                     {products.length === 0 ? 'Loading Products...' : 'No products found'}
                                 </h3>
-                                <p className="text-gray-500 mt-2 max-w-md mx-auto">
+                                <p className="text-gray-500 mt-2 max-w-md mx-auto px-4">
                                     We couldn't find any products matching your selection. Try clearing filters.
                                 </p>
-                                <Link to="/products?category=all" className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
+                                <button onClick={clearAllFilters} className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
                                     Clear Filters
-                                </Link>
+                                </button>
                             </div>
                         )}
                     </div>
