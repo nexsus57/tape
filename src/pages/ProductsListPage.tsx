@@ -70,11 +70,9 @@ export default function ProductsListPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
 
-    // Immediate fallback to static products
     const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
 
     useEffect(() => {
-        // Simulate a short loading state for interaction feedback or data fetching simulation
         setIsLoading(true);
         const timer = setTimeout(() => setIsLoading(false), 300);
         return () => clearTimeout(timer);
@@ -95,8 +93,6 @@ export default function ProductsListPage() {
         } else {
             newParams.delete(key);
         }
-        // If changing category, usually keep industry? Or reset? 
-        // Current UX allows intersection.
         navigate({ search: newParams.toString() });
         if (key === 'industry') setIsIndustrySheetOpen(false);
     };
@@ -296,7 +292,6 @@ export default function ProductsListPage() {
                 {/* MOBILE FILTERS STRUCTURE */}
                 <div className="lg:hidden sticky top-[115px] z-20 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200 shadow-sm pt-2 pb-2">
                     <div className="px-4 space-y-3">
-                        {/* 1. Category Chips (Horizontal Scroll) */}
                         <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
                             <button 
                                 onClick={() => handleFilterChange('category', null)}
@@ -315,7 +310,6 @@ export default function ProductsListPage() {
                             ))}
                         </div>
 
-                        {/* 2. Filter Button & Use Case Trigger */}
                         <div className="flex justify-between items-center gap-4">
                             <button 
                                 onClick={() => setIsIndustrySheetOpen(true)}
