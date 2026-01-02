@@ -250,7 +250,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   }, [products, settings.popularProductIds]);
 
   return (
-    <div className="relative w-full max-w-sm" ref={searchRef}>
+    <div className="relative w-full" ref={searchRef}>
       <div className="relative group">
         <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 z-10 text-gray-400 group-focus-within:text-brand-accent transition-colors"></i>
         <input
@@ -260,8 +260,8 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onKeyDown={handleKeyDown}
-          placeholder="Search tape, SKU, or application..."
-          className="w-full pl-11 pr-4 py-2.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent transition-all duration-300 shadow-sm bg-gray-50 focus:bg-white"
+          placeholder="Search by tape type, application, or industry (EMI, HVAC...)"
+          className="w-full pl-11 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent transition-all duration-300 shadow-sm bg-gray-50 focus:bg-white text-sm lg:text-base"
           autoComplete="off"
           aria-label="Search products"
         />
