@@ -5,13 +5,55 @@ import { useProducts } from '../context/ProductContext';
 import ProductCard from './ProductCard';
 import { useCategories } from '../context/CategoryContext';
 import { AIIcon } from './icons/AIIcon';
+import { Product } from '../types';
 
 interface AITapeFinderProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-// The Strict Categorization Rules provided
+// Intent Mapping Rules for Immediate Response
+const INTENT_RULES = [
+  {
+    keywords: ['heat', 'high temp', 'thermal', 'flame', 'fire', 'burn', 'oven', 'plasma'],
+    match: (p: Product) => 
+      p.tags?.some(t => ['HEAT RESISTANT', 'HIGH TEMPERATURE'].includes(t)) || 
+      p.category === 'teflon-ptfe-tapes' ||
+      p.name.toLowerCase().includes('glass cloth'),
+    reasoning: "Based on your need for heat resistance, we recommend our High-Temperature PTFE, Glass Cloth, or Polyimide tapes."
+  },
+  {
+    keywords: ['slip', 'skid', 'floor', 'walkway', 'stair', 'traction'],
+    match: (p: Product) => 
+      p.tags?.some(t => ['ANTI-SLIP', 'ANTI-SKID', 'FLOOR SAFETY'].includes(t)) || 
+      p.category === 'safety-tapes',
+    reasoning: "For floor safety and traction, our Anti-Skid and Safety Marking tapes are the best choice."
+  },
+  {
+    keywords: ['emi', 'shield', 'interference', 'signal', 'conductive', 'copper', 'static', 'esd'],
+    match: (p: Product) => 
+      p.tags?.some(t => ['EMI SHIELDING', 'EMI', 'RFI', 'ESD'].includes(t)) || 
+      p.category === 'antistatic-esd-tapes',
+    reasoning: "For electronics, shielding, or static control, we recommend our EMI Shielding and ESD tapes."
+  },
+  {
+    keywords: ['water', 'leak', 'seal', 'pipe', 'plumbing', 'moisture', 'outdoor'],
+    match: (p: Product) => 
+      p.tags?.some(t => ['PIPE SEALING', 'LEAK REPAIR', 'WATERPROOF'].includes(t)) || 
+      p.name.toLowerCase().includes('butyl') || 
+      p.name.toLowerCase().includes('silicone'),
+    reasoning: "These tapes are specialized for waterproofing, sealing leaks, and protecting pipes."
+  },
+  {
+    keywords: ['pack', 'box', 'carton', 'ship', 'parcel'],
+    match: (p: Product) => 
+      p.tags?.some(t => ['PACKAGING', 'SEALING'].includes(t)) || 
+      p.category === 'specialty-tapes' && p.name.toLowerCase().includes('tape'),
+    reasoning: "For secure packaging and shipping, these are our most reliable adhesive solutions."
+  }
+];
+
+// The Strict Categorization Rules provided (Keeping for AI context if needed)
 const CATEGORY_RULES = `
 🔌 TAG: EMI SHIELDING / EMI / RFI
 Show ONLY: EMI Shielding Tape, Conductive Copper Foil Tape, Tin-Plated Copper Tape, ESD Conductive Grid Tape, ESD Kapton Tape, Anti-Static Polyester Tape
@@ -27,36 +69,6 @@ Show ONLY: High-Performance Aluminium Foil Tape, Aluminium Foil Scrim Kraft Tape
 
 🚧 TAG: ANTI-SLIP / ANTI-SKID / FLOOR SAFETY
 Show ONLY: Heavy-Duty Anti-Skid & Anti-Slip Tape, Heavy Duty Anti-Skid Tape, Anti-Skid Tape with Centre Glow, Anti-Slip Tape for Bath and Shower
-
-🦺 TAG: SAFETY MARKING / HAZARD / WARNING
-Show ONLY: Hazard Warning & Safety Stripe Tape, Heavy-Duty Floor Marking Tape, Nastro Heavy Duty Floor Marking Tape, Non-Adhesive Caution & Warning Tape, Non-Adhesive Barricade Tape, Glow in the Dark Tape, Glow in Dark Marking Tapes, Photoluminescent Film
-
-🌙 TAG: GLOW IN THE DARK / EMERGENCY VISIBILITY
-Show ONLY: Glow in the Dark Tape, Glow in Dark Marking Tapes, Photoluminescent Film, Anti-Skid Tape with Centre Glow
-
-👕 TAG: REFLECTIVE / HIGH VISIBILITY / PPE
-Show ONLY: Silver TC Sew-On Reflective Tape, Flame Retardant Reflective Tape, PVC Reflective Tape, Heat Transfer Reflective Film, Vinyl Heat Transfer Reflective Film, Reflective Yarn & Thread, Reflective Piping, Woven Reflective Ribbon, Oxford Reflective Ribbon, Hi-Reflective Polyester Fabric, Hi-Reflective TC Fabric, Ordinary Reflective Polyester Fabric, Ordinary Reflective TC Fabric
-
-🖨️ TAG: PRINT / LABEL / GRAPHIC MOUNTING
-Show ONLY: Double-Sided Tissue Tape, Polyester Double Sided Tape, PET Double-Sided Tape, Transfer Tape, Acrylic Double Sided Tape, Hot Melt Tissue Tapes, Double Sided Cloth Tape, Acrylic Gel Tape, Nano Magic (Silicone) Tape
-
-🧱 TAG: FOAM / SPACER / VIBRATION DAMPING
-Show ONLY: EVA Foam Tape, PE Foam Tape, XLPE Foam Tapes, NBR Foam Tapes, Spacer Tapes
-
-📦 TAG: PACKAGING / SEALING
-Show ONLY: BOPP Packing Tape, Tamper-Proof Security Packing Tape, Bag Sealing Tape, Kraft Paper Tape, Paper Tape, Filament Tapes, EZ Application Tape, Lamination Tape
-
-🔩 TAG: GENERAL INDUSTRIAL / MASKING / CLOTH
-Show ONLY: Masking Tape, Heavy-Duty Cloth Duct Tape, Adhesive Cloth Tape, Acetate Cloth Tape, Single-Sided Polyester Tape, Green Polyester Tape, Yellow Polyester Tape, Pink Rayon Tape
-
-🧪 TAG: SURFACE PROTECTION / COATING
-Show ONLY: PE Surface Protection Film, Powder Coated Tape
-
-🧯 TAG: PIPE SEALING / LEAK REPAIR / WATERPROOF
-Show ONLY: Silicone Tape, PVC Pipe Wrapping Tape, Aluminium Butyl Tape
-
-🔥 TAG: THERMAL MANAGEMENT
-Show ONLY: Thermal Conductive Pads, Double-Sided Thermal Tape
 `;
 
 export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
@@ -82,11 +94,58 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
+  const performLocalSearch = (searchQuery: string): { productIds: string[], reasoning: string } | null => {
+      const lowerQuery = searchQuery.toLowerCase();
+      
+      // 1. Check Intent Rules First
+      for (const rule of INTENT_RULES) {
+          if (rule.keywords.some(k => lowerQuery.includes(k))) {
+              const matches = products.filter(rule.match).map(p => p.id).slice(0, 6);
+              if (matches.length > 0) {
+                  return {
+                      productIds: matches,
+                      reasoning: rule.reasoning
+                  };
+              }
+          }
+      }
+
+      // 2. Fallback: Generic Keyword Match
+      const genericMatches = products.filter(p => 
+          p.name.toLowerCase().includes(lowerQuery) || 
+          p.category.replace(/-/g, ' ').includes(lowerQuery) ||
+          p.uses?.some(u => u.toLowerCase().includes(lowerQuery)) ||
+          p.tags?.some(t => t.toLowerCase().includes(lowerQuery))
+      ).map(p => p.id).slice(0, 6);
+
+      if (genericMatches.length > 0) {
+          return {
+              productIds: genericMatches,
+              reasoning: "We found these products that match your search keywords directly."
+          };
+      }
+
+      return null;
+  };
+
   const handleSearch = async () => {
     if (!query.trim()) return;
     setLoading(true);
     setResult(null);
 
+    // 1. Try Rule-Based Matching First (Instant)
+    const localResult = performLocalSearch(query);
+    if (localResult) {
+        // Simulate a tiny delay for "thinking" feel, or just show immediately. 
+        // Showing immediately is better for UX.
+        setTimeout(() => {
+            setResult(localResult);
+            setLoading(false);
+        }, 600);
+        return;
+    }
+
+    // 2. If no rules match, try AI
     try {
       const apiKey = process.env.API_KEY;
       if (!apiKey) throw new Error("API Key missing");
@@ -133,14 +192,40 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       const text = response.text;
       if (text) {
         const data = JSON.parse(text);
-        setResult(data);
+        if (data.productIds && data.productIds.length > 0) {
+            setResult(data);
+        } else {
+            // AI returned valid JSON but no products? Fallback to broad search.
+            throw new Error("No products returned by AI");
+        }
+      } else {
+          throw new Error("Empty response from AI");
       }
     } catch (error) {
-      console.error("AI Error:", error);
-      setResult({ 
-        productIds: [], 
-        reasoning: "I'm having trouble connecting to the expert system right now. Please browse our categories or contact support." 
-      });
+      console.warn("AI Search failed, falling back to basic search:", error);
+      
+      // 3. Final Fallback: Aggressive Local Search
+      // Split query into words and try to match ANY word
+      const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
+      const fallbackMatches = products.filter(p => 
+          words.some(w => 
+              p.name.toLowerCase().includes(w) || 
+              p.category.includes(w) ||
+              p.tags?.some(t => t.toLowerCase().includes(w))
+          )
+      ).map(p => p.id).slice(0, 6);
+
+      if (fallbackMatches.length > 0) {
+          setResult({ 
+            productIds: fallbackMatches, 
+            reasoning: "We couldn't connect to our expert system, but here are some related products based on your keywords." 
+          });
+      } else {
+          setResult({
+              productIds: [],
+              reasoning: "We couldn't find an exact match. Please try browsing our categories or contact our experts directly."
+          });
+      }
     } finally {
       setLoading(false);
     }
@@ -229,7 +314,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
                     <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center shrink-0">
                         <AIIcon className="w-6 h-6 text-brand-yellow" />
                     </div>
-                    <div className="bg-blue-50 p-4 rounded-2xl rounded-tl-none border border-blue-100">
+                    <div className="bg-blue-50 p-4 rounded-2xl rounded-tl-none border border-blue-100 w-full">
                         <p className="text-brand-blue-dark font-medium leading-relaxed">{result.reasoning}</p>
                     </div>
                 </div>
