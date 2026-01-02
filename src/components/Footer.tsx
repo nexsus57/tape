@@ -1,3 +1,4 @@
+
 import { useState, type ReactNode } from 'react';
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
@@ -118,7 +119,7 @@ export default function Footer() {
       <div className="bg-brand-blue-dark py-5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-400 md:flex justify-between items-center">
           <div className="mb-2 md:mb-0 space-x-4">
-            <span>&copy; {new Date().getFullYear()} Sha Kundanmal Misrimal. All Rights Reserved.</span>
+            <span>&copy; 2025–26 Tape India. All Rights Reserved.</span>
             <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
           </div>
           <div className="space-x-4">
