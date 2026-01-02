@@ -14,7 +14,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isAIFinderOpen, setIsAIFinderOpen] = useState(false); // State for AI Modal
+  const [isAIFinderOpen, setIsAIFinderOpen] = useState(false);
   
   const { categories } = useCategories();
   const { cartCount } = useCart();
@@ -30,7 +30,6 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-      // Close menus on route change
       setIsMenuOpen(false);
       setIsMegaMenuOpen(false);
       setIsAIFinderOpen(false);
@@ -62,7 +61,7 @@ export default function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 lg:h-20">
             <Link to="/" className="flex-shrink-0 z-50" aria-label="Tape India Home">
-              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-10 lg:h-14 w-auto" loading="eager" width="56" height="56" />
+              <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-9 lg:h-14 w-auto" loading="eager" width="56" height="56" />
             </Link>
             
             {/* Desktop Navigation */}
@@ -90,7 +89,6 @@ export default function Header() {
                                 style={{ marginTop: '0px' }}
                               >
                                   <div className="flex p-8 gap-8">
-                                      {/* Categories Column */}
                                       <div className="w-2/3 pr-8 border-r border-gray-100">
                                           <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Category</h3>
                                           <div className="grid grid-cols-2 gap-4">
@@ -114,7 +112,6 @@ export default function Header() {
                                           </Link>
                                       </div>
 
-                                      {/* Industries Column */}
                                       <div className="w-1/3">
                                           <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Industry</h3>
                                           <ul className="space-y-2">
@@ -157,7 +154,6 @@ export default function Header() {
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-4">
                 <SearchBar />
-                
                 <button
                   onClick={() => setIsAIFinderOpen(true)}
                   className="flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-accent text-white px-4 py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-sm whitespace-nowrap"
@@ -165,7 +161,6 @@ export default function Header() {
                   <AIIcon className="w-4 h-4 text-brand-yellow" />
                   <span>AI Finder</span>
                 </button>
-
                 <Link to="/request-quote" className="relative p-2 text-gray-600 hover:text-brand-accent transition-colors" aria-label="View Quote Basket">
                     <i className="fas fa-file-invoice text-xl"></i>
                     {cartCount > 0 && (
@@ -174,7 +169,6 @@ export default function Header() {
                         </span>
                     )}
                 </Link>
-
                 {ctaItem && (
                   <Link
                     to={ctaItem.path}
@@ -186,18 +180,19 @@ export default function Header() {
             </div>
 
             {/* Mobile Actions */}
-            <div className="lg:hidden flex items-center gap-3">
+            <div className="lg:hidden flex items-center gap-2">
                <button
                   onClick={() => setIsAIFinderOpen(true)}
-                  className="p-2 text-brand-accent"
+                  className="p-2 text-brand-blue-deep flex items-center gap-1 bg-blue-50 rounded-full px-3"
                   aria-label="Open AI Finder"
                >
-                  <AIIcon className="w-5 h-5" />
+                  <AIIcon className="w-4 h-4" />
+                  <span className="text-xs font-bold">AI Help</span>
                </button>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-brand-accent focus:outline-none p-2"
+                className="text-gray-700 hover:text-brand-accent focus:outline-none p-2 ml-1"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
@@ -208,41 +203,32 @@ export default function Header() {
         </div>
 
         {/* Mobile Sticky Search Bar */}
-        <div className="lg:hidden px-4 pb-3 pt-1 border-b border-gray-100 bg-white">
+        <div className="lg:hidden px-4 pb-3 pt-1 border-b border-gray-100 bg-white shadow-sm">
             <SearchBar />
         </div>
 
-        {/* Mobile Menu Overlay */}
-        <div
-          className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 lg:hidden ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-          onClick={() => setIsMenuOpen(false)}
-          aria-hidden="true"
-        />
-        
         {/* Mobile Menu Panel */}
         <div
-          className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white z-40 shadow-xl transition-transform duration-300 ease-in-out lg:hidden transform ${
+          className={`fixed inset-0 z-50 bg-white transition-transform duration-300 ease-in-out lg:hidden transform ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex justify-between items-center p-5 border-b border-gray-100">
-             <Link to="/" className="flex-shrink-0" aria-label="Tape India Home" onClick={() => setIsMenuOpen(false)}>
-                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India Logo" className="h-12 w-auto" loading="eager" />
+          <div className="flex justify-between items-center p-4 border-b border-gray-100">
+             <Link to="/" className="flex-shrink-0" onClick={() => setIsMenuOpen(false)}>
+                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India" className="h-10 w-auto" />
              </Link>
              <button
                 onClick={() => setIsMenuOpen(false)}
-                className="text-gray-600 hover:text-brand-accent focus:outline-none"
+                className="text-gray-600 p-2"
                 aria-label="Close menu"
               >
                 <i className="fas fa-times text-2xl"></i>
               </button>
           </div>
           
-          <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-100px)]">
+          <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-80px)]">
             {navItems.map((link) => (
               <NavLink 
                 key={link.name} 
@@ -250,18 +236,18 @@ export default function Header() {
                 end={link.path === '/'}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => 
-                    `block px-4 py-3 rounded-md text-lg font-semibold transition-colors text-gray-700 hover:bg-gray-100 ${isActive ? 'bg-blue-50 text-brand-accent' : ''}`
+                    `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-blue-50 text-brand-accent' : 'text-gray-700'}`
                 }
               >
                 {link.name}
               </NavLink>
             ))}
             {ctaItem && (
-               <div className="px-2 pt-4">
+               <div className="mt-6">
                  <Link 
                     to={ctaItem.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-center bg-brand-yellow text-brand-blue-dark font-bold py-3 px-4 rounded-md text-lg hover:bg-yellow-400 transition-colors"
+                    className="block w-full text-center bg-brand-yellow text-brand-blue-dark font-bold py-4 rounded-lg text-lg shadow-sm"
                   >
                    {ctaItem.name}
                   </Link>
