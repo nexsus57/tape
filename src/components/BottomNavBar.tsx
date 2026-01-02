@@ -11,9 +11,6 @@ export default function BottomNavBar() {
     { name: 'Products', path: '/products', icon: 'fas fa-tape' },
   ];
 
-  const activeClass = 'text-brand-accent';
-  const inactiveClass = 'text-gray-500';
-
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-40 h-[72px] pb-safe">
       <div className="grid grid-cols-5 h-full max-w-lg mx-auto">
@@ -23,7 +20,7 @@ export default function BottomNavBar() {
             to={item.path}
             end={item.path === '/'}
             className={({ isActive }) => 
-                `inline-flex flex-col items-center justify-center font-medium group transition-colors ${isActive ? activeClass : inactiveClass}`
+                `inline-flex flex-col items-center justify-center font-medium group transition-colors ${isActive ? 'text-brand-accent' : 'text-gray-500'}`
             }
           >
             <i className={`${item.icon} text-xl mb-1`}></i>
@@ -31,7 +28,6 @@ export default function BottomNavBar() {
           </NavLink>
         ))}
         
-        {/* Dominant Search Button */}
         <button
           onClick={openSearchModal}
           className="inline-flex flex-col items-center justify-center font-bold group text-brand-blue-deep hover:bg-gray-50 transition-colors relative"
@@ -54,7 +50,6 @@ export default function BottomNavBar() {
           <span className="text-[10px]">WhatsApp</span>
         </a>
         
-        {/* Dominant Quote Button */}
         <NavLink
           to="/request-quote"
           className={({ isActive }) => 
