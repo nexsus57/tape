@@ -35,138 +35,11 @@ const TAPE_ENGINEERING_KNOWLEDGE = `
 - Powder Coating -> Green Polyester (204°C) or Polyimide.
 `;
 
-const EXPERT_KNOWLEDGE_BASE = `
-==============================
-REAL HUMAN QUESTIONS + ANSWERS (VERIFIED EXPERT KNOWLEDGE)
-==============================
-
-Q1: Aluminum is conductive, but EMI issues still remain in my enclosure. Why?
-A: Conductivity alone is not enough for EMI control. EMI shielding requires continuous electrical grounding and very low surface resistance across seams. Aluminum tapes usually have non-conductive adhesive, breaking continuity.
-Recommended tapes: Conductive Copper Foil Tape, Tin-Plated Copper Tape, EMI Shielding Tape
-
-Q2: I need a tape that survives vibration, dust, and 10–80°C inside a control panel.
-A: This environment causes adhesive creep and edge lifting in normal tapes. Reinforced backings with heat-stable adhesive are required.
-Recommended tapes: Glass Cloth Tape (FR Grade), Polyimide (Kapton) Tape
-
-Q3: Normal electrical tape melts and falls off near heat. Why?
-A: PVC electrical tape softens near its glass-transition temperature, causing adhesive flow.
-Recommended tapes: Polyimide Tape, Glass Cloth Tape
-
-Q4: I don’t care about cost. I want the strongest, longest-lasting industrial tape.
-A: Strength in industrial use means tear resistance, vibration stability, and long-term adhesive integrity.
-Recommended tapes: Glass Cloth Tape, Reinforced Filament Tape
-
-Q5: EMI reduces slightly after aluminum tape but never fully disappears.
-A: Aluminum reflects RF but does not provide proper grounding at joints and seams.
-Recommended tapes: Conductive Copper Foil Tape, EMI Shielding Tape
-
-Q6: Tape inside inverter cabinets keeps failing after months.
-A: Inverters create heat cycles and vibration that degrade consumer-grade adhesives.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q7: What tape can handle heat and vibration together?
-A: Very few tapes handle both well. Reinforced fiberglass or polyimide materials are required.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q8: Tape near motors becomes brittle over time.
-A: Continuous heat drives plasticizer loss in PVC tapes.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q9: Why does tape peel only at the edges?
-A: Edge lifting is caused by adhesive creep under heat and vibration.
-Recommended tapes: Glass Cloth Tape, Filament Tape
-
-Q10: What tape do OEMs use inside machines?
-A: OEMs use tapes rated for lifecycle durability, not short-term adhesion.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q11: Can copper tape oxidize and lose EMI performance?
-A: Surface oxidation does not significantly affect EMI shielding if continuity remains.
-Recommended tapes: Tin-Plated Copper Tape, Conductive Copper Foil Tape
-
-Q12: Tape near transformers shrinks.
-A: Shrinkage occurs when backing material cannot handle thermal expansion.
-Recommended tapes: Polyimide Tape, Glass Cloth Tape
-
-Q13: Tape failed inside a dusty industrial environment.
-A: Dust accelerates adhesive breakdown unless industrial-grade adhesive is used.
-Recommended tapes: Glass Cloth Tape, Reinforced Filament Tape
-
-Q14: What tape won’t leave residue after heating?
-A: Silicone or high-grade acrylic adhesives resist residue formation.
-Recommended tapes: Polyimide Tape, High-Temperature Masking Tape
-
-Q15: EMI leaks mainly at enclosure seams.
-A: Seams require conductive bridging, not surface coverage.
-Recommended tapes: Conductive Copper Foil Tape, EMI Shielding Tape
-
-Q16: Why is aluminum tape good for HVAC but not electronics?
-A: HVAC sealing does not require electrical grounding or continuity.
-Recommended tapes: Copper Foil Tape (for electronics), EMI Shielding Tape
-
-Q17: Tape inside machines loosens due to oil exposure.
-A: Oil attacks weak adhesives; reinforced industrial adhesives are required.
-Recommended tapes: Glass Cloth Tape, Filament Tape
-
-Q18: Which tape survives continuous 100°C operation?
-A: Most tapes fail above 80°C; only specialty tapes survive long-term.
-Recommended tapes: Polyimide Tape, Glass Cloth FR Tape
-
-Q19: Tape cracks near bends and corners.
-A: Thin foil fatigues without reinforcement.
-Recommended tapes: Copper Foil Tape, Glass Cloth Tape
-
-Q20: EMI problem increased after repainting enclosure.
-A: Paint blocks electrical continuity between metal surfaces.
-Recommended tapes: Conductive Copper Foil Tape, EMI Shielding Tape
-
-Q21: Tape must last years, not months.
-A: Long-term stability depends on backing and adhesive chemistry.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q22: Why is industrial tape more expensive?
-A: Industrial tapes use engineered materials for thermal, mechanical, and chemical stability.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-
-Q23: Tape near relays loosens over time.
-A: Micro-vibration breaks low-grade adhesives.
-Recommended tapes: Glass Cloth Tape, Filament Tape
-
-Q24: Can one tape handle EMI and heat together?
-A: Rare, but copper with high-temperature adhesive can.
-Recommended tapes: Conductive Copper Foil Tape, EMI Shielding Tape
-
-Q25: Tape inside control panels discolors.
-A: Heat oxidation of backing material causes discoloration.
-Recommended tapes: Polyimide Tape, Glass Cloth Tape
-
-Q26: What tape is safest near live components?
-A: Electrical insulation with heat resistance is required.
-Recommended tapes: Polyimide Tape, Glass Cloth Tape
-
-Q27: Tape keeps tearing during installation.
-A: Weak backing causes tear propagation.
-Recommended tapes: Glass Cloth Tape, Filament Tape
-
-Q28: EMI tape works initially but fails later.
-A: Conductive adhesive degradation causes loss of continuity.
-Recommended tapes: Conductive Copper Foil Tape, EMI Shielding Tape
-
-Q29: Tape used for cable harnessing in machines?
-A: Requires abrasion resistance and thermal stability.
-Recommended tapes: Glass Cloth Tape, Filament Tape
-
-Q30: Which tape survives harsh factory environments best?
-A: Harsh environments require heat + vibration + dust resistance.
-Recommended tapes: Glass Cloth Tape, Polyimide Tape
-`;
-
 const SYSTEM_INSTRUCTION = `
 You are the Tape India AI Expert.
 
 PRIMARY RULE:
 All answers and product recommendations must be driven by AI reasoning first.
-The "REAL HUMAN QUESTIONS + ANSWERS" provided are your PRIMARY source of truth.
 Keyword matching and database rules are SECONDARY and SUPPORTIVE only.
 
 DECISION FLOW (MANDATORY):
@@ -179,9 +52,6 @@ IMPORTANT:
 - Database keywords must NEVER override AI judgment.
 - If database results conflict with AI reasoning, AI reasoning wins.
 - It is acceptable to return fewer products if they are more accurate.
-- Recommend ONLY 2–4 tapes if they technically solve the problem.
-- NEVER recommend unrelated categories.
-- If something does not solve the problem, exclude it even if keywords match.
 
 PRODUCT FILTERING RULES:
 - Exclude any product category that does not technically solve the problem.
@@ -408,19 +278,16 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         tags: p.tags
       }));
 
-      // Inject the Deep Knowledge Base and EXPERT KNOWLEDGE BASE into the prompt context
+      // Inject the Deep Knowledge Base into the prompt context
       const prompt = `
         ${TAPE_ENGINEERING_KNOWLEDGE}
-
-        ${EXPERT_KNOWLEDGE_BASE}
 
         USER QUERY: "${query}"
         
         TASK:
-        1. Analyze user query against the "REAL HUMAN QUESTIONS + ANSWERS" and Engineering Knowledge Base.
-        2. Prioritize the reasoning from the expert Q&A pairs above.
-        3. Select best matches from the Inventory below.
-        4. Explain WHY based on the engineering principles (e.g. temp rating, adhesive type).
+        1. Analyze user query against the Engineering Knowledge Base.
+        2. Select best matches from the Inventory below.
+        3. Explain WHY based on the engineering principles (e.g. temp rating, adhesive type).
 
         INVENTORY: ${JSON.stringify(inventory)}
       `;
