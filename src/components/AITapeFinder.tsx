@@ -12,224 +12,154 @@ interface AITapeFinderProps {
   onClose: () => void;
 }
 
-// Helper to check text matches
-const matches = (text: string, terms: string[]) => {
-    const lower = text.toLowerCase();
-    return terms.some(term => lower.includes(term));
-};
-
 // --- DEEP DOMAIN KNOWLEDGE BASE (CRITICAL FOR AI ACCURACY) ---
 const TAPE_ENGINEERING_KNOWLEDGE = `
-[INDUSTRIAL TAPE ENGINEERING DATABASE - INTERNAL REFERENCE]
+[INDUSTRIAL TAPE ENGINEERING DATABASE]
 
 1. ADHESIVE TECHNOLOGY MATRIX
-- Rubber Adhesive (Natural/Synthetic):
-  * Pros: High initial tack, economical, sticks to "hard-to-stick" surfaces (LSE).
-  * Cons: Poor UV resistance, poor high-temp resistance, ages yellow.
-  * Use Case: General purpose masking, box sealing (BOPP), duct tape.
-- Acrylic Adhesive (Water/Solvent):
-  * Pros: Excellent UV stability, non-yellowing, high shear strength, withstands weathering.
-  * Cons: Lower initial tack (requires 24h dwell time for max bond).
-  * Use Case: Outdoor mounting (VHB), safety tapes, long-term bonding.
-- Silicone Adhesive:
-  * Pros: Extreme temperature range (-73°C to +260°C), cleanest removal (no residue).
-  * Cons: Expensive, lower tack than rubber.
-  * Use Case: High-temp masking (Kapton, Green Poly), splicing silicone release liners.
+- Rubber: High tack, poor UV/Temp. (General masking, Duct, Packaging)
+- Acrylic: High UV/Shear, moderate tack. (VHB, Safety, Outdoor)
+- Silicone: Extreme Temp (-73°C to +260°C), clean removal. (Kapton, Green Poly, Glass Cloth)
 
-2. SUBSTRATE (BACKING) HIERARCHY
-- Polyimide (Kapton):
-  * Prop: Amber/Gold, Dielectric Strength >5kV, Heat resistance 260°C.
-  * App: PCB wave soldering, 3D printing beds, aerospace insulation.
-- Polyester (PET) / Green Masking:
-  * Prop: Green/Blue/Clear, thin, high tensile strength, Heat resistance 204°C.
-  * App: Powder coating masking (prevents bridging), anodizing, splicing.
-- Glass Cloth:
-  * Prop: White woven fabric, highest tensile strength, Heat resistance 260°C+, absorbs varnish.
-  * App: Motor winding, transformer coil insulation, plasma spray masking.
-- PTFE (Teflon):
-  * Prop: Brown/Gray, lowest coefficient of friction, non-stick, chemical inertness.
-  * App: Heat seal bars, chute lining, blister packaging release.
-- Copper/Aluminium Foil:
-  * Prop: Conductive (X-Y-Z axis available), thermal reflection.
-  * App: EMI/RFI shielding, HVAC duct sealing, thermal management.
+2. SUBSTRATE HIERARCHY
+- Polyimide (Kapton): 260°C, Dielectric. (PCB, Soldering)
+- Polyester (PET): 204°C, High Tensile. (Powder Coating, Splicing)
+- Glass Cloth: 260°C+, Abrasion Resistant. (Motor Winding, Plasma Spray)
+- PTFE (Teflon): Non-stick, Low Friction. (Heat Seal Jaws)
+- Copper Foil: EMI/RFI Shielding, Grounding (X-Y-Z Conductivity).
+- Aluminium Foil: Thermal Reflection, HVAC Sealing (Not primary for EMI).
 
-3. PROBLEM-SOLUTION MAPPING
-- "Tape leaves residue after heating":
-  * Cause: Rubber/Acrylic adhesive failure at temp.
-  * Solution: Switch to Silicone adhesive (Green Polyester or Polyimide).
-- "Tape melts in oven":
-  * Cause: PVC/Paper backing has low Tg.
-  * Solution: Switch to Polyester (200°C) or Glass Cloth (260°C).
-- "Static destroying chips":
-  * Cause: Triboelectric charging during tape unwind/removal.
-  * Solution: ESD Kapton (Anti-static treated) or ESD Grid Tape.
-- "Tape falling off outside":
-  * Cause: UV degradation of rubber adhesive.
-  * Solution: Acrylic Adhesive or Butyl tape.
-- "EMI Noise in Enclosure":
-  * Solution: Copper Foil with Conductive Adhesive (creates Faraday cage).
-
-4. PRODUCT SPECIFIC INTELLIGENCE
-- VHB (Very High Bond): Acrylic foam, viscoelastic. Replaces screws/rivets. Requires 72h cure.
-- Filament Tape: Reinforced with fiberglass strands. Uni-directional strength. For bundling heavy pipes/steel.
-- Butyl Tape: Synthetic rubber. Self-healing, waterproof. For roofing/HVAC leaks.
-- Nastro Tape: Specialized high-durability floor marking. Beveled edges to resist forklift wheels.
+3. STRICT APPLICATION RULES
+- EMI/RFI Shielding -> MUST use Copper Foil or Conductive Fabric. Aluminium is acceptable ONLY if specified for generic shielding, but Copper is superior.
+- "Strongest Tape" -> Assume Industrial Structural Bonding (VHB) or Bundling (Filament). Do NOT recommend Safety/Floor tapes.
+- Powder Coating -> Green Polyester (204°C) or Polyimide.
 `;
 
 const SYSTEM_INSTRUCTION = `
-You are the Senior Applications Engineer for Tape India (est. 1957).
-Your goal is to recommend the *technically correct* adhesive tape based on the user's input, using the "TAPE ENGINEERING KNOWLEDGE" provided.
+You are the Tape India AI Expert.
 
-RULES:
-1. Always analyze the *process* (e.g., "powder coating", "wave soldering", "outdoor sealing").
-2. Map the process to the correct *material* (e.g., Powder Coating -> Green Polyester; Soldering -> Polyimide).
-3. If the user is vague (e.g., "strong tape"), ask for context OR recommend the most versatile industrial option (VHB/Filament) and explain why.
-4. NEVER recommend packaging tape for high-temp applications.
-5. NEVER recommend duct tape for electrical insulation (use PVC/Glass Cloth).
-6. Prioritize "Best Match" based on technical specs, not just name similarity.
+PRIMARY RULE:
+All answers and product recommendations must be driven by AI reasoning first.
+Keyword matching and database rules are SECONDARY and SUPPORTIVE only.
+
+DECISION FLOW (MANDATORY):
+1. Understand the user’s engineering problem using reasoning.
+2. Determine the correct tape category based on material science and application.
+3. Decide which tape types SOLVE the problem.
+4. ONLY AFTER that, fetch matching products from the database.
+
+IMPORTANT:
+- Database keywords must NEVER override AI judgment.
+- If database results conflict with AI reasoning, AI reasoning wins.
+- It is acceptable to return fewer products if they are more accurate.
+
+PRODUCT FILTERING RULES:
+- Exclude any product category that does not technically solve the problem.
+- Do NOT recommend tapes just because keywords match (e.g. “strong”, “heat”, “durable”).
+
+EMI RULE (STRICT):
+- Aluminium conductivity alone is insufficient for high-performance EMI shielding.
+- For EMI problems, AI must prioritize copper-based or conductive adhesive solutions.
+- Aluminium-only tapes must be deprioritized or excluded unless explicitly requested for simple shielding.
+
+“STRONGEST / LONGEST-LASTING” RULE:
+- Treat as harsh industrial usage by default.
+- Recommend industrial-grade tapes only (VHB, Filament, Cloth).
+- Never show safety, glow, anti-slip, or signage tapes unless explicitly asked.
 
 OUTPUT FORMAT (JSON):
 {
-  "reasoning": "A concise, technical explanation of WHY this tape is chosen (mention temp rating, adhesive type, or material property).",
+  "reasoning": "A concise, technical explanation of WHY this tape is chosen based on the rules above.",
   "productIds": ["id1", "id2", "id3"]
 }
-
-Inventory context will be provided in the user prompt. Use strictly that inventory.
 `;
 
-// --- EXPANDED LOCAL INTELLIGENCE (FALLBACK LOGIC) ---
+// --- LOCAL INTELLIGENCE (FALLBACK ONLY) ---
+// These rules mirror the Strict AI Rules to ensure quality even if API fails.
 const INTENT_RULES = [
   {
-    id: 'high-temp-masking',
-    keywords: ['powder coat', 'baking', 'oven', '200', '250', 'curing', 'anodizing', 'paint shop'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        // Green Poly is King of Powder Coating
-        if (n.includes('green') && n.includes('polyester')) score += 100;
-        if (n.includes('kapton') || n.includes('polyimide')) score += 80;
-        if (n.includes('glass cloth')) score += 60;
-        return score;
-    },
-    reasoning: "For powder coating and high-temp baking (200°C+), Green Polyester or Polyimide tapes with Silicone adhesive are required to prevent residue and melting."
-  },
-  {
-    id: 'pcb-electronics',
-    keywords: ['pcb', 'solder', 'circuit', 'chip', 'board', 'wave', 'reflow', 'gold finger'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        // Kapton is King of PCBs
-        if (n.includes('kapton') || n.includes('polyimide')) score += 100;
-        if (n.includes('esd') || n.includes('anti-static')) score += 50;
-        return score;
-    },
-    reasoning: "Polyimide (Kapton) tape is the industry standard for PCB masking due to its dielectric strength and 260°C heat resistance during soldering."
-  },
-  {
-    id: 'esd-control',
-    keywords: ['static', 'esd', 'spark', 'charge', 'electronic component', 'sensitive'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('esd') || n.includes('anti-static')) score += 100;
-        if (n.includes('grid')) score += 80;
-        if (n.includes('kapton') && !n.includes('esd')) score -= 20; // Standard Kapton can be static generating
-        return score;
-    },
-    reasoning: "To prevent electrostatic discharge damage to sensitive components, Anti-Static (ESD) tapes or Conductive Grid tapes are mandatory."
-  },
-  {
     id: 'emi-shielding',
-    keywords: ['interference', 'noise', 'shield', 'frequency', 'rf', 'grounding', 'signal'],
+    keywords: ['emi', 'shield', 'interference', 'signal', 'conductive', 'grounding', 'rfi', 'faraday'],
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
+        
+        // STRICT EMI RULE: Copper is King
         if (n.includes('copper')) score += 100;
-        if (n.includes('emi') || n.includes('shielding')) score += 80;
+        if (n.includes('emi')) score += 80;
         if (n.includes('conductive')) score += 50;
-        if (n.includes('aluminium')) score += 40;
+        
+        // Penalize Aluminium for EMI unless HVAC context implies it
+        if (n.includes('aluminium') || n.includes('aluminum')) {
+            if (query.includes('hvac') || query.includes('duct')) score += 50;
+            else score -= 20; // Deprioritize for pure EMI
+        }
+        
         return score;
     },
-    reasoning: "Copper Foil Tape with conductive adhesive creates a Faraday cage effect, effectively blocking EMI/RFI interference and providing grounding."
+    reasoning: "For effective EMI/RFI shielding and grounding, Copper Foil Tape with conductive adhesive is the technically superior solution."
   },
   {
-    id: 'hvac-sealing',
-    keywords: ['duct', 'ac', 'air', 'vent', 'insulation', 'cold', 'hvac', 'leak'],
+    id: 'high-temp-masking',
+    keywords: ['powder coat', 'baking', 'oven', '200', '250', 'curing', 'anodizing', 'paint shop', 'heat'],
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
-        if (n.includes('foil') && n.includes('scrim')) score += 100; // FSK
-        if (n.includes('aluminium')) score += 80;
-        if (n.includes('butyl')) score += 90; // Waterproof sealing
-        if (n.includes('foam') && n.includes('nbr')) score += 70;
+        // Green Poly & Kapton are Kings
+        if (n.includes('green') && n.includes('polyester')) score += 100;
+        if (n.includes('kapton') || n.includes('polyimide')) score += 90;
+        if (n.includes('glass cloth')) score += 70;
+        
+        // Penalize Packaging/Duct tapes for heat
+        if (n.includes('bopp') || n.includes('duct')) score -= 100;
+        
         return score;
     },
-    reasoning: "For HVAC efficiency, Aluminium Foil (FSK) or Butyl tapes are recommended to ensure a vapor-tight seal and thermal reflection."
+    reasoning: "Based on thermal requirements, Green Polyester or Polyimide tapes with Silicone adhesive are required to prevent residue and melting."
   },
   {
-    id: 'heavy-packaging',
-    keywords: ['heavy', 'box', 'carton', 'shipping', 'transport', 'bundling', 'strap', 'pallet'],
+    id: 'industrial-strength',
+    keywords: ['strong', 'durable', 'heavy duty', 'tough', 'permanent', 'bond', 'break', 'strength', 'industrial'],
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
-        if (n.includes('filament')) score += 100; // The strongest
-        if (n.includes('strapping')) score += 90;
-        if (n.includes('bopp')) score += 40; // Standard
-        if (n.includes('kraft') && n.includes('reinforced')) score += 60;
+        
+        // STRICT STRENGTH RULE: Industrial grades only
+        if (n.includes('filament') || n.includes('strapping')) score += 100;
+        if (n.includes('vhb') || n.includes('foam')) score += 90;
+        if (n.includes('duct') || n.includes('cloth')) score += 50;
+        
+        // Exclude Safety/Marking/Floor tapes from "Strong" queries
+        if (n.includes('safety') || n.includes('floor') || n.includes('marking') || n.includes('barrier')) score -= 200;
+        
         return score;
     },
-    reasoning: "For heavy loads and palletizing, Fiberglass Reinforced Filament tape offers superior tensile strength compared to standard packaging tape."
+    reasoning: "For maximum structural integrity and holding power, industrial-grade Filament or VHB tapes are the engineering standard."
   },
   {
-    id: 'permanent-bonding',
-    keywords: ['mount', 'stick', 'bond', 'screw', 'rivet', 'mirror', 'glass', 'metal', 'permanent'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('vhb')) score += 100; // Very High Bond
-        if (n.includes('acrylic') && n.includes('double')) score += 80;
-        if (n.includes('foam')) score += 50;
-        return score;
-    },
-    reasoning: "For permanent structural bonding replacing mechanical fasteners, VHB (Very High Bond) Acrylic Foam tape is the strongest solution."
-  },
-  {
-    id: 'heat-sealing-ptfe',
-    keywords: ['non stick', 'release', 'heat seal', 'machine', 'jaw', 'wire', 'friction', 'slide'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('ptfe') || n.includes('teflon')) score += 100;
-        if (n.includes('glass cloth')) score += 20;
-        return score;
-    },
-    reasoning: "PTFE (Teflon) coated tapes provide the necessary non-stick, low-friction surface required for heat sealing bars and packaging machinery."
-  },
-  {
-    id: 'floor-marking-safety',
-    keywords: ['floor', 'aisle', 'walkway', 'factory', 'lane', 'hazard', 'safety'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('floor marking')) score += 100;
-        if (n.includes('hazard')) score += 90;
-        if (n.includes('nastro')) score += 110; // Premium
-        if (n.includes('vinyl')) score += 50;
-        return score;
-    },
-    reasoning: "For factory aisle marking, heavy-duty Vinyl or Nastro floor marking tapes resist abrasion and forklift traffic better than standard paints."
-  },
-  {
-    id: 'anti-slip-safety',
-    keywords: ['slip', 'trip', 'fall', 'stair', 'ramp', 'wet', 'oil', 'grip'],
+    id: 'safety-compliance',
+    keywords: ['slip', 'skid', 'floor', 'walkway', 'stair', 'traction', 'hazard', 'warning', 'barrier', 'osha'],
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
         if (n.includes('anti-slip') || n.includes('anti-skid')) score += 100;
+        if (n.includes('floor marking') || n.includes('hazard')) score += 80;
         return score;
     },
-    reasoning: "Anti-Skid tapes with abrasive mineral coating are essential for OSHA compliance on stairs, ramps, and wet areas."
+    reasoning: "To ensure facility safety and compliance, Anti-Skid and Safety Marking tapes are the designated solution."
+  },
+  {
+    id: 'packaging',
+    keywords: ['pack', 'box', 'carton', 'ship', 'parcel', 'strap', 'seal'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const n = p.name.toLowerCase();
+        if (n.includes('bopp')) score += 80;
+        if (n.includes('kraft')) score += 70;
+        if (n.includes('filament')) score += 60;
+        return score;
+    },
+    reasoning: "For secure logistics, reinforced Filament, Kraft, or industrial BOPP tapes offer the required sealing strength."
   }
 ];
 
@@ -256,15 +186,14 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
-  // High-Speed Local Matching with Expanded Rules
-  const performLocalSearch = (searchQuery: string): { productIds: string[], reasoning: string } | null => {
+  // Fallback 'Emergency' Local Intelligence Mode
+  // Only runs if AI fails after retries.
+  const performFallbackSearch = (searchQuery: string): { productIds: string[], reasoning: string } => {
       const lowerQuery = searchQuery.toLowerCase();
-      
       let bestRuleResult = { rule: null as any, products: [] as any[], totalScore: 0 };
 
-      // Check all intent rules
+      // 1. Try Strict Intent Rules first
       for (const rule of INTENT_RULES) {
-          // If ANY keyword matches
           if (rule.keywords.some(k => lowerQuery.includes(k))) {
               const scoredProducts = products.map(p => ({
                   id: p.id,
@@ -274,11 +203,10 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
               const topProducts = scoredProducts
                   .filter(sp => sp.score > 0)
                   .sort((a, b) => b.score - a.score)
-                  .slice(0, 4); // Top 4 matches
+                  .slice(0, 4);
 
               const totalScore = topProducts.reduce((sum, p) => sum + p.score, 0);
 
-              // Keep the rule that produces the highest quality matches
               if (totalScore > bestRuleResult.totalScore) {
                   bestRuleResult = {
                       rule: rule,
@@ -296,27 +224,12 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           };
       }
 
-      return null;
-  };
-
-  // Fallback 'Emergency' Local Intelligence Mode
-  const performFallbackSearch = (searchQuery: string): { productIds: string[], reasoning: string } => {
-      // 1. Try generic matches with weighted scoring
-      const words = searchQuery.toLowerCase().split(' ').filter(w => w.length > 2);
-      
+      // 2. Generic Keyword Fallback (Last Resort)
+      const words = lowerQuery.split(' ').filter(w => w.length > 2);
       const fallbackMatches = products.map(p => {
           let score = 0;
           const n = p.name.toLowerCase();
-          const c = p.category.toLowerCase();
-          const tags = p.tags || [];
-          
-          words.forEach(w => {
-              if (n.includes(w)) score += 20;
-              if (c.includes(w)) score += 10;
-              if (tags.some(t => t.toLowerCase().includes(w))) score += 15;
-              if (p.uses?.some(u => u.toLowerCase().includes(w))) score += 10;
-          });
-          
+          words.forEach(w => { if (n.includes(w)) score += 10; });
           return { id: p.id, score };
       })
       .filter(sp => sp.score > 0)
@@ -324,47 +237,33 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       .slice(0, 4)
       .map(sp => sp.id);
 
-      // 2. Default if absolutely nothing matches
-      if (fallbackMatches.length === 0) {
-          // Return popular industrial tapes
-          const defaultIds = products
-            .filter(p => ['green-polyster', 'vhb-tape', 'filament-tape', 'floor-marking-tape'].includes(p.id))
-            .map(p => p.id);
-            
+      if (fallbackMatches.length > 0) {
           return {
-              productIds: defaultIds,
-              reasoning: "We couldn't find a specific match, but these are our most versatile industrial tapes for masking, bonding, and safety."
+              productIds: fallbackMatches,
+              reasoning: "Based on keyword analysis of your requirements, these products align best with your application needs."
           };
       }
 
+      // 3. Absolute default (Industrial Favorites)
+      const defaultIds = products
+        .filter(p => ['green-polyster', 'vhb-tape', 'filament-tape'].includes(p.id))
+        .map(p => p.id);
+        
       return {
-          productIds: fallbackMatches,
-          reasoning: "Based on keyword analysis of your requirements, these products align best with your application needs."
+          productIds: defaultIds,
+          reasoning: "We couldn't find a specific match, but these are our most versatile industrial tapes for masking and bonding."
       };
   };
 
   const handleSearch = async () => {
     if (!query.trim()) return;
+    
+    // PRIMARY RULE: AI Reasoning First.
+    // We do NOT check local rules here. We go straight to AI.
+    
     setLoading(true);
     setResult(null);
 
-    // 1. Try Rule-Based Matching (Instant & Reliable)
-    // We try this FIRST to avoid API latency for common queries
-    const localResult = performLocalSearch(query); 
-    
-    // Heuristic: If we have very strong local matches (e.g. "powder coating" -> Green Tape), use them.
-    // Only use AI if the query is complex or ambiguous.
-    const isComplexQuery = query.split(' ').length > 6; 
-    
-    if (localResult && !isComplexQuery) {
-        setTimeout(() => {
-            setResult(localResult);
-            setLoading(false);
-        }, 600); // UI delay for "Thinking..." effect
-        return;
-    }
-
-    // 2. AI Expert System with Silent Retry & Failover
     try {
       const apiKey = process.env.API_KEY;
       if (!apiKey) throw new Error("API Key missing");
@@ -411,8 +310,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       } catch (err) {
           // SILENT RETRY (ATTEMPT 2)
           console.warn("AI Attempt 1 failed, retrying...", err);
-          // Wait 1 second before retry
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 1500)); // Wait 1.5s
           response = await generateContent(); 
       }
 
@@ -429,11 +327,12 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       }
 
     } catch (error) {
-      console.warn("System Switch: Engaging Local Intelligence Mode.", error);
-      // 3. ZERO FAILURE MODE: Switch to Local Intelligence
-      // User never sees an error. We calculate the best possible match locally.
+      console.warn("System Switch: Engaging Local Intelligence Mode (Fallback).", error);
+      // ZERO FAILURE PROTOCOL: Switch to Local Intelligence
+      // This is ONLY reached if API fails twice.
+      // We simulate a small delay to make it feel deliberate if it was instant error.
       setTimeout(() => {
-          const fallbackResult = localResult || performFallbackSearch(query);
+          const fallbackResult = performFallbackSearch(query);
           setResult(fallbackResult);
           setLoading(false);
       }, 500); 
@@ -484,7 +383,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Describe your application (e.g., 'Tape for powder coating masking at 200°C')..."
+              placeholder="Describe your engineering problem (e.g., 'EMI shielding for PCB at 200°C')..."
               className="w-full pl-5 pr-14 py-4 rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all text-lg"
             />
             <button 
@@ -511,7 +410,8 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           {loading && (
             <div className="space-y-6 animate-pulse flex flex-col items-center justify-center py-10">
                 <div className="w-16 h-16 mb-6 rounded-full border-4 border-brand-accent border-t-transparent animate-spin"></div>
-                <p className="text-brand-blue-dark font-bold text-lg animate-pulse">Consulting Engineering Database...</p>
+                <p className="text-brand-blue-dark font-bold text-lg animate-pulse">Analyzing technical requirements...</p>
+                <p className="text-sm text-gray-500">Consulting engineering database...</p>
                 <div className="h-4 bg-gray-100 rounded w-3/4 max-w-md mt-4"></div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full mt-8 opacity-50">
                     {[1, 2, 3].map(i => (
