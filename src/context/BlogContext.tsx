@@ -1,7 +1,9 @@
+
 import { createContext, useContext, ReactNode, useCallback, FC, useMemo, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { BlogArticle, SeoPageData } from '../types';
-import { ALL_BLOG_ARTICLES as INITIAL_ARTICLES } from '../data/seoData';
+import { ALL_BLOG_ARTICLES } from '../data/seoData';
+import { TECHNICAL_BLOGS } from '../data/blogData';
 
 interface BlogContextType {
   articles: BlogArticle[];
@@ -16,12 +18,16 @@ interface BlogProviderProps {
     children: ReactNode;
 }
 
+// Combine existing general blogs with new technical blogs
+const INITIAL_ARTICLES = [...ALL_BLOG_ARTICLES, ...TECHNICAL_BLOGS];
+
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v7', INITIAL_ARTICLES);
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v8', INITIAL_ARTICLES);
 
   useEffect(() => {
     // Data validation: If blog data is corrupted, empty, or not an array, reset to initial data.
-    if (!Array.isArray(storedArticles) || (storedArticles.length === 0 && INITIAL_ARTICLES.length > 0)) {
+    // Also reset if the length is less than expected (implies new hardcoded blogs haven't been added to storage)
+    if (!Array.isArray(storedArticles) || storedArticles.length < INITIAL_ARTICLES.length) {
       setArticles(INITIAL_ARTICLES);
     }
   }, [storedArticles, setArticles]);
