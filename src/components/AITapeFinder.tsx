@@ -12,92 +12,193 @@ interface AITapeFinderProps {
   onClose: () => void;
 }
 
-// --- DEEP DOMAIN KNOWLEDGE BASE (CRITICAL FOR AI ACCURACY) ---
+// --- DEEP DOMAIN KNOWLEDGE BASE ---
 const TAPE_ENGINEERING_KNOWLEDGE = `
 [INDUSTRIAL TAPE ENGINEERING DATABASE]
 
-1. ADHESIVE TECHNOLOGY MATRIX
-- Rubber: High tack, poor UV/Temp. (General masking, Duct, Packaging)
-- Acrylic: High UV/Shear, moderate tack. (VHB, Safety, Outdoor)
-- Silicone: Extreme Temp (-73°C to +260°C), clean removal. (Kapton, Green Poly, Glass Cloth)
+1. STRICT CATEGORY SEPARATION (DO NOT MIX):
+   - **REFLECTIVE / SAFETY**: For visibility, night safety, hazard marking. (Silver TC, PVC Reflective, Radium). NEVER recommend VHB/Bonding tapes here.
+   - **BONDING / MOUNTING**: For sticking two things together permanently. (VHB, Acrylic Foam, Double Sided). NEVER recommend for "visibility".
+   - **MASKING**: For painting/coating protection. (Green Poly, Masking Tape).
+   - **ELECTRICAL/EMI**: For conductivity/insulation. (Copper, Kapton).
 
-2. SUBSTRATE HIERARCHY
-- Polyimide (Kapton): 260°C, Dielectric. (PCB, Soldering)
-- Polyester (PET): 204°C, High Tensile. (Powder Coating, Splicing)
-- Glass Cloth: 260°C+, Abrasion Resistant. (Motor Winding, Plasma Spray)
-- PTFE (Teflon): Non-stick, Low Friction. (Heat Seal Jaws)
-- Copper Foil: EMI/RFI Shielding, Grounding (X-Y-Z Conductivity).
-- Aluminium Foil: Thermal Reflection, HVAC Sealing (Not primary for EMI).
+2. ADHESIVE TECHNOLOGY MATRIX:
+   - Rubber: High tack, economical. (Floor Marking, Duct).
+   - Acrylic: UV stable, clear. (VHB, Clear Packing).
+   - Silicone: Extreme Temp (260°C). (Kapton, Green Poly).
 
-3. STRICT APPLICATION RULES
-- EMI/RFI Shielding -> MUST use Copper Foil or Conductive Fabric. Aluminium is acceptable ONLY if specified for generic shielding, but Copper is superior.
-- "Strongest Tape" -> Assume Industrial Structural Bonding (VHB) or Bundling (Filament). Do NOT recommend Safety/Floor tapes.
-- Powder Coating -> Green Polyester (204°C) or Polyimide.
+3. KEYWORD -> MATERIAL MAPPING:
+   - "Reflective" / "Visibility" / "Night" -> Glass Bead or Microprismatic Tape (Silver TC, PVC).
+   - "Strongest" / "Stick Forever" -> Acrylic Foam (VHB).
+   - "Heat" / "Oven" / "250C" -> Polyimide (Kapton) or Polyester (Green).
+   - "Current" / "Shielding" -> Copper / Aluminum Foil.
+`;
+
+const EXPERT_KNOWLEDGE_BASE = `
+==============================
+VERIFIED HUMAN QUESTIONS + ANSWERS (STRICT TRAINING DATA)
+==============================
+
+Q: I need very high reflective tape for safety jackets.
+A: For apparel and high visibility, you need Sew-On Reflective Fabric or Heat Transfer film. Do NOT use adhesive tapes meant for floors.
+Recommended: Silver TC Sew-On Reflective Tape, Heat Transfer Reflective Film, Grey Reflective Piping.
+
+Q: I need reflective tape for trucks and vehicles.
+A: Rigid vehicle surfaces require adhesive-backed retro-reflective tape.
+Recommended: PVC Reflective Tape, Honeycomb Reflective Tape.
+
+Q: What is the strongest tape to stick metal to metal?
+A: Structural bonding requires VHB (Very High Bond) Acrylic Foam tape. It replaces rivets and screws.
+Recommended: VHB (Very High Bond) Double-Sided Tape, Acrylic Double Sided Tape.
+
+Q: I need tape for powder coating masking at 200 degrees.
+A: Powder coating requires silicone adhesive to prevent residue. Green Polyester (204°C) or Kapton (260°C) are standard.
+Recommended: Green Polyester Tape, Green Polyester Tape with Liner, Polyimide Tape.
+
+Q: My electrical panel has EMI interference.
+A: You need conductive shielding. Copper foil with CONDUCTIVE adhesive is required to create a Faraday cage.
+Recommended: Conductive Copper Foil Tape, EMI Shielding Tape, Tin-Plated Copper Tape.
+
+Q: Tape to mark factory floors that won't peel off with forklifts.
+A: Standard vinyl fails under heavy traffic. You need heavy-duty, beveled-edge floor tape or industrial PVC.
+Recommended: Nastro Heavy Duty Floor Marking Tape, Heavy-Duty Floor Marking Tape.
+
+Q: Tape for sealing HVAC ducts.
+A: Requires thermal efficiency and moisture barrier. Aluminum Foil or FSK (Foil-Scrim-Kraft) is standard.
+Recommended: Aluminium Foil Tape, Foil Scrim Kraft Tape (FSK), Aluminium Butyl Tape.
+
+Q: Tape that glows in the dark for emergency exits.
+A: Photoluminescent tape absorbs light and glows during power outages.
+Recommended: Glow in the Dark Tape, Photoluminescent Film, Anti-Skid Glow in Dark.
+
+Q: Tape to stop leakage in roofing sheets.
+A: Butyl rubber tape is self-healing and waterproof for roofs.
+Recommended: Aluminium Butyl Tape.
+
+Q: Non-stick tape for heat sealing machines.
+A: PTFE (Teflon) tape withstands heat and provides a release surface.
+Recommended: PTFE Coated Fiberglass Tape, Nitto 903 UL Tapes.
+
+Q: Tape for sublimation printing (heat resistant).
+A: Polyimide (Kapton) tape holds paper in place at 200°C without leaving residue.
+Recommended: Polyimide Tape, Green Polyester Tape.
+
+Q: Tape to prevent slipping on stairs.
+A: Anti-Skid tape with abrasive grit.
+Recommended: Heavy Duty Anti-Skid Tape, Coloured Anti-Slip Tape.
+
+Q: Tape for mobile phone repair (battery pulling).
+A: Stretch release adhesive or thin double-sided PET.
+Recommended: PET Double-Sided Tape, Black Tape (Mobile Repair).
+
+Q: Tape for 3D printing bed adhesion.
+A: Kapton (Polyimide) or Blue Masking Tape.
+Recommended: Polyimide Tape, Masking Tape.
+
+Q: Double sided tape that is clear like glass.
+A: Acrylic VHB or Gel tape is optically clear.
+Recommended: Acrylic Gel Tape, VHB Tape (Clear variant).
+
+Q: Tape for harnessing wires in cars.
+A: Fleece or cloth tape dampens noise and resists abrasion.
+Recommended: Cloth Adhesive Tape, PVC Pipe Wrapping Tape.
+
+Q: ESD tape for circuit boards.
+A: Anti-static grid tape or ESD Kapton.
+Recommended: ESD Conductive Grid Tape, ESD Kapton Tape.
+
+Q: Tape for splicing paper rolls in printing press.
+A: Repulpable splicing tape or Double Sided Tissue.
+Recommended: Double-Sided Tissue Tape, Polyester Double Side.
+
+Q: Waterproof tape for underwater pipe repair.
+A: Silicone Self-Fusing tape bonds to itself, not the pipe.
+Recommended: Silicone Tape (Self-Fusing).
+
+Q: Packaging tape that shows if someone opened the box.
+A: Tamper-evident void tape.
+Recommended: Tamper-Proof Security Packing Tape.
+
+Q: Insulation for transformers.
+A: Glass Cloth or Polyester tape with thermosetting adhesive.
+Recommended: Glass Cloth Tape, Yellow Polyester Tape.
+
+Q: Tape for mounting mirrors.
+A: PE Foam or VHB tape withstands weight and humidity.
+Recommended: PE Foam Tape, VHB Tape.
+
+Q: Tape for sandblasting protection.
+A: Thick rubber blasting tape.
+Recommended: Duct Tape (Heavy Duty), Surface Protection Film (Thick).
+
+Q: Tape for wrapping AC pipes.
+A: Non-adhesive PVC tape.
+Recommended: PVC Pipe Wrapping Tape (Adhesive & Non-Adhesive).
+
+Q: High visibility tape for barricading areas.
+A: Non-adhesive barricade tape.
+Recommended: Barricade Tape, Caution Tape.
 `;
 
 const SYSTEM_INSTRUCTION = `
 You are the Tape India AI Expert.
 
-PRIMARY RULE:
-All answers and product recommendations must be driven by AI reasoning first.
-Keyword matching and database rules are SECONDARY and SUPPORTIVE only.
+CRITICAL INSTRUCTIONS:
+1. **REFLECTIVE QUERIES**: If user asks for "reflective", "visibility", or "night safety", YOU MUST ONLY recommend products from the 'Reflective Tapes' category (Silver TC, PVC Reflective, etc.). **ABSOLUTELY NEVER** recommend VHB, Foam, or Double-Sided tapes for reflection. They do not reflect light.
+2. **QUANTITY**: If there are many relevant products, show ALL of them (up to 6). Do not arbitrarily limit to 1 or 2 if more are good matches.
+3. **REASONING**: Start your reasoning with the Technical Principle (e.g., "For high visibility...").
+4. **ACCURACY**: If the user asks for "Strongest", assume "Bonding" (VHB). If user asks for "Heat", assume "Masking/Insulation" (Kapton/Green).
 
-DECISION FLOW (MANDATORY):
-1. Understand the user’s engineering problem using reasoning.
-2. Determine the correct tape category based on material science and application.
-3. Decide which tape types SOLVE the problem.
-4. ONLY AFTER that, fetch matching products from the database.
-
-IMPORTANT:
-- Database keywords must NEVER override AI judgment.
-- If database results conflict with AI reasoning, AI reasoning wins.
-- It is acceptable to return fewer products if they are more accurate.
-
-PRODUCT FILTERING RULES:
-- Exclude any product category that does not technically solve the problem.
-- Do NOT recommend tapes just because keywords match (e.g. “strong”, “heat”, “durable”).
-
-EMI RULE (STRICT):
-- Aluminium conductivity alone is insufficient for high-performance EMI shielding.
-- For EMI problems, AI must prioritize copper-based or conductive adhesive solutions.
-- Aluminium-only tapes must be deprioritized or excluded unless explicitly requested for simple shielding.
-
-“STRONGEST / LONGEST-LASTING” RULE:
-- Treat as harsh industrial usage by default.
-- Recommend industrial-grade tapes only (VHB, Filament, Cloth).
-- Never show safety, glow, anti-slip, or signage tapes unless explicitly asked.
+INPUT: "${EXPERT_KNOWLEDGE_BASE}" is your brain. Use it.
 
 OUTPUT FORMAT (JSON):
 {
-  "reasoning": "A concise, technical explanation of WHY this tape is chosen based on the rules above.",
-  "productIds": ["id1", "id2", "id3"]
+  "reasoning": "Technical explanation...",
+  "productIds": ["id1", "id2", "id3", "id4", "id5"]
 }
 `;
 
-// --- LOCAL INTELLIGENCE (FALLBACK ONLY) ---
-// These rules mirror the Strict AI Rules to ensure quality even if API fails.
+// --- UPDATED LOCAL INTELLIGENCE (FALLBACK) ---
+// Now includes a specific REFLECTIVE rule to prevent VHB fallback
 const INTENT_RULES = [
+  {
+    id: 'reflective-visibility',
+    keywords: ['reflective', 'reflect', 'visibility', 'night', 'glow', 'safety jacket', 'vehicle marking', 'radium', 'shine'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const n = p.name.toLowerCase();
+        const c = p.category.toLowerCase();
+        
+        // Boost Actual Reflective Items
+        if (c.includes('reflective')) score += 200;
+        if (n.includes('reflective')) score += 150;
+        if (n.includes('silver tc')) score += 100;
+        if (n.includes('glow') && query.includes('glow')) score += 100;
+
+        // HEAVILY PENALIZE non-reflective items to prevent VHB appearance
+        if (n.includes('vhb') || n.includes('double') || n.includes('foam')) score -= 500;
+        
+        return score;
+    },
+    reasoning: "For high visibility and safety, only Retro-Reflective tapes (Microprismatic or Glass Bead technology) are suitable."
+  },
   {
     id: 'emi-shielding',
     keywords: ['emi', 'shield', 'interference', 'signal', 'conductive', 'grounding', 'rfi', 'faraday'],
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
-        
-        // STRICT EMI RULE: Copper is King
         if (n.includes('copper')) score += 100;
         if (n.includes('emi')) score += 80;
         if (n.includes('conductive')) score += 50;
-        
-        // Penalize Aluminium for EMI unless HVAC context implies it
+        // Aluminium logic
         if (n.includes('aluminium') || n.includes('aluminum')) {
             if (query.includes('hvac') || query.includes('duct')) score += 50;
-            else score -= 20; // Deprioritize for pure EMI
+            else score -= 20; 
         }
-        
         return score;
     },
-    reasoning: "For effective EMI/RFI shielding and grounding, Copper Foil Tape with conductive adhesive is the technically superior solution."
+    reasoning: "For effective EMI/RFI shielding, Copper Foil Tape with conductive adhesive creates the required Faraday cage."
   },
   {
     id: 'high-temp-masking',
@@ -105,17 +206,13 @@ const INTENT_RULES = [
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
-        // Green Poly & Kapton are Kings
         if (n.includes('green') && n.includes('polyester')) score += 100;
         if (n.includes('kapton') || n.includes('polyimide')) score += 90;
         if (n.includes('glass cloth')) score += 70;
-        
-        // Penalize Packaging/Duct tapes for heat
         if (n.includes('bopp') || n.includes('duct')) score -= 100;
-        
         return score;
     },
-    reasoning: "Based on thermal requirements, Green Polyester or Polyimide tapes with Silicone adhesive are required to prevent residue and melting."
+    reasoning: "Green Polyester or Polyimide tapes with Silicone adhesive are required to prevent residue at high curing temperatures."
   },
   {
     id: 'industrial-strength',
@@ -123,43 +220,12 @@ const INTENT_RULES = [
     score: (p: Product, query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
-        
-        // STRICT STRENGTH RULE: Industrial grades only
-        if (n.includes('filament') || n.includes('strapping')) score += 100;
-        if (n.includes('vhb') || n.includes('foam')) score += 90;
-        if (n.includes('duct') || n.includes('cloth')) score += 50;
-        
-        // Exclude Safety/Marking/Floor tapes from "Strong" queries
-        if (n.includes('safety') || n.includes('floor') || n.includes('marking') || n.includes('barrier')) score -= 200;
-        
+        if (n.includes('filament')) score += 100;
+        if (n.includes('vhb')) score += 100;
+        if (n.includes('safety') || n.includes('floor')) score -= 50; // Context dependent
         return score;
     },
-    reasoning: "For maximum structural integrity and holding power, industrial-grade Filament or VHB tapes are the engineering standard."
-  },
-  {
-    id: 'safety-compliance',
-    keywords: ['slip', 'skid', 'floor', 'walkway', 'stair', 'traction', 'hazard', 'warning', 'barrier', 'osha'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('anti-slip') || n.includes('anti-skid')) score += 100;
-        if (n.includes('floor marking') || n.includes('hazard')) score += 80;
-        return score;
-    },
-    reasoning: "To ensure facility safety and compliance, Anti-Skid and Safety Marking tapes are the designated solution."
-  },
-  {
-    id: 'packaging',
-    keywords: ['pack', 'box', 'carton', 'ship', 'parcel', 'strap', 'seal'],
-    score: (p: Product, query: string) => {
-        let score = 0;
-        const n = p.name.toLowerCase();
-        if (n.includes('bopp')) score += 80;
-        if (n.includes('kraft')) score += 70;
-        if (n.includes('filament')) score += 60;
-        return score;
-    },
-    reasoning: "For secure logistics, reinforced Filament, Kraft, or industrial BOPP tapes offer the required sealing strength."
+    reasoning: "For maximum holding power, industrial-grade VHB (Bonding) or Filament (Bundling) tapes are the strongest options."
   }
 ];
 
@@ -186,13 +252,11 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
-  // Fallback 'Emergency' Local Intelligence Mode
-  // Only runs if AI fails after retries.
   const performFallbackSearch = (searchQuery: string): { productIds: string[], reasoning: string } => {
       const lowerQuery = searchQuery.toLowerCase();
       let bestRuleResult = { rule: null as any, products: [] as any[], totalScore: 0 };
 
-      // 1. Try Strict Intent Rules first
+      // 1. Try Strict Intent Rules
       for (const rule of INTENT_RULES) {
           if (rule.keywords.some(k => lowerQuery.includes(k))) {
               const scoredProducts = products.map(p => ({
@@ -203,7 +267,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
               const topProducts = scoredProducts
                   .filter(sp => sp.score > 0)
                   .sort((a, b) => b.score - a.score)
-                  .slice(0, 4);
+                  .slice(0, 6); // INCREASED LIMIT TO 6
 
               const totalScore = topProducts.reduce((sum, p) => sum + p.score, 0);
 
@@ -224,42 +288,40 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           };
       }
 
-      // 2. Generic Keyword Fallback (Last Resort)
+      // 2. Generic Keyword Fallback
       const words = lowerQuery.split(' ').filter(w => w.length > 2);
       const fallbackMatches = products.map(p => {
           let score = 0;
           const n = p.name.toLowerCase();
-          words.forEach(w => { if (n.includes(w)) score += 10; });
+          const c = p.category.toLowerCase();
+          words.forEach(w => { 
+              if (n.includes(w)) score += 10; 
+              if (c.includes(w)) score += 5;
+          });
           return { id: p.id, score };
       })
       .filter(sp => sp.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 4)
+      .slice(0, 6) // INCREASED LIMIT
       .map(sp => sp.id);
 
       if (fallbackMatches.length > 0) {
           return {
               productIds: fallbackMatches,
-              reasoning: "Based on keyword analysis of your requirements, these products align best with your application needs."
+              reasoning: "These products match the keywords in your request."
           };
       }
 
-      // 3. Absolute default (Industrial Favorites)
-      const defaultIds = products
-        .filter(p => ['green-polyster', 'vhb-tape', 'filament-tape'].includes(p.id))
-        .map(p => p.id);
-        
+      // 3. Absolute Default (Only if NO MATCHES found at all)
+      // NOTE: We only show this if absolutely nothing matched.
       return {
-          productIds: defaultIds,
-          reasoning: "We couldn't find a specific match, but these are our most versatile industrial tapes for masking and bonding."
+          productIds: [],
+          reasoning: "We couldn't find a precise match. Please try describing the application (e.g., 'high heat', 'packaging')."
       };
   };
 
   const handleSearch = async () => {
     if (!query.trim()) return;
-    
-    // PRIMARY RULE: AI Reasoning First.
-    // We do NOT check local rules here. We go straight to AI.
     
     setLoading(true);
     setResult(null);
@@ -278,16 +340,19 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         tags: p.tags
       }));
 
-      // Inject the Deep Knowledge Base into the prompt context
+      // Inject EVERYTHING into the prompt
       const prompt = `
         ${TAPE_ENGINEERING_KNOWLEDGE}
+
+        ${EXPERT_KNOWLEDGE_BASE}
 
         USER QUERY: "${query}"
         
         TASK:
-        1. Analyze user query against the Engineering Knowledge Base.
-        2. Select best matches from the Inventory below.
-        3. Explain WHY based on the engineering principles (e.g. temp rating, adhesive type).
+        1. Analyze user query against the "VERIFIED HUMAN QUESTIONS".
+        2. If the user asks for "Reflective", ONLY return reflective tapes. NO VHB.
+        3. Return ALL relevant product IDs (up to 6).
+        4. Explain WHY based on the engineering principles.
 
         INVENTORY: ${JSON.stringify(inventory)}
       `;
@@ -303,14 +368,13 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           });
       };
 
-      // ATTEMPT 1
+      // Attempt 1
       let response;
       try {
           response = await generateContent();
       } catch (err) {
-          // SILENT RETRY (ATTEMPT 2)
           console.warn("AI Attempt 1 failed, retrying...", err);
-          await new Promise(resolve => setTimeout(resolve, 1500)); // Wait 1.5s
+          await new Promise(resolve => setTimeout(resolve, 1500));
           response = await generateContent(); 
       }
 
@@ -320,6 +384,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         if (data.productIds && data.productIds.length > 0) {
             setResult(data);
         } else {
+            // If AI returns empty, fallback
             throw new Error("AI returned no results");
         }
       } else {
@@ -327,12 +392,11 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       }
 
     } catch (error) {
-      console.warn("System Switch: Engaging Local Intelligence Mode (Fallback).", error);
-      // ZERO FAILURE PROTOCOL: Switch to Local Intelligence
-      // This is ONLY reached if API fails twice.
-      // We simulate a small delay to make it feel deliberate if it was instant error.
+      console.warn("Switching to Local Intelligence (Fallback).", error);
       setTimeout(() => {
           const fallbackResult = performFallbackSearch(query);
+          // If even fallback finds nothing, keep it empty/null to show "No results" message in UI? 
+          // Or show the reasoning.
           setResult(fallbackResult);
           setLoading(false);
       }, 500); 
@@ -383,7 +447,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Describe your engineering problem (e.g., 'EMI shielding for PCB at 200°C')..."
+              placeholder="Ask an engineering question (e.g., 'Tape for high reflective safety jackets')..."
               className="w-full pl-5 pr-14 py-4 rounded-xl border border-gray-200 shadow-sm focus:ring-2 focus:ring-brand-accent focus:border-brand-accent transition-all text-lg"
             />
             <button 
@@ -437,7 +501,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
                 {/* Results Grid */}
                 {recommendedProducts.length > 0 ? (
                     <div>
-                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Recommended Solutions</h3>
+                        <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Recommended Solutions ({recommendedProducts.length})</h3>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                             {recommendedProducts.map(product => (
                                 <ProductCard 
@@ -450,7 +514,8 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
                     </div>
                 ) : (
                     <div className="text-center py-10 text-gray-500">
-                        <p>No exact product matches found in our catalog, but based on your query, we recommend contacting our engineers directly.</p>
+                        <p>No exact product matches found for your specific query.</p>
+                        <p className="text-sm mt-2">Try broader terms like "Tape" or contact us directly.</p>
                     </div>
                 )}
             </div>
