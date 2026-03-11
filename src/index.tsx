@@ -13,6 +13,7 @@ import { IndustryProvider } from './context/IndustryContext';
 import { SearchModalProvider } from './context/SearchModalContext';
 import { BlogProvider } from './context/BlogContext';
 import { CartProvider } from './context/CartContext';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -22,26 +23,28 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <SearchModalProvider>
-          <AuthProvider>
-            <SettingsProvider>
-              <ProductProvider>
-                <CategoryProvider>
-                  <IndustryProvider>
-                    <BlogProvider>
-                      <CartProvider>
-                        <App />
-                      </CartProvider>
-                    </BlogProvider>
-                  </IndustryProvider>
-                </CategoryProvider>
-              </ProductProvider>
-            </SettingsProvider>
-          </AuthProvider>
-        </SearchModalProvider>
-      </BrowserRouter>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <BrowserRouter>
+          <SearchModalProvider>
+            <AuthProvider>
+              <SettingsProvider>
+                <ProductProvider>
+                  <CategoryProvider>
+                    <IndustryProvider>
+                      <BlogProvider>
+                        <CartProvider>
+                          <App />
+                        </CartProvider>
+                      </BlogProvider>
+                    </IndustryProvider>
+                  </CategoryProvider>
+                </ProductProvider>
+              </SettingsProvider>
+            </AuthProvider>
+          </SearchModalProvider>
+        </BrowserRouter>
+      </HelmetProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
