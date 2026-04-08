@@ -10,8 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      // Define process.env.API_KEY globally so the Google GenAI SDK can use it without crashing
-      'process.env.API_KEY': JSON.stringify(env.API_KEY),
+      // Removed insecure API key injection
     },
   }
 })
