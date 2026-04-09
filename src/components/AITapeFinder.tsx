@@ -1,8 +1,7 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { GoogleGenAI } from "@google/genai";
 import { useProducts } from '../context/ProductContext';
-import ProductCard from './ProductCard';
+import AIRecommendationCard from './AIRecommendationCard';
 import { useCategories } from '../context/CategoryContext';
 import { AIIcon } from './icons/AIIcon';
 import { Product } from '../types';
@@ -12,155 +11,27 @@ interface AITapeFinderProps {
   onClose: () => void;
 }
 
-// --- DEEP DOMAIN KNOWLEDGE BASE ---
-const TAPE_ENGINEERING_KNOWLEDGE = `
-[INDUSTRIAL TAPE ENGINEERING DATABASE]
-
-1. STRICT CATEGORY SEPARATION (DO NOT MIX):
-   - **REFLECTIVE / SAFETY**: For visibility, night safety, hazard marking. (Silver TC, PVC Reflective, Radium). NEVER recommend VHB/Bonding tapes here.
-   - **BONDING / MOUNTING**: For sticking two things together permanently. (VHB, Acrylic Foam, Double Sided). NEVER recommend for "visibility".
-   - **MASKING**: For painting/coating protection. (Green Poly, Masking Tape).
-   - **ELECTRICAL/EMI**: For conductivity/insulation. (Copper, Kapton).
-
-2. ADHESIVE TECHNOLOGY MATRIX:
-   - Rubber: High tack, economical. (Floor Marking, Duct).
-   - Acrylic: UV stable, clear. (VHB, Clear Packing).
-   - Silicone: Extreme Temp (260°C). (Kapton, Green Poly).
-
-3. KEYWORD -> MATERIAL MAPPING:
-   - "Reflective" / "Visibility" / "Night" -> Glass Bead or Microprismatic Tape (Silver TC, PVC).
-   - "Strongest" / "Stick Forever" -> Acrylic Foam (VHB).
-   - "Heat" / "Oven" / "250C" -> Polyimide (Kapton) or Polyester (Green).
-   - "Current" / "Shielding" -> Copper / Aluminum Foil.
-`;
-
-const EXPERT_KNOWLEDGE_BASE = `
-==============================
-VERIFIED HUMAN QUESTIONS + ANSWERS (STRICT TRAINING DATA)
-==============================
-
-Q: I need very high reflective tape for safety jackets.
-A: For apparel and high visibility, you need Sew-On Reflective Fabric or Heat Transfer film. Do NOT use adhesive tapes meant for floors.
-Recommended: Silver TC Sew-On Reflective Tape, Heat Transfer Reflective Film, Grey Reflective Piping.
-
-Q: I need reflective tape for trucks and vehicles.
-A: Rigid vehicle surfaces require adhesive-backed retro-reflective tape.
-Recommended: PVC Reflective Tape, Honeycomb Reflective Tape.
-
-Q: What is the strongest tape to stick metal to metal?
-A: Structural bonding requires VHB (Very High Bond) Acrylic Foam tape. It replaces rivets and screws.
-Recommended: VHB (Very High Bond) Double-Sided Tape, Acrylic Double Sided Tape.
-
-Q: I need tape for powder coating masking at 200 degrees.
-A: Powder coating requires silicone adhesive to prevent residue. Green Polyester (204°C) or Kapton (260°C) are standard.
-Recommended: Green Polyester Tape, Green Polyester Tape with Liner, Polyimide Tape.
-
-Q: My electrical panel has EMI interference.
-A: You need conductive shielding. Copper foil with CONDUCTIVE adhesive is required to create a Faraday cage.
-Recommended: Conductive Copper Foil Tape, EMI Shielding Tape, Tin-Plated Copper Tape.
-
-Q: Tape to mark factory floors that won't peel off with forklifts.
-A: Standard vinyl fails under heavy traffic. You need heavy-duty, beveled-edge floor tape or industrial PVC.
-Recommended: Nastro Heavy Duty Floor Marking Tape, Heavy-Duty Floor Marking Tape.
-
-Q: Tape for sealing HVAC ducts.
-A: Requires thermal efficiency and moisture barrier. Aluminum Foil or FSK (Foil-Scrim-Kraft) is standard.
-Recommended: Aluminium Foil Tape, Foil Scrim Kraft Tape (FSK), Aluminium Butyl Tape.
-
-Q: Tape that glows in the dark for emergency exits.
-A: Photoluminescent tape absorbs light and glows during power outages.
-Recommended: Glow in the Dark Tape, Photoluminescent Film, Anti-Skid Glow in Dark.
-
-Q: Tape to stop leakage in roofing sheets.
-A: Butyl rubber tape is self-healing and waterproof for roofs.
-Recommended: Aluminium Butyl Tape.
-
-Q: Non-stick tape for heat sealing machines.
-A: PTFE (Teflon) tape withstands heat and provides a release surface.
-Recommended: PTFE Coated Fiberglass Tape, Nitto 903 UL Tapes.
-
-Q: Tape for sublimation printing (heat resistant).
-A: Polyimide (Kapton) tape holds paper in place at 200°C without leaving residue.
-Recommended: Polyimide Tape, Green Polyester Tape.
-
-Q: Tape to prevent slipping on stairs.
-A: Anti-Skid tape with abrasive grit.
-Recommended: Heavy Duty Anti-Skid Tape, Coloured Anti-Slip Tape.
-
-Q: Tape for mobile phone repair (battery pulling).
-A: Stretch release adhesive or thin double-sided PET.
-Recommended: PET Double-Sided Tape, Black Tape (Mobile Repair).
-
-Q: Tape for 3D printing bed adhesion.
-A: Kapton (Polyimide) or Blue Masking Tape.
-Recommended: Polyimide Tape, Masking Tape.
-
-Q: Double sided tape that is clear like glass.
-A: Acrylic VHB or Gel tape is optically clear.
-Recommended: Acrylic Gel Tape, VHB Tape (Clear variant).
-
-Q: Tape for harnessing wires in cars.
-A: Fleece or cloth tape dampens noise and resists abrasion.
-Recommended: Cloth Adhesive Tape, PVC Pipe Wrapping Tape.
-
-Q: ESD tape for circuit boards.
-A: Anti-static grid tape or ESD Kapton.
-Recommended: ESD Conductive Grid Tape, ESD Kapton Tape.
-
-Q: Tape for splicing paper rolls in printing press.
-A: Repulpable splicing tape or Double Sided Tissue.
-Recommended: Double-Sided Tissue Tape, Polyester Double Side.
-
-Q: Waterproof tape for underwater pipe repair.
-A: Silicone Self-Fusing tape bonds to itself, not the pipe.
-Recommended: Silicone Tape (Self-Fusing).
-
-Q: Packaging tape that shows if someone opened the box.
-A: Tamper-evident void tape.
-Recommended: Tamper-Proof Security Packing Tape.
-
-Q: Insulation for transformers.
-A: Glass Cloth or Polyester tape with thermosetting adhesive.
-Recommended: Glass Cloth Tape, Yellow Polyester Tape.
-
-Q: Tape for mounting mirrors.
-A: PE Foam or VHB tape withstands weight and humidity.
-Recommended: PE Foam Tape, VHB Tape.
-
-Q: Tape for sandblasting protection.
-A: Thick rubber blasting tape.
-Recommended: Duct Tape (Heavy Duty), Surface Protection Film (Thick).
-
-Q: Tape for wrapping AC pipes.
-A: Non-adhesive PVC tape.
-Recommended: PVC Pipe Wrapping Tape (Adhesive & Non-Adhesive).
-
-Q: High visibility tape for barricading areas.
-A: Non-adhesive barricade tape.
-Recommended: Barricade Tape, Caution Tape.
-`;
-
-const SYSTEM_INSTRUCTION = `
-You are the Tape India AI Expert.
-
-CRITICAL INSTRUCTIONS:
-1. **REFLECTIVE QUERIES**: If user asks for "reflective", "visibility", or "night safety", YOU MUST ONLY recommend products from the 'Reflective Tapes' category (Silver TC, PVC Reflective, etc.). **ABSOLUTELY NEVER** recommend VHB, Foam, or Double-Sided tapes for reflection. They do not reflect light.
-2. **QUANTITY**: If there are many relevant products, show ALL of them (up to 6). Do not arbitrarily limit to 1 or 2 if more are good matches.
-3. **REASONING**: Start your reasoning with the Technical Principle (e.g., "For high visibility...").
-4. **ACCURACY**: If the user asks for "Strongest", assume "Bonding" (VHB). If user asks for "Heat", assume "Masking/Insulation" (Kapton/Green).
-
-INPUT: "${EXPERT_KNOWLEDGE_BASE}" is your brain. Use it.
-
-OUTPUT FORMAT (JSON):
-{
-  "reasoning": "Technical explanation...",
-  "productIds": ["id1", "id2", "id3", "id4", "id5"]
-}
-`;
-
 // --- UPDATED LOCAL INTELLIGENCE (FALLBACK) ---
-// Now includes a specific REFLECTIVE rule to prevent VHB fallback
 const INTENT_RULES = [
+  {
+    id: 'packaging-sealing',
+    keywords: ['packaging', 'bopp', 'box', 'carton', 'sealing', 'shipping', 'dispatch', 'packing', 'courier'],
+    score: (p: Product, query: string) => {
+        let score = 0;
+        const n = p.name.toLowerCase();
+        const c = p.category.toLowerCase();
+        
+        if (c.includes('packaging') || c.includes('bopp')) score += 500;
+        if (n.includes('bopp')) score += 200;
+        if (n.includes('brown') || n.includes('transparent')) score += 100;
+
+        // HEAVILY PENALIZE non-packaging items
+        if (!c.includes('packaging') && !c.includes('bopp')) score -= 1000;
+        
+        return score;
+    },
+    reasoning: "For sealing cartons and boxes, BOPP Packaging Tape provides the necessary adhesion and durability."
+  },
   {
     id: 'reflective-visibility',
     keywords: ['reflective', 'reflect', 'visibility', 'night', 'glow', 'safety jacket', 'vehicle marking', 'radium', 'shine'],
@@ -267,7 +138,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
               const topProducts = scoredProducts
                   .filter(sp => sp.score > 0)
                   .sort((a, b) => b.score - a.score)
-                  .slice(0, 6); // INCREASED LIMIT TO 6
+                  .slice(0, 6);
 
               const totalScore = topProducts.reduce((sum, p) => sum + p.score, 0);
 
@@ -302,7 +173,7 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       })
       .filter(sp => sp.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 6) // INCREASED LIMIT
+      .slice(0, 6)
       .map(sp => sp.id);
 
       if (fallbackMatches.length > 0) {
@@ -312,8 +183,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
           };
       }
 
-      // 3. Absolute Default (Only if NO MATCHES found at all)
-      // NOTE: We only show this if absolutely nothing matched.
       return {
           productIds: [],
           reasoning: "We couldn't find a precise match. Please try describing the application (e.g., 'high heat', 'packaging')."
@@ -327,11 +196,6 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
     setResult(null);
 
     try {
-      const apiKey = process.env.API_KEY;
-      if (!apiKey) throw new Error("API Key missing");
-
-      const ai = new GoogleGenAI({ apiKey });
-      
       const inventory = products.map(p => ({
         id: p.id,
         name: p.name,
@@ -340,63 +204,31 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
         tags: p.tags
       }));
 
-      // Inject EVERYTHING into the prompt
-      const prompt = `
-        ${TAPE_ENGINEERING_KNOWLEDGE}
+      // Call our secure Cloudflare Pages Function
+      const response = await fetch('/api/ask-ai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query, inventory })
+      });
 
-        ${EXPERT_KNOWLEDGE_BASE}
-
-        USER QUERY: "${query}"
-        
-        TASK:
-        1. Analyze user query against the "VERIFIED HUMAN QUESTIONS".
-        2. If the user asks for "Reflective", ONLY return reflective tapes. NO VHB.
-        3. Return ALL relevant product IDs (up to 6).
-        4. Explain WHY based on the engineering principles.
-
-        INVENTORY: ${JSON.stringify(inventory)}
-      `;
-
-      const generateContent = async () => {
-          return await ai.models.generateContent({
-            model: 'gemini-3-pro-preview',
-            contents: prompt,
-            config: { 
-                responseMimeType: 'application/json',
-                systemInstruction: SYSTEM_INSTRUCTION
-            }
-          });
-      };
-
-      // Attempt 1
-      let response;
-      try {
-          response = await generateContent();
-      } catch (err) {
-          console.warn("AI Attempt 1 failed, retrying...", err);
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          response = await generateContent(); 
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
       }
 
-      const text = response.text;
-      if (text) {
-        const data = JSON.parse(text);
-        if (data.productIds && data.productIds.length > 0) {
-            setResult(data);
-        } else {
-            // If AI returns empty, fallback
-            throw new Error("AI returned no results");
-        }
+      const data = await response.json();
+      
+      if (data.productIds && data.productIds.length > 0) {
+          setResult(data);
       } else {
-          throw new Error("Empty response");
+          throw new Error("AI returned no results");
       }
 
     } catch (error) {
       console.warn("Switching to Local Intelligence (Fallback).", error);
       setTimeout(() => {
           const fallbackResult = performFallbackSearch(query);
-          // If even fallback finds nothing, keep it empty/null to show "No results" message in UI? 
-          // Or show the reasoning.
           setResult(fallbackResult);
           setLoading(false);
       }, 500); 
@@ -498,16 +330,17 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
                     </div>
                 </div>
 
-                {/* Results Grid */}
+                {/* Results Grid - Now using AIRecommendationCard */}
                 {recommendedProducts.length > 0 ? (
                     <div>
                         <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Recommended Solutions ({recommendedProducts.length})</h3>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
-                            {recommendedProducts.map(product => (
-                                <ProductCard 
+                            {recommendedProducts.map((product, index) => (
+                                <AIRecommendationCard 
                                     key={product.id} 
                                     product={product} 
-                                    categoryName={categoryMap.get(product.category) || ''} 
+                                    categoryName={categoryMap.get(product.category) || ''}
+                                    rank={index}
                                 />
                             ))}
                         </div>
