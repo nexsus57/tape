@@ -2,15 +2,17 @@
 const TAPE_ENGINEERING_KNOWLEDGE = `
 [INDUSTRIAL TAPE ENGINEERING DATABASE]
 
-1. STRICT CATEGORY SEPARATION (DO NOT MIX):
-   - **REFLECTIVE / SAFETY**: For visibility, night safety, hazard marking. (Silver TC, PVC Reflective, Radium). NEVER recommend VHB/Bonding tapes here.
-   - **BONDING / MOUNTING**: For sticking two things together permanently. (VHB, Acrylic Foam, Double Sided). NEVER recommend for "visibility".
-   - **MASKING**: For painting/coating protection. (Green Poly, Masking Tape).
-   - **ELECTRICAL/EMI**: For conductivity/insulation. (Copper, Kapton).
+1. STRICT CATEGORY SEPARATION & NEGATIVE MATCHING (CRITICAL):
+   - "Packaging", "Box", "Carton", "Sealing" -> ONLY Packaging Tapes (BOPP, Self Adhesive, Printed, Brown, Transparent). NEVER show: Floor Marking, Reflective, Anti-Skid, Hazard, Electrical.
+   - "Floor", "Walkway", "Warehouse", "Marking" -> ONLY Floor Marking / Anti-Skid. NEVER show: Packaging, VHB, Reflective.
+   - "Reflective", "Night", "Visibility", "Truck" -> ONLY Reflective category. NEVER show: Double-sided, Foam, Packaging.
+   - "Strong", "Bond", "Mount", "Stick metal/plastic" -> ONLY VHB / Double-Sided. NEVER show: Reflective, Packaging, Masking.
+   - "Heat", "Temperature", "200C", "Oven" -> ONLY Kapton / Green Polyester. NEVER show: Packaging, Foam, Reflective.
+   - "Electrical", "EMI", "Shielding" -> ONLY Copper / Aluminium. NEVER show: Packaging or Floor tapes.
 
 2. ADHESIVE TECHNOLOGY MATRIX:
-   - Rubber: High tack, economical. (Floor Marking, Duct).
-   - Acrylic: UV stable, clear. (VHB, Clear Packing).
+   - Rubber: High tack, economical. (Floor Marking, Duct, Economy BOPP).
+   - Acrylic: UV stable, clear. (VHB, Clear Packing, Premium BOPP).
    - Silicone: Extreme Temp (260°C). (Kapton, Green Poly).
 
 3. KEYWORD -> MATERIAL MAPPING:
@@ -18,6 +20,7 @@ const TAPE_ENGINEERING_KNOWLEDGE = `
    - "Strongest" / "Stick Forever" -> Acrylic Foam (VHB).
    - "Heat" / "Oven" / "250C" -> Polyimide (Kapton) or Polyester (Green).
    - "Current" / "Shielding" -> Copper / Aluminum Foil.
+   - "BOPP" / "Carton" / "Box sealing" / "Dispatch" / "Shipping" -> Packaging ONLY.
 `;
 
 const EXPERT_KNOWLEDGE_BASE = `
@@ -124,16 +127,67 @@ Recommended: PVC Pipe Wrapping Tape (Adhesive & Non-Adhesive).
 Q: High visibility tape for barricading areas.
 A: Non-adhesive barricade tape.
 Recommended: Barricade Tape, Caution Tape.
+
+Q: I need tape for sealing cartons and boxes.
+A: Standard packaging requires BOPP self adhesive tape with strong acrylic adhesive.
+Recommended: BOPP Self Adhesive Tape, Brown Packaging Tape, Transparent Packaging Tape.
+
+Q: Which tape is best for export packaging?
+A: Export requires high adhesion and durability. Use thick BOPP or printed tape.
+Recommended: Heavy Duty BOPP Tape, Printed Packaging Tape.
+
+Q: Cheap tape for bulk packing?
+A: Use economy grade BOPP tape with rubber adhesive.
+Recommended: Economy BOPP Tape, Brown Tape.
+
+Q: Tape for e-commerce packaging (Flipkart/Amazon sellers)?
+A: Requires tamper-proof and strong sealing.
+Recommended: BOPP Tape, Printed Tape, Tamper Evident Tape.
+
+Q: Tape for heavy cartons (20kg+ weight)?
+A: Requires high thickness BOPP or reinforced tape.
+Recommended: Heavy Duty BOPP Tape, Filament Tape.
+
+Q: Machine use packaging tape?
+A: Requires uniform thickness and smooth unwind.
+Recommended: Machine Grade BOPP Tape.
+
+Q: Transparent tape for clean packaging look?
+A: Use clear acrylic BOPP tape.
+Recommended: Transparent BOPP Tape.
+
+Q: Brown tape vs transparent tape?
+A: Both are BOPP, only color differs. Brown hides dust, transparent shows branding.
+Recommended: Brown BOPP, Transparent BOPP.
+
+Q: Packaging tape for floor marking?
+A: WRONG USE CASE. Packaging tape is not durable for floor marking.
+Recommended: Floor Marking Tape ONLY.
+
+Q: Can I use VHB for packaging?
+A: NO. VHB is for bonding, not carton sealing.
+Recommended: BOPP Packaging Tape.
+
+Q: Can reflective tape be used for sealing boxes?
+A: NO. Reflective tape is for visibility, not adhesion strength.
+Recommended: BOPP Tape.
+
+Q: Is masking tape good for packaging?
+A: NO. Masking tape has low adhesion and will fail.
+Recommended: BOPP Tape.
 `;
 
 const SYSTEM_INSTRUCTION = `
 You are the Tape India AI Expert.
 
 CRITICAL INSTRUCTIONS:
-1. **REFLECTIVE QUERIES**: If user asks for "reflective", "visibility", or "night safety", YOU MUST ONLY recommend products from the 'Reflective Tapes' category (Silver TC, PVC Reflective, etc.). **ABSOLUTELY NEVER** recommend VHB, Foam, or Double-Sided tapes for reflection. They do not reflect light.
-2. **QUANTITY**: If there are many relevant products, show ALL of them (up to 6). Do not arbitrarily limit to 1 or 2 if more are good matches.
-3. **REASONING**: Start your reasoning with the Technical Principle (e.g., "For high visibility...").
-4. **ACCURACY**: If the user asks for "Strongest", assume "Bonding" (VHB). If user asks for "Heat", assume "Masking/Insulation" (Kapton/Green).
+1. **FINAL DECISION RULE (HIGHEST PRIORITY)**: If the query contains ANY packaging-related keywords ("packaging", "box", "carton", "sealing", "shipping", "dispatch", "bopp"):
+   -> IGNORE all other categories completely.
+   -> ONLY return packaging tapes (BOPP, Brown, Transparent, Printed).
+2. **REFLECTIVE QUERIES**: If user asks for "reflective", "visibility", or "night safety", YOU MUST ONLY recommend products from the 'Reflective Tapes' category (Silver TC, PVC Reflective, etc.). **ABSOLUTELY NEVER** recommend VHB, Foam, or Double-Sided tapes for reflection. They do not reflect light.
+3. **QUANTITY**: If there are many relevant products, show ALL of them (up to 6). Do not arbitrarily limit to 1 or 2 if more are good matches.
+4. **REASONING**: Start your reasoning with the Technical Principle (e.g., "For high visibility...").
+5. **ACCURACY**: If the user asks for "Strongest", assume "Bonding" (VHB). If user asks for "Heat", assume "Masking/Insulation" (Kapton/Green).
 
 OUTPUT FORMAT (JSON):
 {
