@@ -127,6 +127,24 @@ export default function AITapeFinder({ isOpen, onClose }: AITapeFinderProps) {
       const lowerQuery = searchQuery.toLowerCase();
       let bestRuleResult = { rule: null as any, products: [] as any[], totalScore: 0 };
 
+      // --- HARD OVERRIDE FOR PACKAGING ---
+      const packagingKeywords = ['packaging', 'bopp', 'box', 'carton', 'sealing', 'shipping', 'dispatch', 'packing', 'courier'];
+      const isPackagingQuery = packagingKeywords.some(k => lowerQuery.includes(k));
+
+      if (isPackagingQuery) {
+          const packagingProducts = products
+              .filter(p => p.category.toLowerCase().includes('packaging') || p.name.toLowerCase().includes('bopp'))
+              .slice(0, 6)
+              .map(p => p.id);
+
+          if (packagingProducts.length > 0) {
+              return {
+                  productIds: packagingProducts,
+                  reasoning: "For sealing cartons and boxes, BOPP Packaging Tape provides the necessary adhesion and durability."
+              };
+          }
+      }
+
       // 1. Try Strict Intent Rules
       for (const rule of INTENT_RULES) {
           if (rule.keywords.some(k => lowerQuery.includes(k))) {
