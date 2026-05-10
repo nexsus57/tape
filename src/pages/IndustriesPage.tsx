@@ -1,6 +1,5 @@
 
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useIndustry } from '../context/IndustryContext';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
@@ -11,10 +10,6 @@ export default function IndustriesPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Industries We Serve | Tape India</title>
-        <meta name="description" content="Discover our specialized adhesive tape solutions tailored for Packaging, HVAC, Electronics, Print & Label, Safety, and PTFE industries." />
-      </Helmet>
       <CanonicalTag />
       
       <main className="bg-gray-50 min-h-screen">
