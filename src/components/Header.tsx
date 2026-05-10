@@ -222,7 +222,7 @@ export default function Header() {
         >
           <div className="flex justify-between items-center p-4 border-b border-gray-100">
              <Link to="/" className="flex-shrink-0" onClick={() => setIsMenuOpen(false)}>
-                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India" className="h-10 w-auto" />
+                <img src="https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png" alt="Tape India" className="h-10 w-auto" loading="lazy" />
              </Link>
              <button
                 onClick={() => setIsMenuOpen(false)}
