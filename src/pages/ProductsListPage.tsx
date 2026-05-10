@@ -1,7 +1,6 @@
 
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useMemo, FC, useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { INITIAL_INDUSTRIES_DETAILED, PRODUCTS as STATIC_PRODUCTS, INDUSTRIES } from '../constants';
@@ -223,14 +222,6 @@ export default function ProductsListPage() {
 
     return (
         <>
-            <Helmet>
-                <title>{pageTitle}</title>
-                <meta name="description" content={pageDescription} />
-                <script type="application/ld+json">{breadcrumbSchema}</script>
-                {pageSeoData && pageSeoData["Combined Schema (JSON-LD)"] && (
-                    <script type="application/ld+json">{pageSeoData["Combined Schema (JSON-LD)"]}</script>
-                )}
-            </Helmet>
             <CanonicalTag />
 
             <main className="bg-gray-50 min-h-screen pb-20">
