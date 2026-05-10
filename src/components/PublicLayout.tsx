@@ -10,6 +10,7 @@ import SearchModal from './SearchModal';
 import { useSettings } from '../context/SettingsContext';
 import WhatsAppButton from './WhatsAppButton';
 import { Outlet } from 'react-router-dom';
+import DynamicSEOTags from './DynamicSEOTags';
 
 // This component ensures the page scrolls to the top on navigation
 const ScrollToTop = () => {
@@ -115,6 +116,7 @@ interface PublicLayoutProps {
 const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
+      <DynamicSEOTags />
       <Analytics />
       <OrganizationSchema />
       <ScrollToTop />
