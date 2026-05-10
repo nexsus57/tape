@@ -112,6 +112,7 @@ export default function RequestQuotePage() {
                                                         src={item.details?.image} 
                                                         alt={item.details?.name} 
                                                         className="w-16 h-16 object-cover rounded bg-gray-50"
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex-grow">
                                                         <h3 className="font-semibold text-sm text-gray-800 line-clamp-2">{item.details?.name}</h3>
