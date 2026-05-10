@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import AnimatedSection from '../components/AnimatedSection';
@@ -76,10 +75,6 @@ export default function RequestQuotePage() {
 
     return (
         <>
-            <Helmet>
-                <title>Request a Quote | Tape India</title>
-                <meta name="description" content="Get a personalized quote for your industrial tape needs. Fill out our form, and our experts will get back to you with pricing and information." />
-            </Helmet>
             <CanonicalTag />
             <main className="bg-brand-gray py-16 md:py-24">
                 <div className="container mx-auto px-5 lg:px-8">
