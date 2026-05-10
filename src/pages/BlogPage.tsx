@@ -1,5 +1,4 @@
 
-import { Helmet } from 'react-helmet-async';
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
@@ -21,10 +20,6 @@ export default function BlogPage() {
 
     return (
         <>
-            <Helmet>
-                <title>Industrial Insights – Expert Articles by Tape India</title>
-                <meta name="description" content="Explore expert articles on industrial tapes and materials from Tape India. Learn about EMI shielding, thermal management, contamination control, and safety solutions." />
-            </Helmet>
             <CanonicalTag />
 
             <header className="bg-brand-gray border-b border-slate-200">
