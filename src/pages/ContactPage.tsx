@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Helmet } from 'react-helmet-async';
 import AnimatedSection from "../components/AnimatedSection";
 import { useSettings } from '../context/SettingsContext';
 import CanonicalTag from '../components/CanonicalTag';
@@ -14,11 +13,6 @@ export default function ContactPage() {
 
   return (
     <>
-      <Helmet>
-        <title>{contactData?.["Title (≤60 chars)"] || 'Contact Us | Tape India'}</title>
-        <meta name="description" content={contactData?.["Meta Description (≤160 chars)"] || 'Get in touch with Tape India.'} />
-        {contactData && <script type="application/ld+json">{contactData["Combined Schema (JSON-LD)"]}</script>}
-      </Helmet>
       <CanonicalTag />
       <main className="bg-white py-16 md:py-24">
         <div className="container mx-auto px-5 lg:px-8">
