@@ -2,7 +2,6 @@
 import { useMemo } from 'react';
 // FIX: The reported error is likely a cascade issue. This import is correct for react-router-dom v5.
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { useSettings } from '../context/SettingsContext';
@@ -48,12 +47,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Helmet>
-        <title>{homeData?.["Title (≤60 chars)"] || 'Industrial Tape Manufacturer & Wholesaler | Chennai'}</title>
-        <meta name="description" content={homeData?.["Meta Description (≤160 chars)"] || 'Default Description'} />
-        {homeData && <script type="application/ld+json">{homeData["Combined Schema (JSON-LD)"]}</script>}
-        <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
-      </Helmet>
       <CanonicalTag />
       
       {/* Hero Section */}
