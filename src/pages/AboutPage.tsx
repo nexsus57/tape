@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { QualityIcon, TeamIcon, InnovationIcon, IntegrityIcon } from '../components/icons/WhyChooseUsIcons';
@@ -11,11 +10,6 @@ export default function AboutPage() {
 
   return (
     <>
-      <Helmet>
-        <title>{aboutData?.["Title (≤60 chars)"] || 'About Us | Tape India'}</title>
-        <meta name="description" content={aboutData?.["Meta Description (≤160 chars)"] || 'Learn about Tape India'} />
-        {aboutData && <script type="application/ld+json">{aboutData["Combined Schema (JSON-LD)"]}</script>}
-      </Helmet>
       <CanonicalTag />
       
       {/* Hero Section */}
