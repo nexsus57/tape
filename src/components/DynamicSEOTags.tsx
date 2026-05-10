@@ -122,6 +122,31 @@ export default function DynamicSEOTags() {
             {title && <meta name="twitter:title" content={title} />}
             {description && <meta name="twitter:description" content={description} />}
             <meta name="twitter:image" content={finalImage} />
+
+            {/* Structured Data (JSON-LD) */}
+            {seoMatch['Combined Schema (JSON-LD)'] && seoMatch['Combined Schema (JSON-LD)'] !== "{}" ? (
+                <script type="application/ld+json">
+                    {seoMatch['Combined Schema (JSON-LD)']}
+                </script>
+            ) : (
+                <>
+                    {seoMatch['Product Schema (JSON-LD)'] && seoMatch['Product Schema (JSON-LD)'] !== "{}" && (
+                        <script type="application/ld+json">
+                            {seoMatch['Product Schema (JSON-LD)']}
+                        </script>
+                    )}
+                    {seoMatch['FAQ Schema (JSON-LD)'] && seoMatch['FAQ Schema (JSON-LD)'] !== "{}" && (
+                        <script type="application/ld+json">
+                            {seoMatch['FAQ Schema (JSON-LD)']}
+                        </script>
+                    )}
+                    {seoMatch['LocalBusiness Schema (JSON-LD)'] && seoMatch['LocalBusiness Schema (JSON-LD)'] !== "{}" && (
+                        <script type="application/ld+json">
+                            {seoMatch['LocalBusiness Schema (JSON-LD)']}
+                        </script>
+                    )}
+                </>
+            )}
         </Helmet>
     );
 }
