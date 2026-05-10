@@ -1,6 +1,5 @@
 
 
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import type { ReactNode } from 'react';
@@ -23,11 +22,6 @@ export default function PrivacyPolicyPage() {
   
   return (
     <>
-      <Helmet>
-        <title>{privacyData?.["Title (≤60 chars)"] || 'Privacy Policy | TAPE INDIA'}</title>
-        <meta name="description" content={privacyData?.["Meta Description (≤160 chars)"] || 'Read the Privacy Policy for TAPE INDIA.'} />
-        {privacyData && <script type="application/ld+json">{privacyData["Combined Schema (JSON-LD)"]}</script>}
-      </Helmet>
       <CanonicalTag />
       
       <main className="bg-white py-16 md:py-24">
