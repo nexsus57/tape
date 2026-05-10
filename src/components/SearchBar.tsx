@@ -282,7 +282,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                             onClick={() => { setIsFocused(false); onResultClick?.(); }}
                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group transition-colors"
                         >
-                            <img src={product.image} alt={product.name} className="w-8 h-8 object-contain rounded bg-white border border-gray-100" />
+                            <img src={product.image} alt={product.name} className="w-8 h-8 object-contain rounded bg-white border border-gray-100" loading="lazy" />
                             <span className="text-sm font-medium text-gray-700 group-hover:text-brand-blue-dark line-clamp-1">{product.name}</span>
                         </Link>
                     </li>
