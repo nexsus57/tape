@@ -1,7 +1,6 @@
 
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { INDUSTRIES } from '../constants';
@@ -104,10 +103,6 @@ export default function ProductPage() {
         if (seoProduct) {
              return (
                  <>
-                    <Helmet>
-                        <title>{seoProduct["Title (≤60 chars)"]}</title>
-                        <meta name="description" content={seoProduct["Meta Description (≤160 chars)"]} />
-                    </Helmet>
                     <NotFoundPage message="This product is valid but is missing from the main product list." />
                  </>
              )
@@ -125,11 +120,6 @@ export default function ProductPage() {
     
     return (
         <>
-            <Helmet>
-                <title>{pageTitle}</title>
-                <meta name="description" content={pageDescription} />
-                <script type="application/ld+json">{productSeoData["Combined Schema (JSON-LD)"]}</script>
-            </Helmet>
             <CanonicalTag />
             
             <main className="py-12 md:py-16 bg-gray-50">
