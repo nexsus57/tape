@@ -29,15 +29,7 @@ export default function BlogPostPage() {
 
     return (
         <>
-            <Helmet>
-                <title>{pageTitle}</title>
-                <meta name="description" content={pageDescription} />
-                <meta property="og:title" content={pageTitle} />
-                <meta property="og:description" content={pageDescription} />
-                <meta property="og:image" content={article.image} />
-                <meta property="og:type" content="article" />
-                <meta property="og:url" content={currentUrl} />
-                <meta name="twitter:card" content="summary_large_image" />
+            <Helmet prioritizeSeoTags>
                 {articleSchema && <script type="application/ld+json">{articleSchema}</script>}
             </Helmet>
             <CanonicalTag />
