@@ -100,8 +100,113 @@ export default function DynamicSEOTags() {
         keywords += (keywords ? ", " : "") + seoMatch['Secondary Keywords'];
     }
 
+    const generateBreadcrumbs = () => {
+        const items = [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://tapeindia.shop/"
+            }
+        ];
+
+        let i = 2;
+        if (path.startsWith('/product/')) {
+            items.push({
+                "@type": "ListItem",
+                "position": i++,
+                "name": "Products",
+                "item": "https://tapeindia.shop/products"
+            });
+            const productId = path.replace('/product/', '').toLowerCase().replace(/[^a-z0-9-]+/g, '');
+            const p = products.find(p => p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '') === productId);
+            if (p) {
+                const cat = categories.find(c => c.id === p.category);
+                if (cat) {
+                    items.push({
+                        "@type": "ListItem",
+                        "position": i++,
+                        "name": cat.name,
+                        "item": `https://tapeindia.shop/products?category=${cat.id}`
+                    });
+                }
+                items.push({
+                    "@type": "ListItem",
+                    "position": i,
+                    "name": p.name,
+                    "item": `https://tapeindia.shop${path}`
+                });
+            }
+        } else if (path.startsWith('/products')) {
+            items.push({
+                "@type": "ListItem",
+                "position": i++,
+                "name": "Products",
+                "item": "https://tapeindia.shop/products"
+            });
+            if (search.includes('category=')) {
+                const catId = new URLSearchParams(search).get('category');
+                const cat = categories.find(c => c.id === catId);
+                if (cat) {
+                    items.push({
+                        "@type": "ListItem",
+                        "position": i,
+                        "name": cat.name,
+                        "item": `https://tapeindia.shop${path}${search}`
+                    });
+                }
+            }
+        } else if (path.startsWith('/blog/')) {
+            items.push({
+                "@type": "ListItem",
+                "position": i++,
+                "name": "Blog",
+                "item": "https://tapeindia.shop/blog"
+            });
+            const articleId = path.replace('/blog/', '');
+            const article = articles.find(a => a.id === articleId);
+            if(article) {
+                items.push({
+                    "@type": "ListItem",
+                    "position": i,
+                    "name": article.title,
+                    "item": `https://tapeindia.shop${path}`
+                });
+            }
+        } else if (path !== '/' && seoMatch) {
+            items.push({
+                "@type": "ListItem",
+                "position": i,
+                "name": seoMatch['Page Name'] || title,
+                "item": `https://tapeindia.shop${path}`
+            });
+        }
+
+        if (items.length > 1) {
+            return {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": items
+            };
+        }
+        return null;
+    };
+    
+    const breadcrumbsSchema = generateBreadcrumbs();
+
+    const websiteSchema = path === '/' ? {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://tapeindia.shop/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tapeindia.shop/products?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    } : null;
+
     return (
-        <Helmet>
+        <Helmet prioritizeSeoTags={true}>
             {/* Standard HTML Tags */}
             {title && <title>{title}</title>}
             {description && <meta name="description" content={description} />}
@@ -146,6 +251,20 @@ export default function DynamicSEOTags() {
                         </script>
                     )}
                 </>
+            )}
+            
+            {/* Breadcrumb Schema */}
+            {breadcrumbsSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbsSchema)}
+                </script>
+            )}
+
+            {/* Website Schema */}
+            {websiteSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(websiteSchema)}
+                </script>
             )}
         </Helmet>
     );
