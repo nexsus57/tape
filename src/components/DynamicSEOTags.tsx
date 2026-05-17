@@ -66,6 +66,54 @@ export default function DynamicSEOTags() {
                 };
              }
         }
+    } else if (path === '/products' && search.includes('industry=')) {
+        const indId = new URLSearchParams(search).get('industry');
+        // We know INDUSTRIES from constants are used. Let's just create a dynamic match based on ID.
+        // We capitalize it simply if we don't have the exact text.
+        const indName = indId ? indId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Industry';
+        if (!seoMatch) {
+            seoMatch = {
+                "Page Type": "Industry List",
+                "Page Name": `${indName} Solutions`,
+                "Full URL": `https://tapeindia.shop/products?industry=${indId}`,
+                "Title (≤60 chars)": `${indName} Tapes & Solutions | Tape India`,
+                "Meta Description (≤160 chars)": `Explore our range of industrial tapes specialized for the ${indName} sector. High-performance adhesive solutions from Tape India.`,
+                "H1": `${indName} Solutions`,
+                "Primary Keywords": indName,
+                "Secondary Keywords": "industrial tape",
+                "Schema Type": "CollectionPage",
+                "faqs": []
+            } as any;
+        }
+    } else if (path === '/products' && search.includes('tag=')) {
+        const tag = new URLSearchParams(search).get('tag') || '';
+        const tagName = tag.replace(/-/g, ' ');
+        if (!seoMatch) {
+             seoMatch = {
+                "Page Type": "Tag List",
+                "Page Name": `${tagName} Tapes`,
+                "Full URL": `https://tapeindia.shop/products?tag=${tag}`,
+                "Title (≤60 chars)": `${tagName} Tapes | Tape India`,
+                "Meta Description (≤160 chars)": `High-performance ${tagName} tapes designed for industrial applications. Shop online at Tape India.`,
+                "H1": `${tagName} Solutions`,
+                "Schema Type": "CollectionPage",
+                "faqs": []
+            } as any;
+        }
+    } else if (path === '/products' && search.includes('q=')) {
+        const q = new URLSearchParams(search).get('q') || '';
+        if (!seoMatch) {
+             seoMatch = {
+                "Page Type": "Search results",
+                "Page Name": `Search Results for "${q}"`,
+                "Full URL": `https://tapeindia.shop/products?q=${q}`,
+                "Title (≤60 chars)": `Search: ${q} | Tape India`,
+                "Meta Description (≤160 chars)": `Search results for ${q} at Tape India.`,
+                "H1": `Search Results for ${q}`,
+                "Schema Type": "CollectionPage",
+                "faqs": []
+            } as any;
+        }
     }
 
     // Fallback logic for Blog
