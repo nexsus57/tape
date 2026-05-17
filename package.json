@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsx build-sitemap.ts && vite build",
-    "postbuild": "esbuild scripts/prerender.tsx --bundle --platform=node --external:react --external:react-dom --external:react-helmet-async --external:react-router-dom --outfile=scripts/prerender.cjs && node scripts/prerender.cjs",
+    "postbuild": "esbuild ./scripts/prerender.tsx --bundle --platform=node --external:react --external:react-dom --external:react-helmet-async --external:react-router-dom --outfile=./scripts/prerender.cjs && node ./scripts/prerender.cjs",
     "preview": "vite preview"
   },
   "reactSnap": {
