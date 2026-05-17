@@ -121,8 +121,6 @@ export default function ProductPage() {
     
     return (
         <>
-            <CanonicalTag />
-            
             <main className="py-12 md:py-16 bg-gray-50">
                 <div className="container mx-auto px-5 lg:px-8">
                     {/* Breadcrumbs */}
