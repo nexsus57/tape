@@ -131,11 +131,23 @@ export default function DynamicSEOTags() {
          seoMatch = seoData.find(seo => seo['Page Type'] === 'Homepage');
     }
 
-    if (!seoMatch) return null;
+    if (!seoMatch) {
+        console.log('NO SEO MATCH EVEN FALLBACK FOR PATH:', path);
+        return null;
+    }
 
     const title = seoMatch['Title (≤60 chars)'];
     const description = seoMatch['Meta Description (≤160 chars)'];
-    const url = seoMatch['Full URL'] || currentFullUrl;
+    // Ensure clean canonicals
+    let url = seoMatch['Full URL'] || currentPathUrl;
+
+    console.log('DynamicSEOTags rendered for:', path, 'Title:', title);
+
+    if (search.includes('category=') || search.includes('industry=') || search.includes('tag=') || search.includes('q=')) {
+        if (!seoMatch['Full URL']) {
+             url = currentFullUrl; 
+        }
+    }
     const siteName = "Tape India";
     // If seoMatch specifies an image property directly, use it, else dynamicImage
     const finalImage = seoMatch['image'] || dynamicImage;
@@ -275,6 +287,9 @@ export default function DynamicSEOTags() {
             {title && <meta name="twitter:title" content={title} />}
             {description && <meta name="twitter:description" content={description} />}
             <meta name="twitter:image" content={finalImage} />
+
+            {/* Canonical Link */}
+            <link rel="canonical" href={url} />
 
             {/* Structured Data (JSON-LD) */}
             {seoMatch['Combined Schema (JSON-LD)'] && seoMatch['Combined Schema (JSON-LD)'] !== "{}" ? (
