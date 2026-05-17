@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 // FIX: Added message prop to allow custom messages on the 404 page.
 interface NotFoundPageProps {
@@ -8,6 +9,11 @@ interface NotFoundPageProps {
 export default function NotFoundPage({ message }: NotFoundPageProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center font-sans p-4">
+       <Helmet>
+         <title>404 - Page Not Found | Tape India</title>
+         <meta name="robots" content="noindex, nofollow" />
+         <meta name="prerender-status-code" content="404" />
+       </Helmet>
        <div className="bg-white p-12 rounded-xl shadow-2xl">
         <h1 className="text-6xl font-extrabold text-brand-accent">404</h1>
         <h2 className="text-3xl font-bold text-gray-800 mt-4">Page Not Found</h2>
