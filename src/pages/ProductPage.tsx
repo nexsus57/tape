@@ -10,7 +10,7 @@ import CanonicalTag from '../components/CanonicalTag';
 import { ColorOption } from '../types';
 import { seoData } from '../data/seoData';
 import FaqAccordion from '../components/FaqAccordion';
-import { extendedProductDescriptions } from '../data/extendedProductDescriptions';
+import { extendedProductDescriptions } from '../data/extendedProductDescriptions2';
 
 interface ColorSwatchProps {
     name: string;
