@@ -1,38 +1,38 @@
 
-import { Suspense, lazy } from 'react';
+import { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import PublicLayout from './components/PublicLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
 
-// Lazy load all page components for code splitting
-const HomePage = lazy(() => import('./pages/HomePage'));
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ProductPage = lazy(() => import('./pages/ProductPage'));
-const ProductsListPage = lazy(() => import('./pages/ProductsListPage'));
-const IndustriesPage = lazy(() => import('./pages/IndustriesPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const RequestQuotePage = lazy(() => import('./pages/RequestQuotePage'));
-const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
-const BlogPage = lazy(() => import('./pages/BlogPage'));
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+// Use direct imports instead of lazy loading to allow synchronous SSR prerendering
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ProductPage from './pages/ProductPage';
+import ProductsListPage from './pages/ProductsListPage';
+import IndustriesPage from './pages/IndustriesPage';
+import ContactPage from './pages/ContactPage';
+import RequestQuotePage from './pages/RequestQuotePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
+import NotFoundPage from './pages/NotFoundPage';
 
-// Lazy load Admin components
-const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
-const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
-const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
-const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage'));
-const AdminProductsListPage = lazy(() => import('./pages/admin/AdminProductsListPage'));
-const AdminProductEditPage = lazy(() => import('./pages/admin/AdminProductEditPage'));
-const AdminCategoriesPage = lazy(() => import('./pages/admin/AdminCategoriesPage'));
-const AdminIndustriesPage = lazy(() => import('./pages/admin/AdminIndustriesPage'));
-const AdminIndustryEditPage = lazy(() => import('./pages/admin/AdminIndustryEditPage'));
-const AdminSettingsPage = lazy(() => import('./pages/admin/AdminSettingsPage'));
-const AdminBlogListPage = lazy(() => import('./pages/admin/AdminBlogListPage'));
-const AdminBlogEditPage = lazy(() => import('./pages/admin/AdminBlogEditPage'));
-const SeoContentHubPage = lazy(() => import('./pages/SeoContentHubPage.tsx'));
+// Admin components
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminProductsListPage from './pages/admin/AdminProductsListPage';
+import AdminProductEditPage from './pages/admin/AdminProductEditPage';
+import AdminCategoriesPage from './pages/admin/AdminCategoriesPage';
+import AdminIndustriesPage from './pages/admin/AdminIndustriesPage';
+import AdminIndustryEditPage from './pages/admin/AdminIndustryEditPage';
+import AdminSettingsPage from './pages/admin/AdminSettingsPage';
+import AdminBlogListPage from './pages/admin/AdminBlogListPage';
+import AdminBlogEditPage from './pages/admin/AdminBlogEditPage';
+import SeoContentHubPage from './pages/SeoContentHubPage';
 
 
 export default function App() {
