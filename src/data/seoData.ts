@@ -93,7 +93,7 @@ export const seoData: SeoPageData[] = [
         "Page Type": "Homepage",
         "Page Name": "Home",
         "Full URL": "https://tapeindia.shop/",
-        "Title (≤60 chars)": "Industrial Tape Manufacturer & Wholesaler | Chennai | Tape India",
+        "Title (≤60 chars)": "Industrial Tape Manufacturer & Wholesaler | Tape India",
         "Meta Description (≤160 chars)": "Tape India is a leading B2B manufacturer & supplier of 200+ industrial tapes in Chennai. We offer packaging, safety, electrical & specialty tapes. Get a bulk quote!",
         "H1": "Industrial Tape Manufacturer & Bulk Supplier in India",
         "Primary Keywords": "industrial tape manufacturer, industrial tape supplier, tape india",
