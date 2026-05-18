@@ -16,7 +16,7 @@ const INTENT_RULES = [
   {
     id: 'packaging-sealing',
     keywords: ['packaging', 'bopp', 'box', 'carton', 'sealing', 'shipping', 'dispatch', 'packing', 'courier'],
-    score: (p: Product, query: string) => {
+    score: (p: Product, _query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
         const c = p.category.toLowerCase();
@@ -74,7 +74,7 @@ const INTENT_RULES = [
   {
     id: 'high-temp-masking',
     keywords: ['powder coat', 'baking', 'oven', '200', '250', 'curing', 'anodizing', 'paint shop', 'heat'],
-    score: (p: Product, query: string) => {
+    score: (p: Product, _query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
         if (n.includes('green') && n.includes('polyester')) score += 100;
@@ -88,7 +88,7 @@ const INTENT_RULES = [
   {
     id: 'industrial-strength',
     keywords: ['strong', 'durable', 'heavy duty', 'tough', 'permanent', 'bond', 'break', 'strength', 'industrial'],
-    score: (p: Product, query: string) => {
+    score: (p: Product, _query: string) => {
         let score = 0;
         const n = p.name.toLowerCase();
         if (n.includes('filament')) score += 100;
