@@ -198,7 +198,7 @@ export default function HomePage() {
                       {INDUSTRIES.map(industry => (
                           <div key={industry.id} className="group flex flex-col h-full bg-slate-50 rounded-3xl border border-gray-200 p-8 hover:-translate-y-1 hover:shadow-xl hover:border-gray-300 transition-all duration-300">
                               <h3 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">{industry.name}</h3>
-                              <p className="text-slate-600 font-light leading-relaxed mb-6 flex-1 text-sm">{industry.description}</p>
+                              <p className="text-slate-600 font-light leading-relaxed mb-6 flex-1 text-sm">{industry.subtitle}</p>
                               <Link to={`/industry/${industry.id}`} className="text-amber-600 font-semibold group-hover:text-amber-700 flex items-center mt-auto">
                                   Explore Sector <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                               </Link>
@@ -223,10 +223,10 @@ export default function HomePage() {
                   {settings.testimonials.map((testimonial, index) => (
                       <div key={index} className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm relative">
                           <i className="fas fa-quote-left text-slate-200 text-4xl absolute top-6 left-6"></i>
-                          <p className="text-slate-600 relative z-10 pt-8 pb-6 font-light leading-relaxed italic text-lg">"{testimonial.content}"</p>
+                          <p className="text-slate-600 relative z-10 pt-8 pb-6 font-light leading-relaxed italic text-lg">"{testimonial.quote}"</p>
                           <div className="border-t border-gray-100 pt-6">
-                              <p className="font-bold text-slate-900">{testimonial.name}</p>
-                              <p className="text-sm text-amber-600 font-medium tracking-wide uppercase">{testimonial.role}</p>
+                              <p className="font-bold text-slate-900">{testimonial.author}</p>
+                              <p className="text-sm text-amber-600 font-medium tracking-wide uppercase">{testimonial.company}</p>
                           </div>
                       </div>
                   ))}
