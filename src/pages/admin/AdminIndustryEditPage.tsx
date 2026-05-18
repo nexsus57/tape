@@ -31,7 +31,15 @@ export default function AdminIndustryEditPage() {
         
         if (name.startsWith('seo.')) {
             const seoKey = name.split('.')[1];
-            setIndustry(prev => prev ? { ...prev, seo: { ...prev.seo, [seoKey]: value } } : null);
+            setIndustry(prev => {
+                if (!prev) return null;
+                const newSeo = { 
+                    title: prev.seo?.title || '', 
+                    description: prev.seo?.description || '', 
+                    [seoKey]: value 
+                };
+                return { ...prev, seo: newSeo };
+            });
         } else {
             setIndustry(prev => prev ? { ...prev, [name]: value } : null);
         }
