@@ -1,5 +1,5 @@
 
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useBlog } from '../context/BlogContext';
 import NotFoundPage from './NotFoundPage';
 import BlogCard from '../components/BlogCard';
@@ -12,7 +12,7 @@ export default function BlogPostPage() {
     const { articles } = useBlog();
     
     const article = articles.find(a => a.id === slug);
-    const { enhancedContent } = useSeoEnhancedContent(article);
+    const { enhancedContent } = useSeoEnhancedContent(article?.content);
 
     if (!article) {
         return <NotFoundPage />;
@@ -22,8 +22,6 @@ export default function BlogPostPage() {
         .filter(a => a.category === article.category && a.id !== article.id)
         .slice(0, 3);
         
-    const pageTitle = `${article.title} | Tape India Blog`;
-    const pageDescription = article.summary;
     const currentUrl = `https://tapeindia.shop/blog/${article.id}`;
 
     return (
