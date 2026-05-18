@@ -13,7 +13,7 @@ const IndustryCard: FC<IndustryCardProps> = ({ industry }) => {
 
   return (
     <Link 
-      to={`/products?industry=${industry.id}`} 
+      to={`/industry/${industry.id}`} 
       className={`group block h-full overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 bg-gradient-to-br ${industry.gradientClasses}`}
       aria-label={`View products for ${industry.name}`}
     >
