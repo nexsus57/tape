@@ -137,11 +137,11 @@ const AdminProductEditPage = () => {
 
         if (isEditing && finalProductData.id) {
             const { id, ...updateData } = dataForContext;
-            updateProduct(id, updateData);
+            updateProduct(id!, updateData as Omit<Product, 'id' | 'image'>);
             alert('Product updated successfully!');
         } else {
             const { id, ...createData } = dataForContext;
-            addProduct(createData);
+            addProduct(createData as Omit<Product, 'id' | 'image'>);
             alert('Product created successfully!');
         }
         
