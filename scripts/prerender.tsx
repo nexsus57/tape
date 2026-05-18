@@ -16,6 +16,7 @@ import { BlogProvider } from '../src/context/BlogContext';
 import { CartProvider } from '../src/context/CartContext';
 
 import { PRODUCTS, INDUSTRIES } from '../src/constants';
+import { ALL_CATEGORIES } from '../src/data/seoData';
 import { TECHNICAL_BLOGS } from '../src/data/blogData';
 
 const _dirname = path.resolve('./scripts');
@@ -30,7 +31,8 @@ const routes = [
     '/request-quote',
     '/privacy-policy',
     ...PRODUCTS.map(p => `/product/${p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`),
-    ...INDUSTRIES.map(i => `/products?industry=${i.id}`),
+    ...INDUSTRIES.map(i => `/industry/${i.id}`),
+    ...ALL_CATEGORIES.map(c => `/category/${c.id}`),
     ...TECHNICAL_BLOGS.map(b => `/blog/${b.id}`)
 ];
 
@@ -83,7 +85,10 @@ for (let url of routes) {
 
     finalHtml = finalHtml.replace('<div id="root"></div>', `<div id="root">${htmlStream}</div>`);
 
+    // Determine output file path
+    // Remove query params for file system
     const [pathname, search] = url.split('?');
+    // We don't prerender query params easily, but we can generate directories
     
     let outputPath;
     if (pathname === '/') {
@@ -96,12 +101,17 @@ for (let url of routes) {
         outputPath = path.resolve(dir, 'index.html');
     }
 
+    // Only save if it's a known non-query path, we skip query ones physically because Cloudflare handles ?industry=... dynamically
+    // Wait, if it has query, we can't save it as file? 
+    // Actually we can just skip generating HTML for query routes and let SPA handle them, OR we don't include them in the prerender routes
     if (!search && pathname !== '/') {
          fs.writeFileSync(outputPath, finalHtml);
          console.log(`Prerendered: ${pathname}`);
     } else if (pathname === '/') {
          fs.writeFileSync(outputPath, finalHtml);
          console.log(`Prerendered: /`);
+    } else {
+         // Query routes rely on SPA or we could generate industry directories?
     }
 }
 
