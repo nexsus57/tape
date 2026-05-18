@@ -43,7 +43,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               key={link.to}
               to={link.to}
               onClick={() => setSidebarOpen(false)}
-              className={({ isActive }) => `${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
+              className={({ isActive }: { isActive: boolean }) => `${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
             >
               <link.icon className="h-6 w-6" />
               <span className="mx-3">{link.text}</span>
@@ -57,7 +57,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setSidebarOpen(false)}
-                  className={({ isActive }) => `${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
+                  className={({ isActive }: { isActive: boolean }) => `${navLinkClass} ${isActive ? activeNavLinkClass : ''}`}
                 >
                   <link.icon className="h-6 w-6" />
                   <span className="mx-3">{link.text}</span>
