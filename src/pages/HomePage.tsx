@@ -35,7 +35,7 @@ export default function HomePage() {
       
       <main className="bg-slate-50 min-h-screen text-slate-900 overflow-hidden pb-20">
         {/* Premium Architectural Hero Section */}
-        <section className="relative text-white overflow-hidden pb-32 pt-40 border-b border-gray-800 bg-[#0F172A]">
+        <section className="relative text-white overflow-hidden pb-16 md:pb-20 pt-24 md:pt-32 border-b border-gray-800 bg-[#0F172A]">
           {/* Base Background layer */}
           <div className="absolute inset-0 bg-[#0F172A] z-0"></div>
           
@@ -53,29 +53,29 @@ export default function HomePage() {
 
           <div className="relative container mx-auto px-6 lg:px-8 z-30 max-w-7xl flex flex-col items-start lg:items-center text-left lg:text-center">
             <AnimatedSection>
-              <div className="inline-flex items-center space-x-2 bg-slate-800/50 border border-slate-700/50 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm self-start lg:self-auto">
+              <div className="inline-flex items-center space-x-2 bg-slate-800/50 border border-slate-700/50 rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm self-start lg:self-auto">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
                 <span className="text-slate-300 uppercase tracking-widest font-medium text-xs">Premium OEM Partner Since 1957</span>
               </div>
 
-              <h1 className="font-extrabold mb-6 text-white text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1] drop-shadow-lg">
+              <h1 className="font-extrabold mb-4 text-white text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] drop-shadow-lg">
                 {homeData?.H1 || 'Industrial Tape Manufacturer & Bulk Supplier in India'}
               </h1>
               
-              <p className="text-slate-300 mb-12 max-w-3xl mx-auto text-xl md:text-2xl font-light leading-relaxed">
+              <p className="text-slate-300 mb-8 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">
                 For over 65 years, Tape India has engineered high-performance adhesive solutions. From heavy-duty packaging to precision electronics, we deliver <span className="text-white font-medium">reliability across India.</span>
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-5 justify-start lg:justify-center w-full">
+              <div className="flex flex-col sm:flex-row gap-4 justify-start lg:justify-center w-full">
                 <Link 
                   to="/products" 
-                  className="bg-amber-500 text-slate-900 font-bold py-4 px-10 rounded-xl hover:bg-amber-400 transition-all shadow-sm text-lg"
+                  className="bg-amber-500 text-slate-900 font-bold py-3.5 px-8 rounded-xl hover:bg-amber-400 transition-all shadow-sm text-base md:text-lg"
                 >
                   Explore Products
                 </Link>
                 <Link 
                   to="/request-quote" 
-                  className="bg-slate-800/80 backdrop-blur-md border border-slate-600 text-white font-bold py-4 px-10 rounded-xl hover:bg-slate-700 transition-all text-lg shadow-sm"
+                  className="bg-slate-800/80 backdrop-blur-md border border-slate-600 text-white font-bold py-3.5 px-8 rounded-xl hover:bg-slate-700 transition-all text-base md:text-lg shadow-sm"
                 >
                   {homeData?.CTA || 'Request Bulk Quote'}
                 </Link>
