@@ -108,7 +108,7 @@ export default function AboutPage() {
                     {[
                       { title: "OEM Focused", desc: "Designed explicitly for high-volume automated assembly lines and heavy industry.", icon: "fa-robot", bg: "bg-cyan-50", color: "text-cyan-600" },
                       { title: "Custom Solutions", desc: "Specific width slitting, custom die-cuts, and specialized adhesive formulations.", icon: "fa-sliders-h", bg: "bg-amber-50", color: "text-amber-600" },
-                      { title: "Quality Assured", desc: "Strict batch testing for tensile strength, peel adhesion, and temperature resistance.", icon: "fa-shield-check", bg: "bg-blue-50", color: "text-blue-600" },
+                      { title: "Quality Assured", desc: "Strict batch testing for tensile strength, peel adhesion, and temperature resistance.", icon: "fa-shield-alt", bg: "bg-blue-50", color: "text-blue-600" },
                       { title: "Bulk Availability", desc: "Massive inventory capable of sustaining continuous supply chains Pan-India.", icon: "fa-warehouse", bg: "bg-teal-50", color: "text-teal-600" }
                     ].map((feature, idx) => (
                       <AnimatedSection key={idx} delay={`delay-${idx * 100}`} className="h-full">
@@ -160,10 +160,16 @@ export default function AboutPage() {
                 <p className="text-slate-400 uppercase tracking-widest font-semibold text-xs md:text-sm whitespace-nowrap hidden lg:block">Industry Certified Standard</p>
                 
                 <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-                    {['ISO 9001', 'RoHS Compliant', 'REACH', 'CE Marking', 'Make In India'].map((cert, i) => (
-                        <div key={i} className="flex items-center space-x-3 text-slate-400">
-                           <i className="fas fa-certificate text-lg opacity-50"></i>
-                           <span className="font-semibold text-sm tracking-wider uppercase">{cert}</span>
+                    {[
+                        { name: 'ISO 9001', emoji: '🏆' },
+                        { name: 'RoHS Compliant', emoji: '🌿' },
+                        { name: 'REACH', emoji: '⚙️' },
+                        { name: 'CE Marking', emoji: '✅' },
+                        { name: 'Make In India', emoji: '🇮🇳' }
+                    ].map((cert, i) => (
+                        <div key={i} className="flex items-center space-x-2 text-slate-400">
+                           <span className="text-xl" role="img" aria-label={cert.name}>{cert.emoji}</span>
+                           <span className="font-semibold text-sm tracking-wider uppercase">{cert.name}</span>
                         </div>
                     ))}
                 </div>
