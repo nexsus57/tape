@@ -4,13 +4,23 @@ import { seoData } from '../data/seoData';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { useBlog } from '../context/BlogContext';
-import { generateBreadcrumbsSchema, generateWebsiteSchema } from '../utils/schemaGenerator';
+import { useSettings } from '../context/SettingsContext';
+import { 
+    generateBreadcrumbsSchema, 
+    generateWebsiteSchema,
+    generateOrganizationSchema,
+    generateProductSchema,
+    generateCategorySchema,
+    generateArticleSchema,
+    generateFAQSchema
+} from '../utils/schemaGenerator';
 
 export default function DynamicSEOTags() {
     const location = useLocation();
     const { products } = useProducts();
     const { categories } = useCategories();
     const { articles } = useBlog();
+    const { settings } = useSettings();
     
     const path = location.pathname;
     const search = location.search;
@@ -64,7 +74,7 @@ export default function DynamicSEOTags() {
                     "LocalBusiness Schema (JSON-LD)": "{}",
                     "FAQ Schema (JSON-LD)": "{}",
                     "Combined Schema (JSON-LD)": "{}"
-                };
+                } as any;
              }
         }
     } else if (path.startsWith('/industry/') || (path === '/products' && search.includes('industry='))) {
@@ -171,6 +181,36 @@ export default function DynamicSEOTags() {
     );
 
     const websiteSchema = generateWebsiteSchema(path);
+    const organizationSchema = path === '/' ? generateOrganizationSchema() : null;
+    const faqSchema = seoMatch.faqs && seoMatch.faqs.length > 0 ? generateFAQSchema(seoMatch.faqs) : null;
+
+    let productSchema = null;
+    if (path.startsWith('/product/')) {
+        const productId = path.replace('/product/', '').toLowerCase().replace(/[^a-z0-9-]+/g, '');
+        const p = products.find(p => p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '') === productId);
+        if (p) {
+            const cat = categories.find(c => c.id === p.category);
+            productSchema = generateProductSchema(p, cat ? cat.name : "");
+        }
+    }
+
+    let categorySchema = null;
+    if (path.startsWith('/category/') || (path === '/products' && search.includes('category='))) {
+        const catId = path.startsWith('/category/') ? path.replace('/category/', '') : new URLSearchParams(search).get('category');
+        const cat = categories.find(c => c.id === catId);
+        if (cat) {
+             categorySchema = generateCategorySchema(cat, products);
+        }
+    }
+
+    let articleSchema = null;
+    if (path.startsWith('/blog/')) {
+        const articleId = path.replace('/blog/', '');
+        const article = articles.find(a => a.id === articleId);
+        if (article) {
+             articleSchema = generateArticleSchema(article);
+        }
+    }
 
     return (
         <Helmet prioritizeSeoTags={true}>
@@ -198,45 +238,51 @@ export default function DynamicSEOTags() {
             {/* Canonical Link */}
             <link rel="canonical" href={url} />
 
-            {/* Structured Data (JSON-LD) */}
-            {seoMatch['Combined Schema (JSON-LD)'] && seoMatch['Combined Schema (JSON-LD)'] !== "{}" ? (
-                <script type="application/ld+json">
-                    {seoMatch['Combined Schema (JSON-LD)']}
-                </script>
-            ) : (
-                <>
-                    {seoMatch['Product Schema (JSON-LD)'] && seoMatch['Product Schema (JSON-LD)'] !== "{}" && (
-                        <script type="application/ld+json">
-                            {seoMatch['Product Schema (JSON-LD)']}
-                        </script>
-                    )}
-                    {seoMatch['FAQ Schema (JSON-LD)'] && seoMatch['FAQ Schema (JSON-LD)'] !== "{}" && (
-                        <script type="application/ld+json">
-                            {seoMatch['FAQ Schema (JSON-LD)']}
-                        </script>
-                    )}
-                    {seoMatch['LocalBusiness Schema (JSON-LD)'] && seoMatch['LocalBusiness Schema (JSON-LD)'] !== "{}" && (
-                        <script type="application/ld+json">
-                            {seoMatch['LocalBusiness Schema (JSON-LD)']}
-                        </script>
-                    )}
-                </>
-            )}
+            {/* Dynamic Structured Data (JSON-LD) */}
             
-            {/* Breadcrumb Schema */}
             {breadcrumbsSchema && (
                 <script type="application/ld+json">
                     {JSON.stringify(breadcrumbsSchema)}
                 </script>
             )}
 
-            {/* Website Schema */}
             {websiteSchema && (
                 <script type="application/ld+json">
                     {JSON.stringify(websiteSchema)}
                 </script>
             )}
+
+            {organizationSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(organizationSchema)}
+                </script>
+            )}
+
+            {productSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(productSchema)}
+                </script>
+            )}
+
+            {categorySchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(categorySchema)}
+                </script>
+            )}
+
+            {articleSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(articleSchema)}
+                </script>
+            )}
+
+            {faqSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(faqSchema)}
+                </script>
+            )}
         </Helmet>
     );
 }
+
 
