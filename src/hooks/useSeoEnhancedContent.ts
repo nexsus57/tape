@@ -5,8 +5,7 @@ import { BlogArticle } from '../types';
 /**
  * An expert SEO automation hook.
  * Takes a blog article and automatically generates:
- * 1. A valid Article Schema (JSON-LD).
- * 2. The article content with inline internal product links.
+ * 1. The article content with inline internal product links.
  */
 export const useSeoEnhancedContent = (article: BlogArticle | undefined) => {
     const { products } = useProducts();
@@ -54,40 +53,5 @@ export const useSeoEnhancedContent = (article: BlogArticle | undefined) => {
 
     }, [article, products]);
 
-    // Memoize the schema generation.
-    const articleSchema = useMemo(() => {
-        if (!article) return null;
-
-        const schema = {
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            'headline': article.title,
-            'description': article.summary.substring(0, 160), // Ensure it's ~160 chars
-            'author': {
-                '@type': 'Person',
-                'name': 'Aagum'
-            },
-            'publisher': {
-                '@type': 'Organization',
-                'name': 'Tape India',
-                'logo': {
-                    '@type': 'ImageObject',
-                    'url': 'https://tapeindia.shop/logo.png'
-                }
-            },
-            'datePublished': article.datePublished,
-            'dateModified': article.dateModified,
-            'image': [
-                 article.image || 'https://tapeindia.shop/images/default-blog.webp'
-            ],
-            'mainEntityOfPage': {
-                '@type': 'WebPage',
-                '@id': `https://tapeindia.shop/blog/${article.id}`
-            }
-        };
-
-        return JSON.stringify(schema, null, 2);
-    }, [article]);
-
-    return { enhancedContent, articleSchema };
+    return { enhancedContent };
 };
