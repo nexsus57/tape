@@ -187,7 +187,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
       } else if (query) {
         saveRecentSearch(query);
         setIsFocused(false);
-        navigate(`/products?q=${encodeURIComponent(query)}`);
+        navigate(`/search/${encodeURIComponent(query)}`);
         onResultClick?.();
       }
     } else if (e.key === 'Escape') {
@@ -339,7 +339,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
               
               <li className="bg-gray-50 p-2 text-center">
                  <Link 
-                    to={`/products?q=${encodeURIComponent(query)}`}
+                    to={`/search/${encodeURIComponent(query)}`}
                     onClick={() => { setIsFocused(false); onResultClick?.(); }}
                     className="text-xs font-bold text-brand-accent hover:underline uppercase tracking-wider block w-full"
                  >
