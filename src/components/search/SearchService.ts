@@ -44,7 +44,7 @@ const searchData: SearchResult[] = [
     name: i.name,
     type: 'industry' as const,
     url: `/industry/${i.id}`,
-    description: i.description
+    description: i.subtitle
   }))
 ];
 
