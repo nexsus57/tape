@@ -175,7 +175,7 @@ export default function ProductsListPage() {
 
             <main className="bg-[#F8FAFC] min-h-screen pb-24">
                 {/* Clean Premium Hero Section */}
-                <div className="relative bg-[#0F172A] py-16 md:py-24 overflow-hidden">
+                <div className="relative bg-[#0F172A] py-10 md:py-16 overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
                     <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
                     
@@ -215,7 +215,7 @@ export default function ProductsListPage() {
                                     <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Browse by Category</h2>
                                     <p className="text-slate-500 text-lg mt-2 font-light">Select a category to view specialized adhesive tapes.</p>
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                                     {categories.map(cat => {
                                         const count = products.filter(p => p.category === cat.id).length;
                                         
