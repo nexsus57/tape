@@ -1,7 +1,6 @@
 
 import { createContext, useContext, ReactNode, FC, useMemo, useCallback } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Product } from '../types';
 
 export interface CartItem {
     productId: string;
