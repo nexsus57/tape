@@ -155,21 +155,27 @@ export default function AboutPage() {
         </section>
 
         {/* 5. Certification / Trust Strip */}
-        <section className="py-12 bg-slate-900 border-b border-slate-800">
-            <div className="container mx-auto px-6 lg:px-8 max-w-7xl relative z-10 flex flex-col md:flex-row items-center justify-between opacity-90 gap-8">
-                <p className="text-slate-400 uppercase tracking-widest font-semibold text-xs md:text-sm whitespace-nowrap hidden lg:block">Industry Certified Standard</p>
+        <section className="py-16 bg-[#0B1527] border-y border-slate-800">
+            <div className="container mx-auto px-6 lg:px-8 max-w-7xl relative z-10 flex flex-col xl:flex-row items-center justify-between gap-12">
                 
-                <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+                <div className="flex-1 text-center xl:text-left">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-2">Certified Quality.</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight">Trusted Everywhere.</h2>
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-3 md:gap-4 lg:flex-nowrap">
                     {[
-                        { name: 'ISO 9001', emoji: '🏆' },
-                        { name: 'RoHS Compliant', emoji: '🌿' },
-                        { name: 'REACH', emoji: '⚙️' },
-                        { name: 'CE Marking', emoji: '✅' },
-                        { name: 'Make In India', emoji: '🇮🇳' }
+                        { name: 'ISO\n9001:2015\nCertified', icon: <i className="fas fa-certificate text-3xl md:text-4xl text-white"></i> },
+                        { name: 'RoHS\nCompliant', icon: <i className="fas fa-leaf text-3xl md:text-4xl text-white"></i> },
+                        { name: 'REACH\nCompliant', icon: <i className="fas fa-check-circle text-3xl md:text-4xl text-white"></i> },
+                        { name: 'CE\nCertified', icon: <span className="font-bold text-3xl md:text-4xl text-white tracking-tighter leading-none">CE</span> },
+                        { name: 'Proudly\nMade in India', icon: <i className="fas fa-industry text-3xl md:text-4xl text-white"></i> }
                     ].map((cert, i) => (
-                        <div key={i} className="flex items-center space-x-2 text-slate-400">
-                           <span className="text-xl" role="img" aria-label={cert.name}>{cert.emoji}</span>
-                           <span className="font-semibold text-sm tracking-wider uppercase">{cert.name}</span>
+                        <div key={i} className="flex flex-col items-center justify-center p-4 md:p-6 bg-slate-800/40 rounded-2xl border border-slate-700/50 min-w-[120px] md:min-w-[140px] aspect-square transition-colors hover:bg-slate-800">
+                           <div className="h-12 flex items-center justify-center mb-3">
+                               {cert.icon}
+                           </div>
+                           <span className="text-white text-[10px] md:text-xs font-medium uppercase tracking-wider text-center leading-relaxed whitespace-pre-line opacity-90">{cert.name}</span>
                         </div>
                     ))}
                 </div>
