@@ -135,8 +135,8 @@ export default function IndustriesPage() {
                  <p className="text-gray-500 max-w-2xl mx-auto">Explore our extensive range of specialized adhesive tapes organized by product type and material.</p>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                 {categories.slice(0, 8).map((category, idx) => (
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                 {categories.slice(0, 6).map((category, idx) => (
                     <AnimatedSection key={category.id} delay={`delay-${(idx % 4) * 100}`}>
                        <Link to={`/category/${category.id}`} className="group block bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl hover:border-brand-accent/40 transition-all duration-300 h-full flex flex-col">
                           <div className="h-40 overflow-hidden bg-gray-100 relative">
