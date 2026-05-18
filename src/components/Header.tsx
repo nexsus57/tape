@@ -96,7 +96,7 @@ export default function Header() {
                                               {categories.slice(0, 8).map(cat => {
                                                   const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
                                                   return (
-                                                      <Link key={cat.id} to={`/products?category=${cat.id}`} className="flex items-start p-3 rounded-lg hover:bg-blue-50 transition-colors group">
+                                                      <Link key={cat.id} to={`/category/${cat.id}`} className="flex items-start p-3 rounded-lg hover:bg-blue-50 transition-colors group">
                                                           <div className="mt-1 mr-3 text-brand-accent group-hover:text-brand-blue-dark transition-colors">
                                                               <Icon className="w-5 h-5" />
                                                           </div>
@@ -118,7 +118,7 @@ export default function Header() {
                                           <ul className="space-y-2">
                                               {INDUSTRIES.slice(0, 6).map(ind => (
                                                   <li key={ind.id}>
-                                                      <Link to={`/products?industry=${ind.id}`} className="block text-gray-700 hover:text-brand-accent hover:translate-x-1 transition-all text-sm font-medium py-1">
+                                                      <Link to={`/industry/${ind.id}`} className="block text-gray-700 hover:text-brand-accent hover:translate-x-1 transition-all text-sm font-medium py-1">
                                                           {ind.name}
                                                       </Link>
                                                   </li>
