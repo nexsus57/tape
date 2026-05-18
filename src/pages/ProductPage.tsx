@@ -136,7 +136,7 @@ export default function ProductPage() {
                             </li>
                                 {category && (
                                 <li className="flex items-center">
-                                    <Link to={`/products?category=${category.id}`} className="text-gray-500 hover:text-brand-blue">{category.name}</Link>
+                                    <Link to={`/category/${category.id}`} className="text-gray-500 hover:text-brand-blue">{category.name}</Link>
                                     <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
                                 </li>
                             )}
@@ -238,7 +238,7 @@ export default function ProductPage() {
                                         <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Relevant Industries</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {relatedIndustries.map(industry => (
-                                                <Link key={industry.id} to={`/products?industry=${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-md hover:bg-brand-accent hover:text-white transition-colors text-sm">
+                                                <Link key={industry.id} to={`/industry/${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-md hover:bg-brand-accent hover:text-white transition-colors text-sm">
                                                     {industry.name}
                                                 </Link>
                                             ))}
