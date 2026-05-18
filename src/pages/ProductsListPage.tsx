@@ -175,7 +175,7 @@ export default function ProductsListPage() {
 
             <main className="bg-[#F8FAFC] min-h-screen pb-24">
                 {/* Clean Premium Hero Section */}
-                <div className="relative bg-[#0F172A] py-10 md:py-16 overflow-hidden">
+                <div className="relative bg-[#0F172A] pt-8 pb-10 md:pt-10 md:pb-12 overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
                     <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
                     
@@ -184,10 +184,10 @@ export default function ProductsListPage() {
                             <span className="uppercase tracking-widest font-semibold text-xs md:text-sm mb-4 inline-block text-amber-500">
                                 {isAllProductsView ? "Complete Catalog" : "Product Filtering"}
                             </span>
-                            <h1 className="font-extrabold mb-6 text-4xl md:text-5xl lg:text-7xl text-white tracking-tight capitalize">
+                            <h1 className="font-extrabold mb-4 md:mb-6 text-4xl md:text-5xl lg:text-7xl text-white tracking-tight capitalize">
                                 {isAllProductsView ? "All Industrial Tapes" : pageH1}
                             </h1>
-                            <div className="text-lg md:text-xl font-light text-slate-300 leading-relaxed max-w-2xl">
+                            <div className="text-base md:text-xl font-light text-slate-300 leading-relaxed max-w-2xl">
                                 {isAllProductsView ? (
                                     "Explore our complete range of high-performance industrial adhesive solutions, trusted by businesses across India for demanding applications."
                                 ) : (
@@ -209,13 +209,13 @@ export default function ProductsListPage() {
                 {isAllProductsView && (
                     <>
                         {/* Shop by Category Section - Light & Clean */}
-                        <div className="py-24 bg-white border-b border-gray-200">
-                            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                                <div className="mb-12 md:mb-16">
-                                    <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Browse by Category</h2>
-                                    <p className="text-slate-500 text-lg mt-2 font-light">Select a category to view specialized adhesive tapes.</p>
+                        <div className="py-6 md:py-8 bg-white border-b border-gray-200">
+                            <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+                                <div className="mb-6 md:mb-8 text-left">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Browse by Category</h2>
+                                    <p className="text-slate-500 text-base md:text-lg mt-2 font-light">Select a category to view specialized adhesive tapes.</p>
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6">
                                     {categories.map(cat => {
                                         const count = products.filter(p => p.category === cat.id).length;
                                         
