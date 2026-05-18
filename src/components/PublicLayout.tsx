@@ -1,6 +1,6 @@
 
 import { useLocation } from 'react-router-dom';
-import { useEffect, ReactNode } from 'react';
+import { useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Analytics from './Analytics';
@@ -21,11 +21,7 @@ const ScrollToTop = () => {
   return null;
 };
 
-interface PublicLayoutProps {
-    children?: ReactNode;
-}
-
-const PublicLayout = ({ children }: PublicLayoutProps) => {
+const PublicLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <DynamicSEOTags />
