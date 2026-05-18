@@ -143,7 +143,7 @@ export default function ProductPage() {
     
     return (
         <>
-            <main className="py-12 md:py-16 bg-slate-50 min-h-screen">
+            <main className="pt-6 pb-12 md:pt-8 md:pb-16 bg-slate-50 min-h-screen">
                 <div className="container mx-auto px-5 lg:px-8 max-w-7xl">
                     {/* Breadcrumbs */}
                     <nav className="text-sm font-semibold mb-6" aria-label="Breadcrumb">
