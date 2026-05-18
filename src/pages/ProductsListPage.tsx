@@ -224,7 +224,7 @@ export default function ProductsListPage() {
                                     <h2 className="text-3xl lg:text-4xl font-extrabold text-white mb-4 drop-shadow-md">Shop by Category</h2>
                                     <p className="text-blue-200 text-lg max-w-2xl mx-auto font-light">Select a category to view our specialized, high-performance adhesive tapes.</p>
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                                     {categories.map(cat => {
                                         const count = products.filter(p => p.category === cat.id).length;
                                         
