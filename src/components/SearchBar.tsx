@@ -1,22 +1,12 @@
 
 import React, { useState, useEffect, useRef, useMemo, type KeyboardEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Fuse from 'fuse.js';
-import { create, insertMultiple, search as oramaSearch } from '@orama/orama';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import { useSettings } from '../context/SettingsContext';
-import { Product } from '../types';
+import { performSearch, SearchResult } from './search/SearchService';
 
-interface SearchResult extends Product {
-  source?: 'fuse' | 'orama';
-}
-
-const MAX_RESULTS = 8;
 const MAX_RECENT_SEARCHES = 5;
-
-let oramaDb: any = null;
-let lastProductCount = 0;
 
 const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const [query, setQuery] = useState('');
@@ -32,58 +22,6 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const fuse = useMemo(() => {
-    return new Fuse(products, {
-      keys: [
-        { name: 'name', weight: 0.7 },
-        { name: 'tags', weight: 0.6 }, // Increased weight for Tags (Intent)
-        { name: 'uses', weight: 0.5 }, // Added Uses for problem-based search
-        { name: 'category', weight: 0.4 },
-        { name: 'industries', weight: 0.3 },
-        { name: 'features', weight: 0.2 },
-        { name: 'id', weight: 0.2 },
-        { name: 'shortDescription', weight: 0.1 }
-      ],
-      threshold: 0.4, // Slightly increased threshold to allow fuzzier matches
-      ignoreLocation: true,
-      includeScore: true,
-    });
-  }, [products]);
-
-  useEffect(() => {
-    const initOrama = async () => {
-      if (oramaDb && products.length === lastProductCount) return;
-      
-      const db = await create({
-        schema: {
-          id: 'string',
-          name: 'string',
-          description: 'string',
-          category: 'string',
-          industries: 'string[]',
-          tags: 'string[]', // Added schema support
-          uses: 'string[]'  // Added schema support
-        },
-      });
-
-      const records = products.map(p => ({
-        id: p.id,
-        name: p.name,
-        description: p.shortDescription || '',
-        category: p.category,
-        industries: p.industries || [],
-        tags: p.tags || [],
-        uses: p.uses || []
-      }));
-
-      await insertMultiple(db, records);
-      oramaDb = db;
-      lastProductCount = products.length;
-    };
-
-    initOrama();
-  }, [products]);
-
   useEffect(() => {
     try {
       const saved = localStorage.getItem('tapeindia_recent_searches');
@@ -95,57 +33,16 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     }
   }, []);
 
-  const performSearch = async (searchQuery: string) => {
-    if (!searchQuery.trim()) {
-      setResults([]);
-      return;
-    }
-
-    const q = searchQuery.toLowerCase();
-    let combinedResults: SearchResult[] = [];
-    const seenIds = new Set<string>();
-
-    const fuseResult = fuse.search(q);
-    const fuseMatches = fuseResult.map(res => {
-      seenIds.add(res.item.id);
-      return { ...res.item, source: 'fuse' as const };
-    });
-
-    combinedResults = [...fuseMatches];
-
-    const isDescriptive = q.split(' ').length >= 3;
-    const needsMoreResults = fuseMatches.length < 3;
-
-    if ((needsMoreResults || isDescriptive) && oramaDb) {
-      try {
-        const oramaResult = await oramaSearch(oramaDb, {
-          term: q,
-          limit: 10, 
-          threshold: 0,
-        });
-
-        if (oramaResult.count > 0) {
-          const oramaMatches = oramaResult.hits
-            .map(hit => products.find(p => p.id === hit.document.id))
-            .filter((p): p is Product => !!p && !seenIds.has(p.id))
-            .map(p => ({ ...p, source: 'orama' as const }));
-          
-          combinedResults = [...combinedResults, ...oramaMatches];
-        }
-      } catch (e) {
-        console.warn("Orama search failed silently", e);
-      }
-    }
-
-    setResults(combinedResults.slice(0, MAX_RESULTS));
-  };
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      performSearch(query);
-    }, 100); 
+      if (!query.trim()) {
+        setResults([]);
+        return;
+      }
+      setResults(performSearch(query));
+    }, 150); 
     return () => clearTimeout(timer);
-  }, [query, fuse]);
+  }, [query]);
 
   const handleRecentSearchClick = (term: string) => {
     setQuery(term);
@@ -164,12 +61,12 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     });
   };
 
-  const handleSelection = (product: Product) => {
-    saveRecentSearch(query || product.name);
+  const handleSelection = (result: SearchResult) => {
+    saveRecentSearch(query || result.name);
     setQuery('');
     setResults([]);
     setIsFocused(false);
-    navigate(`/product/${product.id}`);
+    navigate(result.url);
     onResultClick?.();
   };
 
@@ -196,10 +93,10 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
     }
   };
 
-  const handleAddToQuote = (e: React.MouseEvent, product: Product) => {
+  const handleAddToQuote = (e: React.MouseEvent, productId: string) => {
     e.stopPropagation();
     e.preventDefault();
-    addToCart(product.id);
+    addToCart(productId);
     
     const btn = e.currentTarget as HTMLButtonElement;
     const originalContent = btn.innerHTML;
@@ -242,7 +139,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onKeyDown={handleKeyDown}
-          placeholder="Search by tape type, application, or industry (EMI, HVAC...)"
+          placeholder="Search tape type, app, industry (EMI, HVAC...)"
           className="w-full pl-11 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent/50 focus:border-brand-accent transition-all duration-300 shadow-sm bg-gray-50 focus:bg-white text-sm lg:text-base"
           autoComplete="off"
           aria-label="Search products"
@@ -294,45 +191,53 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 
           {query.trim().length > 0 && results.length > 0 && (
             <ul className="divide-y divide-gray-50">
-              {results.map((product, index) => (
+              {results.map((result, index) => (
                 <li 
-                    key={product.id} 
+                    key={result.id} 
                     className={`${index === activeIndex ? 'bg-blue-50' : ''} hover:bg-gray-50 transition-colors`}
                 >
                   <div
-                    onClick={() => handleSelection(product)}
+                    onClick={() => handleSelection(result)}
                     className="flex items-center p-3 cursor-pointer group"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 bg-white rounded border border-gray-200 p-0.5 mr-3 overflow-hidden">
-                        <img 
-                            src={product.image} 
-                            alt={product.name} 
-                            className="w-full h-full object-contain"
-                            loading="lazy"
-                        />
-                    </div>
+                    {result.image ? (
+                        <div className="flex-shrink-0 w-10 h-10 bg-white rounded border border-gray-200 p-0.5 mr-3 overflow-hidden">
+                            <img 
+                                src={result.image} 
+                                alt={result.name} 
+                                className="w-full h-full object-contain"
+                                loading="lazy"
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex-shrink-0 w-10 h-10 bg-gray-100 rounded border border-gray-200 flex items-center justify-center mr-3 text-gray-400">
+                            <i className="fas fa-tag"></i>
+                        </div>
+                    )}
 
                     <div className="flex-grow min-w-0 mr-2">
                       <div className="flex items-center gap-2 mb-0.5">
                         <p className="text-sm font-bold text-gray-800 truncate group-hover:text-brand-accent transition-colors">
-                            {product.name}
+                            {result.name}
                         </p>
                       </div>
                       <div className="flex items-center text-xs text-gray-500 gap-2">
-                         <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600 truncate max-w-[120px]">
-                            {product.category.replace(/-/g, ' ')}
+                         <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600 truncate max-w-[120px] uppercase">
+                            {result.type}
                          </span>
                       </div>
                     </div>
 
-                    <button
-                        onClick={(e) => handleAddToQuote(e, product)}
-                        className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all duration-200 shadow-sm z-10"
-                        title="Add to Quote"
-                        aria-label="Add to quote"
-                    >
-                        <i className="fas fa-plus text-xs"></i>
-                    </button>
+                    {result.type === 'product' && (
+                        <button
+                            onClick={(e) => handleAddToQuote(e, result.id)}
+                            className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 text-brand-accent hover:bg-brand-accent hover:text-white hover:border-brand-accent transition-all duration-200 shadow-sm z-10"
+                            title="Add to Quote"
+                            aria-label="Add to quote"
+                        >
+                            <i className="fas fa-plus text-xs"></i>
+                        </button>
+                    )}
                   </div>
                 </li>
               ))}
@@ -365,3 +270,4 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
 };
 
 export default SearchBar;
+
