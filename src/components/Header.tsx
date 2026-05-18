@@ -52,12 +52,12 @@ export default function Header() {
   const getLinkClass = (path: string, isMegaMenu: boolean = false) => {
       const isActive = location.pathname === path || (path !== '/' && location.pathname.startsWith(path));
       const activeState = isActive || isMegaMenu;
-      return `text-base font-semibold transition-colors duration-200 flex items-center ${activeState ? 'text-brand-accent' : 'text-gray-700 hover:text-brand-accent'}`;
+      return `text-base font-semibold transition-colors duration-200 flex items-center ${activeState ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'}`;
   };
 
   return (
     <>
-      <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}>
+      <header className={`bg-white sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'shadow-md border-b border-gray-100' : 'border-b border-transparent'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between lg:justify-start h-14 lg:h-20 gap-4 lg:gap-0">
             {/* Logo */}
@@ -81,57 +81,55 @@ export default function Header() {
                                 className={getLinkClass(link.path, isMegaMenuOpen)}
                               >
                                 {link.name}
-                                <i className={`fas fa-chevron-down ml-1 text-xs transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}></i>
+                                <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}></i>
                               </Link>
 
                               {/* MEGA MENU - Updated Positioning (Left Aligned to avoid overflow) */}
                               <div 
-                                className={`absolute top-full -left-4 transform w-[85vw] max-w-5xl bg-white shadow-2xl rounded-b-xl border-t-4 border-brand-accent transition-all duration-300 origin-top-left ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
-                                style={{ marginTop: '20px' }} // Added offset for better hover bridge
+                                className={`absolute top-[48px] -left-4 transform w-[80vw] max-w-4xl bg-white shadow-2xl rounded-2xl border border-gray-100 transition-all duration-300 origin-top-left ${isMegaMenuOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
                               >
-                                  <div className="flex p-8 gap-8">
+                                  <div className="flex p-8 gap-8 border-b border-gray-100">
                                       <div className="w-2/3 pr-8 border-r border-gray-100">
-                                          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Category</h3>
-                                          <div className="grid grid-cols-2 gap-4">
+                                          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">By Category</h3>
+                                          <div className="grid grid-cols-2 gap-2">
                                               {categories.slice(0, 8).map(cat => {
                                                   const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
                                                   return (
-                                                      <Link key={cat.id} to={`/category/${cat.id}`} className="flex items-start p-3 rounded-lg hover:bg-blue-50 transition-colors group">
-                                                          <div className="mt-1 mr-3 text-brand-accent group-hover:text-brand-blue-dark transition-colors">
+                                                      <Link key={cat.id} to={`/category/${cat.id}`} className="flex items-start p-3 rounded-xl hover:bg-slate-50 transition-colors group">
+                                                          <div className="mt-0.5 mr-3 text-slate-400 group-hover:text-amber-500 transition-colors">
                                                               <Icon className="w-5 h-5" />
                                                           </div>
                                                           <div>
-                                                              <span className="block font-semibold text-gray-800 group-hover:text-brand-accent">{cat.name}</span>
-                                                              <span className="text-xs text-gray-500 line-clamp-1">{cat.subtitle}</span>
+                                                              <span className="block font-semibold text-slate-900 group-hover:text-amber-600 transition-colors leading-snug">{cat.name}</span>
                                                           </div>
                                                       </Link>
                                                   );
                                               })}
                                           </div>
-                                          <Link to="/products" className="inline-block mt-4 text-sm font-bold text-brand-accent hover:underline">
+                                          <Link to="/products" className="inline-block mt-4 text-sm font-semibold text-amber-600 hover:text-amber-700">
                                               View All Categories &rarr;
                                           </Link>
                                       </div>
 
                                       <div className="w-1/3">
-                                          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">By Industry</h3>
-                                          <ul className="space-y-2">
+                                          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">By Industry</h3>
+                                          <ul className="space-y-1">
                                               {INDUSTRIES.slice(0, 6).map(ind => (
                                                   <li key={ind.id}>
-                                                      <Link to={`/industry/${ind.id}`} className="block text-gray-700 hover:text-brand-accent hover:translate-x-1 transition-all text-sm font-medium py-1">
+                                                      <Link to={`/industry/${ind.id}`} className="block text-slate-600 hover:text-amber-600 hover:translate-x-1 transition-all text-sm font-medium py-2">
                                                           {ind.name}
                                                       </Link>
                                                   </li>
                                               ))}
                                           </ul>
-                                          <Link to="/industries" className="inline-block mt-4 text-sm font-bold text-brand-accent hover:underline">
+                                          <Link to="/industries" className="inline-block mt-4 text-sm font-semibold text-amber-600 hover:text-amber-700">
                                               View All Industries &rarr;
                                           </Link>
                                       </div>
                                   </div>
-                                  <div className="bg-gray-50 px-8 py-4 rounded-b-xl flex justify-between items-center">
-                                      <p className="text-sm text-gray-600">Need help finding a tape?</p>
-                                      <Link to="/contact" className="text-sm font-bold text-brand-blue-dark hover:text-brand-accent">Contact our Experts &rarr;</Link>
+                                  <div className="bg-slate-50 px-8 py-4 rounded-b-2xl flex justify-between items-center">
+                                      <p className="text-sm font-medium text-slate-600">Need specific custom configurations?</p>
+                                      <Link to="/contact" className="text-sm font-bold text-slate-900 hover:text-amber-600 transition-colors">Contact Engineering &rarr;</Link>
                                   </div>
                               </div>
                           </div>
@@ -143,7 +141,7 @@ export default function Header() {
                         to={link.path}
                         end={link.path === '/'}
                         className={({ isActive }) => 
-                            `text-base font-semibold transition-colors duration-200 text-gray-700 hover:text-brand-accent ${isActive ? 'text-brand-accent' : ''}`
+                            `text-base font-semibold transition-colors duration-200 text-slate-700 hover:text-amber-600 ${isActive ? 'text-amber-600' : ''}`
                         }
                     >
                     {link.name}
@@ -161,15 +159,15 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-3 xl:gap-4 ml-auto flex-shrink-0">
                 <button
                   onClick={() => setIsAIFinderOpen(true)}
-                  className="flex items-center gap-2 bg-gradient-to-r from-brand-blue to-brand-accent text-white px-3 py-2 xl:px-4 xl:py-2.5 rounded-full font-bold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-xs xl:text-sm whitespace-nowrap"
+                  className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-lg font-semibold shadow-sm hover:bg-slate-800 transition-all text-sm whitespace-nowrap"
                 >
-                  <AIIcon className="w-4 h-4 text-brand-yellow" />
+                  <AIIcon className="w-4 h-4 text-amber-400" />
                   <span>AI Finder</span>
                 </button>
-                <Link to="/request-quote" className="relative p-2 text-gray-600 hover:text-brand-accent transition-colors" aria-label="View Quote Basket">
+                <Link to="/request-quote" className="relative p-2 text-slate-600 hover:text-amber-600 transition-colors" aria-label="View Quote Basket">
                     <i className="fas fa-file-invoice text-xl"></i>
                     {cartCount > 0 && (
-                        <span className="absolute top-0 right-0 bg-brand-amber text-brand-blue-dark text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full shadow-sm">
+                        <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-900 text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full shadow-sm">
                             {cartCount}
                         </span>
                     )}
@@ -177,7 +175,7 @@ export default function Header() {
                 {ctaItem && (
                   <Link
                     to={ctaItem.path}
-                    className="bg-brand-yellow text-brand-blue-dark font-bold py-2 px-4 xl:py-2.5 xl:px-6 rounded-md text-sm xl:text-base hover:bg-yellow-400 transition-colors transform hover:scale-105 whitespace-nowrap"
+                    className="bg-amber-500 text-slate-900 font-bold py-2.5 px-6 rounded-lg text-sm xl:text-base hover:bg-amber-400 transition-colors shadow-sm whitespace-nowrap"
                   >
                     {ctaItem.name}
                   </Link>
@@ -188,16 +186,16 @@ export default function Header() {
             <div className="lg:hidden flex items-center gap-2 ml-auto">
                <button
                   onClick={() => setIsAIFinderOpen(true)}
-                  className="p-2 text-brand-blue-deep flex items-center gap-1 bg-blue-50 rounded-full px-3"
+                  className="p-2 text-slate-900 flex items-center gap-1 bg-amber-50 rounded-lg px-3"
                   aria-label="Open AI Finder"
                >
-                  <AIIcon className="w-4 h-4" />
-                  <span className="text-xs font-bold">AI Help</span>
+                  <AIIcon className="w-4 h-4 text-amber-600" />
+                  <span className="text-xs font-bold text-amber-700">AI</span>
                </button>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-700 hover:text-brand-accent focus:outline-none p-2 ml-1"
+                className="text-slate-700 hover:text-amber-600 focus:outline-none p-2 ml-1"
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
               >
@@ -208,7 +206,7 @@ export default function Header() {
         </div>
 
         {/* Mobile Sticky Search Bar */}
-        <div className="lg:hidden px-4 pb-3 pt-1 border-b border-gray-100 bg-white shadow-sm">
+        <div className="lg:hidden px-4 pb-3 pt-1 bg-white">
             <SearchBar />
         </div>
 
@@ -226,7 +224,7 @@ export default function Header() {
              </Link>
              <button
                 onClick={() => setIsMenuOpen(false)}
-                className="text-gray-600 p-2"
+                className="text-slate-600 p-2"
                 aria-label="Close menu"
               >
                 <i className="fas fa-times text-2xl"></i>
@@ -241,7 +239,7 @@ export default function Header() {
                 end={link.path === '/'}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => 
-                    `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-blue-50 text-brand-accent' : 'text-gray-700'}`
+                    `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-amber-50 text-amber-600' : 'text-slate-700 hover:bg-slate-50'}`
                 }
               >
                 {link.name}
@@ -252,7 +250,7 @@ export default function Header() {
                  <Link 
                     to={ctaItem.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block w-full text-center bg-brand-yellow text-brand-blue-dark font-bold py-4 rounded-lg text-lg shadow-sm"
+                    className="block w-full text-center bg-amber-500 text-slate-900 font-bold py-4 rounded-lg text-lg shadow-sm hover:bg-amber-400"
                   >
                    {ctaItem.name}
                   </Link>
