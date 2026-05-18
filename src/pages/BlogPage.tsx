@@ -1,84 +1,99 @@
 
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import AnimatedSection from '../components/AnimatedSection';
+import { useParams, Link } from 'react-router-dom';
+import { useBlog } from '../context/BlogContext';
+import NotFoundPage from './NotFoundPage';
+import BlogCard from '../components/BlogCard';
 import CanonicalTag from '../components/CanonicalTag';
-import BlogCard from '../components/BlogCard'; // New component for blog posts
-import { useBlog } from '../context/BlogContext'; // Fetch articles from context
+import AnimatedSection from '../components/AnimatedSection';
+import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
 
-const POSTS_PER_PAGE = 6;
-
-export default function BlogPage() {
-    const { articles: allArticles } = useBlog();
-    const [visiblePosts, setVisiblePosts] = useState(POSTS_PER_PAGE);
-
-    const loadMorePosts = () => {
-        setVisiblePosts(prev => prev + POSTS_PER_PAGE);
-    };
+export default function BlogPostPage() {
+    const { slug } = useParams<{ slug: string }>();
+    const { articles } = useBlog();
     
-    const currentArticles = useMemo(() => allArticles.slice(0, visiblePosts), [allArticles, visiblePosts]);
+    const article = articles.find(a => a.id === slug);
+    const { enhancedContent } = useSeoEnhancedContent(article?.content);
+
+    if (!article) {
+        return <NotFoundPage />;
+    }
+    
+    const relatedArticles = articles
+        .filter(a => a.category === article.category && a.id !== article.id)
+        .slice(0, 3);
+        
+    const pageTitle = `${article.title} | Tape India Blog`;
+    const pageDescription = article.summary;
+    const currentUrl = `https://tapeindia.shop/blog/${article.id}`;
 
     return (
         <>
             <CanonicalTag />
-
-            <header className="bg-brand-gray border-b border-slate-200">
-                <div className="container mx-auto px-5 lg:px-8 py-16 md:py-20 text-center">
-                    <AnimatedSection>
-                        <h1 className="font-extrabold mb-4 text-brand-blue-dark">
-                            Industrial Insights
-                        </h1>
-                        <p className="text-slate-600 max-w-3xl mx-auto text-lg">
-                            Expert articles and technical guides from the specialists at Tape India. Explore topics on adhesive technology, material science, and industry best practices.
-                        </p>
-                    </AnimatedSection>
-                </div>
-            </header>
-
-            <main className="bg-white py-16 md:py-24">
-                <div className="container mx-auto px-5 lg:px-8">
-                    <AnimatedSection>
-                        {currentArticles.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-                                {currentArticles.map((article) => (
-                                    <BlogCard key={article.id} article={article} />
-                                ))}
-                            </div>
-                        ) : (
-                             <div className="text-center py-20 bg-white rounded-lg shadow-sm">
-                                <h2 className="text-2xl font-bold mb-4">No Articles Found</h2>
-                                <p className="text-gray-500">There are currently no articles to display. Please check back later.</p>
-                            </div>
-                        )}
-                    </AnimatedSection>
-
-                    {visiblePosts < allArticles.length && (
-                        <AnimatedSection className="text-center mt-16">
-                            <button
-                                onClick={loadMorePosts}
-                                className="bg-brand-accent text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-brand-accent-dark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30"
-                            >
-                                Load More Articles
-                            </button>
-                        </AnimatedSection>
-                    )}
-                </div>
-            </main>
             
-            {/* Call to Action Section */}
-            <section className="bg-brand-blue-dark">
-                <div className="container mx-auto px-5 lg:px-8 py-20 text-center">
-                    <AnimatedSection>
-                        <h2 className="text-white mb-5">Need Industrial Tapes in Bulk?</h2>
-                        <p className="text-blue-200 max-w-2xl mx-auto mb-10">
-                            Contact Tape India for expert advice and competitive quotes on our extensive range of adhesive solutions.
-                        </p>
-                        <Link to="/request-quote" className="bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md hover:bg-yellow-400 transition-colors text-lg">
-                            Request a Quote
-                        </Link>
-                    </AnimatedSection>
+            <main className="bg-white">
+                <header className="relative py-24 md:py-32">
+                    <div className="absolute inset-0">
+                         <img src={article.image} alt={`Featured image for ${article.title}`} className="w-full h-full object-cover" aria-hidden="true" />
+                         <div className="absolute inset-0 bg-black/50"></div>
+                    </div>
+                     <div className="relative container mx-auto px-5 lg:px-8 text-center text-white">
+                        <p className="font-bold text-brand-yellow uppercase tracking-widest mb-4">{article.category}</p>
+                        <h1 className="font-extrabold text-white !text-3xl md:!text-5xl max-w-4xl mx-auto">{article.title}</h1>
+                        <div className="mt-8 flex items-center justify-center space-x-6 text-slate-300">
+                            <span>By {article.author}</span>
+                            <span className="h-1 w-1 bg-slate-400 rounded-full"></span>
+                            <span>{new Date(article.datePublished).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                            <span className="h-1 w-1 bg-slate-400 rounded-full"></span>
+                            <span>{article.readTime} min read</span>
+                        </div>
+                    </div>
+                </header>
+                
+                <div className="py-16 md:py-24">
+                    <div className="container mx-auto px-5 lg:px-8">
+                        <article className="prose prose-lg lg:prose-xl max-w-4xl mx-auto">
+                           <div 
+                             dangerouslySetInnerHTML={{ __html: enhancedContent }} 
+                             className="prose-headings:text-brand-blue-dark prose-a:text-brand-accent hover:prose-a:text-brand-accent-dark prose-strong:text-brand-blue-dark"
+                           />
+                        </article>
+                        
+                        <div className="max-w-4xl mx-auto mt-12 border-t pt-8">
+                           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                                {article.tags && article.tags.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        <span className="font-bold mr-2">Tags:</span>
+                                        {article.tags.map(tag => (
+                                            <span key={tag} className="bg-slate-200 text-slate-700 text-sm font-semibold px-3 py-1 rounded-full">{tag}</span>
+                                        ))}
+                                    </div>
+                                )}
+                                <div className="flex items-center space-x-4">
+                                    <span className="font-bold">Share:</span>
+                                    <a href={`https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodeURIComponent(article.title)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter" className="text-slate-500 hover:text-[#1DA1F2] transition-colors text-2xl"><i className="fab fa-twitter"></i></a>
+                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook" className="text-slate-500 hover:text-[#1877F2] transition-colors text-2xl"><i className="fab fa-facebook"></i></a>
+                                    <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}&title=${encodeURIComponent(article.title)}&summary=${encodeURIComponent(article.summary)}`} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" className="text-slate-500 hover:text-[#0A66C2] transition-colors text-2xl"><i className="fab fa-linkedin"></i></a>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+
+                {relatedArticles.length > 0 && (
+                    <section className="py-16 md:py-24 bg-brand-gray">
+                        <div className="container mx-auto px-5 lg:px-8">
+                             <AnimatedSection>
+                                <h2 className="text-3xl font-bold mb-12 text-center text-brand-blue-dark">Related Articles</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {relatedArticles.map(related => (
+                                        <BlogCard key={related.id} article={related} />
+                                    ))}
+                                </div>
+                            </AnimatedSection>
+                        </div>
+                    </section>
+                )}
+            </main>
         </>
     );
 }
