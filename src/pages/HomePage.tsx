@@ -40,7 +40,7 @@ export default function HomePage() {
       "url": "https://tapeindia.shop/",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://tapeindia.shop/products?q={search_term_string}",
+        "target": "https://tapeindia.shop/search/{search_term_string}",
         "query-input": "required name=search_term_string"
       }
     };
