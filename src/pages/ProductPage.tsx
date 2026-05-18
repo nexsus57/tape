@@ -1,4 +1,3 @@
-
 import { useMemo, useState, type FC, useEffect, type CSSProperties } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
@@ -19,7 +18,7 @@ interface ColorSwatchProps {
 }
 
 const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
-    let swatchClasses = "w-6 h-6 rounded-full border border-gray-300 flex-shrink-0 shadow-inner";
+    let swatchClasses = "w-6 h-6 rounded-full border border-gray-200 flex-shrink-0 shadow-sm";
     // FIX: Use CSSProperties type from react import
     let swatchStyle: CSSProperties = {};
 
@@ -41,7 +40,7 @@ const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
                 style={swatchStyle}
                 title={name}
             ></div>
-            <span className="text-gray-600 text-sm">{name}</span>
+            <span className="text-slate-600 text-sm font-medium">{name}</span>
         </div>
     );
 };
@@ -95,8 +94,8 @@ export default function ProductPage() {
       // Sort by Score Descending
       scoredCandidates.sort((a, b) => b.score - a.score);
 
-      // Return top 3 highest scored products
-      return scoredCandidates.slice(0, 3).map(item => item.product);
+      // Return top 3 highest scored products (modified to slice Top 4 to match grid layout of 4 cols)
+      return scoredCandidates.slice(0, 4).map(item => item.product);
     }, [product, products]);
 
     if (!product) {
@@ -146,44 +145,44 @@ export default function ProductPage() {
     
     return (
         <>
-            <main className="py-12 md:py-16 bg-gray-50">
-                <div className="container mx-auto px-5 lg:px-8">
+            <main className="py-12 md:py-16 bg-slate-50 min-h-screen">
+                <div className="container mx-auto px-5 lg:px-8 max-w-7xl">
                     {/* Breadcrumbs */}
                     <nav className="text-sm font-semibold mb-6" aria-label="Breadcrumb">
                         <ol className="list-none p-0 inline-flex items-center flex-wrap">
                             <li className="flex items-center">
-                                <Link to="/" className="text-gray-500 hover:text-brand-blue">Home</Link>
-                                <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                                <Link to="/" className="text-slate-500 hover:text-amber-600 transition-colors">Home</Link>
+                                <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
                             </li>
                             <li className="flex items-center">
-                                <Link to="/products" className="text-gray-500 hover:text-brand-blue">Products</Link>
-                                <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                                <Link to="/products" className="text-slate-500 hover:text-amber-600 transition-colors">Products</Link>
+                                <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
                             </li>
                                 {category && (
                                 <li className="flex items-center">
-                                    <Link to={`/category/${category.id}`} className="text-gray-500 hover:text-brand-blue">{category.name}</Link>
-                                    <i className="fas fa-chevron-right mx-2 text-gray-400 text-xs"></i>
+                                    <Link to={`/category/${category.id}`} className="text-slate-500 hover:text-amber-600 transition-colors">{category.name}</Link>
+                                    <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
                                 </li>
                             )}
-                            <li className="text-brand-blue-dark truncate max-w-[200px]" aria-current="page">{product.name}</li>
+                            <li className="text-slate-900 truncate max-w-[200px]" aria-current="page">{product.name}</li>
                         </ol>
                     </nav>
 
-                    <div className="bg-white p-6 md:p-8 rounded-xl shadow-md grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+                    <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-200 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
                         {/* Left Column: Product Image */}
                         <div className="lg:col-span-2">
-                             <div className="sticky top-24 self-start">
+                             <div className="sticky top-28 self-start">
                                 <div 
-                                    className="product-detail-image-container relative bg-white border border-gray-200 rounded-lg p-4"
+                                    className="product-detail-image-container relative bg-slate-50/50 border border-gray-100 rounded-2xl p-8 aspect-square flex items-center justify-center mix-blend-multiply"
                                 >
                                     <img
                                         src={product.image}
                                         alt={imageAltText}
-                                        className="rounded-lg"
+                                        className="rounded-lg object-contain w-full h-full filter drop-shadow-sm mix-blend-multiply"
                                         crossOrigin="anonymous"
                                         onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
-                                        width="300"
-                                        height="300"
+                                        width="400"
+                                        height="400"
                                     />
                                 </div>
                             </div>
@@ -191,24 +190,23 @@ export default function ProductPage() {
 
                         {/* Right Column: Product Details */}
                         <div className="lg:col-span-3">
-                            <h1 className="font-extrabold text-brand-blue-dark mb-3 leading-tight">{h1Text}</h1>
+                            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight leading-tight">{h1Text}</h1>
                             
-                             <div className="space-y-6 text-slate-700">
+                             <div className="space-y-8 text-slate-700">
                                 <div className="prose prose-lg max-w-none text-base leading-relaxed text-slate-600">
-                                   <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
-                                   <p className="mt-4" dangerouslySetInnerHTML={{ __html: enhancedSummary }}></p>
+                                   <p className="font-light text-lg tracking-wide" dangerouslySetInnerHTML={{ __html: enhancedSummary }}></p>
                                    
                                    {/* Dynamically generated expanded unique content for SEO (150+ words) */}
                                    <div 
-                                       className="mt-6 space-y-4 text-sm text-slate-500" 
+                                       className="mt-8 space-y-4 text-base font-light text-slate-500 pt-6 border-t border-gray-100" 
                                        dangerouslySetInnerHTML={{ __html: enhancedExtendedContent }} 
                                    />
                                 </div>
 
                                 {product.features && product.features.length > 0 && (
-                                    <div>
-                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-2">Key Features</h3>
-                                        <ul className="list-disc list-outside pl-5 space-y-1 text-base">
+                                    <div className="bg-slate-50 p-6 rounded-2xl border border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Key Features</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-2 text-base text-slate-700 font-medium">
                                             {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
                                         </ul>
                                     </div>
@@ -216,29 +214,29 @@ export default function ProductPage() {
                                 
                                 {product.uses && product.uses.length > 0 && (
                                     <div>
-                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-2">Common Applications</h3>
-                                        <ul className="list-disc list-outside pl-5 space-y-1 text-base">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Common Applications</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-2 text-base text-slate-700 font-medium">
                                             {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
                                         </ul>
                                     </div>
                                 )}
 
                                 {hasOptions && (
-                                    <div>
-                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Options & Customization</h3>
-                                        <div className="space-y-4">
+                                    <div className="pt-6 border-t border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-6">Options & Customization</h3>
+                                        <div className="space-y-6">
                                             {product.availableColors && product.availableColors.length > 0 && (
                                                 <div>
-                                                    <h4 className="font-semibold text-base mb-2 text-gray-800">Available Colors:</h4>
-                                                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                                    <h4 className="font-semibold text-sm mb-3 text-slate-700">Available Colors:</h4>
+                                                    <div className="flex flex-wrap gap-x-4 gap-y-3">
                                                         {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
                                                     </div>
                                                 </div>
                                             )}
                                             {product.customizable && (
                                                 <div>
-                                                    <h4 className="font-semibold text-base mb-2 text-gray-800">Custom Sizes:</h4>
-                                                    <p className="text-base text-gray-700">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
+                                                    <h4 className="font-semibold text-sm mb-2 text-slate-700">Custom Sizes:</h4>
+                                                    <p className="text-sm text-slate-500 font-light">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
                                                 </div>
                                             )}
                                         </div>
@@ -246,11 +244,11 @@ export default function ProductPage() {
                                 )}
 
                                 {relatedIndustries.length > 0 && (
-                                    <div className="hidden lg:block">
-                                        <h3 className="text-lg font-bold text-brand-blue-dark mb-3">Relevant Industries</h3>
+                                    <div className="hidden lg:block pt-6 border-t border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Relevant Industries</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {relatedIndustries.map(industry => (
-                                                <Link key={industry.id} to={`/industry/${industry.id}`} className="bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-md hover:bg-brand-accent hover:text-white transition-colors text-sm">
+                                                <Link key={industry.id} to={`/industry/${industry.id}`} className="bg-slate-100 text-slate-600 font-medium px-4 py-2 rounded-lg hover:bg-slate-900 hover:text-white transition-colors text-sm">
                                                     {industry.name}
                                                 </Link>
                                             ))}
@@ -259,16 +257,16 @@ export default function ProductPage() {
                                 )}
 
                                 {/* Request Quote Section */}
-                                <div className="!mt-10 pt-6 border-t border-gray-200">
-                                  <h3 className="text-xl font-bold text-brand-blue-dark">Get a Quote for {product.name}</h3>
-                                  <p className="text-gray-600 my-3">
-                                      For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our team for a personalized quote.
+                                <div className="!mt-12 pt-8 border-t border-gray-200">
+                                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight">Ready to order {product.name}?</h3>
+                                  <p className="text-slate-500 my-4 font-light text-lg">
+                                      For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our engineering team.
                                   </p>
                                   <Link
                                       to={`/request-quote?product=${product.id}`}
-                                      className="inline-block bg-brand-yellow text-brand-blue-dark font-bold py-3 px-8 rounded-md text-base hover:bg-yellow-400 transition-colors transform hover:scale-105"
+                                      className="inline-block bg-slate-900 text-white font-bold py-4 px-10 rounded-xl text-base hover:bg-amber-500 hover:text-slate-900 transition-colors shadow-sm"
                                   >
-                                      {productSeoData.CTA}
+                                      {productSeoData.CTA || "Request a Quote"}
                                   </Link>
                                 </div>
                            </div>
@@ -277,8 +275,8 @@ export default function ProductPage() {
 
                     {/* FAQ Section */}
                     {productSeoData.faqs && productSeoData.faqs.length > 0 && (
-                        <div className="bg-white p-6 md:p-8 rounded-xl shadow-md mt-8">
-                           <h2 className="text-2xl font-bold text-brand-blue-dark mb-6">Frequently Asked Questions</h2>
+                        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-200 mt-12">
+                           <h2 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Frequently Asked Questions</h2>
                            <div className="space-y-4">
                                {productSeoData.faqs.map((faq, index) => (
                                    <FaqAccordion key={index} question={faq.name} answer={faq.acceptedAnswer.text} />
@@ -291,10 +289,10 @@ export default function ProductPage() {
 
             {/* Related Products Section */}
             {relatedProducts.length > 0 && (
-                <section className="py-16 md:py-24 bg-brand-gray">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 className="text-3xl font-bold mb-12 text-center text-brand-blue-dark">You Might Also Need</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
+                <section className="py-20 md:py-24 bg-white border-t border-gray-200">
+                    <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
+                        <h2 className="text-3xl font-bold mb-12 text-center text-slate-900 tracking-tight">You Might Also Need</h2>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                             {relatedProducts.map(p => (
                                <ProductCard key={p.id} product={p} categoryName={category?.name || ''} />
                             ))}
