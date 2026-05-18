@@ -1,6 +1,6 @@
 
 
-import { Industry, NavLinkData, Testimonial, Product, Category, IndustryDetail } from './types';
+import { Industry, NavLinkData, Testimonial, Product, IndustryDetail } from './types';
 
 export const NAV_LINKS: NavLinkData[] = [
     { name: 'Home', path: '/' },
