@@ -1,6 +1,5 @@
 
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useBlog } from '../context/BlogContext';
 import NotFoundPage from './NotFoundPage';
 import BlogCard from '../components/BlogCard';
@@ -13,7 +12,7 @@ export default function BlogPostPage() {
     const { articles } = useBlog();
     
     const article = articles.find(a => a.id === slug);
-    const { enhancedContent, articleSchema } = useSeoEnhancedContent(article);
+    const { enhancedContent } = useSeoEnhancedContent(article);
 
     if (!article) {
         return <NotFoundPage />;
@@ -29,9 +28,6 @@ export default function BlogPostPage() {
 
     return (
         <>
-            <Helmet prioritizeSeoTags>
-                {articleSchema && <script type="application/ld+json">{articleSchema}</script>}
-            </Helmet>
             <CanonicalTag />
             
             <main className="bg-white">
