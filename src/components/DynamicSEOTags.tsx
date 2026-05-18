@@ -39,9 +39,9 @@ export default function DynamicSEOTags() {
         if (p && p.image) dynamicImage = p.image;
     }
 
-    // Fallback logic for Categories
-    if (path === '/products' && search.includes('category=')) {
-        const catId = new URLSearchParams(search).get('category');
+    // Fallback logic for Categories (Static and Query)
+    if ((path.startsWith('/category/') || (path === '/products' && search.includes('category=')))) {
+        const catId = path.startsWith('/category/') ? path.replace('/category/', '') : new URLSearchParams(search).get('category');
         const cat = categories.find(c => c.id === catId);
         if (cat) {
              if (cat.image) dynamicImage = cat.image;
@@ -49,7 +49,7 @@ export default function DynamicSEOTags() {
                 seoMatch = {
                     "Page Type": "Category List",
                     "Page Name": cat.name,
-                    "Full URL": `https://tapeindia.shop/products?category=${cat.id}`,
+                    "Full URL": `https://tapeindia.shop/category/${cat.id}`,
                     "Title (≤60 chars)": `${cat.name} Manufacturer & Supplier | Tape India`,
                     "Meta Description (≤160 chars)": (cat.description || cat.subtitle || '').substring(0, 160),
                     "H1": cat.name,
@@ -66,8 +66,8 @@ export default function DynamicSEOTags() {
                 };
              }
         }
-    } else if (path === '/products' && search.includes('industry=')) {
-        const indId = new URLSearchParams(search).get('industry');
+    } else if (path.startsWith('/industry/') || (path === '/products' && search.includes('industry='))) {
+        const indId = path.startsWith('/industry/') ? path.replace('/industry/', '') : new URLSearchParams(search).get('industry');
         // We know INDUSTRIES from constants are used. Let's just create a dynamic match based on ID.
         // We capitalize it simply if we don't have the exact text.
         const indName = indId ? indId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Industry';
@@ -75,7 +75,7 @@ export default function DynamicSEOTags() {
             seoMatch = {
                 "Page Type": "Industry List",
                 "Page Name": `${indName} Solutions`,
-                "Full URL": `https://tapeindia.shop/products?industry=${indId}`,
+                "Full URL": `https://tapeindia.shop/industry/${indId}`,
                 "Title (≤60 chars)": `${indName} Tapes & Solutions | Tape India`,
                 "Meta Description (≤160 chars)": `Explore our range of industrial tapes specialized for the ${indName} sector. High-performance adhesive solutions from Tape India.`,
                 "H1": `${indName} Solutions`,
@@ -85,14 +85,14 @@ export default function DynamicSEOTags() {
                 "faqs": []
             } as any;
         }
-    } else if (path === '/products' && search.includes('tag=')) {
-        const tag = new URLSearchParams(search).get('tag') || '';
+    } else if (path.startsWith('/tag/') || (path === '/products' && search.includes('tag='))) {
+        const tag = path.startsWith('/tag/') ? path.replace('/tag/', '') : new URLSearchParams(search).get('tag') || '';
         const tagName = tag.replace(/-/g, ' ');
         if (!seoMatch) {
              seoMatch = {
                 "Page Type": "Tag List",
                 "Page Name": `${tagName} Tapes`,
-                "Full URL": `https://tapeindia.shop/products?tag=${tag}`,
+                "Full URL": `https://tapeindia.shop/tag/${tag}`,
                 "Title (≤60 chars)": `${tagName} Tapes | Tape India`,
                 "Meta Description (≤160 chars)": `High-performance ${tagName} tapes designed for industrial applications. Shop online at Tape India.`,
                 "H1": `${tagName} Solutions`,
@@ -100,13 +100,13 @@ export default function DynamicSEOTags() {
                 "faqs": []
             } as any;
         }
-    } else if (path === '/products' && search.includes('q=')) {
-        const q = new URLSearchParams(search).get('q') || '';
+    } else if (path.startsWith('/search/') || (path === '/products' && search.includes('q='))) {
+        const q = path.startsWith('/search/') ? decodeURIComponent(path.replace('/search/', '')) : new URLSearchParams(search).get('q') || '';
         if (!seoMatch) {
              seoMatch = {
                 "Page Type": "Search results",
                 "Page Name": `Search Results for "${q}"`,
-                "Full URL": `https://tapeindia.shop/products?q=${q}`,
+                "Full URL": `https://tapeindia.shop/search/${encodeURIComponent(q)}`,
                 "Title (≤60 chars)": `Search: ${q} | Tape India`,
                 "Meta Description (≤160 chars)": `Search results for ${q} at Tape India.`,
                 "H1": `Search Results for ${q}`,
@@ -187,7 +187,7 @@ export default function DynamicSEOTags() {
                         "@type": "ListItem",
                         "position": i++,
                         "name": cat.name,
-                        "item": `https://tapeindia.shop/products?category=${cat.id}`
+                        "item": `https://tapeindia.shop/category/${cat.id}`
                     });
                 }
                 items.push({
@@ -197,6 +197,38 @@ export default function DynamicSEOTags() {
                     "item": `https://tapeindia.shop${path}`
                 });
             }
+        } else if (path.startsWith('/category/')) {
+            items.push({
+                "@type": "ListItem",
+                "position": i++,
+                "name": "Products",
+                "item": "https://tapeindia.shop/products"
+            });
+            const catId = path.replace('/category/', '');
+            const cat = categories.find(c => c.id === catId);
+            if (cat) {
+                items.push({
+                    "@type": "ListItem",
+                    "position": i,
+                    "name": cat.name,
+                    "item": `https://tapeindia.shop${path}`
+                });
+            }
+        } else if (path.startsWith('/industry/')) {
+            items.push({
+                "@type": "ListItem",
+                "position": i++,
+                "name": "Industries",
+                "item": "https://tapeindia.shop/industries"
+            });
+            const indId = path.replace('/industry/', '');
+            const indName = indId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            items.push({
+                "@type": "ListItem",
+                "position": i,
+                "name": indName,
+                "item": `https://tapeindia.shop${path}`
+            });
         } else if (path.startsWith('/products')) {
             items.push({
                 "@type": "ListItem",
@@ -260,7 +292,7 @@ export default function DynamicSEOTags() {
       "url": "https://tapeindia.shop/",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://tapeindia.shop/products?q={search_term_string}",
+        "target": "https://tapeindia.shop/search/{search_term_string}",
         "query-input": "required name=search_term_string"
       }
     } : null;
