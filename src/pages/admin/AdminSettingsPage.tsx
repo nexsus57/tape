@@ -2,7 +2,7 @@
 import { useState, type FormEvent, ChangeEvent } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useProducts } from '../../context/ProductContext';
-import { Settings, Testimonial } from '../../types';
+import { Settings } from '../../types';
 
 export default function AdminSettingsPage() {
     const { settings, setSettings } = useSettings();
