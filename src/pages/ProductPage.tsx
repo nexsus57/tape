@@ -11,6 +11,7 @@ import { ColorOption } from '../types';
 import { seoData } from '../data/seoData';
 import FaqAccordion from '../components/FaqAccordion';
 import { extendedProductDescriptions } from '../data/extendedProductDescriptions2';
+import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
 
 interface ColorSwatchProps {
     name: string;
@@ -117,7 +118,31 @@ export default function ProductPage() {
     const imageAltText = pageTitle;
     const h1Text = productSeoData.H1;
 
+    // Apply aggressive internal linking to the summary
+    const { enhancedContent: enhancedSummary } = useSeoEnhancedContent(productSeoData.summary);
+
     const hasOptions = (product.availableColors && product.availableColors.length > 0) || product.customizable;
+    
+    // Process extended descriptions for internal linking
+    const extendedContent = useMemo(() => {
+        if (!product) return '';
+        if (extendedProductDescriptions[product.id]) {
+            return extendedProductDescriptions[product.id];
+        }
+        
+        return `<p>The ${product.name} stands as a premier solution within our ${category?.name || 'industrial tape'} category, meticulously engineered to meet the demanding standards of modern industrial applications. As a leading manufacturer and supplier of adhesive technologies across India, Tape India ensures that every roll of this tape delivers exceptional performance and reliability, making it a critical component for businesses seeking optimal operational efficiency.</p>
+        
+        <p>Designed specifically for professional environments, this tape offers unique advantages that set it apart. Its superior material composition provides robust durability, ensuring it can withstand rigorous conditions without compromising on adhesive strength or structural integrity. ${relatedIndustries.length > 0 ? `This makes the ${product.name} particularly well-suited for sectors such as ${relatedIndustries.map(i => i.name).join(', ')}. Professionals in these fields rely on our tapes to tackle complex challenges, trusting in the consistent quality that Tape India has delivered for over six decades.` : ''}</p>
+        
+        <p>${product.features && product.features.length > 0 ? `When evaluating adhesive solutions, the critical features of the ${product.name} become readily apparent. Notable characteristics such as ${product.features.slice(0, 3).join(', ')} provide the specific performance metrics required for specialized tasks. These attributes ensure that the tape not only adheres securely but also maintains its hold under varying environmental stresses, temperature fluctuations, and mechanical wear.` : ''} ${product.uses && product.uses.length > 0 ? `Commonly utilized for tasks including ${product.uses.slice(0,3).join(' and ')}, this versatile tape adapts to a multitude of scenarios. Whether you are addressing heavy-duty packaging needs, intricate electronic insulation, or long-term structural bonding, it provides a steadfast solution.` : ''}</p>
+        
+        <p>By choosing Tape India as your bulk supplier for the ${product.name}, you are partnering with an experienced manufacturer dedicated to excellence. We understand that in an industrial context, the reliability of your materials directly impacts your bottom line. Therefore, we subject our products to stringent quality control processes, guaranteeing that you receive an adhesive product that performs flawlessly, order after order. Contact our sales team today to discuss your specific requirements, request custom sizes, or inquire about wholesale pricing tailored to your business needs.</p>`;
+    }, [product, category, relatedIndustries]);
+    
+    // Apply aggressive internal linking to the extended content
+    const { enhancedContent: enhancedExtendedContent } = useSeoEnhancedContent(
+        extendedContent.split('\n\n').map(p => p.trim() && !p.startsWith('<p>') ? `<p>${p}</p>` : p).join('')
+    );
     
     return (
         <>
@@ -171,26 +196,13 @@ export default function ProductPage() {
                              <div className="space-y-6 text-slate-700">
                                 <div className="prose prose-lg max-w-none text-base leading-relaxed text-slate-600">
                                    <h2 className="text-xl font-bold text-brand-blue-dark border-b border-gray-200 pb-2">Product Description</h2>
-                                   <p className="mt-4">{productSeoData.summary}</p>
+                                   <p className="mt-4" dangerouslySetInnerHTML={{ __html: enhancedSummary }}></p>
                                    
                                    {/* Dynamically generated expanded unique content for SEO (150+ words) */}
-                                   <div className="mt-6 space-y-4 text-sm text-slate-500">
-                                      {extendedProductDescriptions[product.id] ? (
-                                          extendedProductDescriptions[product.id].split('\n\n').map((paragraph, idx) => (
-                                              <p key={idx}>{paragraph}</p>
-                                          ))
-                                      ) : (
-                                          <>
-                                          <p>The {product.name} stands as a premier solution within our {category?.name || 'industrial tape'} category, meticulously engineered to meet the demanding standards of modern industrial applications. As a leading manufacturer and supplier of adhesive technologies across India, Tape India ensures that every roll of this tape delivers exceptional performance and reliability, making it a critical component for businesses seeking optimal operational efficiency.</p>
-                                          
-                                          <p>Designed specifically for professional environments, this tape offers unique advantages that set it apart. Its superior material composition provides robust durability, ensuring it can withstand rigorous conditions without compromising on adhesive strength or structural integrity. {relatedIndustries.length > 0 ? `This makes the ${product.name} particularly well-suited for sectors such as ${relatedIndustries.map(i => i.name).join(', ')}. Professionals in these fields rely on our tapes to tackle complex challenges, trusting in the consistent quality that Tape India has delivered for over six decades.` : ''}</p>
-                                          
-                                          <p>{product.features && product.features.length > 0 ? `When evaluating adhesive solutions, the critical features of the ${product.name} become readily apparent. Notable characteristics such as ${product.features.slice(0, 3).join(', ')} provide the specific performance metrics required for specialized tasks. These attributes ensure that the tape not only adheres securely but also maintains its hold under varying environmental stresses, temperature fluctuations, and mechanical wear.` : ''} {product.uses && product.uses.length > 0 ? `Commonly utilized for tasks including ${product.uses.slice(0,3).join(' and ')}, this versatile tape adapts to a multitude of scenarios. Whether you are addressing heavy-duty packaging needs, intricate electronic insulation, or long-term structural bonding, it provides a steadfast solution.` : ''}</p>
-                                          
-                                          <p>By choosing Tape India as your bulk supplier for the {product.name}, you are partnering with an experienced manufacturer dedicated to excellence. We understand that in an industrial context, the reliability of your materials directly impacts your bottom line. Therefore, we subject our products to stringent quality control processes, guaranteeing that you receive an adhesive product that performs flawlessly, order after order. Contact our sales team today to discuss your specific requirements, request custom sizes, or inquire about wholesale pricing tailored to your business needs.</p>
-                                          </>
-                                      )}
-                                   </div>
+                                   <div 
+                                       className="mt-6 space-y-4 text-sm text-slate-500" 
+                                       dangerouslySetInnerHTML={{ __html: enhancedExtendedContent }} 
+                                   />
                                 </div>
 
                                 {product.features && product.features.length > 0 && (
