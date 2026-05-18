@@ -1,6 +1,6 @@
 
 import { useLocation, Link, useNavigate, useParams } from 'react-router-dom';
-import { useMemo, FC, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { INITIAL_INDUSTRIES_DETAILED, PRODUCTS as STATIC_PRODUCTS, INDUSTRIES } from '../constants';
@@ -9,33 +9,8 @@ import CanonicalTag from '../components/CanonicalTag';
 import AnimatedSection from '../components/AnimatedSection';
 import { seoData } from '../data/seoData';
 import type { SeoPageData } from '../types';
+import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
 import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
-
-interface FilterButtonProps {
-    label: string;
-    isActive: boolean;
-    onClick: () => void;
-    variant?: 'default' | 'industry';
-}
-
-const FilterButton: FC<FilterButtonProps> = ({ label, isActive, onClick, variant = 'default' }) => {
-    const activeClass = variant === 'industry'
-        ? 'bg-brand-blue-deep text-white border-brand-blue-deep shadow-md'
-        : 'bg-brand-accent text-white border-brand-accent shadow-md';
-    
-    const inactiveClass = 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50';
-
-    return (
-        <button
-            onClick={onClick}
-            className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-200 whitespace-nowrap border flex-shrink-0 ${
-                isActive ? activeClass : inactiveClass
-            }`}
-        >
-            {label}
-        </button>
-    );
-}
 
 const ProductSkeleton = () => (
   <div className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col h-full animate-pulse">
@@ -53,15 +28,6 @@ const ProductSkeleton = () => (
   </div>
 );
 
-const COMMON_USE_CASES = [
-    { label: 'High Heat', tag: 'High Temperature' },
-    { label: 'Waterproof', tag: 'Waterproof' },
-    { label: 'Electrical', tag: 'Insulation' },
-    { label: 'Anti-Slip', tag: 'Anti-Slip' },
-    { label: 'Packaging', tag: 'Packaging' },
-    { label: 'EMI Shielding', tag: 'EMI' },
-];
-
 export default function ProductsListPage() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -69,7 +35,6 @@ export default function ProductsListPage() {
     const { products: contextProducts } = useProducts();
     const { categories } = useCategories();
     const [isLoading, setIsLoading] = useState(true);
-    const [isIndustrySheetOpen, setIsIndustrySheetOpen] = useState(false);
 
     const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
 
@@ -104,50 +69,14 @@ export default function ProductsListPage() {
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
 
-    const handleFilterChange = (key: string, value: string | null) => {
-        if (key === 'industry') {
-            setIsIndustrySheetOpen(false);
-            if (value) {
-                navigate(`/industry/${value}`);
-            } else {
-                navigate('/products');
-            }
-        } else if (key === 'category') {
-            if (value) {
-                navigate(`/category/${value}`);
-            } else {
-                navigate('/products');
-            }
-        } else if (key === 'tag') {
-            if (value) {
-                navigate(`/tag/${value}`);
-            } else {
-                navigate('/products');
-            }
-        } else {
-            const newParams = new URLSearchParams(location.search);
-            if (value) {
-                newParams.set(key, value);
-            } else {
-                newParams.delete(key);
-            }
-            navigate({ search: newParams.toString() });
-        }
-    };
-
     const clearAllFilters = () => {
         navigate('/products');
-        setIsIndustrySheetOpen(false);
     };
 
     const { 
       filteredProducts, 
-      pageTitle, 
-      pageDescription, 
       pageContent, 
-      breadcrumbSchema, 
       pageH1,
-      pageSeoData,
     } = useMemo(() => {
         let prods = [];
         let pageData: Partial<SeoPageData> | undefined;
@@ -188,6 +117,9 @@ export default function ProductsListPage() {
             
             if (category) {
                 pageData = seoData.find(p => p.id === activeCategory || p["Page Name"] === category.name);
+                if (!pageData) {
+                    pageData = { H1: category.name, summary: category.description || category.subtitle };
+                }
             }
         } else if (activeTag) {
              const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
@@ -196,33 +128,23 @@ export default function ProductsListPage() {
              );
              pageData = {
                  H1: `${activeTag.replace(/-/g, ' ')} Solutions`,
-                 "Title (≤60 chars)": `${activeTag.replace(/-/g, ' ')} Tapes | Tape India`,
              };
         } else if (searchQuery) {
              const q = searchQuery.trim().toLowerCase();
-             // Escape special regex characters
              const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
              const regex = new RegExp(safeQ, 'i');
 
              prods = availableProducts.filter(p => {
-                 // Check Tags
                  if (p.tags?.some(t => t.toLowerCase().includes(q))) return true;
-                 // Check Name
                  if (regex.test(p.name)) return true;
-                 // Check Uses/Applications
                  if (p.uses?.some(u => u.toLowerCase().includes(q))) return true;
-                 // Check Category Name (loose match)
                  if (p.category.includes(q)) return true;
-                 
-                 // Fallback: Check if description contains the word
                  if (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) return true;
-
                  return false;
              });
 
              pageData = {
                  H1: `Search Results: "${searchQuery}"`,
-                 "Title (≤60 chars)": `Search: ${searchQuery} | Tape India`,
              };
         } else {
             prods = availableProducts;
@@ -232,205 +154,162 @@ export default function ProductsListPage() {
             pageData = seoData.find(p => p["Page Name"] === "All Products List");
         }
 
-        const title = pageData?.["Title (≤60 chars)"] || 'All Industrial Tapes | Tape India';
-        const desc = pageData?.["Meta Description (≤160 chars)"] || 'Browse our complete catalog of industrial tapes.';
         const h1 = pageData?.H1 || 'All Products';
         const content = pageData?.summary || '';
         
-        const breadcrumbList = [
-             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tapeindia.shop/" },
-             { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://tapeindia.shop/products" }
-        ];
-        
-        const bcSchema = {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": breadcrumbList
-        };
-
         return {
             filteredProducts: prods,
-            pageTitle: title,
-            pageDescription: desc,
             pageContent: content,
-            breadcrumbSchema: JSON.stringify(bcSchema),
             pageH1: h1,
-            pageSeoData: pageData
         };
     }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
 
     const { enhancedContent: enhancedPageContent } = useSeoEnhancedContent(pageContent);
     const { enhancedContent: enhancedCategoryText } = useSeoEnhancedContent(
-        `Welcome to the ${pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our ${pageH1} solutions are designed to address the complex challenges faced by modern industries. By browsing the selection below, you will find high-performance products that have been trusted by professionals nationwide to streamline operations, enhance safety, and secure valuable assets. We invite you to explore the unique specifications of each tape to find the perfect match for your application, and our expert team stands ready to assist you with bulk ordering, customized dimensioning, and specialized technical support to ensure your complete satisfaction.`
+        `Welcome to the ${pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our ${pageH1} solutions are designed to address the complex challenges faced by modern industries.`
     );
     const { enhancedContent: enhancedIndustryText } = useSeoEnhancedContent(
-        `Welcome to our specialized collection of industrial tapes for the ${pageH1}. At Tape India, we recognize that this sector demands adhesive solutions that can perform reliably under highly specific and often extreme conditions. As a trusted manufacturer and nationwide supplier, we have meticulously curated this selection of high-performance tapes to meet the stringent requirements of your industry. Over our decades of operation, we have developed a deep understanding of the unique challenges faced by professionals in your field, and our products are engineered to deliver superior durability, precise adherence, and long-lasting stability. Whether your application involves enduring extreme temperatures, providing critical electrical insulation, or securing heavy loads, you will find a reliable solution within our inventory. We partner with businesses across India to ensure a robust and uninterrupted supply chain, allowing you to focus on your core operations with confidence. Browse our industry-specific products below to discover the ideal tapes for your projects, and contact our technical sales team for personalized advice on bulk purchasing, custom specifications, and advanced adhesive applications tailored to your business.`
+        `Welcome to our specialized collection of industrial tapes for the ${pageH1}. At Tape India, we recognize that this sector demands adhesive solutions that can perform reliably under highly specific and often extreme conditions. As a trusted manufacturer and nationwide supplier, we have meticulously curated this selection of high-performance tapes to meet the stringent requirements of your industry.`
     );
+
+    const isAllProductsView = !activeCategory && !activeIndustry && !activeTag && !searchQuery;
 
     return (
         <>
             <CanonicalTag />
 
             <main className="bg-gray-50 min-h-screen pb-20">
-                {/* Mobile Header Title */}
-                <div className="bg-white border-b border-gray-100 py-4 px-4 lg:hidden">
-                    <h1 className="text-xl font-extrabold text-brand-blue-dark">{pageH1}</h1>
-                    {activeIndustry || activeTag ? (
-                        <button onClick={clearAllFilters} className="text-xs text-brand-accent mt-1 font-medium">Clear Filters</button>
-                    ) : null}
-                </div>
-
-                {/* Desktop Hero */}
-                <div className="hidden lg:block bg-brand-blue-deep text-white py-12 md:py-16">
-                    <div className="container mx-auto px-5 lg:px-8 text-center">
+                {/* Premium Hero Section */}
+                <div className="relative bg-gradient-to-br from-brand-blue-deep via-brand-blue to-brand-blue-dark py-16 md:py-24 overflow-hidden">
+                    <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
+                    <div className="container relative z-10 mx-auto px-5 lg:px-8 text-center text-white">
                         <AnimatedSection>
-                            <h1 className="font-extrabold mb-4 text-white capitalize">{pageH1}</h1>
-                            {pageContent && <p className="text-blue-100 max-w-3xl mx-auto text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: enhancedPageContent }}></p>}
+                            <span className="uppercase tracking-widest font-semibold text-sm mb-4 inline-block text-brand-accent">
+                                {isAllProductsView ? "Complete Catalog" : "Product Filtering"}
+                            </span>
+                            <h1 className="font-extrabold mb-6 text-4xl md:text-5xl lg:text-6xl drop-shadow-md capitalize">
+                                {isAllProductsView ? "All Industrial Tapes" : pageH1}
+                            </h1>
+                            <div className="max-w-3xl mx-auto text-lg md:text-xl font-light text-blue-100 leading-relaxed">
+                                {isAllProductsView ? (
+                                    "Explore our complete range of high-performance industrial adhesive solutions, trusted by businesses across India for demanding applications."
+                                ) : (
+                                    <div dangerouslySetInnerHTML={{ __html: enhancedPageContent || enhancedCategoryText }} />
+                                )}
+                            </div>
                             
-                            {(activeCategory && activeCategory !== 'all') && (
-                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80" dangerouslySetInnerHTML={{ __html: enhancedCategoryText }}></p>
-                            )}
-                            
-                            {activeIndustry && (
-                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80" dangerouslySetInnerHTML={{ __html: enhancedIndustryText }}></p>
+                            {(activeIndustry || activeCategory || activeTag || searchQuery) && (
+                                <div className="mt-8">
+                                    <button onClick={clearAllFilters} className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-6 py-2 rounded-full font-semibold transition-all backdrop-blur-sm">
+                                        <i className="fas fa-times mr-2"></i> Clear Filters
+                                    </button>
+                                </div>
                             )}
                         </AnimatedSection>
                     </div>
                 </div>
 
-                {/* Sticky Filter Bar (Desktop) */}
-                <div className="hidden lg:block sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all">
-                    <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-                        <div className="flex items-center gap-3">
-                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap w-20">Categories</span>
-                            <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
-                                <FilterButton 
-                                    label="All Products" 
-                                    isActive={!activeCategory || activeCategory === 'all'} 
-                                    onClick={() => handleFilterChange('category', null)} 
-                                />
-                                {categories.map(cat => (
-                                    <FilterButton 
-                                        key={cat.id} 
-                                        label={cat.name} 
-                                        isActive={activeCategory === cat.id} 
-                                        onClick={() => handleFilterChange('category', cat.id)} 
-                                    />
-                                ))}
+                {isAllProductsView && (
+                    <>
+                        {/* Shop by Category Section */}
+                        <div className="container mx-auto px-5 lg:px-8 -mt-8 relative z-20 mb-16">
+                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+                                <div className="text-center mb-8">
+                                    <h2 className="text-2xl font-bold text-gray-800">Shop by Category</h2>
+                                    <p className="text-gray-500">Select a category to view specialized adhesive tapes.</p>
+                                </div>
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                    {categories.map(cat => {
+                                        const count = products.filter(p => p.category === cat.id).length;
+                                        return (
+                                        <Link key={cat.id} to={`/category/${cat.id}`} className="group flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-brand-blue-deep transition-colors duration-300 border border-gray-100 hover:border-brand-blue-deep">
+                                            <div className="w-16 h-16 bg-white rounded-full p-2 shadow-sm mb-3 group-hover:scale-110 transition-transform duration-300">
+                                                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover rounded-full" />
+                                            </div>
+                                            <h3 className="font-semibold text-gray-800 group-hover:text-white text-center text-sm mb-1">{cat.name}</h3>
+                                            <span className="text-xs text-gray-500 group-hover:text-brand-accent">{count} Products</span>
+                                        </Link>
+                                    )})}
+                                </div>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest whitespace-nowrap w-20">Industries</span>
-                            <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
-                                <FilterButton 
-                                    label="All Industries" 
-                                    isActive={!activeIndustry} 
-                                    onClick={() => handleFilterChange('industry', null)}
-                                    variant="industry"
-                                />
-                                {INDUSTRIES.map(ind => (
-                                    <FilterButton 
-                                        key={ind.id} 
-                                        label={ind.name} 
-                                        isActive={activeIndustry === ind.id} 
-                                        onClick={() => handleFilterChange('industry', ind.id)}
-                                        variant="industry"
-                                    />
-                                ))}
+
+                        {/* Shop by Industry Section */}
+                        <div className="container mx-auto px-5 lg:px-8 mb-16">
+                            <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-800">Shop by Industry</h2>
+                                    <p className="text-gray-500 text-sm mt-1">Industrial solutions engineered for your specific sector.</p>
+                                </div>
+                                <Link to="/industries" className="text-brand-blue-deep font-semibold hover:text-brand-accent text-sm hidden sm:block">View All Industries &rarr;</Link>
+                            </div>
+                            <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+                                {INDUSTRIES.map(ind => {
+                                    const iconName = ind.id === 'packaging-industry' ? 'BoxIcon' : 
+                                        ind.id === 'hvac-industry' ? 'WindIcon' :
+                                        ind.id === 'electronic-industry' ? 'CpuIcon' :
+                                        ind.id === 'print-labels-signage-industry' ? 'LayersIcon' :
+                                        ind.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon';
+                                    const Icon = INDUSTRY_ICONS_MAP[iconName] || INDUSTRY_ICONS_MAP.SparklesIcon;
+                                    const count = products.filter(p => p.industries?.includes(ind.id) || INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind.id)?.products.includes(p.id)).length;
+                                    
+                                    return (
+                                    <Link key={ind.id} to={`/industry/${ind.id}`} className="group relative bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                                        <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${ind.gradientClasses} opacity-0 group-hover:opacity-100 transition-opacity`}></div>
+                                        <Icon className="w-8 h-8 text-brand-blue-deep group-hover:text-brand-accent transition-colors mb-4" />
+                                        <h3 className="font-bold text-gray-800 text-sm mb-1">{ind.name}</h3>
+                                        <div className="text-xs text-gray-500">{count} Products</div>
+                                    </Link>
+                                )})}
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                {/* MOBILE FILTERS STRUCTURE */}
-                <div className="lg:hidden sticky top-[115px] z-20 bg-gray-50/95 backdrop-blur-sm border-b border-gray-200 shadow-sm pt-2 pb-2">
-                    <div className="px-4 space-y-3">
-                        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
-                            <button 
-                                onClick={() => handleFilterChange('category', null)}
-                                className={`px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap border ${!activeCategory || activeCategory === 'all' ? 'bg-brand-accent text-white border-brand-accent' : 'bg-white text-gray-600 border-gray-200'}`}
-                            >
-                                All
-                            </button>
-                            {categories.map(cat => (
-                                <button 
-                                    key={cat.id}
-                                    onClick={() => handleFilterChange('category', cat.id)}
-                                    className={`px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap border ${activeCategory === cat.id ? 'bg-brand-accent text-white border-brand-accent' : 'bg-white text-gray-600 border-gray-200'}`}
-                                >
-                                    {cat.name}
-                                </button>
-                            ))}
-                        </div>
-
-                        <div className="flex justify-between items-center gap-4">
-                            <button 
-                                onClick={() => setIsIndustrySheetOpen(true)}
-                                className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold transition-colors ${activeIndustry ? 'bg-brand-blue-deep text-white shadow-md' : 'bg-white text-gray-700 border border-gray-200 shadow-sm'}`}
-                            >
-                                <i className="fas fa-filter"></i>
-                                {activeIndustry ? INDUSTRIES.find(i => i.id === activeIndustry)?.name : 'Filter by Industry'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* "What are you trying to solve?" - Use Case Chips */}
-                <div className="lg:hidden px-4 py-4 bg-gray-50">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">What are you trying to solve?</p>
-                    <div className="flex flex-wrap gap-2">
-                        {COMMON_USE_CASES.map(useCase => (
-                            <button
-                                key={useCase.tag}
-                                onClick={() => handleFilterChange('tag', useCase.tag)}
-                                className={`px-3 py-1 text-xs font-medium rounded border ${activeTag === useCase.tag ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200'}`}
-                            >
-                                {useCase.label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Industry Bottom Sheet (Mobile) */}
-                {isIndustrySheetOpen && (
-                    <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsIndustrySheetOpen(false)}></div>
-                        <div className="relative bg-white rounded-t-2xl max-h-[80vh] overflow-y-auto animate-slide-up shadow-2xl">
-                            <div className="p-4 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
-                                <h3 className="text-lg font-bold text-gray-800">Select Industry</h3>
-                                <button onClick={() => setIsIndustrySheetOpen(false)} className="text-gray-500 text-2xl">&times;</button>
-                            </div>
-                            <div className="p-4 space-y-2">
-                                <button 
-                                    onClick={() => handleFilterChange('industry', null)}
-                                    className={`w-full text-left px-4 py-3 rounded-lg font-medium ${!activeIndustry ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-50'}`}
-                                >
-                                    All Industries
-                                </button>
-                                {INDUSTRIES.map(ind => (
-                                    <button 
-                                        key={ind.id}
-                                        onClick={() => handleFilterChange('industry', ind.id)}
-                                        className={`w-full text-left px-4 py-3 rounded-lg font-medium flex items-center gap-3 ${activeIndustry === ind.id ? 'bg-blue-50 text-brand-accent' : 'text-gray-700 hover:bg-gray-50'}`}
-                                    >
-                                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${ind.gradientClasses}`}></div>
-                                        {ind.name}
-                                    </button>
-                                ))}
+                        
+                        {/* Trust Bar */}
+                        <div className="bg-white border-y border-gray-200 py-8 mb-16">
+                            <div className="container mx-auto px-5 lg:px-8">
+                                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center divide-x divide-gray-100">
+                                    <div className="flex flex-col items-center justify-center p-2">
+                                        <i className="fas fa-history text-2xl text-brand-accent mb-2"></i>
+                                        <span className="font-bold text-gray-800 text-sm">65+ Years Experience</span>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center p-2">
+                                        <i className="fas fa-truck text-2xl text-brand-accent mb-2"></i>
+                                        <span className="font-bold text-gray-800 text-sm">PAN-India Delivery</span>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center p-2">
+                                        <i className="fas fa-cogs text-2xl text-brand-accent mb-2"></i>
+                                        <span className="font-bold text-gray-800 text-sm">Custom Solutions</span>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center p-2">
+                                        <i className="fas fa-boxes text-2xl text-brand-accent mb-2"></i>
+                                        <span className="font-bold text-gray-800 text-sm">Bulk Supply</span>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center p-2">
+                                        <i className="fas fa-check-circle text-2xl text-brand-accent mb-2"></i>
+                                        <span className="font-bold text-gray-800 text-sm">Quality Assurance</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </>
                 )}
 
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    {/* PRODUCT GRID */}
+                <div className={`container mx-auto px-4 sm:px-6 lg:px-8 ${!isAllProductsView ? 'py-12' : ''}`}>
+                    {/* PRODUCT GRID SECTION */}
+                    {isAllProductsView && (
+                        <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
+                            <h2 className="text-3xl font-extrabold text-brand-blue-deep">All Products</h2>
+                            <span className="text-gray-500 font-medium">{filteredProducts.length} Items</span>
+                        </div>
+                    )}
+                    
                     <div className="min-h-[50vh]">
                         {isLoading ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
-                                {[1, 2, 3, 4, 5, 6].map(i => <ProductSkeleton key={i} />)}
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <ProductSkeleton key={i} />)}
                             </div>
                         ) : filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 lg:gap-8 animate-fade-in">
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 animate-fade-in">
                                 {filteredProducts.map(product => (
                                     <ProductCard 
                                         key={product.id} 
@@ -440,18 +319,18 @@ export default function ProductsListPage() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center py-24 bg-white rounded-xl shadow-sm border border-gray-100 animate-fade-in">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-                                    <i className="fas fa-search text-gray-400 text-2xl"></i>
+                            <div className="text-center py-24 bg-white rounded-2xl shadow-sm border border-gray-100 animate-fade-in">
+                                <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-50 rounded-full mb-6">
+                                    <i className="fas fa-search text-gray-400 text-3xl"></i>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-700">
+                                <h3 className="text-2xl font-bold text-gray-800">
                                     {products.length === 0 ? 'Loading Products...' : 'No products found'}
                                 </h3>
-                                <p className="text-gray-500 mt-2 max-w-md mx-auto px-4">
+                                <p className="text-gray-500 mt-3 max-w-md mx-auto px-4 text-lg">
                                     We couldn't find any products matching your selection. Try clearing filters or using broader terms.
                                 </p>
-                                <button onClick={clearAllFilters} className="mt-6 inline-block bg-brand-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-brand-accent-dark transition-colors">
-                                    Clear Filters
+                                <button onClick={clearAllFilters} className="mt-8 inline-block bg-brand-blue-deep text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-accent transition-colors shadow-md">
+                                    View All Products
                                 </button>
                             </div>
                         )}
