@@ -1,5 +1,5 @@
 
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link, useNavigate, useParams } from 'react-router-dom';
 import { useMemo, FC, useState, useEffect } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
@@ -64,6 +64,7 @@ const COMMON_USE_CASES = [
 export default function ProductsListPage() {
     const location = useLocation();
     const navigate = useNavigate();
+    const params = useParams();
     const { products: contextProducts } = useProducts();
     const { categories } = useCategories();
     const [isLoading, setIsLoading] = useState(true);
@@ -71,33 +72,70 @@ export default function ProductsListPage() {
 
     const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
 
+    const searchParams = new URLSearchParams(location.search);
+    const activeCategory = params.categoryId || searchParams.get('category'); 
+    const activeIndustry = params.industryId || searchParams.get('industry');
+    const activeTag = params.tagId || searchParams.get('tag');
+    const searchQuery = params.searchQuery || searchParams.get('q');
+
+    // SEO Redirect Logic: Convert query params to clean URLs
+    useEffect(() => {
+        if (searchParams.has('industry')) {
+            const ind = searchParams.get('industry');
+            navigate(`/industry/${ind}`, { replace: true });
+        } else if (searchParams.has('category')) {
+            const cat = searchParams.get('category');
+            navigate(`/category/${cat}`, { replace: true });
+        } else if (searchParams.has('tag')) {
+            const tag = searchParams.get('tag');
+            navigate(`/tag/${tag}`, { replace: true });
+        } else if (searchParams.has('q')) {
+            const q = searchParams.get('q');
+            navigate(`/search/${q}`, { replace: true });
+        }
+    }, [location.search, navigate, searchParams]);
+
     useEffect(() => {
         setIsLoading(true);
         const timer = setTimeout(() => setIsLoading(false), 300);
         return () => clearTimeout(timer);
-    }, [location.search]);
+    }, [location.pathname, location.search]);
 
     const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
-    
-    const searchParams = new URLSearchParams(location.search);
-    const activeCategory = searchParams.get('category'); 
-    const activeIndustry = searchParams.get('industry');
-    const activeTag = searchParams.get('tag');
-    const searchQuery = searchParams.get('q');
 
     const handleFilterChange = (key: string, value: string | null) => {
-        const newParams = new URLSearchParams(location.search);
-        if (value) {
-            newParams.set(key, value);
+        if (key === 'industry') {
+            setIsIndustrySheetOpen(false);
+            if (value) {
+                navigate(`/industry/${value}`);
+            } else {
+                navigate('/products');
+            }
+        } else if (key === 'category') {
+            if (value) {
+                navigate(`/category/${value}`);
+            } else {
+                navigate('/products');
+            }
+        } else if (key === 'tag') {
+            if (value) {
+                navigate(`/tag/${value}`);
+            } else {
+                navigate('/products');
+            }
         } else {
-            newParams.delete(key);
+            const newParams = new URLSearchParams(location.search);
+            if (value) {
+                newParams.set(key, value);
+            } else {
+                newParams.delete(key);
+            }
+            navigate({ search: newParams.toString() });
         }
-        navigate({ search: newParams.toString() });
-        if (key === 'industry') setIsIndustrySheetOpen(false);
     };
 
     const clearAllFilters = () => {
-        navigate({ search: '' });
+        navigate('/products');
         setIsIndustrySheetOpen(false);
     };
 
