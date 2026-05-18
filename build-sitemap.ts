@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { PRODUCTS, INDUSTRIES } from './src/constants';
+import { ALL_CATEGORIES } from './src/data/seoData';
 import { TECHNICAL_BLOGS } from './src/data/blogData';
 
 const BASE_URL = 'https://tapeindia.shop';
@@ -20,7 +21,9 @@ const sitemap = [
     '  <!-- Products -->',
     ...PRODUCTS.map(product => `  <url><loc>${BASE_URL}/product/${product.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}</loc><priority>0.8</priority></url>`),
     '  <!-- Industries -->',
-    ...INDUSTRIES.map(industry => `  <url><loc>${BASE_URL}/products?industry=${industry.id}</loc><priority>0.8</priority></url>`),
+    ...INDUSTRIES.map(industry => `  <url><loc>${BASE_URL}/industry/${industry.id}</loc><priority>0.8</priority></url>`),
+    '  <!-- Categories -->',
+    ...ALL_CATEGORIES.map(category => `  <url><loc>${BASE_URL}/category/${category.id}</loc><priority>0.8</priority></url>`),
     '</urlset>'
 ].join('\n');
 
