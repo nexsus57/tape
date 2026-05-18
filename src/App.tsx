@@ -70,6 +70,10 @@ export default function App() {
               <Route path="about" element={<AboutPage />} />
               <Route path="industries" element={<IndustriesPage />} />
               <Route path="products" element={<ProductsListPage />} />
+              <Route path="industry/:industryId" element={<ProductsListPage />} />
+              <Route path="category/:categoryId" element={<ProductsListPage />} />
+              <Route path="tag/:tagId" element={<ProductsListPage />} />
+              <Route path="search/:searchQuery" element={<ProductsListPage />} />
               <Route path="product/:productId" element={<ProductPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="blog" element={<BlogPage />} />
