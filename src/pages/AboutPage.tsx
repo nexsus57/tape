@@ -108,7 +108,7 @@ export default function AboutPage() {
                     {[
                       { title: "OEM Focused", desc: "Designed explicitly for high-volume automated assembly lines and heavy industry.", icon: "fa-robot", bg: "bg-cyan-50", color: "text-cyan-600" },
                       { title: "Custom Solutions", desc: "Specific width slitting, custom die-cuts, and specialized adhesive formulations.", icon: "fa-sliders-h", bg: "bg-amber-50", color: "text-amber-600" },
-                      { title: "Quality Assured", desc: "Strict batch testing for tensile strength, peel adhesion, and temperature resistance.", icon: "fa-shield-alt", bg: "bg-blue-50", color: "text-blue-600" },
+                      { title: "Quality Assured", desc: "Strict batch testing for tensile strength, peel adhesion, and temperature resistance.", icon: "fa-check-circle", bg: "bg-blue-50", color: "text-blue-600" },
                       { title: "Bulk Availability", desc: "Massive inventory capable of sustaining continuous supply chains Pan-India.", icon: "fa-warehouse", bg: "bg-teal-50", color: "text-teal-600" }
                     ].map((feature, idx) => (
                       <AnimatedSection key={idx} delay={`delay-${idx * 100}`} className="h-full">
