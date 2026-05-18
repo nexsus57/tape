@@ -1,15 +1,11 @@
 
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
 import Sidebar from './Sidebar';
 import AdminHeader from './AdminHeader';
 import Analytics from '../Analytics';
 import { Outlet } from 'react-router-dom';
 
-interface AdminLayoutProps {
-    children?: ReactNode;
-}
-
-const AdminLayout = ({ children }: AdminLayoutProps) => {
+const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
