@@ -19,7 +19,7 @@ export default function BottomNavBar() {
             key={item.name}
             to={item.path}
             end={item.path === '/'}
-            className={({ isActive }) => 
+            className={({ isActive }: { isActive: boolean }) => 
                 `inline-flex flex-col items-center justify-center font-medium group transition-colors ${isActive ? 'text-brand-accent' : 'text-gray-500'}`
             }
           >
@@ -52,11 +52,11 @@ export default function BottomNavBar() {
         
         <NavLink
           to="/request-quote"
-          className={({ isActive }) => 
+          className={({ isActive }: { isActive: boolean }) => 
             `inline-flex flex-col items-center justify-center font-bold group transition-colors ${isActive ? 'text-brand-blue-dark bg-amber-50' : 'text-gray-600'}`
           }
         >
-          {({ isActive }) => (
+          {({ isActive }: { isActive: boolean }) => (
             <>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-1 shadow-sm ${isActive ? 'bg-brand-amber text-brand-blue-dark' : 'bg-brand-yellow text-brand-blue-dark'}`}>
                  <i className="fas fa-file-invoice text-lg"></i>
