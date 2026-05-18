@@ -50,7 +50,7 @@ export default function IndustriesPage() {
                return (
                  <AnimatedSection key={industry.id} delay={`delay-${(index % 3) * 100}`} className="h-full">
                     <Link 
-                        to={`/products?industry=${industry.id}`}
+                        to={`/industry/${industry.id}`}
                         className="group flex flex-col h-full bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-brand-accent/20 transition-all duration-300 overflow-hidden transform hover:-translate-y-1"
                     >
                         <div className="p-6 md:p-8 flex flex-col items-start h-full relative">
