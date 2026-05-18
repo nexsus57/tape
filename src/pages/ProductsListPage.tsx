@@ -9,6 +9,7 @@ import CanonicalTag from '../components/CanonicalTag';
 import AnimatedSection from '../components/AnimatedSection';
 import { seoData } from '../data/seoData';
 import type { SeoPageData } from '../types';
+import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
 
 interface FilterButtonProps {
     label: string;
@@ -258,6 +259,14 @@ export default function ProductsListPage() {
         };
     }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
 
+    const { enhancedContent: enhancedPageContent } = useSeoEnhancedContent(pageContent);
+    const { enhancedContent: enhancedCategoryText } = useSeoEnhancedContent(
+        `Welcome to the ${pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our ${pageH1} solutions are designed to address the complex challenges faced by modern industries. By browsing the selection below, you will find high-performance products that have been trusted by professionals nationwide to streamline operations, enhance safety, and secure valuable assets. We invite you to explore the unique specifications of each tape to find the perfect match for your application, and our expert team stands ready to assist you with bulk ordering, customized dimensioning, and specialized technical support to ensure your complete satisfaction.`
+    );
+    const { enhancedContent: enhancedIndustryText } = useSeoEnhancedContent(
+        `Welcome to our specialized collection of industrial tapes for the ${pageH1}. At Tape India, we recognize that this sector demands adhesive solutions that can perform reliably under highly specific and often extreme conditions. As a trusted manufacturer and nationwide supplier, we have meticulously curated this selection of high-performance tapes to meet the stringent requirements of your industry. Over our decades of operation, we have developed a deep understanding of the unique challenges faced by professionals in your field, and our products are engineered to deliver superior durability, precise adherence, and long-lasting stability. Whether your application involves enduring extreme temperatures, providing critical electrical insulation, or securing heavy loads, you will find a reliable solution within our inventory. We partner with businesses across India to ensure a robust and uninterrupted supply chain, allowing you to focus on your core operations with confidence. Browse our industry-specific products below to discover the ideal tapes for your projects, and contact our technical sales team for personalized advice on bulk purchasing, custom specifications, and advanced adhesive applications tailored to your business.`
+    );
+
     return (
         <>
             <CanonicalTag />
@@ -276,18 +285,14 @@ export default function ProductsListPage() {
                     <div className="container mx-auto px-5 lg:px-8 text-center">
                         <AnimatedSection>
                             <h1 className="font-extrabold mb-4 text-white capitalize">{pageH1}</h1>
-                            {pageContent && <p className="text-blue-100 max-w-3xl mx-auto text-lg leading-relaxed">{pageContent}</p>}
+                            {pageContent && <p className="text-blue-100 max-w-3xl mx-auto text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: enhancedPageContent }}></p>}
                             
                             {(activeCategory && activeCategory !== 'all') && (
-                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80">
-                                    Welcome to the {pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our {pageH1} solutions are designed to address the complex challenges faced by modern industries. By browsing the selection below, you will find high-performance products that have been trusted by professionals nationwide to streamline operations, enhance safety, and secure valuable assets. We invite you to explore the unique specifications of each tape to find the perfect match for your application, and our expert team stands ready to assist you with bulk ordering, customized dimensioning, and specialized technical support to ensure your complete satisfaction.
-                                </p>
+                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80" dangerouslySetInnerHTML={{ __html: enhancedCategoryText }}></p>
                             )}
                             
                             {activeIndustry && (
-                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80">
-                                    Welcome to our specialized collection of industrial tapes for the {pageH1}. At Tape India, we recognize that this sector demands adhesive solutions that can perform reliably under highly specific and often extreme conditions. As a trusted manufacturer and nationwide supplier, we have meticulously curated this selection of high-performance tapes to meet the stringent requirements of your industry. Over our decades of operation, we have developed a deep understanding of the unique challenges faced by professionals in your field, and our products are engineered to deliver superior durability, precise adherence, and long-lasting stability. Whether your application involves enduring extreme temperatures, providing critical electrical insulation, or securing heavy loads, you will find a reliable solution within our inventory. We partner with businesses across India to ensure a robust and uninterrupted supply chain, allowing you to focus on your core operations with confidence. Browse our industry-specific products below to discover the ideal tapes for your projects, and contact our technical sales team for personalized advice on bulk purchasing, custom specifications, and advanced adhesive applications tailored to your business.
-                                </p>
+                                <p className="text-blue-200 max-w-4xl mx-auto mt-6 text-sm leading-relaxed text-justify opacity-80" dangerouslySetInnerHTML={{ __html: enhancedIndustryText }}></p>
                             )}
                         </AnimatedSection>
                     </div>
