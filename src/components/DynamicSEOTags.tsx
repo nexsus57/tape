@@ -4,7 +4,6 @@ import { seoData } from '../data/seoData';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { useBlog } from '../context/BlogContext';
-import { useSettings } from '../context/SettingsContext';
 import { 
     generateBreadcrumbsSchema, 
     generateWebsiteSchema,
@@ -20,7 +19,6 @@ export default function DynamicSEOTags() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const { articles } = useBlog();
-    const { settings } = useSettings();
     
     const path = location.pathname;
     const search = location.search;
@@ -81,7 +79,7 @@ export default function DynamicSEOTags() {
         const indId = path.startsWith('/industry/') ? path.replace('/industry/', '') : new URLSearchParams(search).get('industry');
         // We know INDUSTRIES from constants are used. Let's just create a dynamic match based on ID.
         // We capitalize it simply if we don't have the exact text.
-        const indName = indId ? indId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Industry';
+        const indName = indId ? indId.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Industry';
         if (!seoMatch) {
             seoMatch = {
                 "Page Type": "Industry List",
