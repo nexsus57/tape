@@ -13,7 +13,7 @@ const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
 
   return (
     <Link 
-      to={`/products?category=${category.id}`} 
+      to={`/category/${category.id}`} 
       className="group block bg-white rounded-xl shadow-md hover:shadow-lg hover:shadow-brand-accent/20 transition-all duration-300 ease-in-out border border-gray-100/50 transform hover:-translate-y-1.5 h-full"
       aria-label={`Browse ${category.name}`}
     >
