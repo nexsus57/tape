@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { NAV_LINKS, INDUSTRIES } from '../constants';
 import SearchBar from './SearchBar';
-import { useSearchModal } from '../context/SearchModalContext';
 import { useCategories } from '../context/CategoryContext';
 import { useCart } from '../context/CartContext';
 import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
@@ -140,7 +139,7 @@ export default function Header() {
                         key={link.name}
                         to={link.path}
                         end={link.path === '/'}
-                        className={({ isActive }) => 
+                        className={({ isActive }: { isActive: boolean }) => 
                             `text-base font-semibold transition-colors duration-200 text-slate-700 hover:text-amber-600 ${isActive ? 'text-amber-600' : ''}`
                         }
                     >
@@ -238,7 +237,7 @@ export default function Header() {
                 to={link.path}
                 end={link.path === '/'}
                 onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }) => 
+                className={({ isActive }: { isActive: boolean }) => 
                     `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-amber-50 text-amber-600' : 'text-slate-700 hover:bg-slate-50'}`
                 }
               >
