@@ -212,22 +212,54 @@ export default function ProductsListPage() {
                 {isAllProductsView && (
                     <>
                         {/* Shop by Category Section */}
-                        <div className="container mx-auto px-5 lg:px-8 -mt-8 relative z-20 mb-16">
-                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-                                <div className="text-center mb-8">
-                                    <h2 className="text-2xl font-bold text-gray-800">Shop by Category</h2>
-                                    <p className="text-gray-500">Select a category to view specialized adhesive tapes.</p>
+                        <div className="relative py-20 overflow-hidden bg-gradient-to-br from-brand-blue-deep via-brand-blue-dark to-gray-900 border-b border-brand-accent/20">
+                            {/* Decorative background elements */}
+                            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+                                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-brand-blue/20 blur-[100px]"></div>
+                                <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-brand-accent/10 blur-[100px]"></div>
+                            </div>
+                            
+                            <div className="container mx-auto px-5 lg:px-8 relative z-10">
+                                <div className="text-center mb-12">
+                                    <h2 className="text-3xl lg:text-4xl font-extrabold text-white mb-4 drop-shadow-md">Shop by Category</h2>
+                                    <p className="text-blue-200 text-lg max-w-2xl mx-auto font-light">Select a category to view our specialized, high-performance adhesive tapes.</p>
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                                     {categories.map(cat => {
                                         const count = products.filter(p => p.category === cat.id).length;
+                                        
+                                        // Determine glow color based on category ID
+                                        let glowColor = 'group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]';
+                                        let borderColor = 'group-hover:border-blue-500/50';
+                                        
+                                        if (cat.id.includes('safe')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(234,179,8,0.3)]'; 
+                                            borderColor = 'group-hover:border-yellow-500/50'; 
+                                        } else if (cat.id.includes('reflect')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(96,165,250,0.3)]'; 
+                                            borderColor = 'group-hover:border-blue-400/50'; 
+                                        } else if (cat.id.includes('anti') || cat.id.includes('esd')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]'; 
+                                            borderColor = 'group-hover:border-cyan-500/50'; 
+                                        } else if (cat.id.includes('teflon') || cat.id.includes('ptfe')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(20,184,166,0.3)]'; 
+                                            borderColor = 'group-hover:border-teal-500/50'; 
+                                        } else if (cat.id.includes('double')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]'; 
+                                            borderColor = 'group-hover:border-red-500/50'; 
+                                        } else if (cat.id.includes('special')) { 
+                                            glowColor = 'group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]'; 
+                                            borderColor = 'group-hover:border-orange-500/50'; 
+                                        }
+
                                         return (
-                                        <Link key={cat.id} to={`/category/${cat.id}`} className="group flex flex-col items-center p-4 bg-gray-50 rounded-xl hover:bg-brand-blue-deep transition-colors duration-300 border border-gray-100 hover:border-brand-blue-deep">
-                                            <div className="w-16 h-16 bg-white rounded-full p-2 shadow-sm mb-3 group-hover:scale-110 transition-transform duration-300">
-                                                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover rounded-full" />
+                                        <Link key={cat.id} to={`/category/${cat.id}`} className={`group relative flex flex-col items-center p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 ${borderColor} ${glowColor} shadow-lg transition-all duration-300 hover:-translate-y-2 overflow-hidden`}>
+                                            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            <div className="relative w-24 h-24 sm:w-28 sm:h-28 mb-4 group-hover:scale-110 transition-transform duration-500 z-10 drop-shadow-2xl">
+                                                <img src={cat.image} alt={cat.name} className="w-full h-full object-contain filter drop-shadow-2xl" />
                                             </div>
-                                            <h3 className="font-semibold text-gray-800 group-hover:text-white text-center text-sm mb-1">{cat.name}</h3>
-                                            <span className="text-xs text-gray-500 group-hover:text-brand-accent">{count} Products</span>
+                                            <h3 className="font-bold text-white text-center text-sm md:text-base mb-1 relative z-10">{cat.name}</h3>
+                                            <span className="text-xs text-blue-300 group-hover:text-white transition-colors relative z-10">{count} Products</span>
                                         </Link>
                                     )})}
                                 </div>
@@ -235,58 +267,80 @@ export default function ProductsListPage() {
                         </div>
 
                         {/* Shop by Industry Section */}
-                        <div className="container mx-auto px-5 lg:px-8 mb-16">
-                            <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-800">Shop by Industry</h2>
-                                    <p className="text-gray-500 text-sm mt-1">Industrial solutions engineered for your specific sector.</p>
-                                </div>
-                                <Link to="/industries" className="text-brand-blue-deep font-semibold hover:text-brand-accent text-sm hidden sm:block">View All Industries &rarr;</Link>
-                            </div>
-                            <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-                                {INDUSTRIES.map(ind => {
-                                    const iconName = ind.id === 'packaging-industry' ? 'BoxIcon' : 
-                                        ind.id === 'hvac-industry' ? 'WindIcon' :
-                                        ind.id === 'electronic-industry' ? 'CpuIcon' :
-                                        ind.id === 'print-labels-signage-industry' ? 'LayersIcon' :
-                                        ind.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon';
-                                    const Icon = INDUSTRY_ICONS_MAP[iconName] || INDUSTRY_ICONS_MAP.SparklesIcon;
-                                    const count = products.filter(p => p.industries?.includes(ind.id) || INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind.id)?.products.includes(p.id)).length;
-                                    
-                                    return (
-                                    <Link key={ind.id} to={`/industry/${ind.id}`} className="group relative bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden">
-                                        <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${ind.gradientClasses} opacity-0 group-hover:opacity-100 transition-opacity`}></div>
-                                        <Icon className="w-8 h-8 text-brand-blue-deep group-hover:text-brand-accent transition-colors mb-4" />
-                                        <h3 className="font-bold text-gray-800 text-sm mb-1">{ind.name}</h3>
-                                        <div className="text-xs text-gray-500">{count} Products</div>
+                        <div className="relative py-20 bg-gray-900 border-b border-gray-800">
+                            <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]"></div>
+                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-accent/50 to-transparent"></div>
+                            
+                            <div className="container mx-auto px-5 lg:px-8 relative z-10">
+                                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-gray-800 pb-6">
+                                    <div>
+                                        <h2 className="text-3xl lg:text-4xl font-extrabold text-white">Shop by Industry</h2>
+                                        <p className="text-gray-400 text-lg mt-2 font-light">Industrial solutions engineered for your specific sector.</p>
+                                    </div>
+                                    <Link to="/industries" className="text-brand-accent font-semibold hover:text-white transition-colors text-sm mt-4 md:mt-0 flex items-center group">
+                                        View All Industries <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                                     </Link>
-                                )})}
+                                </div>
+                                <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
+                                    {INDUSTRIES.map(ind => {
+                                        const iconName = ind.id === 'packaging-industry' ? 'BoxIcon' : 
+                                            ind.id === 'hvac-industry' ? 'WindIcon' :
+                                            ind.id === 'electronic-industry' ? 'CpuIcon' :
+                                            ind.id === 'print-labels-signage-industry' ? 'LayersIcon' :
+                                            ind.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon';
+                                        const Icon = INDUSTRY_ICONS_MAP[iconName] || INDUSTRY_ICONS_MAP.SparklesIcon;
+                                        const count = products.filter(p => p.industries?.includes(ind.id) || INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind.id)?.products.includes(p.id)).length;
+                                        
+                                        return (
+                                        <Link key={ind.id} to={`/industry/${ind.id}`} className="group relative bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:border-gray-500 transition-all duration-300 hover:-translate-y-2 overflow-hidden flex flex-col items-center text-center">
+                                            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${ind.gradientClasses} opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+                                            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            
+                                            <div className="w-16 h-16 rounded-full bg-gray-900 border border-gray-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10 shadow-inner">
+                                                 <Icon className="w-8 h-8 text-gray-400 group-hover:text-white transition-colors" />
+                                            </div>
+                                            <h3 className="font-bold text-gray-100 text-sm md:text-base mb-1 relative z-10 group-hover:text-white">{ind.name}</h3>
+                                            <div className="text-xs text-brand-accent relative z-10 font-semibold">{count} Products</div>
+                                        </Link>
+                                    )})}
+                                </div>
                             </div>
                         </div>
                         
                         {/* Trust Bar */}
-                        <div className="bg-white border-y border-gray-200 py-8 mb-16">
-                            <div className="container mx-auto px-5 lg:px-8">
-                                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center divide-x divide-gray-100">
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-history text-2xl text-brand-accent mb-2"></i>
-                                        <span className="font-bold text-gray-800 text-sm">65+ Years Experience</span>
+                        <div className="relative bg-[#0a1628] border-y border-brand-blue-dark py-12 mb-16 overflow-hidden">
+                            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-blue/40 via-transparent to-transparent"></div>
+                            <div className="container mx-auto px-5 lg:px-8 relative z-10">
+                                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center divide-x divide-white/10">
+                                    <div className="flex flex-col items-center justify-center p-2 group hover:-translate-y-1 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors border border-white/5 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                            <i className="fas fa-history text-2xl text-brand-accent group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] transition-all"></i>
+                                        </div>
+                                        <span className="font-bold text-gray-200 text-sm tracking-wide group-hover:text-white transition-colors">65+ Years Experience</span>
                                     </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-truck text-2xl text-brand-accent mb-2"></i>
-                                        <span className="font-bold text-gray-800 text-sm">PAN-India Delivery</span>
+                                    <div className="flex flex-col items-center justify-center p-2 group hover:-translate-y-1 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors border border-white/5 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                            <i className="fas fa-truck text-2xl text-brand-accent group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] transition-all"></i>
+                                        </div>
+                                        <span className="font-bold text-gray-200 text-sm tracking-wide group-hover:text-white transition-colors">PAN-India Delivery</span>
                                     </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-cogs text-2xl text-brand-accent mb-2"></i>
-                                        <span className="font-bold text-gray-800 text-sm">Custom Solutions</span>
+                                    <div className="flex flex-col items-center justify-center p-2 group hover:-translate-y-1 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors border border-white/5 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                            <i className="fas fa-cogs text-2xl text-brand-accent group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] transition-all"></i>
+                                        </div>
+                                        <span className="font-bold text-gray-200 text-sm tracking-wide group-hover:text-white transition-colors">Custom Solutions</span>
                                     </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-boxes text-2xl text-brand-accent mb-2"></i>
-                                        <span className="font-bold text-gray-800 text-sm">Bulk Supply</span>
+                                    <div className="flex flex-col items-center justify-center p-2 group hover:-translate-y-1 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors border border-white/5 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                            <i className="fas fa-boxes text-2xl text-brand-accent group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] transition-all"></i>
+                                        </div>
+                                        <span className="font-bold text-gray-200 text-sm tracking-wide group-hover:text-white transition-colors">Bulk Supply</span>
                                     </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-check-circle text-2xl text-brand-accent mb-2"></i>
-                                        <span className="font-bold text-gray-800 text-sm">Quality Assurance</span>
+                                    <div className="flex flex-col items-center justify-center p-2 group hover:-translate-y-1 transition-transform">
+                                        <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors border border-white/5 shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+                                            <i className="fas fa-check-circle text-2xl text-brand-accent group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] transition-all"></i>
+                                        </div>
+                                        <span className="font-bold text-gray-200 text-sm tracking-wide group-hover:text-white transition-colors">Quality Assurance</span>
                                     </div>
                                 </div>
                             </div>
