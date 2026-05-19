@@ -22,7 +22,7 @@ interface BlogProviderProps {
 const INITIAL_ARTICLES = [...ALL_BLOG_ARTICLES, ...TECHNICAL_BLOGS];
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v8', INITIAL_ARTICLES);
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v9', INITIAL_ARTICLES);
 
   useEffect(() => {
     // Data validation: If blog data is corrupted, empty, or not an array, reset to initial data.
