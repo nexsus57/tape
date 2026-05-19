@@ -37,27 +37,36 @@ export default function ProductsListPage() {
     const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
 
     const searchParams = new URLSearchParams(location.search);
-    const activeCategory = params.categoryId || searchParams.get('category'); 
-    const activeIndustry = params.industryId || searchParams.get('industry');
+    const activeCategoryParam = searchParams.get('category') || searchParams.get('categories'); 
+    const activeIndustryParam = searchParams.get('industry') || searchParams.get('industries');
     const activeTag = params.tagId || searchParams.get('tag');
     const searchQuery = params.searchQuery || searchParams.get('q');
+    
+    // Support parsing multiple values like ?category=c1,c2
+    const activeCategories = useMemo(() => {
+        if (activeCategoryParam) return activeCategoryParam.split(',');
+        if (params.categoryId) return [params.categoryId];
+        return [];
+    }, [activeCategoryParam, params.categoryId]);
 
-    // SEO Redirect Logic: Convert query params to clean URLs
+    const activeIndustries = useMemo(() => {
+        if (activeIndustryParam) return activeIndustryParam.split(',');
+        if (params.industryId) return [params.industryId];
+        return [];
+    }, [activeIndustryParam, params.industryId]);
+
+    // SEO Redirect Logic: We remove the auto-redirects for category/industry 
+    // to allow query params to work alongside or multi-select without forcing 
+    // a redirect to a single path. We keep them for tag/q as fallback.
     useEffect(() => {
-        if (searchParams.has('industry')) {
-            const ind = searchParams.get('industry');
-            navigate(`/industry/${ind}`, { replace: true });
-        } else if (searchParams.has('category')) {
-            const cat = searchParams.get('category');
-            navigate(`/category/${cat}`, { replace: true });
-        } else if (searchParams.has('tag')) {
+        if (searchParams.has('tag') && !params.tagId) {
             const tag = searchParams.get('tag');
             navigate(`/tag/${tag}`, { replace: true });
-        } else if (searchParams.has('q')) {
+        } else if (searchParams.has('q') && !params.searchQuery) {
             const q = searchParams.get('q');
             navigate(`/search/${q}`, { replace: true });
         }
-    }, [location.search, navigate, searchParams]);
+    }, [location.search, navigate, searchParams, params.tagId, params.searchQuery]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -76,52 +85,54 @@ export default function ProductsListPage() {
       pageContent, 
       pageH1,
     } = useMemo(() => {
-        let prods = [];
+        let prods = products || [];
         let pageData: Partial<SeoPageData> | undefined;
 
-        const availableProducts = products || [];
+        if (activeIndustries.length > 0 || (activeCategories.length > 0 && !activeCategories.includes('all'))) {
+            prods = prods.filter(p => {
+                const matchesIndustry = activeIndustries.length === 0 || activeIndustries.some(ind => {
+                    const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind);
+                    if (industryDetail) {
+                        return industryDetail.products.includes(p.id) || p.industries?.includes(ind);
+                    }
+                    return p.industries?.includes(ind);
+                });
+                const matchesCategory = activeCategories.length === 0 || activeCategories.includes('all') || activeCategories.includes(p.category);
+                
+                return matchesIndustry && matchesCategory;
+            });
 
-        if (activeIndustry) {
-            const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === activeIndustry);
-            if (industryDetail) {
-                prods = availableProducts.filter(p => 
-                    industryDetail.products.includes(p.id) || 
-                    p.industries?.includes(activeIndustry)
-                );
-                
-                if (activeCategory && activeCategory !== 'all') {
-                    prods = prods.filter(p => p.category === activeCategory);
+            if (activeIndustries.length === 1 && activeCategories.length === 0) {
+                const ind = activeIndustries[0];
+                const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind);
+                if (industryDetail) {
+                    pageData = {
+                        "Title (≤60 chars)": industryDetail.seo?.title || `${industryDetail.name} Solutions | Tape India`,
+                        "Meta Description (≤160 chars)": industryDetail.seo?.description || `Explore our range of tapes specialized for the ${industryDetail.name}.`,
+                        H1: `${industryDetail.name} Solutions`,
+                        summary: industryDetail.description,
+                    };
+                } else {
+                    const simpleInd = INDUSTRIES.find(i => i.id === ind);
+                    pageData = {
+                        H1: simpleInd ? `${simpleInd.name} Tapes` : 'Industry Products',
+                    };
                 }
-                
-                pageData = {
-                    "Title (≤60 chars)": industryDetail.seo?.title || `${industryDetail.name} Solutions | Tape India`,
-                    "Meta Description (≤160 chars)": industryDetail.seo?.description || `Explore our range of tapes specialized for the ${industryDetail.name}.`,
-                    H1: `${industryDetail.name} Solutions`,
-                    summary: industryDetail.description,
-                };
+            } else if (activeCategories.length === 1 && activeIndustries.length === 0) {
+                const cat = activeCategories[0];
+                const category = categories.find(c => c.id === cat);
+                if (category) {
+                    pageData = seoData.find(p => p.id === cat || p["Page Name"] === category.name);
+                    if (!pageData) {
+                        pageData = { H1: category.name, summary: category.description || category.subtitle };
+                    }
+                }
             } else {
-                prods = availableProducts.filter(p => p.industries?.includes(activeIndustry));
-                if (activeCategory && activeCategory !== 'all') {
-                    prods = prods.filter(p => p.category === activeCategory);
-                }
-                const simpleInd = INDUSTRIES.find(i => i.id === activeIndustry);
-                pageData = {
-                    H1: simpleInd ? `${simpleInd.name} Tapes` : 'Industry Products',
-                }
-            }
-        } else if (activeCategory && activeCategory !== 'all') {
-            const category = categories.find(c => c.id === activeCategory);
-            prods = availableProducts.filter(p => p.category === activeCategory);
-            
-            if (category) {
-                pageData = seoData.find(p => p.id === activeCategory || p["Page Name"] === category.name);
-                if (!pageData) {
-                    pageData = { H1: category.name, summary: category.description || category.subtitle };
-                }
+                pageData = { H1: 'Filtered Products' };
             }
         } else if (activeTag) {
              const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
-             prods = availableProducts.filter(p => 
+             prods = prods.filter(p => 
                  p.tags?.some((t: string) => t.toUpperCase().includes(normalizedTag))
              );
              pageData = {
@@ -129,10 +140,10 @@ export default function ProductsListPage() {
              };
         } else if (searchQuery) {
              const q = searchQuery.trim().toLowerCase();
-             const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Fix regex escaping issue
+             const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
              const regex = new RegExp(safeQ, 'i');
 
-             prods = availableProducts.filter(p => {
+             prods = prods.filter(p => {
                  if (p.tags?.some((t: string) => t.toLowerCase().includes(q))) return true;
                  if (regex.test(p.name)) return true;
                  if (p.uses?.some((u: string) => u.toLowerCase().includes(q))) return true;
@@ -145,29 +156,73 @@ export default function ProductsListPage() {
                  H1: `Search Results: "${searchQuery}"`,
              };
         } else {
-            prods = availableProducts;
+            prods = prods;
         }
 
         if (!pageData) {
             pageData = seoData.find(p => p["Page Name"] === "All Products List");
         }
 
-        const h1 = pageData?.H1 || 'All Products';
-        const content = pageData?.summary || '';
-        
         return {
             filteredProducts: prods,
-            pageContent: content,
-            pageH1: h1,
+            pageContent: pageData?.summary || '',
+            pageH1: pageData?.H1 || 'All Products',
         };
-    }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
+    }, [activeCategories, activeIndustries, activeTag, searchQuery, products, categories]);
 
     const { enhancedContent: enhancedPageContent } = useSeoEnhancedContent(pageContent);
     const { enhancedContent: enhancedCategoryText } = useSeoEnhancedContent(
         `Welcome to the ${pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our ${pageH1} solutions are designed to address the complex challenges faced by modern industries.`
     );
 
-    const isAllProductsView = !activeCategory && !activeIndustry && !activeTag && !searchQuery;
+    const isAllProductsView = activeCategories.length === 0 && activeIndustries.length === 0 && !activeTag && !searchQuery;
+
+    const updateFilters = (cats: string[], inds: string[]) => {
+        const qs = new URLSearchParams(location.search);
+        
+        if (cats.length > 0) {
+            qs.set('categories', cats.join(','));
+        } else {
+            qs.delete('categories');
+        }
+
+        if (inds.length > 0) {
+            qs.set('industries', inds.join(','));
+        } else {
+            qs.delete('industries');
+        }
+
+        // Clear legacy singles
+        qs.delete('category');
+        qs.delete('industry');
+
+        navigate({
+            pathname: '/products',
+            search: qs.toString()
+        });
+    };
+
+    const handleToggleCategory = (e: React.MouseEvent, catId: string) => {
+        e.preventDefault();
+        let newCats = [...activeCategories];
+        if (newCats.includes(catId)) {
+            newCats = newCats.filter(c => c !== catId);
+        } else {
+            newCats.push(catId);
+        }
+        updateFilters(newCats, activeIndustries);
+    };
+
+    const handleToggleIndustry = (e: React.MouseEvent, indId: string) => {
+        e.preventDefault();
+        let newInds = [...activeIndustries];
+        if (newInds.includes(indId)) {
+            newInds = newInds.filter(i => i !== indId);
+        } else {
+            newInds.push(indId);
+        }
+        updateFilters(activeCategories, newInds);
+    };
 
     return (
         <>
@@ -200,7 +255,7 @@ export default function ProductsListPage() {
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
                             <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
                                 <h3 className="font-bold text-gray-900">Categories</h3>
-                                {(activeIndustry || activeCategory || activeTag || searchQuery) && (
+                                {(activeIndustries.length > 0 || activeCategories.length > 0 || activeTag || searchQuery) && (
                                     <button onClick={clearAllFilters} className="text-xs font-semibold text-amber-600 hover:text-amber-700">Clear</button>
                                 )}
                             </div>
@@ -219,16 +274,22 @@ export default function ProductsListPage() {
                                 </li>
                                 {categories.map(cat => (
                                     <li key={cat.id}>
-                                        <Link 
-                                            to={`/category/${cat.id}`}
-                                            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                                activeCategory === cat.id
-                                                    ? 'bg-amber-50 text-amber-700' 
-                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        <a 
+                                            href={`/category/${cat.id}`}
+                                            onClick={(e) => handleToggleCategory(e, cat.id)}
+                                            className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+                                                activeCategories.includes(cat.id)
+                                                    ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' 
+                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
                                             }`}
                                         >
-                                            {cat.name}
-                                        </Link>
+                                            <div className="flex items-center justify-between">
+                                                <span>{cat.name}</span>
+                                                {activeCategories.includes(cat.id) && (
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                )}
+                                            </div>
+                                        </a>
                                     </li>
                                 ))}
                             </ul>
@@ -239,16 +300,22 @@ export default function ProductsListPage() {
                             <ul className="space-y-1">
                                 {INDUSTRIES.map(ind => (
                                     <li key={ind.id}>
-                                        <Link 
-                                            to={`/industry/${ind.id}`}
-                                            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                                activeIndustry === ind.id
-                                                    ? 'bg-amber-50 text-amber-700' 
-                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        <a 
+                                            href={`/industry/${ind.id}`}
+                                            onClick={(e) => handleToggleIndustry(e, ind.id)}
+                                            className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+                                                activeIndustries.includes(ind.id)
+                                                    ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' 
+                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
                                             }`}
                                         >
-                                            {ind.name}
-                                        </Link>
+                                            <div className="flex items-center justify-between">
+                                                <span>{ind.name}</span>
+                                                {activeIndustries.includes(ind.id) && (
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                )}
+                                            </div>
+                                        </a>
                                     </li>
                                 ))}
                             </ul>
@@ -272,30 +339,38 @@ export default function ProductsListPage() {
                                     All Products
                                 </Link>
                                 {categories.map(cat => (
-                                    <Link 
+                                    <a 
                                         key={cat.id}
-                                        to={`/category/${cat.id}`}
-                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                                            activeCategory === cat.id
+                                        href={`/category/${cat.id}`}
+                                        onClick={(e) => handleToggleCategory(e, cat.id)}
+                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ${
+                                            activeCategories.includes(cat.id)
                                                 ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
                                                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
                                         }`}
                                     >
                                         {cat.name}
-                                    </Link>
+                                        {activeCategories.includes(cat.id) && (
+                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                        )}
+                                    </a>
                                 ))}
                                 {INDUSTRIES.map(ind => (
-                                    <Link 
+                                    <a 
                                         key={ind.id}
-                                        to={`/industry/${ind.id}`}
-                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                                            activeIndustry === ind.id
+                                        href={`/industry/${ind.id}`}
+                                        onClick={(e) => handleToggleIndustry(e, ind.id)}
+                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ${
+                                            activeIndustries.includes(ind.id)
                                                 ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
                                                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
                                         }`}
                                     >
                                         {ind.name}
-                                    </Link>
+                                        {activeIndustries.includes(ind.id) && (
+                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                        )}
+                                    </a>
                                 ))}
                             </div>
                         </div>
