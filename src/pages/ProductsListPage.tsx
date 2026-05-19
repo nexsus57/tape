@@ -310,6 +310,36 @@ export default function ProductsListPage() {
 
                 <div className={`container mx-auto px-6 lg:px-8 max-w-7xl ${isAllProductsView ? 'py-8' : 'py-6'}`}>
                     {/* PRODUCT GRID SECTION */}
+                    
+                    {/* Inline Category Filters */}
+                    <div className="mb-8 overflow-x-auto pb-4 hide-scrollbar">
+                        <div className="flex items-center space-x-2 min-w-max">
+                            <Link 
+                                to="/products"
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                                    !activeCategory && !activeIndustry && !activeTag && !searchQuery
+                                        ? 'bg-slate-900 text-white shadow-sm' 
+                                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 shadow-sm'
+                                }`}
+                            >
+                                All Products
+                            </Link>
+                            {categories.map(cat => (
+                                <Link 
+                                    key={cat.id}
+                                    to={`/category/${cat.id}`}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                                        activeCategory === cat.id
+                                            ? 'bg-slate-900 text-white shadow-sm' 
+                                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 shadow-sm'
+                                    }`}
+                                >
+                                    {cat.name}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
                     {isAllProductsView ? (
                         <div className="mb-6 md:mb-8">
                             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">All Catalog Products</h2>
