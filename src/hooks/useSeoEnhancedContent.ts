@@ -46,9 +46,21 @@ export const useSeoEnhancedContent = (content: string | undefined | null) => {
         // Splitting by HTML tags prevents us from injecting broken a-tags inside HTML attributes.
         const parts = processedContent.split(/(<[^>]+>)/g);
 
+        let insideLink = false;
+
         const newParts = parts.map(part => {
-            // Unchanged if it's already an HTML tag
-            if (part.startsWith('<') && part.endsWith('>')) {
+            // Check for link boundaries
+            if (part.toLowerCase().startsWith('<a ') || part.toLowerCase() === '<a>') {
+                insideLink = true;
+                return part;
+            }
+            if (part.toLowerCase() === '</a>') {
+                insideLink = false;
+                return part;
+            }
+
+            // Unchanged if it's already an HTML tag or we are inside an existing link
+            if (insideLink || (part.startsWith('<') && part.endsWith('>'))) {
                 return part;
             }
 
@@ -61,11 +73,16 @@ export const useSeoEnhancedContent = (content: string | undefined | null) => {
                 if (!url) return;
                 
                 // Allow optional 's' or 'es' at the end of the word for plurals
-                // Negative lookbehind & lookahead for <a> tags to avoid link nesting
-                const regex = new RegExp(`(?<!<a[^>]*>.*?)\\b(${entityName}(?:s|es)?)\\b(?!.*?</a>)`, 'gi');
+                // Escape RegExp special characters to prevent Syntax Errors on unexpected product names
+                const escapeRegExp = (string: string) => {
+                    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
+                }
+                const escapedName = escapeRegExp(entityName);
+
+                // Safe basic word boundary regex
+                const regex = new RegExp(`\\b(${escapedName}(?:s|es)?)\\b`, 'gi');
                 
                 textPart = textPart.replace(regex, (match) => {
-                     // Check if it's inside an href or similar attribute which split might have missed (sanity check)
                      return `<a href="${url}" class="text-brand-accent hover:text-brand-500 hover:underline transition-colors font-medium border-b border-brand-accent/30 hover:border-brand-500" title="View details for ${entityName}">${match}</a>`;
                 });
             });
