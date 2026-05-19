@@ -5,6 +5,7 @@ import { useCategories } from '../context/CategoryContext';
 import AnimatedSection from '../components/AnimatedSection';
 import CanonicalTag from '../components/CanonicalTag';
 import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
+import { INDUSTRIES } from '../constants';
 
 export default function IndustriesPage() {
   const { industries } = useIndustry();
@@ -51,6 +52,8 @@ export default function IndustriesPage() {
         <div className="container mx-auto px-6 lg:px-8 -mt-20 relative z-20 mb-24 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {industries.map((industry, index) => {
+               const staticInd = INDUSTRIES.find(i => i.id === industry.id);
+               const gradientClasses = staticInd?.gradientClasses || 'from-slate-500 to-slate-700';
                // Resolve Icon dynamically based on ID
                const iconName = industry.id === 'packaging-industry' ? 'BoxIcon' : 
                             industry.id === 'hvac-industry' ? 'WindIcon' :
@@ -64,31 +67,25 @@ export default function IndustriesPage() {
                  <AnimatedSection key={industry.id} delay={`delay-${(index % 3) * 100}`} className="h-full">
                     <Link 
                         to={`/industry/${industry.id}`}
-                        className="group flex flex-col h-full bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300 overflow-hidden relative"
+                        className="group flex flex-col h-full bg-white rounded-3xl border border-gray-200 p-8 hover:-translate-y-1 hover:shadow-xl hover:border-gray-300 transition-all duration-300 relative overflow-hidden"
                     >
-                        <div className="p-8 flex flex-col items-start h-full relative z-10 w-full">
-                            <div className="flex justify-between items-start w-full mb-6">
-                                {/* Icon Container */}
-                                <div className={`w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300 shadow-sm`}>
-                                    <Icon className="w-7 h-7" />
-                                </div>
-                                <div className="text-[10px] font-bold tracking-wider text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-                                    INDUSTRY
-                                </div>
+                        <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${gradientClasses}`}></div>
+                        
+                        <div className="flex items-center space-x-4 mb-6">
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white bg-gradient-to-br ${gradientClasses} shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                                <Icon className="w-7 h-7" />
                             </div>
-                            
-                            <h2 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">
+                            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
                                 {industry.name}
                             </h2>
-                            
-                            <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
-                                {industry.description.length > 100 ? industry.description.substring(0, 100) + '...' : industry.description}
-                            </p>
-                            
-                            <div className="flex items-center text-amber-600 font-semibold text-sm mt-auto group-hover:text-amber-700 transition-colors pt-4 border-t border-gray-100 w-full relative">
-                                <span>Explore Catalog</span>
-                                <i className="fas fa-arrow-right ml-auto transition-transform group-hover:translate-x-1"></i>
-                            </div>
+                        </div>
+                        
+                        <p className="text-slate-600 font-light leading-relaxed mb-6 flex-1 text-sm">
+                            {industry.description.length > 100 ? industry.description.substring(0, 100) + '...' : industry.description}
+                        </p>
+                        
+                        <div className="text-amber-600 font-semibold group-hover:text-amber-700 flex items-center mt-auto">
+                            Explore Sector <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </div>
                     </Link>
                  </AnimatedSection>
