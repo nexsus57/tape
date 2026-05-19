@@ -7,6 +7,7 @@ import { INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
 import AnimatedSection from '../components/AnimatedSection';
 import { ExperienceIcon, QualityIcon, RangeIcon } from '../components/icons/WhyChooseUsIcons';
+import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
 import { type Product } from '../types';
 import CanonicalTag from '../components/CanonicalTag';
 import { seoData } from '../data/seoData';
@@ -201,15 +202,33 @@ export default function HomePage() {
               
               <AnimatedSection className="delay-200">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                      {INDUSTRIES.map(industry => (
-                          <div key={industry.id} className="group flex flex-col h-full bg-slate-50 rounded-3xl border border-gray-200 p-8 hover:-translate-y-1 hover:shadow-xl hover:border-gray-300 transition-all duration-300">
-                              <h3 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">{industry.name}</h3>
+                      {INDUSTRIES.map((industry, index) => {
+                          const iconName = industry.id === 'packaging-industry' ? 'BoxIcon' : 
+                                       industry.id === 'hvac-industry' ? 'WindIcon' :
+                                       industry.id === 'electronic-industry' ? 'CpuIcon' :
+                                       industry.id === 'print-labels-signage-industry' ? 'LayersIcon' :
+                                       industry.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon';
+                          const Icon = INDUSTRY_ICONS_MAP[iconName] || INDUSTRY_ICONS_MAP.SparklesIcon;
+
+                          return (
+                          <div key={industry.id} className="group flex flex-col h-full bg-white rounded-3xl border border-gray-200 p-8 hover:-translate-y-1 hover:shadow-xl hover:border-gray-300 transition-all duration-300 relative overflow-hidden">
+                              <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${industry.gradientClasses}`}></div>
+                              
+                              <div className="flex items-center space-x-4 mb-6">
+                                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white bg-gradient-to-br ${industry.gradientClasses} shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                                      <Icon className="w-7 h-7" />
+                                  </div>
+                                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight">{industry.name}</h3>
+                              </div>
+                              
                               <p className="text-slate-600 font-light leading-relaxed mb-6 flex-1 text-sm">{industry.subtitle}</p>
+                              
                               <Link to={`/industry/${industry.id}`} className="text-amber-600 font-semibold group-hover:text-amber-700 flex items-center mt-auto">
                                   Explore Sector <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                               </Link>
                           </div>
-                      ))}
+                          );
+                      })}
                   </div>
               </AnimatedSection>
           </div>
