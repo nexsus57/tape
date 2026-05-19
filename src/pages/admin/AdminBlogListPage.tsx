@@ -1,11 +1,18 @@
 
 
 import { Link } from 'react-router-dom';
-import { ALL_BLOG_ARTICLES } from '../../data/seoData';
+import { useBlog } from '../../context/BlogContext';
 import { PlusCircleIcon } from '../../components/icons/AdminIcons';
 
 export default function AdminBlogListPage() {
-  const articles = ALL_BLOG_ARTICLES;
+  const { articles } = useBlog();
+
+  const handleDelete = (id: string, title: string) => {
+    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+      // In a real app we'd call deleteArticle from context
+      alert('Delete functionality is simulated. Delete would remove ID: ' + id);
+    }
+  };
 
   return (
     <div>
@@ -36,7 +43,9 @@ export default function AdminBlogListPage() {
               {articles.map((article) => (
                 <tr key={article.id} className="border-b border-admin-border hover:bg-gray-50">
                   <td className="px-5 py-4 text-sm">
-                    <p className="text-admin-text font-semibold whitespace-no-wrap">{article.title}</p>
+                     <Link to={`/blog/${article.id}`} target="_blank" rel="noreferrer" className="text-admin-accent hover:underline font-semibold whitespace-no-wrap">
+                         {article.title}
+                     </Link>
                   </td>
                   <td className="px-5 py-4 text-sm">
                     <p className="text-admin-text-light whitespace-no-wrap">{article.category}</p>
@@ -49,7 +58,8 @@ export default function AdminBlogListPage() {
                   </td>
                   <td className="px-5 py-4 text-sm">
                     <div className="flex items-center space-x-3">
-                      <Link to={`/admin/blog/edit/${article.id}`} className="text-admin-accent hover:text-admin-accent-hover font-semibold">Edit</Link>
+                      <Link to={`/admin/blog/edit/${article.id}`} className="text-indigo-600 hover:text-indigo-900 font-semibold">Edit</Link>
+                      <button onClick={() => handleDelete(article.id, article.title)} className="text-red-600 hover:text-red-900 font-semibold">Delete</button>
                     </div>
                   </td>
                 </tr>
