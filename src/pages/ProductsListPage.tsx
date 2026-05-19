@@ -209,11 +209,11 @@ export default function ProductsListPage() {
                 {isAllProductsView && (
                     <>
                         {/* Shop by Category Section - Light & Clean */}
-                        <div className="py-6 md:py-8 bg-white border-b border-gray-200">
+                        <div className="py-4 md:py-6 bg-white border-b border-gray-200">
                             <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-                                <div className="mb-6 md:mb-8 text-left">
+                                <div className="mb-4 md:mb-6 text-left">
                                     <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Browse by Category</h2>
-                                    <p className="text-slate-500 text-base md:text-lg mt-2 font-light">Select a category to view specialized adhesive tapes.</p>
+                                    <p className="text-slate-500 text-base md:text-lg mt-1 font-light">Select a category to view specialized adhesive tapes.</p>
                                 </div>
                                 <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6">
                                     {categories.map(cat => {
@@ -226,8 +226,8 @@ export default function ProductsListPage() {
                                         if (cat.id.includes('teflon')) accentColor = 'bg-teal-100 text-teal-700';
 
                                         return (
-                                        <Link key={cat.id} to={`/category/${cat.id}`} className="group flex flex-col p-6 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300">
-                                            <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 relative">
+                                        <Link key={cat.id} to={`/category/${cat.id}`} className="group flex flex-col p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300">
+                                            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 relative">
                                                 <div className={`absolute inset-0 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-10 transition-all duration-500 ${accentColor.split(' ')[0]}`}></div>
                                                 <img src={cat.image} alt={cat.name} className="relative z-10 w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" />
                                             </div>
@@ -244,18 +244,18 @@ export default function ProductsListPage() {
                         </div>
 
                         {/* Shop by Industry Section - Soft Gray */}
-                        <div className="py-8 md:py-12 bg-slate-50 border-b border-gray-200">
+                        <div className="py-4 md:py-6 bg-slate-50 border-b border-gray-200">
                             <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                                <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b border-gray-200 pb-4">
+                                <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 border-b border-gray-200 pb-2">
                                     <div>
                                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Shop by Industry</h2>
-                                        <p className="text-slate-500 text-base md:text-lg mt-2 font-light hidden md:block">Engineered for your specific sector.</p>
+                                        <p className="text-slate-500 text-base md:text-lg mt-1 font-light hidden md:block">Engineered for your specific sector.</p>
                                     </div>
-                                    <Link to="/industries" className="text-amber-600 font-medium hover:text-amber-700 transition-colors text-sm mt-4 md:mt-0 flex items-center group">
+                                    <Link to="/industries" className="text-amber-600 font-medium hover:text-amber-700 transition-colors text-sm mt-2 md:mt-0 flex items-center group">
                                         View All Industries <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                                     </Link>
                                 </div>
-                                <div className="grid grid-cols-2 lg:grid-cols-6 gap-6">
+                                <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
                                     {INDUSTRIES.map(ind => {
                                         const iconName = ind.id === 'packaging-industry' ? 'BoxIcon' : 
                                             ind.id === 'hvac-industry' ? 'WindIcon' :
@@ -266,11 +266,11 @@ export default function ProductsListPage() {
                                         const count = products.filter(p => p.industries?.includes(ind.id) || INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind.id)?.products.includes(p.id)).length;
                                         
                                         return (
-                                        <Link key={ind.id} to={`/industry/${ind.id}`} className="group bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col text-left">
-                                            <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-6 group-hover:bg-slate-900 transition-colors duration-300">
-                                                 <Icon className="w-6 h-6 text-slate-600 group-hover:text-white transition-colors" />
+                                        <Link key={ind.id} to={`/industry/${ind.id}`} className="group bg-white p-4 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col text-left">
+                                            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-colors duration-300">
+                                                 <Icon className="w-5 h-5 text-slate-600 group-hover:text-white transition-colors" />
                                             </div>
-                                            <h3 className="font-semibold text-slate-900 text-sm mb-2">{ind.name}</h3>
+                                            <h3 className="font-semibold text-slate-900 text-sm mb-1">{ind.name}</h3>
                                             <div className="text-xs text-slate-500 mt-auto">{count} Products</div>
                                         </Link>
                                     )})}
@@ -279,7 +279,7 @@ export default function ProductsListPage() {
                         </div>
                         
                         {/* Trust Bar - Dark Accent */}
-                        <div className="bg-[#0F172A] py-16">
+                        <div className="bg-[#0F172A] py-8">
                             <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
                                 <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center divide-x divide-slate-800">
                                     <div className="flex flex-col items-center justify-center p-2">
