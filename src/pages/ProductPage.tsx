@@ -1,316 +1,303 @@
-
-import { useLocation, Link, useNavigate, useParams } from 'react-router-dom';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, type FC, useEffect, type CSSProperties } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
-import { INITIAL_INDUSTRIES_DETAILED, PRODUCTS as STATIC_PRODUCTS, INDUSTRIES } from '../constants';
+import { INDUSTRIES } from '../constants';
+import NotFoundPage from './NotFoundPage';
 import ProductCard from '../components/ProductCard';
-import CanonicalTag from '../components/CanonicalTag';
-import AnimatedSection from '../components/AnimatedSection';
+import { ColorOption } from '../types';
 import { seoData } from '../data/seoData';
-import type { SeoPageData } from '../types';
-import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
+import FaqAccordion from '../components/FaqAccordion';
+import { extendedProductDescriptions } from '../data/extendedProductDescriptions2';
 import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
 
-const ProductSkeleton = () => (
-  <div className="bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-full animate-pulse">
-    <div className="bg-slate-50/50 aspect-[4/3] w-full rounded-t-2xl border-b border-gray-100"></div>
-    <div className="p-6 space-y-4 flex-grow">
-        <div className="h-3 bg-slate-100 rounded-full w-1/4"></div>
-        <div className="h-5 bg-slate-100 rounded-full w-3/4"></div>
-        <div className="h-4 bg-slate-50 rounded-full w-1/2"></div>
-        <div className="flex gap-2 mt-auto pt-4 border-t border-gray-100">
-            <div className="h-10 bg-slate-100 rounded-lg w-full mt-4"></div>
-        </div>
-    </div>
-  </div>
-);
+interface ColorSwatchProps {
+    name: string;
+    colors: string[];
+}
 
-export default function ProductsListPage() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const params = useParams();
-    const { products: contextProducts } = useProducts();
-    const { categories } = useCategories();
-    const [isLoading, setIsLoading] = useState(true);
+const ColorSwatch: FC<ColorSwatchProps> = ({ name, colors }) => {
+    let swatchClasses = "w-6 h-6 rounded-full border border-gray-200 flex-shrink-0 shadow-sm";
+    // FIX: Use CSSProperties type from react import
+    let swatchStyle: CSSProperties = {};
 
-    const products = (contextProducts && contextProducts.length > 0) ? contextProducts : (STATIC_PRODUCTS as any[]);
-
-    const searchParams = new URLSearchParams(location.search);
-    const activeCategory = params.categoryId || searchParams.get('category'); 
-    const activeIndustry = params.industryId || searchParams.get('industry');
-    const activeTag = params.tagId || searchParams.get('tag');
-    const searchQuery = params.searchQuery || searchParams.get('q');
-
-    // SEO Redirect Logic: Convert query params to clean URLs
-    useEffect(() => {
-        if (searchParams.has('industry')) {
-            const ind = searchParams.get('industry');
-            navigate(`/industry/${ind}`, { replace: true });
-        } else if (searchParams.has('category')) {
-            const cat = searchParams.get('category');
-            navigate(`/category/${cat}`, { replace: true });
-        } else if (searchParams.has('tag')) {
-            const tag = searchParams.get('tag');
-            navigate(`/tag/${tag}`, { replace: true });
-        } else if (searchParams.has('q')) {
-            const q = searchParams.get('q');
-            navigate(`/search/${q}`, { replace: true });
+    if (colors[0] === 'transparent') {
+        swatchClasses += " bg-white";
+        swatchStyle = {
+             backgroundImage: `url("data:image/svg+xml,%3csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='5' height='5' x='0' y='0' fill='rgb(229, 231, 235)'/%3e%3crect width='5' height='5' x='5' y='5' fill='rgb(229, 231, 235)'/%3e%3c/svg%3e")`,
         }
-    }, [location.search, navigate, searchParams]);
-
-    useEffect(() => {
-        setIsLoading(true);
-        const timer = setTimeout(() => setIsLoading(false), 300);
-        return () => clearTimeout(timer);
-    }, [location.pathname, location.search]);
-
-    const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
-
-    const clearAllFilters = () => {
-        navigate('/products');
-    };
-
-    const { 
-      filteredProducts, 
-      pageContent, 
-      pageH1,
-    } = useMemo(() => {
-        let prods = [];
-        let pageData: Partial<SeoPageData> | undefined;
-
-        const availableProducts = products || [];
-
-        if (activeIndustry) {
-            const industryDetail = INITIAL_INDUSTRIES_DETAILED.find(i => i.id === activeIndustry);
-            if (industryDetail) {
-                prods = availableProducts.filter(p => 
-                    industryDetail.products.includes(p.id) || 
-                    p.industries?.includes(activeIndustry)
-                );
-                
-                if (activeCategory && activeCategory !== 'all') {
-                    prods = prods.filter(p => p.category === activeCategory);
-                }
-                
-                pageData = {
-                    "Title (≤60 chars)": industryDetail.seo?.title || `${industryDetail.name} Solutions | Tape India`,
-                    "Meta Description (≤160 chars)": industryDetail.seo?.description || `Explore our range of tapes specialized for the ${industryDetail.name}.`,
-                    H1: `${industryDetail.name} Solutions`,
-                    summary: industryDetail.description,
-                };
-            } else {
-                prods = availableProducts.filter(p => p.industries?.includes(activeIndustry));
-                if (activeCategory && activeCategory !== 'all') {
-                    prods = prods.filter(p => p.category === activeCategory);
-                }
-                const simpleInd = INDUSTRIES.find(i => i.id === activeIndustry);
-                pageData = {
-                    H1: simpleInd ? `${simpleInd.name} Tapes` : 'Industry Products',
-                }
-            }
-        } else if (activeCategory && activeCategory !== 'all') {
-            const category = categories.find(c => c.id === activeCategory);
-            prods = availableProducts.filter(p => p.category === activeCategory);
-            
-            if (category) {
-                pageData = seoData.find(p => p.id === activeCategory || p["Page Name"] === category.name);
-                if (!pageData) {
-                    pageData = { H1: category.name, summary: category.description || category.subtitle };
-                }
-            }
-        } else if (activeTag) {
-             const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
-             prods = availableProducts.filter(p => 
-                 p.tags?.some((t: string) => t.toUpperCase().includes(normalizedTag))
-             );
-             pageData = {
-                 H1: `${activeTag.replace(/-/g, ' ')} Solutions`,
-             };
-        } else if (searchQuery) {
-             const q = searchQuery.trim().toLowerCase();
-             const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Fix regex escaping issue
-             const regex = new RegExp(safeQ, 'i');
-
-             prods = availableProducts.filter(p => {
-                 if (p.tags?.some((t: string) => t.toLowerCase().includes(q))) return true;
-                 if (regex.test(p.name)) return true;
-                 if (p.uses?.some((u: string) => u.toLowerCase().includes(q))) return true;
-                 if (p.category.includes(q)) return true;
-                 if (p.shortDescription && p.shortDescription.toLowerCase().includes(q)) return true;
-                 return false;
-             });
-
-             pageData = {
-                 H1: `Search Results: "${searchQuery}"`,
-             };
-        } else {
-            prods = availableProducts;
-        }
-
-        if (!pageData) {
-            pageData = seoData.find(p => p["Page Name"] === "All Products List");
-        }
-
-        const h1 = pageData?.H1 || 'All Products';
-        const content = pageData?.summary || '';
-        
-        return {
-            filteredProducts: prods,
-            pageContent: content,
-            pageH1: h1,
-        };
-    }, [activeCategory, activeIndustry, activeTag, searchQuery, products, categories]);
-
-    const { enhancedContent: enhancedPageContent } = useSeoEnhancedContent(pageContent);
-    const { enhancedContent: enhancedCategoryText } = useSeoEnhancedContent(
-        `Welcome to the ${pageH1} section of Tape India's comprehensive product catalog. As a pioneering manufacturer and B2B supplier of advanced adhesive solutions across India, we are proud to offer an extensive array of tapes specifically engineered for this category. Our commitment to excellence spanning several decades ensures that every product in this collection meets rigorous quality standards, providing you with dependable performance in even the most demanding environments. Whether you require robust holding power, specialized resistance, or precise dimensional stability, our ${pageH1} solutions are designed to address the complex challenges faced by modern industries.`
-    );
-
-    const isAllProductsView = !activeCategory && !activeIndustry && !activeTag && !searchQuery;
+    } else if (colors.length > 1) {
+        swatchStyle = { background: `linear-gradient(135deg, ${colors[0]} 50%, ${colors[1]} 50%)` };
+    } else {
+        swatchStyle = { backgroundColor: colors[0] };
+    }
 
     return (
+        <div className="flex items-center gap-2">
+            <div
+                className={swatchClasses}
+                style={swatchStyle}
+                title={name}
+            ></div>
+            <span className="text-slate-600 text-sm font-medium">{name}</span>
+        </div>
+    );
+};
+
+
+export default function ProductPage() {
+    const { productId } = useParams<{ productId: string }>();
+    const { products } = useProducts();
+    const product = products.find(p => p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '') === productId);
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [productId]);
+
+    const { categories } = useCategories();
+    const category = useMemo(() => categories.find(c => c.id === product?.category), [categories, product]);
+    
+    const relatedIndustries = useMemo(() => {
+        if (!product?.industries) return [];
+        return INDUSTRIES.filter(ind => product.industries?.includes(ind.id));
+    }, [product]);
+    
+    // --- SMART RELATED PRODUCTS ALGORITHM (Weighted Scoring) ---
+    const relatedProducts = useMemo(() => {
+      if (!product) return [];
+      
+      const candidates = products.filter(p => p.id !== product.id);
+      
+      const scoredCandidates = candidates.map(p => {
+          let score = 0;
+          
+          // 1. Category Match (Base relevance - 10 pts)
+          if (p.category === product.category) score += 10;
+          
+          // 2. Industry Overlap (Context relevance - 5 pts per shared industry)
+          const commonIndustries = p.industries?.filter(ind => product.industries?.includes(ind));
+          if (commonIndustries && commonIndustries.length > 0) {
+              score += (commonIndustries.length * 5);
+          }
+
+          // 3. Name/Keyword Similarity (Specific relevance - 2 pts per shared significant word)
+          const pTokens = p.name.toLowerCase().split(/[\s-]+/);
+          const currentTokens = product.name.toLowerCase().split(/[\s-]+/);
+          // Filter only meaningful words > 3 chars
+          const commonTokens = pTokens.filter(t => t.length > 3 && currentTokens.includes(t));
+          score += (commonTokens.length * 2);
+
+          return { product: p, score };
+      });
+
+      // Sort by Score Descending
+      scoredCandidates.sort((a, b) => b.score - a.score);
+
+      // Return top 3 highest scored products (modified to slice Top 4 to match grid layout of 4 cols)
+      return scoredCandidates.slice(0, 4).map(item => item.product);
+    }, [product, products]);
+
+    if (!product) {
+        // Find a product that might exist in seoData but not in products constant (edge case)
+        const seoProduct = seoData.find(p => p["Full URL"].includes(`/product/${productId}`));
+        if (seoProduct) {
+             return (
+                 <>
+                    <NotFoundPage message="This product is valid but is missing from the main product list." />
+                 </>
+             )
+        }
+        return <NotFoundPage />;
+    }
+    
+    const productSeoData = product.seo;
+    const pageTitle = productSeoData["Title (≤60 chars)"];
+    const imageAltText = pageTitle;
+    const h1Text = productSeoData.H1;
+
+    // Apply aggressive internal linking to the summary
+    const { enhancedContent: enhancedSummary } = useSeoEnhancedContent(productSeoData.summary);
+
+    const hasOptions = (product.availableColors && product.availableColors.length > 0) || product.customizable;
+    
+    // Process extended descriptions for internal linking
+    const extendedContent = useMemo(() => {
+        if (!product) return '';
+        if (extendedProductDescriptions[product.id]) {
+            return extendedProductDescriptions[product.id];
+        }
+        
+        return `<p>The ${product.name} stands as a premier solution within our ${category?.name || 'industrial tape'} category, meticulously engineered to meet the demanding standards of modern industrial applications. As a leading manufacturer and supplier of adhesive technologies across India, Tape India ensures that every roll of this tape delivers exceptional performance and reliability, making it a critical component for businesses seeking optimal operational efficiency.</p>
+        
+        <p>Designed specifically for professional environments, this tape offers unique advantages that set it apart. Its superior material composition provides robust durability, ensuring it can withstand rigorous conditions without compromising on adhesive strength or structural integrity. ${relatedIndustries.length > 0 ? `This makes the ${product.name} particularly well-suited for sectors such as ${relatedIndustries.map(i => i.name).join(', ')}. Professionals in these fields rely on our tapes to tackle complex challenges, trusting in the consistent quality that Tape India has delivered for over six decades.` : ''}</p>
+        
+        <p>${product.features && product.features.length > 0 ? `When evaluating adhesive solutions, the critical features of the ${product.name} become readily apparent. Notable characteristics such as ${product.features.slice(0, 3).join(', ')} provide the specific performance metrics required for specialized tasks. These attributes ensure that the tape not only adheres securely but also maintains its hold under varying environmental stresses, temperature fluctuations, and mechanical wear.` : ''} ${product.uses && product.uses.length > 0 ? `Commonly utilized for tasks including ${product.uses.slice(0,3).join(' and ')}, this versatile tape adapts to a multitude of scenarios. Whether you are addressing heavy-duty packaging needs, intricate electronic insulation, or long-term structural bonding, it provides a steadfast solution.` : ''}</p>
+        
+        <p>By choosing Tape India as your bulk supplier for the ${product.name}, you are partnering with an experienced manufacturer dedicated to excellence. We understand that in an industrial context, the reliability of your materials directly impacts your bottom line. Therefore, we subject our products to stringent quality control processes, guaranteeing that you receive an adhesive product that performs flawlessly, order after order. Contact our sales team today to discuss your specific requirements, request custom sizes, or inquire about wholesale pricing tailored to your business needs.</p>`;
+    }, [product, category, relatedIndustries]);
+    
+    // Apply aggressive internal linking to the extended content
+    const { enhancedContent: enhancedExtendedContent } = useSeoEnhancedContent(
+        extendedContent.split('\n\n').map(p => p.trim() && !p.startsWith('<p>') ? `<p>${p}</p>` : p).join('')
+    );
+    
+    return (
         <>
-            <CanonicalTag />
-
-            <main className="bg-[#F8FAFC] min-h-screen pb-16">
-                {/* Clean Premium Hero Section - Compact */}
-                <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6 md:pt-8 md:pb-8 relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
-                    <div className="relative z-10">
-                        <AnimatedSection className="max-w-4xl">
-                            <h1 className="font-bold mb-2 text-2xl md:text-4xl lg:text-5xl text-white tracking-tight capitalize">
-                                {isAllProductsView ? "Industrial Tapes Collection" : pageH1}
-                            </h1>
-                            <div className="text-sm md:text-base font-light text-slate-300 leading-relaxed max-w-2xl line-clamp-2">
-                                {isAllProductsView ? (
-                                    "Explore our complete range of high-performance industrial adhesive solutions."
-                                ) : (
-                                    <div dangerouslySetInnerHTML={{ __html: enhancedPageContent || enhancedCategoryText }} />
-                                )}
-                            </div>
-                        </AnimatedSection>
-                    </div>
-                </div>
-
-                <div className="container mx-auto px-4 lg:px-8 max-w-[1440px] py-6 md:py-8 lg:flex lg:gap-8 lg:items-start">
-                    
-                    {/* Sidebar Filters (Desktop) */}
-                    <div className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-                            <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
-                                <h3 className="font-bold text-gray-900">Categories</h3>
-                                {(activeIndustry || activeCategory || activeTag || searchQuery) && (
-                                    <button onClick={clearAllFilters} className="text-xs font-semibold text-amber-600 hover:text-amber-700">Clear</button>
-                                )}
-                            </div>
-                            <ul className="space-y-1">
-                                <li>
-                                    <Link 
-                                        to="/products"
-                                        className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                            isAllProductsView 
-                                                ? 'bg-amber-50 text-amber-700' 
-                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                                        }`}
-                                    >
-                                        All Products
-                                    </Link>
+            <main className="pt-6 pb-12 md:pt-8 md:pb-16 bg-slate-50 min-h-screen">
+                <div className="container mx-auto px-5 lg:px-8 max-w-7xl">
+                    {/* Breadcrumbs */}
+                    <nav className="text-sm font-semibold mb-6" aria-label="Breadcrumb">
+                        <ol className="list-none p-0 inline-flex items-center flex-wrap">
+                            <li className="flex items-center">
+                                <Link to="/" className="text-slate-500 hover:text-amber-600 transition-colors">Home</Link>
+                                <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
+                            </li>
+                            <li className="flex items-center">
+                                <Link to="/products" className="text-slate-500 hover:text-amber-600 transition-colors">Products</Link>
+                                <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
+                            </li>
+                                {category && (
+                                <li className="flex items-center">
+                                    <Link to={`/category/${category.id}`} className="text-slate-500 hover:text-amber-600 transition-colors">{category.name}</Link>
+                                    <i className="fas fa-chevron-right mx-2 text-slate-300 text-[10px]"></i>
                                 </li>
-                                {categories.map(cat => (
-                                    <li key={cat.id}>
-                                        <Link 
-                                            to={`/category/${cat.id}`}
-                                            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                                activeCategory === cat.id
-                                                    ? 'bg-amber-50 text-amber-700' 
-                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                                            }`}
-                                        >
-                                            {cat.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+                            )}
+                            <li className="text-slate-900 truncate max-w-[200px]" aria-current="page">{product.name}</li>
+                        </ol>
+                    </nav>
 
-                    {/* PRODUCT GRID SECTION */}
-                    <div className="flex-1">
-                        
-                        {/* Mobile Inline Category Filters */}
-                        <div className="lg:hidden mb-6 overflow-x-auto pb-2 hide-scrollbar">
-                            <div className="flex items-center space-x-2 min-w-max">
-                                <Link 
-                                    to="/products"
-                                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                                        isAllProductsView
-                                            ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
-                                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
-                                    }`}
+                    <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-200 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
+                        {/* Left Column: Product Image */}
+                        <div className="lg:col-span-2">
+                             <div className="sticky top-28 self-start">
+                                <div 
+                                    className="product-detail-image-container relative bg-slate-50/50 border border-gray-100 rounded-2xl p-8 aspect-square flex items-center justify-center mix-blend-multiply"
                                 >
-                                    All Products
-                                </Link>
-                                {categories.map(cat => (
-                                    <Link 
-                                        key={cat.id}
-                                        to={`/category/${cat.id}`}
-                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-                                            activeCategory === cat.id
-                                                ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
-                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
-                                        }`}
-                                    >
-                                        {cat.name}
-                                    </Link>
-                                ))}
+                                    <img
+                                        src={product.image}
+                                        alt={imageAltText}
+                                        className="rounded-lg object-contain w-full h-full filter drop-shadow-sm mix-blend-multiply"
+                                        crossOrigin="anonymous"
+                                        onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
+                                        width="400"
+                                        height="400"
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
-                                {isAllProductsView ? "Our Products" : "Filtered Results"}
-                            </h2>
-                            <span className="text-gray-500 font-medium text-xs md:text-sm bg-gray-100 px-3 py-1 rounded-full">
-                                {filteredProducts.length} Items
-                            </span>
-                        </div>
-                        
-                        <div className="min-h-[50vh]">
-                            {isLoading ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-                                    {[1, 2, 3, 4, 5, 6].map(i => <ProductSkeleton key={i} />)}
+                        {/* Right Column: Product Details */}
+                        <div className="lg:col-span-3">
+                            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight leading-tight">{h1Text}</h1>
+                            
+                             <div className="space-y-8 text-slate-700">
+                                <div className="prose prose-lg max-w-none text-base leading-relaxed text-slate-600">
+                                   <p className="font-light text-lg tracking-wide" dangerouslySetInnerHTML={{ __html: enhancedSummary }}></p>
+                                   
+                                   {/* Dynamically generated expanded unique content for SEO (150+ words) */}
+                                   <div 
+                                       className="mt-8 space-y-4 text-base font-light text-slate-500 pt-6 border-t border-gray-100" 
+                                       dangerouslySetInnerHTML={{ __html: enhancedExtendedContent }} 
+                                   />
                                 </div>
-                            ) : filteredProducts.length > 0 ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 hover-grid">
-                                    {filteredProducts.map(product => (
-                                        <ProductCard 
-                                            key={product.id} 
-                                            product={product} 
-                                            categoryName={categoryMap.get(product.category) || ''} 
-                                        />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
-                                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-full mb-4">
-                                        <i className="fas fa-search text-gray-400 text-xl"></i>
+
+                                {product.features && product.features.length > 0 && (
+                                    <div className="bg-slate-50 p-6 rounded-2xl border border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Key Features</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-2 text-base text-slate-700 font-medium">
+                                            {product.features.map((feature, index) => <li key={`feat-${index}`}>{feature}</li>)}
+                                        </ul>
                                     </div>
-                                    <h3 className="text-lg font-bold text-gray-900">
-                                        No products found
-                                    </h3>
-                                    <p className="text-gray-500 text-sm mt-1 max-w-sm mx-auto">
-                                        Try adjusting your filters or browse all products.
-                                    </p>
-                                    <button onClick={clearAllFilters} className="mt-6 bg-slate-900 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors">
-                                        Clear Filters
-                                    </button>
+                                )}
+                                
+                                {product.uses && product.uses.length > 0 && (
+                                    <div>
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Common Applications</h3>
+                                        <ul className="list-disc list-outside pl-5 space-y-2 text-base text-slate-700 font-medium">
+                                            {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {hasOptions && (
+                                    <div className="pt-6 border-t border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-6">Options & Customization</h3>
+                                        <div className="space-y-6">
+                                            {product.availableColors && product.availableColors.length > 0 && (
+                                                <div>
+                                                    <h4 className="font-semibold text-sm mb-3 text-slate-700">Available Colors:</h4>
+                                                    <div className="flex flex-wrap gap-x-4 gap-y-3">
+                                                        {product.availableColors.map((opt: ColorOption) => <ColorSwatch key={opt.name} {...opt} />)}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {product.customizable && (
+                                                <div>
+                                                    <h4 className="font-semibold text-sm mb-2 text-slate-700">Custom Sizes:</h4>
+                                                    <p className="text-sm text-slate-500 font-light">This product can be slit to custom widths or die-cut. Contact us with your requirements.</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {relatedIndustries.length > 0 && (
+                                    <div className="hidden lg:block pt-6 border-t border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Relevant Industries</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {relatedIndustries.map(industry => (
+                                                <Link key={industry.id} to={`/industry/${industry.id}`} className="bg-slate-100 text-slate-600 font-medium px-4 py-2 rounded-lg hover:bg-slate-900 hover:text-white transition-colors text-sm">
+                                                    {industry.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Request Quote Section */}
+                                <div className="!mt-12 pt-8 border-t border-gray-200">
+                                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight">Ready to order {product.name}?</h3>
+                                  <p className="text-slate-500 my-4 font-light text-lg">
+                                      For competitive B2B pricing, custom sizes, and Pan-India delivery, contact our engineering team.
+                                  </p>
+                                  <Link
+                                      to={`/request-quote?product=${product.id}`}
+                                      className="inline-block bg-slate-900 text-white font-bold py-4 px-10 rounded-xl text-base hover:bg-amber-500 hover:text-slate-900 transition-colors shadow-sm"
+                                  >
+                                      {productSeoData.CTA || "Request a Quote"}
+                                  </Link>
                                 </div>
-                            )}
+                           </div>
                         </div>
                     </div>
+
+                    {/* FAQ Section */}
+                    {productSeoData.faqs && productSeoData.faqs.length > 0 && (
+                        <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-200 mt-12">
+                           <h2 className="text-2xl font-bold text-slate-900 mb-8 tracking-tight">Frequently Asked Questions</h2>
+                           <div className="space-y-4">
+                               {productSeoData.faqs.map((faq, index) => (
+                                   <FaqAccordion key={index} question={faq.name} answer={faq.acceptedAnswer.text} />
+                               ))}
+                           </div>
+                        </div>
+                    )}
                 </div>
             </main>
+
+            {/* Related Products Section */}
+            {relatedProducts.length > 0 && (
+                <section className="py-20 md:py-24 bg-white border-t border-gray-200">
+                    <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
+                        <h2 className="text-3xl font-bold mb-12 text-center text-slate-900 tracking-tight">You Might Also Need</h2>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+                            {relatedProducts.map(p => (
+                               <ProductCard key={p.id} product={p} categoryName={category?.name || ''} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </>
     );
 }
