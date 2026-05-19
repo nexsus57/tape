@@ -76,10 +76,8 @@ export default function App() {
               <Route path="search/:searchQuery" element={<ProductsListPage />} />
               <Route path="product/:productId" element={<ProductPage />} />
               <Route path="contact" element={<ContactPage />} />
-              <Route path="blog">
-                <Route index element={<BlogPage />} />
-                <Route path=":slug" element={<BlogPostPage />} />
-              </Route>
+              <Route path="blog" element={<BlogPage />} />
+              <Route path="blog/:slug" element={<BlogPostPage />} />
               <Route path="request-quote" element={<RequestQuotePage />} />
               <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
               {/* Catch-all for any other route */}
