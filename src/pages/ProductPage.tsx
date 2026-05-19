@@ -10,6 +10,7 @@ import { seoData } from '../data/seoData';
 import FaqAccordion from '../components/FaqAccordion';
 import { extendedProductDescriptions } from '../data/extendedProductDescriptions2';
 import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
+import { PRODUCT_SPECIFICATIONS } from '../data/productSpecifications';
 
 interface ColorSwatchProps {
     name: string;
@@ -216,6 +217,24 @@ export default function ProductPage() {
                                         <ul className="list-disc list-outside pl-5 space-y-2 text-base text-slate-700 font-medium">
                                             {product.uses.map((use, index) => <li key={`use-${index}`}>{use}</li>)}
                                         </ul>
+                                    </div>
+                                )}
+
+                                {(PRODUCT_SPECIFICATIONS[product.id] || product.specifications) && (
+                                    <div className="pt-6 border-t border-gray-100">
+                                        <h3 className="text-sm uppercase tracking-widest font-bold text-slate-400 mb-4">Specifications</h3>
+                                        <div className="bg-white border text-sm border-gray-200 rounded-xl overflow-hidden">
+                                            <table className="w-full text-left">
+                                                <tbody className="divide-y divide-gray-100 text-slate-600">
+                                                    {(PRODUCT_SPECIFICATIONS[product.id] || product.specifications || []).map((spec, index) => (
+                                                        <tr key={index} className={index % 2 === 0 ? "bg-slate-50/50" : "bg-white"}>
+                                                            <td className="py-3 px-4 font-semibold text-slate-700 w-1/3 border-r border-gray-100">{spec.label}</td>
+                                                            <td className="py-3 px-4">{spec.value}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 )}
 
