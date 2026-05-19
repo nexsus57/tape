@@ -278,11 +278,11 @@ export default function ProductsListPage() {
                         
                         <div className="min-h-[50vh]">
                             {isLoading ? (
-                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-                                    {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <ProductSkeleton key={i} />)}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+                                    {[1, 2, 3, 4, 5, 6].map(i => <ProductSkeleton key={i} />)}
                                 </div>
                             ) : filteredProducts.length > 0 ? (
-                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 hover-grid">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 hover-grid">
                                     {filteredProducts.map(product => (
                                         <ProductCard 
                                             key={product.id} 
