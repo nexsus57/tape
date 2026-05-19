@@ -67,17 +67,17 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
             </div>
         )}
 
-        <div className={`mt-auto pt-3 border-t border-gray-100 grid grid-cols-2 gap-2 ${specs.length === 0 ? 'mt-auto' : ''}`}>
-            <div className="flex items-center justify-center text-xs font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 rounded-lg py-2">
-                View Details
-            </div>
-            <button
-                onClick={handleAddToQuote}
-                className="w-full bg-amber-500 text-gray-900 text-xs sm:text-sm font-bold py-2.5 px-3 rounded-lg hover:bg-amber-400 transition-colors duration-300 shadow-sm z-10 whitespace-nowrap"
-                aria-label={`Add ${product.name} to quote`}
-            >
-                Add to Quote
-            </button>
+        <div className={`mt-auto pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-2 sm:gap-3 ${specs.length === 0 ? 'mt-auto' : ''}`}>
+             <div className="flex-1 hidden sm:flex items-center justify-center text-xs md:text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 rounded-lg py-2 md:py-2.5">
+                 Details
+             </div>
+             <button
+                 onClick={handleAddToQuote}
+                 className="w-full sm:flex-[2] bg-amber-500 text-gray-900 text-sm font-bold py-3 sm:py-2.5 px-4 rounded-lg hover:bg-amber-400 transition-colors duration-300 shadow-sm z-10 whitespace-nowrap flex items-center justify-center"
+                 aria-label={`Add ${product.name} to quote`}
+             >
+                 Add to Quote
+             </button>
         </div>
       </div>
     </Link>
