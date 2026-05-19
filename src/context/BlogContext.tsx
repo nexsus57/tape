@@ -22,19 +22,53 @@ interface BlogProviderProps {
 const INITIAL_ARTICLES = [...ALL_BLOG_ARTICLES, ...TECHNICAL_BLOGS];
 
 export const BlogProvider: FC<BlogProviderProps> = ({ children }) => {
-  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v9', INITIAL_ARTICLES);
+  // Use v10 to ensure we run the new migration/merge logic cleanly
+  const [storedArticles, setArticles] = useLocalStorage<BlogArticle[]>('tapeindia_blog_v10', []);
 
   useEffect(() => {
-    // Data validation: If blog data is corrupted, empty, or not an array, reset to initial data.
-    // Also reset if the length is less than expected (implies new hardcoded blogs haven't been added to storage)
-    if (!Array.isArray(storedArticles) || storedArticles.length < INITIAL_ARTICLES.length) {
-      setArticles(INITIAL_ARTICLES);
+    // Attempt recovery from older versions to preserve user's custom posts
+    let legacyArticles: BlogArticle[] = [];
+    try {
+        const v8 = localStorage.getItem('tapeindia_blog_v8');
+        const v9 = localStorage.getItem('tapeindia_blog_v9');
+        const vX = v9 ? JSON.parse(v9) : (v8 ? JSON.parse(v8) : null);
+        if (Array.isArray(vX)) {
+            legacyArticles = vX;
+        }
+    } catch(e) {
+        console.error("Could not recover legacy articles");
     }
-  }, [storedArticles, setArticles]);
+
+    // Combine legacy, current stored, and INITIAL_ARTICLES, ensuring uniqueness by ID
+    const allKnown = [...legacyArticles, ...(Array.isArray(storedArticles) ? storedArticles : []), ...INITIAL_ARTICLES];
+    
+    // De-duplicate by ID, prioritizing newer or custom entries if they share an ID with INITIAL
+    const mergedMap = new Map<string, BlogArticle>();
+    
+    // First, insert INITIAL_ARTICLES as base
+    INITIAL_ARTICLES.forEach(a => mergedMap.set(a.id, a));
+    
+    // Then overwrite/append with anything in legacy/stored matching
+    allKnown.forEach(a => {
+        if (!INITIAL_ARTICLES.find(initA => initA.id === a.id)) {
+            // It's a custom article, retain it!
+            mergedMap.set(a.id, a);
+        } else if (a.dateModified > mergedMap.get(a.id)!.dateModified) {
+             // If a saved version of a default article is newer, keep it
+             mergedMap.set(a.id, a);
+        }
+    });
+
+    const finalArticles = Array.from(mergedMap.values());
+
+    // Only update if the merged length or content differs to avoid infinite loops
+    if (!Array.isArray(storedArticles) || storedArticles.length !== finalArticles.length) {
+        setArticles(finalArticles);
+    }
+  }, []); // Run only on mount to stabilize state
 
   const articles = useMemo(() => {
-    const validArticles = Array.isArray(storedArticles) ? storedArticles : INITIAL_ARTICLES;
-    // Always return a new sorted array to prevent state mutation and ensure consistent order.
+    const validArticles = Array.isArray(storedArticles) && storedArticles.length > 0 ? storedArticles : INITIAL_ARTICLES;
     return [...validArticles].sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime());
   }, [storedArticles]);
 
