@@ -252,18 +252,18 @@ export default function ProductsListPage() {
                     
                     {/* Sidebar Filters (Desktop) */}
                     <div className="hidden lg:block w-72 flex-shrink-0 sticky top-24 self-start">
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
-                            <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                            <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-2">
                                 <h3 className="font-bold text-gray-900">Categories</h3>
                                 {(activeIndustries.length > 0 || activeCategories.length > 0 || activeTag || searchQuery) && (
                                     <button onClick={clearAllFilters} className="text-xs font-semibold text-amber-600 hover:text-amber-700">Clear</button>
                                 )}
                             </div>
-                            <ul className="space-y-1">
+                            <ul className="space-y-0.5">
                                 <li>
                                     <Link 
                                         to="/products"
-                                        className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                        className={`block px-3 py-1.5 rounded-lg text-[13.5px] font-medium transition-colors ${
                                             isAllProductsView 
                                                 ? 'bg-amber-50 text-amber-700' 
                                                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -277,7 +277,7 @@ export default function ProductsListPage() {
                                         <a 
                                             href={`/category/${cat.id}`}
                                             onClick={(e) => handleToggleCategory(e, cat.id)}
-                                            className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+                                            className={`block px-3 py-1.5 rounded-lg text-[13.5px] font-medium transition-colors w-full text-left ${
                                                 activeCategories.includes(cat.id)
                                                     ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' 
                                                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
@@ -286,7 +286,7 @@ export default function ProductsListPage() {
                                             <div className="flex items-center justify-between">
                                                 <span>{cat.name}</span>
                                                 {activeCategories.includes(cat.id) && (
-                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                                 )}
                                             </div>
                                         </a>
@@ -294,16 +294,16 @@ export default function ProductsListPage() {
                                 ))}
                             </ul>
 
-                            <div className="flex items-center justify-between mt-8 mb-4 border-b border-gray-100 pb-3">
+                            <div className="flex items-center justify-between mt-5 mb-3 border-b border-gray-100 pb-2">
                                 <h3 className="font-bold text-gray-900">Industries</h3>
                             </div>
-                            <ul className="space-y-1">
+                            <ul className="space-y-0.5">
                                 {INDUSTRIES.map(ind => (
                                     <li key={ind.id}>
                                         <a 
                                             href={`/industry/${ind.id}`}
                                             onClick={(e) => handleToggleIndustry(e, ind.id)}
-                                            className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full text-left ${
+                                            className={`block px-3 py-1.5 rounded-lg text-[13.5px] font-medium transition-colors w-full text-left ${
                                                 activeIndustries.includes(ind.id)
                                                     ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' 
                                                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
@@ -312,7 +312,7 @@ export default function ProductsListPage() {
                                             <div className="flex items-center justify-between">
                                                 <span>{ind.name}</span>
                                                 {activeIndustries.includes(ind.id) && (
-                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                                 )}
                                             </div>
                                         </a>
