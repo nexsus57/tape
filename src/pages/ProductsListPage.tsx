@@ -244,12 +244,12 @@ export default function ProductsListPage() {
                         </div>
 
                         {/* Shop by Industry Section - Soft Gray */}
-                        <div className="py-24 bg-slate-50 border-b border-gray-200">
+                        <div className="py-8 md:py-12 bg-slate-50 border-b border-gray-200">
                             <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-gray-200 pb-6">
+                                <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b border-gray-200 pb-4">
                                     <div>
-                                        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Shop by Industry</h2>
-                                        <p className="text-slate-500 text-lg mt-2 font-light">Engineered for your specific sector.</p>
+                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Shop by Industry</h2>
+                                        <p className="text-slate-500 text-base md:text-lg mt-2 font-light hidden md:block">Engineered for your specific sector.</p>
                                     </div>
                                     <Link to="/industries" className="text-amber-600 font-medium hover:text-amber-700 transition-colors text-sm mt-4 md:mt-0 flex items-center group">
                                         View All Industries <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
@@ -308,11 +308,11 @@ export default function ProductsListPage() {
                     </>
                 )}
 
-                <div className={`container mx-auto px-6 lg:px-8 max-w-7xl ${isAllProductsView ? 'py-16' : 'py-12'}`}>
+                <div className={`container mx-auto px-6 lg:px-8 max-w-7xl ${isAllProductsView ? 'py-8' : 'py-6'}`}>
                     {/* PRODUCT GRID SECTION */}
                     {isAllProductsView ? (
-                        <div className="mb-10">
-                            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">All Catalog Products</h2>
+                        <div className="mb-6 md:mb-8">
+                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">All Catalog Products</h2>
                         </div>
                     ) : (
                         <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
