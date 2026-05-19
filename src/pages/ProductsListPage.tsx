@@ -177,7 +177,7 @@ export default function ProductsListPage() {
                 {/* Clean Premium Hero Section - Compact */}
                 <div className="bg-slate-900 pt-6 pb-6 md:pt-8 md:pb-8 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
-                    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
                         <AnimatedSection className="max-w-4xl">
                             <h1 className="font-bold mb-2 text-2xl md:text-4xl lg:text-5xl text-white tracking-tight capitalize">
                                 {isAllProductsView ? "Industrial Tapes Collection" : pageH1}
@@ -193,10 +193,10 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
-                <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:flex lg:gap-8 lg:items-start">
+                <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-6 md:py-8 lg:flex lg:gap-10 lg:items-start">
                     
                     {/* Sidebar Filters (Desktop) */}
-                    <div className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
+                    <div className="hidden lg:block w-72 flex-shrink-0 sticky top-24 self-start">
                         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
                             <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
                                 <h3 className="font-bold text-gray-900">Categories</h3>
@@ -232,6 +232,26 @@ export default function ProductsListPage() {
                                     </li>
                                 ))}
                             </ul>
+
+                            <div className="flex items-center justify-between mt-8 mb-4 border-b border-gray-100 pb-3">
+                                <h3 className="font-bold text-gray-900">Industries</h3>
+                            </div>
+                            <ul className="space-y-1">
+                                {INDUSTRIES.map(ind => (
+                                    <li key={ind.id}>
+                                        <Link 
+                                            to={`/industry/${ind.id}`}
+                                            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                activeIndustry === ind.id
+                                                    ? 'bg-amber-50 text-amber-700' 
+                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                            }`}
+                                        >
+                                            {ind.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
 
@@ -262,6 +282,19 @@ export default function ProductsListPage() {
                                         }`}
                                     >
                                         {cat.name}
+                                    </Link>
+                                ))}
+                                {INDUSTRIES.map(ind => (
+                                    <Link 
+                                        key={ind.id}
+                                        to={`/industry/${ind.id}`}
+                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
+                                            activeIndustry === ind.id
+                                                ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
+                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
+                                        }`}
+                                    >
+                                        {ind.name}
                                     </Link>
                                 ))}
                             </div>
