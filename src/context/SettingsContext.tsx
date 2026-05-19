@@ -28,6 +28,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
         'ptfe-silicone-adhesive',
         'coloured-anti-slip-tape',
         'silver-tc',
+        'polyimide-tape',
     ],
     testimonials: INITIAL_TESTIMONIALS
 };
