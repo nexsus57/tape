@@ -243,40 +243,7 @@ export default function ProductsListPage() {
                             </div>
                         </div>
 
-                        {/* Shop by Industry Section - Soft Gray */}
-                        <div className="py-4 md:py-6 bg-slate-50 border-b border-gray-200">
-                            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                                <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 border-b border-gray-200 pb-2">
-                                    <div>
-                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Shop by Industry</h2>
-                                        <p className="text-slate-500 text-base md:text-lg mt-1 font-light hidden md:block">Engineered for your specific sector.</p>
-                                    </div>
-                                    <Link to="/industries" className="text-amber-600 font-medium hover:text-amber-700 transition-colors text-sm mt-2 md:mt-0 flex items-center group">
-                                        View All Industries <i className="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                                    </Link>
-                                </div>
-                                <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-                                    {INDUSTRIES.map(ind => {
-                                        const iconName = ind.id === 'packaging-industry' ? 'BoxIcon' : 
-                                            ind.id === 'hvac-industry' ? 'WindIcon' :
-                                            ind.id === 'electronic-industry' ? 'CpuIcon' :
-                                            ind.id === 'print-labels-signage-industry' ? 'LayersIcon' :
-                                            ind.id === 'reflective-safety-industry' ? 'SunIcon' : 'SparklesIcon';
-                                        const Icon = INDUSTRY_ICONS_MAP[iconName] || INDUSTRY_ICONS_MAP.SparklesIcon;
-                                        const count = products.filter(p => p.industries?.includes(ind.id) || INITIAL_INDUSTRIES_DETAILED.find(i => i.id === ind.id)?.products.includes(p.id)).length;
-                                        
-                                        return (
-                                        <Link key={ind.id} to={`/industry/${ind.id}`} className="group bg-white p-4 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col text-left">
-                                            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-900 transition-colors duration-300">
-                                                 <Icon className="w-5 h-5 text-slate-600 group-hover:text-white transition-colors" />
-                                            </div>
-                                            <h3 className="font-semibold text-slate-900 text-sm mb-1">{ind.name}</h3>
-                                            <div className="text-xs text-slate-500 mt-auto">{count} Products</div>
-                                        </Link>
-                                    )})}
-                                </div>
-                            </div>
-                        </div>
+
                         
                         {/* Trust Bar - Dark Accent */}
                         <div className="bg-[#0F172A] py-8">
