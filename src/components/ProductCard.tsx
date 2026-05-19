@@ -19,51 +19,61 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
   };
 
   const specs = (product.tags && product.tags.length > 0) 
-    ? product.tags.slice(0, 2) 
-    : (product.features ? product.features.slice(0, 2) : []);
+    ? product.tags.slice(0, 3) 
+    : (product.features ? product.features.slice(0, 3) : []);
 
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-200 overflow-hidden"
+      className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-200 overflow-hidden"
     >
-      <div className="relative overflow-hidden bg-gray-50/50 p-6 sm:p-8 aspect-[4/3] flex items-center justify-center border-b border-gray-100 mix-blend-multiply">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-contain object-center transform transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm mix-blend-multiply"
-          loading="lazy"
-          width="300"
-          height="300"
-          onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
-        />
+      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white pt-[60%] sm:pt-[70%] w-full flex items-center justify-center border-b border-gray-100 group-hover:bg-gray-50 transition-colors duration-300">
+        <div className="absolute inset-0 p-4 flex items-center justify-center">
+            <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-contain filter drop-shadow-md sm:drop-shadow-xl transform transition-transform duration-500 group-hover:scale-110 mix-blend-multiply"
+            loading="lazy"
+            width="300"
+            height="300"
+            onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
+            />
+        </div>
+        {/* Mock Heart Icon or Best Seller Tag if needed */}
       </div>
 
-      <div className="p-6 flex flex-col flex-grow bg-white">
+      <div className="p-4 sm:p-5 flex flex-col flex-grow bg-white">
         <div className="mb-2 flex items-center">
-             <span className="inline-block text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-slate-100 px-2.5 py-1 rounded-full">
+             <span className="inline-block text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-sm">
               {categoryName}
             </span>
         </div>
 
-        <h3 className="text-sm sm:text-base font-bold text-slate-900 mb-3 leading-snug group-hover:text-amber-600 transition-colors line-clamp-2 tracking-tight">
+        <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-3 leading-snug group-hover:text-amber-500 transition-colors line-clamp-2">
           {product.name}
         </h3>
 
         {specs.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-4 mt-auto"> 
+            <div className="flex flex-wrap gap-1.5 mb-4 mt-auto"> 
                 {specs.map((spec, i) => (
-                    <span key={i} className="text-[10px] font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100 truncate max-w-[120px] uppercase tracking-wide">
-                        {spec.replace(/-/g, ' ')}
+                    <span key={i} className="text-[10px] font-medium text-gray-600 bg-gray-50 px-2 rounded-full border border-gray-200 truncate flex items-center py-0.5 max-w-full">
+                        {/* Dummy icon could go here if we knew what it was */}
+                        <svg className="w-3 h-3 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="truncate">{spec.replace(/-/g, ' ')}</span>
                     </span>
                 ))}
             </div>
         )}
 
-        <div className={`mt-auto pt-4 border-t border-gray-100 flex items-center justify-between gap-3 ${specs.length === 0 ? 'mt-auto' : ''}`}>
+        <div className={`mt-auto pt-3 border-t border-gray-100 grid grid-cols-2 gap-2 ${specs.length === 0 ? 'mt-auto' : ''}`}>
+            <div className="flex items-center justify-center text-xs font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 rounded-lg py-2">
+                View Details
+            </div>
             <button
                 onClick={handleAddToQuote}
-                className="w-full bg-slate-900 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-300 shadow-sm z-10 whitespace-nowrap"
+                className="w-full bg-amber-500 text-gray-900 text-xs sm:text-sm font-bold py-2.5 px-3 rounded-lg hover:bg-amber-400 transition-colors duration-300 shadow-sm z-10 whitespace-nowrap"
                 aria-label={`Add ${product.name} to quote`}
             >
                 Add to Quote
