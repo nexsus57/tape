@@ -26,7 +26,13 @@ export default function HomePage() {
 
     const popularProducts = useMemo(() => {
         const productMap = new Map(products.map(p => [p.id, p]));
-        return settings.popularProductIds.map(id => productMap.get(id)).filter((p): p is Product => Boolean(p));
+        const popular = settings.popularProductIds.map(id => productMap.get(id)).filter((p): p is Product => Boolean(p));
+        // Force polyimide-tape to be included per user request, if not already there
+        if (!popular.find(p => p.id === 'polyimide-tape')) {
+            const polyimide = productMap.get('polyimide-tape');
+            if (polyimide) popular.push(polyimide);
+        }
+        return popular;
     }, [products, settings.popularProductIds]);
 
   return (
@@ -35,7 +41,7 @@ export default function HomePage() {
       
       <main className="bg-slate-50 min-h-screen text-slate-900 overflow-hidden pb-20">
         {/* Premium Architectural Hero Section */}
-        <section className="relative text-white overflow-hidden pb-16 md:pb-20 pt-24 md:pt-32 border-b border-gray-800 bg-[#0F172A]">
+        <section className="relative text-white overflow-hidden pb-10 md:pb-12 pt-16 md:pt-24 border-b border-gray-800 bg-[#0F172A]">
           {/* Base Background layer */}
           <div className="absolute inset-0 bg-[#0F172A] z-0"></div>
           
@@ -43,7 +49,7 @@ export default function HomePage() {
             <img 
               src="https://file.garden/aIULwzQ_QkPKQcGw/banner.webp" 
               alt="Industrial tapes manufacturing"
-              className="w-full h-full object-cover mix-blend-overlay filter grayscale"
+              className="w-full h-full object-cover object-bottom mix-blend-overlay filter grayscale"
               loading="eager"
             />
           </div>
@@ -166,7 +172,7 @@ export default function HomePage() {
                 
                 <AnimatedSection className="delay-200">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 gap-y-12">
-                        {popularProducts.slice(0, 8).map(product => (
+                        {popularProducts.slice(0, 4).map(product => (
                             <ProductCard key={product.id} product={product} categoryName={categoryMap.get(product.category) || ''} />
                         ))}
                     </div>
