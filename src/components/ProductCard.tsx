@@ -27,15 +27,15 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
       to={`/product/${product.id}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-200 overflow-hidden"
     >
-      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white pt-[65%] sm:pt-[75%] w-full flex items-center justify-center border-b border-gray-100 group-hover:bg-gray-50 transition-colors duration-300">
-        <div className="absolute inset-0 p-4 sm:p-6 flex items-center justify-center">
+      <div className="relative overflow-hidden bg-white pt-[80%] sm:pt-[90%] w-full flex items-center justify-center border-b border-gray-100 group-hover:bg-gray-50 transition-colors duration-300">
+        <div className="absolute inset-0 p-2 sm:p-4 flex items-center justify-center">
             <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain filter drop-shadow-md sm:drop-shadow-xl transform transition-transform duration-500 group-hover:scale-110 mix-blend-multiply"
+            className="w-full h-full object-contain filter drop-shadow-md sm:drop-shadow-xl transform transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
-            width="300"
-            height="300"
+            width="350"
+            height="350"
             onError={(e) => (e.currentTarget.src = "https://file.garden/aIULwzQ_QkPKQcGw/tapeindialogo.png")}
             />
         </div>
