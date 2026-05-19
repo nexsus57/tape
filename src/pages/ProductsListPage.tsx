@@ -177,7 +177,7 @@ export default function ProductsListPage() {
                 {/* Clean Premium Hero Section - Compact */}
                 <div className="bg-slate-900 pt-6 pb-6 md:pt-8 md:pb-8 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
-                    <div className="container relative z-10 mx-auto px-4 lg:px-8 max-w-7xl">
+                    <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <AnimatedSection className="max-w-4xl">
                             <h1 className="font-bold mb-2 text-2xl md:text-4xl lg:text-5xl text-white tracking-tight capitalize">
                                 {isAllProductsView ? "Industrial Tapes Collection" : pageH1}
@@ -193,7 +193,7 @@ export default function ProductsListPage() {
                     </div>
                 </div>
 
-                <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6 md:py-8 lg:flex lg:gap-8 lg:items-start">
+                <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 lg:flex lg:gap-8 lg:items-start">
                     
                     {/* Sidebar Filters (Desktop) */}
                     <div className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
@@ -278,11 +278,11 @@ export default function ProductsListPage() {
                         
                         <div className="min-h-[50vh]">
                             {isLoading ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                                     {[1, 2, 3, 4, 5, 6].map(i => <ProductSkeleton key={i} />)}
                                 </div>
                             ) : filteredProducts.length > 0 ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 hover-grid">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 hover-grid">
                                     {filteredProducts.map(product => (
                                         <ProductCard 
                                             key={product.id} 
