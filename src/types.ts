@@ -46,6 +46,11 @@ export interface ColorOption {
     colors: string[]; // hex codes or 'transparent'
 }
 
+export interface ProductSpecification {
+    label: string;
+    value: string;
+}
+
 export interface Product {
   id: string;
   name:string;
@@ -66,6 +71,7 @@ export interface Product {
   highlights?: string[];
   availableColors?: ColorOption[];
   customizable?: boolean;
+  specifications?: ProductSpecification[];
   seo: SeoPageData;
 }
 
