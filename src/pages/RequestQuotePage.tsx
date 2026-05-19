@@ -166,36 +166,36 @@ export default function RequestQuotePage() {
                             </AnimatedSection>
 
                             <AnimatedSection className="delay-200">
-                                <div className="bg-slate-900 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 p-8 opacity-5">
-                                        <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
-                                    </div>
-                                    <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
-                                        Why Choose Tape India?
-                                    </h3>
-                                    <ul className="space-y-5">
-                                        <li className="flex items-start gap-4">
-                                            <div className="bg-slate-800 p-2 rounded-lg text-amber-400 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
-                                            <div>
-                                                <h4 className="font-bold text-sm">Premium Quality Products</h4>
-                                                <p className="text-slate-400 text-xs mt-1">Stringent quality control for industrial applications.</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start gap-4">
-                                            <div className="bg-slate-800 p-2 rounded-lg text-emerald-400 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                                            <div>
-                                                <h4 className="font-bold text-sm">Pan India Delivery</h4>
-                                                <p className="text-slate-400 text-xs mt-1">Reliable shipping network across all major cities.</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start gap-4">
-                                            <div className="bg-slate-800 p-2 rounded-lg text-blue-400 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg></div>
-                                            <div>
-                                                <h4 className="font-bold text-sm">Custom Sizes Available</h4>
-                                                <p className="text-slate-400 text-xs mt-1">Die-cutting and slitting exactly to your requirements.</p>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                <div className="bg-white border border-gray-200 rounded-2xl p-6 text-slate-900 shadow-sm relative overflow-hidden">
+                                     <div className="absolute top-0 right-0 p-8 opacity-5">
+                                         <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                                     </div>
+                                     <h3 className="font-extrabold text-lg mb-6 flex items-center gap-2">
+                                         Why Choose Tape India?
+                                     </h3>
+                                     <ul className="space-y-5">
+                                         <li className="flex items-start gap-4">
+                                             <div className="bg-amber-50 p-2 rounded-lg text-amber-600 border border-amber-100 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg></div>
+                                             <div>
+                                                 <h4 className="font-bold text-sm">Premium Quality Products</h4>
+                                                 <p className="text-slate-500 text-xs mt-1">Stringent quality control for industrial applications.</p>
+                                             </div>
+                                         </li>
+                                         <li className="flex items-start gap-4">
+                                             <div className="bg-amber-50 p-2 rounded-lg text-amber-600 border border-amber-100 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                                             <div>
+                                                 <h4 className="font-bold text-sm">Pan India Delivery</h4>
+                                                 <p className="text-slate-500 text-xs mt-1">Reliable shipping network across all major cities.</p>
+                                             </div>
+                                         </li>
+                                         <li className="flex items-start gap-4">
+                                             <div className="bg-amber-50 p-2 rounded-lg text-amber-600 border border-amber-100 mt-0.5"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg></div>
+                                             <div>
+                                                 <h4 className="font-bold text-sm">Custom Sizes Available</h4>
+                                                 <p className="text-slate-500 text-xs mt-1">Die-cutting and slitting exactly to your requirements.</p>
+                                             </div>
+                                         </li>
+                                     </ul>
                                 </div>
                             </AnimatedSection>
                         </div>
