@@ -173,182 +173,141 @@ export default function ProductsListPage() {
         <>
             <CanonicalTag />
 
-            <main className="bg-[#F8FAFC] min-h-screen pb-24">
-                {/* Clean Premium Hero Section */}
-                <div className="relative bg-[#0F172A] pt-8 pb-10 md:pt-10 md:pb-12 overflow-hidden">
+            <main className="bg-[#F8FAFC] min-h-screen pb-16">
+                {/* Clean Premium Hero Section - Compact */}
+                <div className="bg-slate-900 pt-6 pb-6 md:pt-8 md:pb-8 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')]"></div>
-                    <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
-                    
-                    <div className="container relative z-10 mx-auto px-6 lg:px-8 max-w-7xl">
+                    <div className="container relative z-10 mx-auto px-4 lg:px-8 max-w-7xl">
                         <AnimatedSection className="max-w-4xl">
-                            <span className="uppercase tracking-widest font-semibold text-xs md:text-sm mb-4 inline-block text-amber-500">
-                                {isAllProductsView ? "Complete Catalog" : "Product Filtering"}
-                            </span>
-                            <h1 className="font-extrabold mb-4 md:mb-6 text-4xl md:text-5xl lg:text-7xl text-white tracking-tight capitalize">
-                                {isAllProductsView ? "All Industrial Tapes" : pageH1}
+                            <h1 className="font-bold mb-2 text-2xl md:text-4xl lg:text-5xl text-white tracking-tight capitalize">
+                                {isAllProductsView ? "Industrial Tapes Collection" : pageH1}
                             </h1>
-                            <div className="text-base md:text-xl font-light text-slate-300 leading-relaxed max-w-2xl">
+                            <div className="text-sm md:text-base font-light text-slate-300 leading-relaxed max-w-2xl line-clamp-2">
                                 {isAllProductsView ? (
-                                    "Explore our complete range of high-performance industrial adhesive solutions, trusted by businesses across India for demanding applications."
+                                    "Explore our complete range of high-performance industrial adhesive solutions."
                                 ) : (
                                     <div dangerouslySetInnerHTML={{ __html: enhancedPageContent || enhancedCategoryText }} />
                                 )}
                             </div>
-                            
-                            {(activeIndustry || activeCategory || activeTag || searchQuery) && (
-                                <div className="mt-8">
-                                    <button onClick={clearAllFilters} className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2.5 rounded-lg font-medium transition-all backdrop-blur-sm shadow-sm flex items-center">
-                                        <i className="fas fa-times mr-2 opacity-70"></i> Clear Filters
-                                    </button>
-                                </div>
-                            )}
                         </AnimatedSection>
                     </div>
                 </div>
 
-                {isAllProductsView && (
-                    <>
-                        {/* Shop by Category Section - Light & Clean */}
-                        <div className="py-4 md:py-6 bg-white border-b border-gray-200">
-                            <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-                                <div className="mb-4 md:mb-6 text-left">
-                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Browse by Category</h2>
-                                    <p className="text-slate-500 text-base md:text-lg mt-1 font-light">Select a category to view specialized adhesive tapes.</p>
-                                </div>
-                                <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6">
-                                    {categories.map(cat => {
-                                        const count = products.filter(p => p.category === cat.id).length;
-                                        
-                                        // Product accents
-                                        let accentColor = 'bg-slate-100 text-slate-600';
-                                        if (cat.id.includes('safe') || cat.id.includes('special')) accentColor = 'bg-amber-100 text-amber-700';
-                                        if (cat.id.includes('reflect') || cat.id.includes('anti')) accentColor = 'bg-blue-100 text-blue-700';
-                                        if (cat.id.includes('teflon')) accentColor = 'bg-teal-100 text-teal-700';
-
-                                        return (
-                                        <Link key={cat.id} to={`/category/${cat.id}`} className="group flex flex-col p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300">
-                                            <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 relative">
-                                                <div className={`absolute inset-0 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-10 transition-all duration-500 ${accentColor.split(' ')[0]}`}></div>
-                                                <img src={cat.image} alt={cat.name} className="relative z-10 w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500" />
-                                            </div>
-                                            <h3 className="font-semibold text-slate-900 text-center text-sm mb-2">{cat.name}</h3>
-                                            <div className="flex justify-center mt-auto">
-                                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${accentColor}`}>
-                                                    {count} Items
-                                                </span>
-                                            </div>
-                                        </Link>
-                                    )})}
-                                </div>
-                            </div>
-                        </div>
-
-
-                        
-                        {/* Trust Bar - Dark Accent */}
-                        <div className="bg-[#0F172A] py-8">
-                            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                                <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center divide-x divide-slate-800">
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-history text-2xl text-slate-400 mb-4"></i>
-                                        <span className="font-medium text-slate-300 text-sm">65+ Years Experience</span>
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-truck text-2xl text-slate-400 mb-4"></i>
-                                        <span className="font-medium text-slate-300 text-sm">PAN-India Delivery</span>
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-cogs text-2xl text-slate-400 mb-4"></i>
-                                        <span className="font-medium text-slate-300 text-sm">Custom Solutions</span>
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-boxes text-2xl text-slate-400 mb-4"></i>
-                                        <span className="font-medium text-slate-300 text-sm">Bulk Supply</span>
-                                    </div>
-                                    <div className="flex flex-col items-center justify-center p-2">
-                                        <i className="fas fa-check-circle text-2xl text-slate-400 mb-4"></i>
-                                        <span className="font-medium text-slate-300 text-sm">Quality Assured</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                <div className={`container mx-auto px-6 lg:px-8 max-w-7xl ${isAllProductsView ? 'py-8' : 'py-6'}`}>
-                    {/* PRODUCT GRID SECTION */}
+                <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6 md:py-8 lg:flex lg:gap-8 lg:items-start">
                     
-                    {/* Inline Category Filters */}
-                    <div className="mb-8 overflow-x-auto pb-4 hide-scrollbar">
-                        <div className="flex items-center space-x-2 min-w-max">
-                            <Link 
-                                to="/products"
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                                    !activeCategory && !activeIndustry && !activeTag && !searchQuery
-                                        ? 'bg-slate-900 text-white shadow-sm' 
-                                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 shadow-sm'
-                                }`}
-                            >
-                                All Products
-                            </Link>
-                            {categories.map(cat => (
-                                <Link 
-                                    key={cat.id}
-                                    to={`/category/${cat.id}`}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                                        activeCategory === cat.id
-                                            ? 'bg-slate-900 text-white shadow-sm' 
-                                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 shadow-sm'
-                                    }`}
-                                >
-                                    {cat.name}
-                                </Link>
-                            ))}
+                    {/* Sidebar Filters (Desktop) */}
+                    <div className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+                            <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                                <h3 className="font-bold text-gray-900">Categories</h3>
+                                {(activeIndustry || activeCategory || activeTag || searchQuery) && (
+                                    <button onClick={clearAllFilters} className="text-xs font-semibold text-amber-600 hover:text-amber-700">Clear</button>
+                                )}
+                            </div>
+                            <ul className="space-y-1">
+                                <li>
+                                    <Link 
+                                        to="/products"
+                                        className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                            isAllProductsView 
+                                                ? 'bg-amber-50 text-amber-700' 
+                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        }`}
+                                    >
+                                        All Products
+                                    </Link>
+                                </li>
+                                {categories.map(cat => (
+                                    <li key={cat.id}>
+                                        <Link 
+                                            to={`/category/${cat.id}`}
+                                            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                activeCategory === cat.id
+                                                    ? 'bg-amber-50 text-amber-700' 
+                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                            }`}
+                                        >
+                                            {cat.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
 
-                    {isAllProductsView ? (
-                        <div className="mb-6 md:mb-8">
-                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">All Catalog Products</h2>
-                        </div>
-                    ) : (
-                        <div className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
-                            <h2 className="text-2xl font-bold text-slate-900">Filtered Results</h2>
-                            <span className="text-slate-500 font-medium text-sm bg-slate-100 px-3 py-1 rounded-full">{filteredProducts.length} Items</span>
-                        </div>
-                    )}
-                    
-                    <div className="min-h-[50vh]">
-                        {isLoading ? (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <ProductSkeleton key={i} />)}
-                            </div>
-                        ) : filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 hover-grid">
-                                {filteredProducts.map(product => (
-                                    <ProductCard 
-                                        key={product.id} 
-                                        product={product} 
-                                        categoryName={categoryMap.get(product.category) || ''} 
-                                    />
+                    {/* PRODUCT GRID SECTION */}
+                    <div className="flex-1">
+                        
+                        {/* Mobile Inline Category Filters */}
+                        <div className="lg:hidden mb-6 overflow-x-auto pb-2 hide-scrollbar">
+                            <div className="flex items-center space-x-2 min-w-max">
+                                <Link 
+                                    to="/products"
+                                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
+                                        isAllProductsView
+                                            ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
+                                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
+                                    }`}
+                                >
+                                    All Products
+                                </Link>
+                                {categories.map(cat => (
+                                    <Link 
+                                        key={cat.id}
+                                        to={`/category/${cat.id}`}
+                                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
+                                            activeCategory === cat.id
+                                                ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
+                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
+                                        }`}
+                                    >
+                                        {cat.name}
+                                    </Link>
                                 ))}
                             </div>
-                        ) : (
-                            <div className="text-center py-24 bg-white rounded-2xl shadow-sm border border-gray-200">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-50 rounded-full mb-6">
-                                    <i className="fas fa-search text-slate-400 text-2xl"></i>
+                        </div>
+
+                        <div className="mb-4 flex items-center justify-between">
+                            <h2 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
+                                {isAllProductsView ? "Our Products" : "Filtered Results"}
+                            </h2>
+                            <span className="text-gray-500 font-medium text-xs md:text-sm bg-gray-100 px-3 py-1 rounded-full">
+                                {filteredProducts.length} Items
+                            </span>
+                        </div>
+                        
+                        <div className="min-h-[50vh]">
+                            {isLoading ? (
+                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+                                    {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <ProductSkeleton key={i} />)}
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900">
-                                    No products found
-                                </h3>
-                                <p className="text-slate-500 mt-2 max-w-md mx-auto">
-                                    We couldn't find any products matching your selection. Try clearing filters.
-                                </p>
-                                <button onClick={clearAllFilters} className="mt-8 bg-slate-900 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition-colors">
-                                    Clear Filters
-                                </button>
-                            </div>
-                        )}
+                            ) : filteredProducts.length > 0 ? (
+                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 hover-grid">
+                                    {filteredProducts.map(product => (
+                                        <ProductCard 
+                                            key={product.id} 
+                                            product={product} 
+                                            categoryName={categoryMap.get(product.category) || ''} 
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
+                                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-full mb-4">
+                                        <i className="fas fa-search text-gray-400 text-xl"></i>
+                                    </div>
+                                    <h3 className="text-lg font-bold text-gray-900">
+                                        No products found
+                                    </h3>
+                                    <p className="text-gray-500 text-sm mt-1 max-w-sm mx-auto">
+                                        Try adjusting your filters or browse all products.
+                                    </p>
+                                    <button onClick={clearAllFilters} className="mt-6 bg-slate-900 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors">
+                                        Clear Filters
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
