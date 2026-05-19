@@ -48,7 +48,7 @@ export default function AboutPage() {
 
                {/* Trust Badges - Desktop Floating, Mobile Grid */}
                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
-                 {["ISO 9001:2015", "Made in India", "PAN India Supply", "OEM Trusted", "100+ Solutions"].map((badge, idx) => (
+                 {["PAN India Supply", "OEM Trusted", "100+ Solutions"].map((badge, idx) => (
                     <div key={idx} className="bg-white/5 backdrop-blur-sm border border-white/10 text-slate-300 rounded-lg px-4 py-2 text-sm font-medium tracking-wider flex items-center cursor-default">
                        <i className="fas fa-check-circle text-amber-500 mr-2"></i> {badge}
                     </div>
