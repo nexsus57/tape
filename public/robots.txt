@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
 
 Sitemap: https://tapeindia.shop/sitemap.xml
