@@ -24,7 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, categoryName }) => {
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={`/product/${product.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-200 overflow-hidden"
     >
       <div className="relative overflow-hidden bg-white pt-[80%] sm:pt-[90%] w-full flex items-center justify-center border-b border-gray-100 group-hover:bg-gray-50 transition-colors duration-300">
