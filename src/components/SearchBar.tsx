@@ -175,7 +175,7 @@ const SearchBar = ({ onResultClick }: { onResultClick?: () => void }) => {
                   {popularProductsList.map(product => (
                     <li key={product.id}>
                         <Link 
-                            to={`/product/${product.id}`}
+                            to={`/product/${product.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`}
                             onClick={() => { setIsFocused(false); onResultClick?.(); }}
                             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group transition-colors"
                         >
