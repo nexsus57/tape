@@ -76,11 +76,11 @@ for (let url of routes) {
     let finalHtml = template.replace(
         '<!-- Google Tag Manager -->',
         `
-        ${helmet.title.toString()}
-        ${helmet.priority.toString()}
-        ${helmet.meta.toString()}
-        ${helmet.link.toString()}
-        ${helmet.script.toString()}
+        ${helmet.title ? helmet.title.toString() : ''}
+        ${helmet.priority ? helmet.priority.toString() : ''}
+        ${helmet.meta ? helmet.meta.toString() : ''}
+        ${helmet.link ? helmet.link.toString() : ''}
+        ${helmet.script ? helmet.script.toString() : ''}
         <!-- Google Tag Manager -->`
     );
 
