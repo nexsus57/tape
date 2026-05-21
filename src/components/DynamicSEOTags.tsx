@@ -150,16 +150,61 @@ export default function DynamicSEOTags() {
 
     const title = seoMatch['Title (≤60 chars)'];
     const description = seoMatch['Meta Description (≤160 chars)'];
-    // Ensure clean canonicals
-    let url = seoMatch['Full URL'] || currentPathUrl;
-
-    console.log('DynamicSEOTags rendered for:', path, 'Title:', title);
-
-    if (search.includes('category=') || search.includes('industry=') || search.includes('tag=') || search.includes('q=')) {
-        if (!seoMatch['Full URL']) {
-             url = currentFullUrl; 
-        }
+    
+    // --- PRODUCTION-GRADE DETERMINISTIC CANONICAL ALIGNMENT ---
+    // Rule 1: Always enforce absolute HTTPS with tapeindia.shop domain
+    // Rule 2: Remove trailing slash from all URLs EXCEPT the root home page "/"
+    let canonicalPath = path;
+    if (canonicalPath.endsWith('/') && canonicalPath.length > 1) {
+        canonicalPath = canonicalPath.slice(0, -1);
     }
+    
+    let url = `https://tapeindia.shop${canonicalPath}`;
+    
+    // Rule 3: Map any dynamic path variations or query strings (e.g. products?category=...)
+    // back to their single, authoritative, indexable, clean canonical URL.
+    if (canonicalPath.startsWith('/category/')) {
+        const catId = canonicalPath.replace('/category/', '').toLowerCase();
+        url = `https://tapeindia.shop/category/${catId}`;
+    } else if (canonicalPath === '/products' && search.includes('category=')) {
+        const catId = new URLSearchParams(search).get('category')?.toLowerCase();
+        if (catId) {
+            url = `https://tapeindia.shop/category/${catId}`;
+        }
+    } else if (canonicalPath.startsWith('/industry/')) {
+        const indId = canonicalPath.replace('/industry/', '').toLowerCase();
+        url = `https://tapeindia.shop/industry/${indId}`;
+    } else if (canonicalPath === '/products' && search.includes('industry=')) {
+        const indId = new URLSearchParams(search).get('industry')?.toLowerCase();
+        if (indId) {
+            url = `https://tapeindia.shop/industry/${indId}`;
+        }
+    } else if (canonicalPath.startsWith('/tag/')) {
+        const tagId = canonicalPath.replace('/tag/', '').toLowerCase();
+        url = `https://tapeindia.shop/tag/${tagId}`;
+    } else if (canonicalPath === '/products' && search.includes('tag=')) {
+        const tagId = new URLSearchParams(search).get('tag')?.toLowerCase();
+        if (tagId) {
+            url = `https://tapeindia.shop/tag/${tagId}`;
+        }
+    } else if (canonicalPath.startsWith('/product/')) {
+        const prodId = canonicalPath.replace('/product/', '').toLowerCase().replace(/[^a-z0-9-]+/g, '');
+        url = `https://tapeindia.shop/product/${prodId}`;
+    } else if (canonicalPath.startsWith('/blog/')) {
+        const articleId = canonicalPath.replace('/blog/', '').toLowerCase();
+        url = `https://tapeindia.shop/blog/${articleId}`;
+    }
+
+    // Rule 4: Apply indexing safeguards (noindex, nofollow) for search queries,
+    // parameter-rich, staging/dev, and thin URLs to protect Google crawl-trust.
+    const isNoIndex = 
+        canonicalPath.startsWith('/search/') || 
+        search.includes('q=') || 
+        canonicalPath.startsWith('/admin') ||
+        (search && !search.includes('category=') && !search.includes('industry=') && !search.includes('tag='));
+
+    console.log('DynamicSEOTags canonical formulation:', url, 'noindex:', isNoIndex);
+
     const siteName = "Tape India";
     // If seoMatch specifies an image property directly, use it, else dynamicImage
     const finalImage = seoMatch['image'] || dynamicImage;
@@ -216,6 +261,11 @@ export default function DynamicSEOTags() {
     return (
         <Helmet prioritizeSeoTags={true}>
             {/* Standard HTML Tags */}
+            {isNoIndex ? (
+                <meta name="robots" content="noindex, nofollow" />
+            ) : (
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+            )}
             {title && <title>{title}</title>}
             {description && <meta name="description" content={description} />}
             {keywords && <meta name="keywords" content={keywords} />}
