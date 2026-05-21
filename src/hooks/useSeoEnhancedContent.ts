@@ -35,7 +35,7 @@ export const useSeoEnhancedContent = (content: string | undefined | null) => {
 
         // Add products (highest priority, will overwrite if names collide, which is desired)
         products.forEach(p => {
-            if (p.name) linkMap.set(p.name.toLowerCase().trim(), `/product/${p.id}`);
+            if (p.name) linkMap.set(p.name.toLowerCase().trim(), `/product/${p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`);
         });
 
         // Sort names by length, descending. This is crucial to match
