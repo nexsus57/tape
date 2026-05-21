@@ -147,7 +147,7 @@ export default function RequestQuotePage() {
                                                     <div className="flex-grow min-w-0">
                                                         <h3 className="font-bold text-sm text-slate-800 line-clamp-2 leading-tight mb-1">{item.details?.name}</h3>
                                                         <div className="flex items-center gap-3 mt-2">
-                                                             <Link to={`/product/${item.productId}`} className="text-xs font-semibold text-slate-500 hover:text-amber-600 transition-colors">View Product</Link>
+                                                             <Link to={`/product/${item.productId.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`} className="text-xs font-semibold text-slate-500 hover:text-amber-600 transition-colors">View Product</Link>
                                                              <span className="text-gray-300">|</span>
                                                              <button onClick={() => removeFromCart(item.productId)} className="text-xs font-semibold text-red-400 hover:text-red-600 transition-colors">Remove</button>
                                                         </div>
@@ -328,3 +328,4 @@ export default function RequestQuotePage() {
         </>
     );
 }
+
