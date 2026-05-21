@@ -20,7 +20,10 @@ export default function DynamicSEOTags() {
     const { categories } = useCategories();
     const { articles } = useBlog();
     
-    const path = location.pathname;
+    let path = location.pathname;
+    if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+    }
     const search = location.search;
     const currentFullUrl = `https://tapeindia.shop${path}${search}`;
     const currentPathUrl = `https://tapeindia.shop${path}`;
