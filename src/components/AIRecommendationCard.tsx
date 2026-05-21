@@ -29,7 +29,7 @@ const AIRecommendationCard: FC<AIRecommendationCardProps> = ({ product, category
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={`/product/${product.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`}
       className={`group relative flex flex-col h-full bg-white rounded-xl transition-all duration-300 overflow-hidden
         ${isTopPick 
             ? 'shadow-[0_0_20px_rgba(245,197,24,0.25)] border-2 border-brand-yellow scale-[1.02] z-10' 
