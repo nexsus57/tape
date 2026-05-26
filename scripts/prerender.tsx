@@ -22,6 +22,20 @@ import { TECHNICAL_BLOGS } from '../src/data/blogData';
 
 const _dirname = path.resolve('./scripts');
 
+// Dynamic generation of unique and active tag slugs for pre-rendering
+const uniqueTags = new Set<string>();
+PRODUCTS.forEach(product => {
+    if (product.tags) {
+        product.tags.forEach(tag => {
+            const normalized = tag.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]+/g, '');
+            if (normalized) {
+                uniqueTags.add(normalized);
+            }
+        });
+    }
+});
+const sortedTags = Array.from(uniqueTags).sort();
+
 const routes = [
     '/',
     '/about',
@@ -31,10 +45,12 @@ const routes = [
     '/contact',
     '/request-quote',
     '/privacy-policy',
+    '/404',
     ...PRODUCTS.map(p => `/product/${p.id.toLowerCase().replace(/[^a-z0-9-]+/g, '')}`),
     ...INDUSTRIES.map(i => `/industry/${i.id}`),
     ...ALL_CATEGORIES.map(c => `/category/${c.id}`),
-    ...TECHNICAL_BLOGS.map(b => `/blog/${b.id}`)
+    ...TECHNICAL_BLOGS.map(b => `/blog/${b.id}`),
+    ...sortedTags.map(t => `/tag/${t}`)
 ];
 
 const templatePath = path.resolve(_dirname, '../dist/index.html');
