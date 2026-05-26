@@ -23,14 +23,6 @@ export default function AboutPage() {
 
           <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
 
-          {/* Floating Product Elements */}
-          <div className="absolute inset-0 pointer-events-none z-10 hidden md:block">
-            <img src="https://file.garden/aIULwzQ_QkPKQcGw/copper%20tape%202.webp" className="absolute top-[20%] right-[15%] w-48 lg:w-64 filter drop-shadow-[0_30px_40px_rgba(0,0,0,0.8)] opacity-90 animate-float rotate-[-15deg]" alt="Copper Tape" />
-            <img src="https://file.garden/aIULwzQ_QkPKQcGw/pvc%20reflective%20tape.webp" className="absolute bottom-[15%] right-[25%] w-40 lg:w-56 filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-70 animate-float rotate-[25deg]" style={{ animationDelay: '2s' }} alt="Reflective Tape" />
-            <img src="https://file.garden/aIULwzQ_QkPKQcGw/ptef%20silicone%20adhe.webp" className="absolute top-[30%] left-[10%] w-32 lg:w-48 filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-50 animate-float rotate-[10deg]" style={{ animationDelay: '1s' }} alt="PTFE Tape" />
-            <img src="https://file.garden/aIULwzQ_QkPKQcGw/esd%20kapton.webp" className="absolute bottom-[25%] left-[15%] w-36 lg:w-44 filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-60 animate-float rotate-[-20deg]" style={{ animationDelay: '3s' }} alt="ESD Tape" />
-          </div>
-
           <div className="container relative mx-auto px-6 lg:px-8 z-20 text-center md:text-left flex flex-col items-center md:items-start max-w-7xl">
             <AnimatedSection>
                <div className="inline-flex items-center space-x-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 mb-8 shadow-sm">
