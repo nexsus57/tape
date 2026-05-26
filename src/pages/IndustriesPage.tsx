@@ -23,15 +23,6 @@ export default function IndustriesPage() {
           
           <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
 
-          {/* Floating Product Elements - Desktop Only */}
-          <div className="hidden lg:block absolute inset-0 pointer-events-none z-0">
-             <img src="https://file.garden/aIULwzQ_QkPKQcGw/copper%20tape%202.webp" className="absolute top-[15%] left-[5%] w-32 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] animate-float opacity-70 rotate-[-15deg]" alt="" />
-             <img src="https://file.garden/aIULwzQ_QkPKQcGw/pvc%20reflective%20tape.webp" className="absolute bottom-[10%] left-[15%] w-40 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] animate-float opacity-80 rotate-[10deg]" style={{animationDelay: '1s'}} alt="" />
-             <img src="https://file.garden/aIULwzQ_QkPKQcGw/floor%20marking%20tape.webp" className="absolute top-[20%] right-[8%] w-36 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] animate-float opacity-70 rotate-[20deg]" style={{animationDelay: '1.5s'}} alt="" />
-             <img src="https://file.garden/aIULwzQ_QkPKQcGw/emi%20sheliding%20tape.webp" className="absolute bottom-[15%] right-[10%] w-28 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] animate-float opacity-60 rotate-[-25deg]" style={{animationDelay: '0.5s'}} alt="" />
-             <img src="https://file.garden/aIULwzQ_QkPKQcGw/ptef%20silicone%20adhe.webp" className="absolute top-[5%] right-[30%] w-24 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] animate-float opacity-50 rotate-[45deg]" style={{animationDelay: '2s'}} alt="" />
-          </div>
-
           <div className="container relative z-10 mx-auto px-6 lg:px-8 text-center max-w-7xl">
             <AnimatedSection>
               <div className="inline-flex items-center space-x-2 bg-slate-800/50 border border-slate-700/50 rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
