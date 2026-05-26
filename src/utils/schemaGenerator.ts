@@ -265,9 +265,10 @@ export const generateProductSchema = (product: Product, categoryName: string = "
         "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "INR",
-            "lowPrice": "150.00",
-            "highPrice": "4500.00",
+            "lowPrice": 150.00,
+            "highPrice": 4500.00,
             "offerCount": "10",
+            "priceValidUntil": "2027-12-31",
             "availability": "https://schema.org/InStock",
             "url": productUrl
         },
