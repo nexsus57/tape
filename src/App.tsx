@@ -80,6 +80,7 @@ export default function App() {
               <Route path="blog/:slug" element={<BlogPostPage />} />
               <Route path="request-quote" element={<RequestQuotePage />} />
               <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="404" element={<NotFoundPage />} />
               {/* Catch-all for any other route */}
               <Route path="*" element={<NotFoundPage />} />
           </Route>
