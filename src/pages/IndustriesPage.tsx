@@ -15,9 +15,9 @@ export default function IndustriesPage() {
     <>
       <CanonicalTag />
       
-      <main className="bg-slate-50 min-h-screen text-slate-900 pb-20">
+      <div className="bg-slate-50 min-h-screen text-slate-900">
         {/* Premium Hero Section */}
-        <header className="relative bg-[#0F172A] lg:pb-40 lg:pt-32 pt-24 pb-24 overflow-hidden border-b border-gray-800">
+        <header className="relative bg-[#0F172A] pt-24 pb-32 md:pb-40 lg:pt-32 lg:pb-48 overflow-hidden border-b border-gray-800">
           {/* Subtle background overlay/texture */}
           <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxwb2x5Z29uIHBvaW50cz0iMCAwIDQgMCAwIDQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] mix-blend-overlay"></div>
           
@@ -40,7 +40,7 @@ export default function IndustriesPage() {
         </header>
 
         {/* Industry Section */}
-        <div className="container mx-auto px-6 lg:px-8 -mt-20 relative z-20 mb-24 max-w-7xl">
+        <div className="container mx-auto px-6 lg:px-8 -mt-12 md:-mt-20 relative z-20 mb-12 md:mb-16 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {industries.map((industry, index) => {
                const staticInd = INDUSTRIES.find(i => i.id === industry.id);
@@ -86,9 +86,9 @@ export default function IndustriesPage() {
         </div>
 
         {/* Not Sure Which Industry? Section */}
-        <section className="py-24 relative bg-gray-100/50 border-t border-gray-200">
+        <section className="py-16 md:py-24 relative bg-gray-100/50 border-t border-gray-200">
            <div className="container mx-auto px-6 lg:px-8 max-w-7xl relative z-10">
-              <div className="bg-white border border-gray-200 rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-12">
+              <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-12 shadow-sm relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12">
                  <div className="text-center lg:text-left flex-1 relative z-10">
                     <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Not Sure Which Industry?</h2>
                     <p className="text-lg text-slate-600 mb-10 max-w-2xl font-light">
@@ -136,9 +136,9 @@ export default function IndustriesPage() {
         </section>
 
         {/* Popular Categories Preview */}
-        <section className="py-24 relative bg-white border-t border-gray-200">
+        <section className="py-16 md:py-24 pb-12 md:pb-16 relative bg-white border-t border-gray-200">
            <div className="container mx-auto px-6 lg:px-8 max-w-7xl relative z-10">
-              <div className="mb-16 md:flex md:items-end justify-between border-b border-gray-200 pb-6">
+              <div className="mb-10 md:mb-16 md:flex md:items-end justify-between border-b border-gray-200 pb-6">
                  <div>
                     <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Popular Tape Categories</h2>
                     <p className="text-slate-500 mt-2 text-lg font-light">Structured by adhesive type and core application logic.</p>
@@ -148,7 +148,7 @@ export default function IndustriesPage() {
                  </Link>
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                  {categories.slice(0, 6).map((category, idx) => {
                     // Accents based on category id
                     let accentColor = 'bg-slate-100 text-slate-700';
@@ -206,7 +206,7 @@ export default function IndustriesPage() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="bg-[#0F172A] py-20 relative overflow-hidden mt-12 mx-4 lg:mx-8 rounded-3xl mb-12">
+        <section className="bg-[#0F172A] py-16 md:py-20 relative overflow-hidden mt-8 md:mt-12 mx-4 lg:mx-8 rounded-3xl mb-8 md:mb-12">
           <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]"></div>
           <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-800/50 blur-[100px] pointer-events-none"></div>
 
@@ -236,7 +236,7 @@ export default function IndustriesPage() {
              </AnimatedSection>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }
