@@ -1,12 +1,22 @@
-# Redirect www to apex
-https://www.tapeindia.shop/* https://tapeindia.shop/:splat 301
-
-# Redirect http to https
-http://tapeindia.shop/* https://tapeindia.shop/:splat 301
-http://www.tapeindia.shop/* https://tapeindia.shop/:splat 301
-
 # Redirect index.html to root
 /index.html / 301
 
-# SPA Fallback (Must be at the very bottom)
-/* /index.html 200
+# Specific dynamic routes that must remain client-side (SPA 200)
+/admin/* /index.html 200
+/admin /index.html 200
+/search/* /index.html 200
+
+# Strict CDN-level block for literal bracket placeholder URLs (Avoid Google Sitelinks Searchbox crawls soft 404s)
+/search/%7Bsearch_term_string%7D /404.html 404
+/search/{search_term_string} /404.html 404
+
+# Force strict 404 status codes for missing dynamic items
+# Because valid items are pre-rendered statically, any missing items represent 404s
+/product/* /404.html 404
+/blog/* /404.html 404
+/industry/* /404.html 404
+/category/* /404.html 404
+/tag/* /404.html 404
+
+# Catch-all fallback for other unmatched paths
+/* /404.html 404
