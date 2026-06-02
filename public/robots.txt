@@ -3,5 +3,12 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /api/*
+Disallow: /search
+Disallow: /search/*
+Disallow: /products?*
+Disallow: /products/?*
+Disallow: /request-quote
+Disallow: /request-quote/*
+Disallow: /request-quote?*
 
 Sitemap: https://tapeindia.shop/sitemap.xml
