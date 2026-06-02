@@ -225,6 +225,7 @@ export default function ProductPage() {
                             <div className="flex flex-col sm:flex-row gap-4 mb-10">
                                 <Link
                                     to={`/request-quote?product=${product.id}`}
+                                    rel="nofollow"
                                     className="flex-1 bg-slate-900 text-white font-bold py-4 px-8 rounded-xl text-center hover:bg-amber-500 hover:text-slate-900 transition-colors shadow-sm"
                                 >
                                     {productSeoData.CTA || "Request a Quote"}
@@ -382,6 +383,7 @@ export default function ProductPage() {
 
                                 <Link
                                     to={`/request-quote?product=${product.id}`}
+                                    rel="nofollow"
                                     className="flex w-full items-center justify-center gap-2 bg-amber-500 text-slate-900 font-bold py-4 px-6 rounded-xl text-center hover:bg-amber-400 transition-colors shadow-sm"
                                 >
                                     Get Quote Now <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
