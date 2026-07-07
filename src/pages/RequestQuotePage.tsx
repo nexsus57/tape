@@ -20,19 +20,19 @@ export default function RequestQuotePage() {
     const [fileName, setFileName] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Handle direct link from product page query param
+    // Handle direct link from product page query param without client-side redirect
+    const hasAddedFromQuery = useRef(false);
     useEffect(() => {
+        if (hasAddedFromQuery.current) return;
         const productId = searchParams.get('product');
         if (productId) {
-            addToCart(productId);
-            
-            searchParams.delete('product');
-            navigate({
-                pathname: location.pathname,
-                search: searchParams.toString()
-            }, { replace: true });
+            hasAddedFromQuery.current = true;
+            const isAlreadyInCart = cart.some(item => item.productId === productId);
+            if (!isAlreadyInCart) {
+                addToCart(productId);
+            }
         }
-    }, [searchParams, addToCart, navigate, location.pathname]);
+    }, [searchParams, addToCart, cart]);
 
     useEffect(() => {
         setRedirectUrl(`${window.location.origin}/thank-you.html`);
