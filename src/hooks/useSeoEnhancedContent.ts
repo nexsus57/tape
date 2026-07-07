@@ -25,7 +25,7 @@ export const useSeoEnhancedContent = (content: string | undefined | null) => {
 
         // Add industries
         industries.forEach(i => {
-            if (i.name) linkMap.set(i.name.toLowerCase().trim(), `/products?industry=${i.id}`);
+            if (i.name) linkMap.set(i.name.toLowerCase().trim(), `/industry/${i.id}`);
         });
 
         // Add categories
