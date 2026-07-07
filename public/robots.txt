@@ -1,14 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/*
-Disallow: /api/*
-Disallow: /search
-Disallow: /search/*
-Disallow: /products?*
-Disallow: /products/?*
-Disallow: /request-quote
-Disallow: /request-quote/*
-Disallow: /request-quote?*
+Disallow: /admin/
+Disallow: /api/
+Disallow: /search/
+Disallow: /*?*
+Disallow: /thank-you
 
 Sitemap: https://tapeindia.shop/sitemap.xml
