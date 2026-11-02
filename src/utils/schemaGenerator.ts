@@ -150,10 +150,10 @@ export const generateWebsiteSchema = (path: string) => {
 
 export const generateOrganizationSchema = (settings?: any) => {
     const contact = settings?.contact || {
-        address: "18, 5th Main Rd, \nNew Colony, \nChromepet, Chennai – 600044",
-        phone1: "+91-9876543210",
+        address: "SHA KUNDANMAL MISRIMAL,\n#52, Narayana Mudali Street,\nSowcarpet, Chennai – 600 079",
+        phone1: "+91-9840647096",
         phone2: "",
-        email: "info@tapeindia.shop"
+        email: "tapeindia@yahoo.com"
     };
 
     const reviewSchema = settings?.testimonials?.length > 0 ? settings.testimonials.map((t: any) => ({
