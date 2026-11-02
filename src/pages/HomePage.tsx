@@ -1,14 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { useSettings } from '../context/SettingsContext';
 import { INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
-import CategoryCard from '../components/CategoryCard';
 import AnimatedSection from '../components/AnimatedSection';
 import { ExperienceIcon, QualityIcon, RangeIcon } from '../components/icons/WhyChooseUsIcons';
 import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
+import { ICONS_MAP, SparklesIcon } from '../components/icons/CategoryIcons';
 import { type Product } from '../types';
 import CanonicalTag from '../components/CanonicalTag';
 import { seoData } from '../data/seoData';
@@ -17,7 +17,6 @@ export default function HomePage() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const { settings } = useSettings();
-    const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
     const homeData = useMemo(() => seoData.find(p => p["Page Name"] === "Home"), []);
 
@@ -37,17 +36,6 @@ export default function HomePage() {
         }
         return popular;
     }, [products, settings.popularProductIds]);
-
-    const filteredCategoryProducts = useMemo(() => {
-        if (selectedCategory === 'all') {
-            return popularProducts;
-        }
-        return products.filter(p => p.category === selectedCategory);
-    }, [selectedCategory, products, popularProducts]);
-
-    const activeCategoryObj = useMemo(() => {
-        return categories.find(c => c.id === selectedCategory);
-    }, [categories, selectedCategory]);
 
   return (
     <>
@@ -178,39 +166,79 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Popular Products Section */}
-        <section className="py-24 bg-slate-50 border-b border-gray-200">
-            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-                <AnimatedSection className="text-center md:flex md:items-end md:justify-between mb-16 text-left border-b border-gray-200 pb-6">
+        {/* Popular Products & Shop by Category Section */}
+        <section className="py-20 md:py-24 bg-slate-50 border-b border-gray-200">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+                <AnimatedSection className="text-center md:flex md:items-end md:justify-between mb-12 text-left border-b border-gray-200 pb-6">
                     <div>
-                        <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Popular Industrial Tapes</h2>
-                        <p className="text-slate-500 mt-3 max-w-2xl text-lg font-light">
-                            Explore our most trusted solutions, engineered for performance.
+                        <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Our Popular Industrial Tapes</h2>
+                        <p className="text-slate-500 mt-3 max-w-2xl text-base md:text-lg font-light">
+                            Explore some of our most trusted and sought-after taping solutions, engineered for performance across key industries.
                         </p>
                     </div>
                     <Link
                         to="/products"
-                        className="hidden md:inline-flex items-center bg-slate-900 text-white font-medium py-3 px-8 rounded-lg hover:bg-slate-800 transition-all shadow-sm"
+                        className="hidden md:inline-flex items-center bg-slate-900 text-white font-medium py-2.5 px-6 rounded-lg hover:bg-slate-800 transition-all text-sm shadow-sm"
                     >
-                        View Full Catalog <i className="fas fa-arrow-right ml-2"></i>
+                        View Full Catalog <i className="fas fa-arrow-right ml-2 text-xs"></i>
                     </Link>
                 </AnimatedSection>
                 
-                <AnimatedSection className="delay-200">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 gap-y-12">
+                <AnimatedSection className="delay-100">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 gap-y-10">
                         {popularProducts.slice(0, 4).map(product => (
                             <ProductCard key={product.id} product={product} categoryName={categoryMap.get(product.category) || ''} />
                         ))}
                     </div>
                 </AnimatedSection>
                 
-                <div className="mt-12 text-center md:hidden">
+                <div className="mt-8 text-center md:hidden">
                     <Link
                         to="/products"
-                        className="inline-flex items-center w-full justify-center bg-slate-900 text-white font-medium py-3.5 px-8 rounded-lg hover:bg-slate-800 transition-all shadow-sm"
+                        className="inline-flex items-center justify-center w-full bg-slate-900 text-white font-medium py-3 px-6 rounded-lg hover:bg-slate-800 transition-all text-sm shadow-sm"
                     >
-                        View Full Catalog <i className="fas fa-arrow-right ml-2"></i>
+                        View Full Catalog <i className="fas fa-arrow-right ml-2 text-xs"></i>
                     </Link>
+                </div>
+
+                {/* Shop by Category - 6 Buttons below popular products */}
+                <div className="mt-16 pt-12 border-t border-gray-200">
+                    <AnimatedSection className="text-center mb-8">
+                        <div className="inline-flex items-center space-x-2 bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
+                            <span>Direct Category Access</span>
+                        </div>
+                        <h3 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
+                            Shop by Category
+                        </h3>
+                        <p className="text-slate-500 mt-2 max-w-2xl mx-auto text-sm md:text-base font-light">
+                            Select any of our 6 core categories to explore specific tapes and technical data:
+                        </p>
+                    </AnimatedSection>
+
+                    <AnimatedSection className="delay-200">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+                            {categories.map((cat) => {
+                                const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
+                                return (
+                                    <Link
+                                        key={cat.id}
+                                        to={`/category/${cat.id}`}
+                                        className="group bg-white hover:bg-amber-500 border border-gray-200 hover:border-amber-500 rounded-xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-amber-50 group-hover:bg-white text-amber-600 group-hover:text-slate-900 flex items-center justify-center mb-3 transition-colors duration-200 shadow-sm">
+                                            <Icon className="w-6 h-6" />
+                                        </div>
+                                        <span className="font-bold text-sm text-slate-900 group-hover:text-slate-950 transition-colors duration-200">
+                                            {cat.name}
+                                        </span>
+                                        <span className="text-[11px] text-amber-600 group-hover:text-slate-900 font-semibold mt-1.5 inline-flex items-center gap-1">
+                                            Shop Now <i className="fas fa-arrow-right text-[9px] group-hover:translate-x-0.5 transition-transform"></i>
+                                        </span>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </AnimatedSection>
                 </div>
             </div>
         </section>
@@ -227,7 +255,7 @@ export default function HomePage() {
               
               <AnimatedSection className="delay-200">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                      {INDUSTRIES.map((industry, index) => {
+                      {INDUSTRIES.map((industry) => {
                           const iconName = industry.id === 'packaging-industry' ? 'BoxIcon' : 
                                        industry.id === 'hvac-industry' ? 'WindIcon' :
                                        industry.id === 'electronic-industry' ? 'CpuIcon' :
@@ -258,9 +286,9 @@ export default function HomePage() {
               </AnimatedSection>
           </div>
         </section>
-        
+
         {/* Testimonials Section */}
-         <section className="py-24 bg-slate-50 mb-12">
+         <section className="py-24 bg-white mb-12">
           <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
               <AnimatedSection className="text-center mb-16">
                   <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Trusted by Industry Leaders</h2>
