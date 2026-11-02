@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { NAV_LINKS, INDUSTRIES } from '../constants';
+import { NAV_LINKS, INDUSTRIES, PRODUCT_RANGE_ITEMS } from '../constants';
 import SearchBar from './SearchBar';
 import { useCategories } from '../context/CategoryContext';
 import { useCart } from '../context/CartContext';
@@ -12,6 +12,8 @@ import AITapeFinder from './AITapeFinder';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isProductRangeOpen, setIsProductRangeOpen] = useState(false);
+  const [isMobileProductRangeOpen, setIsMobileProductRangeOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAIFinderOpen, setIsAIFinderOpen] = useState(false);
   
@@ -19,6 +21,7 @@ export default function Header() {
   const { cartCount } = useCart();
   const location = useLocation();
   const megaMenuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const productRangeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +34,7 @@ export default function Header() {
   useEffect(() => {
       setIsMenuOpen(false);
       setIsMegaMenuOpen(false);
+      setIsProductRangeOpen(false);
       setIsAIFinderOpen(false);
   }, [location]);
 
@@ -44,6 +48,20 @@ export default function Header() {
       setIsMegaMenuOpen(false);
     }, 150);
   };
+
+  const handleProductRangeMouseEnter = () => {
+    if (productRangeTimeoutRef.current) clearTimeout(productRangeTimeoutRef.current);
+    setIsProductRangeOpen(true);
+  };
+
+  const handleProductRangeMouseLeave = () => {
+    productRangeTimeoutRef.current = setTimeout(() => {
+      setIsProductRangeOpen(false);
+    }, 150);
+  };
+
+  const industrialItems = PRODUCT_RANGE_ITEMS.filter(item => item.column === 'industrial');
+  const technicalItems = PRODUCT_RANGE_ITEMS.filter(item => item.column === 'technical');
 
   const navItems = NAV_LINKS.filter(l => !l.isButton);
   const ctaItem = NAV_LINKS.find(l => l.isButton);
@@ -134,13 +152,85 @@ export default function Header() {
                           </div>
                       );
                   }
+                  if (link.name === 'Product Range') {
+                      return (
+                          <div 
+                            key={link.name} 
+                            className="relative h-full flex items-center"
+                            onMouseEnter={handleProductRangeMouseEnter}
+                            onMouseLeave={handleProductRangeMouseLeave}
+                          >
+                              <Link 
+                                to={link.path}
+                                className={`text-base font-semibold transition-colors duration-200 flex items-center whitespace-nowrap ${isProductRangeOpen ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'}`}
+                              >
+                                {link.name}
+                                <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-200 ${isProductRangeOpen ? 'rotate-180' : ''}`}></i>
+                              </Link>
+
+                              {/* PRODUCT RANGE MEGA MENU */}
+                              <div 
+                                className={`absolute top-[48px] -left-20 xl:-left-36 transform w-[740px] max-w-[92vw] bg-white shadow-2xl rounded-2xl border border-gray-100 transition-all duration-300 origin-top-left z-50 ${isProductRangeOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
+                              >
+                                  <div className="grid grid-cols-2 p-6 gap-6 border-b border-gray-100 max-h-[520px] overflow-y-auto custom-scrollbar">
+                                      {/* Column 1: Industrial & Packaging Range */}
+                                      <div className="space-y-1 pr-3 border-r border-gray-100">
+                                          <div className="flex items-center gap-2 mb-3 px-2">
+                                              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                                              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Industrial & Packaging Range</h3>
+                                          </div>
+                                          {industrialItems.map((item) => (
+                                              <Link 
+                                                  key={item.name} 
+                                                  to={item.path} 
+                                                  className="group flex flex-col px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                                              >
+                                                  <span className="font-semibold text-slate-800 text-sm group-hover:text-amber-600 transition-colors leading-snug">{item.name}</span>
+                                                  {item.tagline && (
+                                                      <span className="text-[11px] text-slate-400 group-hover:text-slate-500 transition-colors">{item.tagline}</span>
+                                                  )}
+                                              </Link>
+                                          ))}
+                                      </div>
+
+                                      {/* Column 2: Technical & Safety Range */}
+                                      <div className="space-y-1 pl-1">
+                                          <div className="flex items-center gap-2 mb-3 px-2">
+                                              <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                                              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Technical & Safety Range</h3>
+                                          </div>
+                                          {technicalItems.map((item) => (
+                                              <Link 
+                                                  key={item.name} 
+                                                  to={item.path} 
+                                                  className="group flex flex-col px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                                              >
+                                                  <span className="font-semibold text-slate-800 text-sm group-hover:text-amber-600 transition-colors leading-snug">{item.name}</span>
+                                                  {item.tagline && (
+                                                      <span className="text-[11px] text-slate-400 group-hover:text-slate-500 transition-colors">{item.tagline}</span>
+                                                  )}
+                                              </Link>
+                                          ))}
+                                      </div>
+                                  </div>
+
+                                  <div className="bg-slate-50 px-6 py-3.5 rounded-b-2xl flex justify-between items-center text-xs">
+                                      <span className="text-slate-600 font-medium">Looking for custom slitting or technical data sheets?</span>
+                                      <Link to="/request-quote" className="font-bold text-slate-900 hover:text-amber-600 transition-colors flex items-center gap-1">
+                                          Request a Quote &rarr;
+                                      </Link>
+                                  </div>
+                              </div>
+                          </div>
+                      );
+                  }
                   return (
                     <NavLink 
                         key={link.name}
                         to={link.path}
                         end={link.path === '/'}
                         className={({ isActive }: { isActive: boolean }) => 
-                            `text-base font-semibold transition-colors duration-200 text-slate-700 hover:text-amber-600 ${isActive ? 'text-amber-600' : ''}`
+                            `text-base font-semibold transition-colors duration-200 text-slate-700 hover:text-amber-600 whitespace-nowrap ${isActive ? 'text-amber-600' : ''}`
                         }
                     >
                     {link.name}
@@ -231,19 +321,61 @@ export default function Header() {
           </div>
           
           <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-80px)]">
-            {navItems.map((link) => (
-              <NavLink 
-                key={link.name} 
-                to={link.path}
-                end={link.path === '/'}
-                onClick={() => setIsMenuOpen(false)}
-                className={({ isActive }: { isActive: boolean }) => 
-                    `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-amber-50 text-amber-600' : 'text-slate-700 hover:bg-slate-50'}`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+            {navItems.map((link) => {
+              if (link.name === 'Product Range') {
+                return (
+                  <div key={link.name} className="border-b border-gray-100 pb-1">
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileProductRangeOpen(!isMobileProductRangeOpen)}
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-lg font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
+                      <span>Product Range</span>
+                      <i className={`fas fa-chevron-down text-sm transition-transform duration-200 ${isMobileProductRangeOpen ? 'rotate-180 text-amber-600' : 'text-slate-400'}`}></i>
+                    </button>
+                    {isMobileProductRangeOpen && (
+                      <div className="pl-3 pr-2 py-2 space-y-1 bg-slate-50/90 rounded-xl my-1 max-h-[380px] overflow-y-auto custom-scrollbar">
+                        <div className="px-3 pt-1 pb-0.5 text-[11px] font-bold text-amber-600 uppercase tracking-wider">Industrial & Packaging</div>
+                        {industrialItems.map((item) => (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-1.5 rounded-md text-sm font-medium text-slate-700 hover:text-amber-600 hover:bg-white transition-colors"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                        <div className="px-3 pt-3 pb-0.5 text-[11px] font-bold text-blue-600 uppercase tracking-wider border-t border-gray-200/60 mt-2">Technical & Safety</div>
+                        {technicalItems.map((item) => (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-1.5 rounded-md text-sm font-medium text-slate-700 hover:text-amber-600 hover:bg-white transition-colors"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return (
+                <NavLink 
+                  key={link.name} 
+                  to={link.path}
+                  end={link.path === '/'}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={({ isActive }: { isActive: boolean }) => 
+                      `block px-4 py-3 rounded-lg text-lg font-medium transition-colors ${isActive ? 'bg-amber-50 text-amber-600' : 'text-slate-700 hover:bg-slate-50'}`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              );
+            })}
             {ctaItem && (
                <div className="mt-6">
                  <Link 
