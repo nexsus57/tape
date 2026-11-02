@@ -132,8 +132,13 @@ export default function ProductsListPage() {
             }
         } else if (activeTag) {
              const normalizedTag = activeTag.toUpperCase().replace(/-/g, ' ');
+             const rawTag = activeTag.toUpperCase();
              prods = prods.filter(p => 
-                 p.tags?.some((t: string) => t.toUpperCase().includes(normalizedTag))
+                 p.tags?.some((t: string) => {
+                     const normT = t.toUpperCase();
+                     const spaceT = normT.replace(/-/g, ' ');
+                     return normT.includes(rawTag) || spaceT.includes(normalizedTag) || normT.includes(normalizedTag);
+                 })
              );
              pageData = {
                  H1: `${activeTag.replace(/-/g, ' ')} Solutions`,
