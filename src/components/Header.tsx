@@ -1,13 +1,47 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { NAV_LINKS, INDUSTRIES, PRODUCT_RANGE_ITEMS } from '../constants';
+import { NAV_LINKS, INDUSTRIES } from '../constants';
 import SearchBar from './SearchBar';
 import { useCategories } from '../context/CategoryContext';
 import { useCart } from '../context/CartContext';
 import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
 import { AIIcon } from './icons/AIIcon';
 import AITapeFinder from './AITapeFinder';
+
+export interface ProductRangeItem {
+    name: string;
+    path: string;
+    column: 'industrial' | 'technical';
+    tagline?: string;
+}
+
+export const PRODUCT_RANGE_ITEMS: ProductRangeItem[] = [
+    // Column 1: Industrial, Packaging & Foam Tapes (11 items)
+    { name: 'Double Sided Tape', path: '/category/double-sided-tapes', column: 'industrial', tagline: 'Mounting & structural bonding' },
+    { name: 'Double / Single Sided Foam Tape', path: '/tag/foam', column: 'industrial', tagline: 'Cushioning & gap filling' },
+    { name: 'Double Sided Flexo Cloth Tape', path: '/product/double-coated-cloth-tape-581', column: 'industrial', tagline: 'Plate mounting & carpet fixing' },
+    { name: 'Packing Tape', path: '/tag/packaging', column: 'industrial', tagline: 'BOPP, tamper-evident & carton sealing' },
+    { name: 'Paper Tape', path: '/product/paper-tape', column: 'industrial', tagline: 'Eco-friendly kraft & self-adhesive' },
+    { name: 'Aluminium Tape', path: '/product/aluminum-foil-2-tape', column: 'industrial', tagline: 'HVAC, heat reflection & sealing' },
+    { name: 'Surface Protection Tapes', path: '/tag/surface-protection', column: 'industrial', tagline: 'Scratch-free film protection' },
+    { name: 'Bag Sealing Tape', path: '/product/bag-sealing-tape', column: 'industrial', tagline: 'Commercial pouch & bag sealing' },
+    { name: 'Fine Line Masking Tape', path: '/product/fine-line-masking-tape', column: 'industrial', tagline: 'Sharp paint lines & curves' },
+    { name: 'Black Acetate Cloth Tape', path: '/product/acetate-cloth-tape-white-19mm-x-66m-crop', column: 'industrial', tagline: 'Transformer & harness wrapping' },
+    { name: 'Sticky Mats', path: '/product/stickymat', column: 'industrial', tagline: 'Cleanroom contamination control' },
+
+    // Column 2: High Temp, Specialty & Safety Range (10 items)
+    { name: 'High Temperature Tape', path: '/tag/high-temperature', column: 'technical', tagline: 'Up to 260°C Kapton & polyimide' },
+    { name: 'Teflon Cloth & Adhesive Sheets', path: '/category/teflon-ptfe-tapes', column: 'technical', tagline: 'Non-stick PTFE fabrics & liners' },
+    { name: 'Nitto Teflon Tape', path: '/product/nitto-903-ul-tapes', column: 'technical', tagline: 'Original Nitto 903UL PTFE' },
+    { name: 'Silicone Rubber Fiberglass Sleeve', path: '/product/silicone-rubber-fiberglass-sleeve', column: 'technical', tagline: 'High-temp electrical sleeving' },
+    { name: 'Copper Conductive Adhesive Tapes', path: '/product/copper-tape-2', column: 'technical', tagline: 'EMI grounding & circuit repair' },
+    { name: 'EMI Conductive Copper & Fabrics Tapes', path: '/tag/emi', column: 'technical', tagline: 'Shielding against interference' },
+    { name: 'Thermal Conductive Tapes & Pads', path: '/tag/thermal-management', column: 'technical', tagline: 'Heat dissipation for electronics' },
+    { name: 'Floor Safety Tape', path: '/category/safety-tapes', column: 'technical', tagline: 'Heavy-duty pathway marking' },
+    { name: 'Anti Slip Tape / Anti Skid Tape', path: '/tag/anti-slip', column: 'technical', tagline: 'Traction grip for stair & ramps' },
+    { name: 'Reflective Tape', path: '/category/reflective-tapes', column: 'technical', tagline: 'High-visibility retroreflective' },
+];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,7 +97,20 @@ export default function Header() {
   const industrialItems = PRODUCT_RANGE_ITEMS.filter(item => item.column === 'industrial');
   const technicalItems = PRODUCT_RANGE_ITEMS.filter(item => item.column === 'technical');
 
-  const navItems = NAV_LINKS.filter(l => !l.isButton);
+  const baseNavItems = NAV_LINKS.filter(l => !l.isButton);
+  const navItems = (() => {
+      if (baseNavItems.some(l => l.name === 'Product Range')) {
+          return baseNavItems;
+      }
+      const list: typeof baseNavItems = [];
+      for (const item of baseNavItems) {
+          list.push(item);
+          if (item.name === 'Products') {
+              list.push({ name: 'Product Range', path: '/products' });
+          }
+      }
+      return list;
+  })();
   const ctaItem = NAV_LINKS.find(l => l.isButton);
 
   const getLinkClass = (path: string, isMegaMenu: boolean = false) => {
