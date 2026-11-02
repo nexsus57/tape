@@ -220,7 +220,7 @@ export default function RequestQuotePage() {
                                         ))}
                                     </div>
 
-                                     <form action="https://formsubmit.co/tapeindiain@yahoo.com" method="POST" encType="multipart/form-data" className="flex flex-col flex-grow">
+                                     <form action="https://formsubmit.co/tapeindia@yahoo.com" method="POST" encType="multipart/form-data" className="flex flex-col flex-grow">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 mb-8">
                                             {formFields.map(field => (
                                                 <div key={field.name}>
