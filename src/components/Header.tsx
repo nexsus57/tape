@@ -8,6 +8,7 @@ import { useCart } from '../context/CartContext';
 import { ICONS_MAP, SparklesIcon } from './icons/CategoryIcons';
 import { AIIcon } from './icons/AIIcon';
 import AITapeFinder from './AITapeFinder';
+import { getCategoryTheme } from '../utils/categoryThemes';
 
 export interface ProductRangeItem {
     name: string;
@@ -158,13 +159,14 @@ export default function Header() {
                                           <div className="grid grid-cols-2 gap-2">
                                               {categories.slice(0, 8).map(cat => {
                                                   const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
+                                                  const theme = getCategoryTheme(cat.id);
                                                   return (
                                                       <Link key={cat.id} to={`/category/${cat.id}`} className="flex items-start p-3 rounded-xl hover:bg-slate-50 transition-colors group">
-                                                          <div className="mt-0.5 mr-3 text-slate-400 group-hover:text-amber-500 transition-colors">
+                                                          <div className={`mt-0.5 mr-3 ${theme.subtext} group-hover:scale-110 transition-transform`}>
                                                               <Icon className="w-5 h-5" />
                                                           </div>
                                                           <div>
-                                                              <span className="block font-semibold text-slate-900 group-hover:text-amber-600 transition-colors leading-snug">{cat.name}</span>
+                                                              <span className={`block font-semibold text-slate-900 ${theme.titleHover} transition-colors leading-snug`}>{cat.name}</span>
                                                           </div>
                                                       </Link>
                                                   );
