@@ -391,7 +391,7 @@ export default function ProductPage() {
                                 
                                 <div className="mt-4 pt-4 border-t border-gray-100 text-center">
                                     <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">Or reach out directly</p>
-                                    <a href="mailto:sales@tapeindia.shop" className="block mt-2 font-medium text-slate-600 hover:text-amber-600 transition-colors">sales@tapeindia.shop</a>
+                                    <a href="mailto:tapeindia@yahoo.com" className="block mt-2 font-medium text-slate-600 hover:text-amber-600 transition-colors">tapeindia@yahoo.com</a>
                                 </div>
                             </div>
                         </div>
