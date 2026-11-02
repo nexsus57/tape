@@ -11,6 +11,7 @@ import { seoData } from '../data/seoData';
 import type { SeoPageData } from '../types';
 import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
 import { useSeoEnhancedContent } from '../hooks/useSeoEnhancedContent';
+import { getCategoryTheme } from '../utils/categoryThemes';
 
 const ProductSkeleton = () => (
   <div className="bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col h-full animate-pulse">
@@ -277,26 +278,33 @@ export default function ProductsListPage() {
                                         All Products
                                     </Link>
                                 </li>
-                                {categories.map(cat => (
-                                    <li key={cat.id}>
-                                        <a 
-                                            href={`/category/${cat.id}`}
-                                            onClick={(e) => handleToggleCategory(e, cat.id)}
-                                            className={`block px-3 py-1.5 rounded-lg text-[13.5px] font-medium transition-colors w-full text-left ${
-                                                activeCategories.includes(cat.id)
-                                                    ? 'bg-amber-50 text-amber-700 border border-amber-200 shadow-sm' 
-                                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
-                                            }`}
-                                        >
-                                            <div className="flex items-center justify-between">
-                                                <span>{cat.name}</span>
-                                                {activeCategories.includes(cat.id) && (
-                                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                                )}
-                                            </div>
-                                        </a>
-                                    </li>
-                                ))}
+                                {categories.map(cat => {
+                                    const theme = getCategoryTheme(cat.id);
+                                    const isActive = activeCategories.includes(cat.id);
+                                    return (
+                                        <li key={cat.id}>
+                                            <a 
+                                                href={`/category/${cat.id}`}
+                                                onClick={(e) => handleToggleCategory(e, cat.id)}
+                                                className={`block px-3 py-1.5 rounded-lg text-[13.5px] font-medium transition-colors w-full text-left ${
+                                                    isActive
+                                                        ? `${theme.cardBg} ${theme.subtext} border ${theme.cardBorder} shadow-sm font-semibold` 
+                                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent'
+                                                }`}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className={`w-2 h-2 rounded-full ${theme.solidColor}`}></span>
+                                                        <span>{cat.name}</span>
+                                                    </div>
+                                                    {isActive && (
+                                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                    )}
+                                                </div>
+                                            </a>
+                                        </li>
+                                    );
+                                })}
                             </ul>
 
                             <div className="flex items-center justify-between mt-5 mb-3 border-b border-gray-100 pb-2">
@@ -343,23 +351,28 @@ export default function ProductsListPage() {
                                 >
                                     All Products
                                 </Link>
-                                {categories.map(cat => (
-                                    <a 
-                                        key={cat.id}
-                                        href={`/category/${cat.id}`}
-                                        onClick={(e) => handleToggleCategory(e, cat.id)}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors border flex items-center gap-1 ${
-                                            activeCategories.includes(cat.id)
-                                                ? 'bg-amber-500 text-gray-900 border-amber-500 shadow-sm' 
-                                                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-gray-900'
-                                        }`}
-                                    >
-                                        {cat.name}
-                                        {activeCategories.includes(cat.id) && (
-                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                                        )}
-                                    </a>
-                                ))}
+                                {categories.map(cat => {
+                                    const theme = getCategoryTheme(cat.id);
+                                    const isActive = activeCategories.includes(cat.id);
+                                    return (
+                                        <a 
+                                            key={cat.id}
+                                            href={`/category/${cat.id}`}
+                                            onClick={(e) => handleToggleCategory(e, cat.id)}
+                                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all border flex items-center gap-2 ${
+                                                isActive
+                                                    ? `${theme.solidColor} text-white border-transparent shadow-sm` 
+                                                    : `bg-white text-gray-700 ${theme.cardBorder} hover:${theme.cardBg}`
+                                            }`}
+                                        >
+                                            <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-white' : theme.solidColor}`}></span>
+                                            {cat.name}
+                                            {isActive && (
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                            )}
+                                        </a>
+                                    );
+                                })}
                                 {INDUSTRIES.map(ind => (
                                     <a 
                                         key={ind.id}
