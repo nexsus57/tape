@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useCategories } from '../context/CategoryContext';
 import { useSettings } from '../context/SettingsContext';
 import { INDUSTRIES } from '../constants';
 import ProductCard from '../components/ProductCard';
+import CategoryCard from '../components/CategoryCard';
 import AnimatedSection from '../components/AnimatedSection';
 import { ExperienceIcon, QualityIcon, RangeIcon } from '../components/icons/WhyChooseUsIcons';
 import { INDUSTRY_ICONS_MAP } from '../components/icons/IndustryIcons';
@@ -16,6 +17,7 @@ export default function HomePage() {
     const { products } = useProducts();
     const { categories } = useCategories();
     const { settings } = useSettings();
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
     const homeData = useMemo(() => seoData.find(p => p["Page Name"] === "Home"), []);
 
@@ -35,6 +37,17 @@ export default function HomePage() {
         }
         return popular;
     }, [products, settings.popularProductIds]);
+
+    const filteredCategoryProducts = useMemo(() => {
+        if (selectedCategory === 'all') {
+            return popularProducts;
+        }
+        return products.filter(p => p.category === selectedCategory);
+    }, [selectedCategory, products, popularProducts]);
+
+    const activeCategoryObj = useMemo(() => {
+        return categories.find(c => c.id === selectedCategory);
+    }, [categories, selectedCategory]);
 
   return (
     <>
