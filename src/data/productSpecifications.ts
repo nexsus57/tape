@@ -1,4 +1,3 @@
-
 export interface ProductSpecification {
     label: string;
     value: string;
@@ -12,6 +11,15 @@ export const PRODUCT_SPECIFICATIONS: Record<string, ProductSpecification[]> = {
         { label: 'Applications', value: 'Safety Marking, Hazard Identification, Industrial Floors' },
         { label: 'Colors', value: 'Red, Yellow, Green, Blue, White, Black' },
         { label: 'Customization', value: 'Size and color customization available based on order quantity' },
+    ],
+    'silicone-rubber-fiberglass-sleeve': [
+        { label: 'Base Material', value: 'Braided E-Glass Fiberglass Yarn' },
+        { label: 'Coating', value: 'High-Grade Extruded Silicone Rubber' },
+        { label: 'Operating Temperature', value: '-60°C to +200°C' },
+        { label: 'Dielectric Strength', value: '4.0 kV to 7.0 kV' },
+        { label: 'Flammability Rating', value: 'UL 1441 VW-1 / Self-extinguishing' },
+        { label: 'Features', value: 'High flexibility, oil & chemical resistance, thermal insulation' },
+        { label: 'Applications', value: 'Motor leads, transformers, heating elements, automotive wiring harnesses' },
     ],
     'hazardtape': [
         { label: 'Material', value: 'Soft PVC Film' },
