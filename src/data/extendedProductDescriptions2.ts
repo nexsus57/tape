@@ -7,6 +7,12 @@ Businesses across India rely on our safety tapes for efficient workplace managem
 
 As a trusted supplier of safety tapes in India, we provide reliable products with consistent quality, competitive pricing, and nationwide delivery support. Whether you require heavy-duty floor marking tapes, anti-skid tapes, or warning tapes, our solutions are designed for long-term industrial use and superior adhesion performance.`,
 
+  "silicone-rubber-fiberglass-sleeve": `Silicone rubber fiberglass sleeve is a premium grade, heavy-duty electrical insulation sleeve engineered from closely woven, non-alkali E-glass fiberglass braiding heavily coated with liquid silicone elastomer. Formulated for demanding high-temperature environments, this flexible sleeving provides continuous thermal protection up to 200°C with exceptional dielectric breakdown voltage resistance ranging between 4 kV and 7 kV.
+
+Widely utilized across the electrical, automotive, aerospace, transformer, motor, and industrial machinery sectors, silicone fiberglass sleeving protects critical wire harnesses, cable assemblies, sensor leads, and heating elements against extreme heat, electrical arcing, mechanical abrasion, moisture, hydraulic fluids, and corrosive industrial chemicals.
+
+Manufactured in compliance with stringent industrial and international standards, our silicone rubber coated fiberglass sleeves offer self-extinguishing flame resistance (VW-1 rating), remarkable flexibility under cold and hot extremes (-60°C to +200°C), and enduring durability without cracking or hardening over time. Available in diverse inner diameters and wall thicknesses for bulk industrial procurement across India.`,
+
   "hazardtape": `Hazard warning and safety stripe tape is a high-visibility industrial marking tape designed to identify dangerous areas, restricted zones, walkways, and safety boundaries in industrial and commercial environments. Featuring bold black-yellow, red-white, or other contrasting stripe patterns, these tapes instantly attract attention and help improve workplace safety compliance.
 
 Widely used in factories, warehouses, airports, construction sites, logistics hubs, malls, and manufacturing plants, hazard warning tapes assist in reducing workplace accidents and guiding workers toward safe operational practices. These tapes are ideal for marking machinery areas, loading zones, electrical hazards, emergency exits, staircases, pipelines, and storage sections.
