@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 const WHATSAPP_NUMBERS = [
-    { name: 'Sayam', number: '917010530018' },
+    { name: 'Tape India Sales & Support', number: '918072468057' },
 ];
 
 export default function WhatsAppButton() {
