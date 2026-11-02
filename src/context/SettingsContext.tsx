@@ -16,8 +16,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
     contact: {
         address: "SHA KUNDANMAL MISRIMAL,\n#52, Narayana Mudali Street,\nSowcarpet, Chennai – 600 079",
         phone1: "+91-9840647096",
-        phone2: "9841137052",
-        email: "tapeindiain@yahoo.com"
+        phone2: "",
+        email: "tapeindia@yahoo.com"
     },
     socialLinks: {
         facebook: "https://www.facebook.com/tapeindia",
@@ -46,18 +46,22 @@ interface SettingsProviderProps {
 }
 
 export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
-  const [settings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v1', defaultSettings);
+  const [settings, setSettings] = useLocalStorage<Settings>('tapeindia_settings_v2', defaultSettings);
 
   useEffect(() => {
-    // Data validation: If settings object is corrupted, reset to defaults.
+    // Data validation and migration: ensure latest email and contact info are always reflected
     const isValid = settings &&
                     typeof settings === 'object' &&
                     settings.contact &&
                     settings.popularProductIds &&
                     Array.isArray(settings.popularProductIds);
     
-    if (!isValid) {
-        setSettings(defaultSettings);
+    if (!isValid || settings.contact?.email !== 'tapeindia@yahoo.com' || settings.contact?.phone2 === '9841137052') {
+        setSettings({
+            ...defaultSettings,
+            ...settings,
+            contact: defaultSettings.contact
+        });
     }
   }, [settings, setSettings]);
 
