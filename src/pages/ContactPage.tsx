@@ -51,6 +51,14 @@ export default function ContactPage() {
                                   )}
                               </div>
                           </li>
+                          <li className="flex items-start">
+                              <i className="fab fa-whatsapp text-green-600 w-6 text-center mt-1 mr-5 flex-shrink-0 text-xl"></i>
+                              <div>
+                                  <h3 className="font-semibold text-gray-800">WhatsApp Support</h3>
+                                  <a href="https://wa.me/918072468057" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-green-600 transition-colors">+91-8072468057</a>
+                                  <p className="text-xs text-gray-400 mt-0.5">Direct chat with our associate</p>
+                              </div>
+                          </li>
                            <li className="flex items-start">
                               <i className="fas fa-envelope text-brand-accent w-6 text-center mt-1 mr-5 flex-shrink-0"></i>
                               <div>
