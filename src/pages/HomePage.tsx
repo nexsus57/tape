@@ -12,6 +12,7 @@ import { ICONS_MAP, SparklesIcon } from '../components/icons/CategoryIcons';
 import { type Product } from '../types';
 import CanonicalTag from '../components/CanonicalTag';
 import { seoData } from '../data/seoData';
+import { getCategoryTheme } from '../utils/categoryThemes';
 
 export default function HomePage() {
     const { products } = useProducts();
@@ -216,23 +217,37 @@ export default function HomePage() {
                     </AnimatedSection>
 
                     <AnimatedSection className="delay-200">
-                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
                             {categories.map((cat) => {
                                 const Icon = ICONS_MAP[cat.icon] || SparklesIcon;
+                                const theme = getCategoryTheme(cat.id);
                                 return (
                                     <Link
                                         key={cat.id}
                                         to={`/category/${cat.id}`}
-                                        className="group bg-white hover:bg-amber-500 border border-gray-200 hover:border-amber-500 rounded-xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1"
+                                        className={`group relative overflow-hidden ${theme.cardBg} ${theme.cardBorder} border rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-between text-center shadow-sm ${theme.cardHoverShadow} transition-all duration-300 hover:-translate-y-1.5`}
                                     >
-                                        <div className="w-12 h-12 rounded-xl bg-amber-50 group-hover:bg-white text-amber-600 group-hover:text-slate-900 flex items-center justify-center mb-3 transition-colors duration-200 shadow-sm">
-                                            <Icon className="w-6 h-6" />
+                                        {/* Colored Top Accent Stripe */}
+                                        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${theme.accentGradient} opacity-95 group-hover:opacity-100 transition-opacity`}></div>
+
+                                        {/* Colored Themed Icon Badge */}
+                                        <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${theme.iconBg} flex items-center justify-center mt-1 mb-2.5 transition-all duration-300 group-hover:scale-105`}>
+                                            <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
                                         </div>
-                                        <span className="font-bold text-sm text-slate-900 group-hover:text-slate-950 transition-colors duration-200">
+
+                                        {/* Category Title */}
+                                        <span className={`font-bold text-sm sm:text-[14.5px] text-slate-900 ${theme.titleHover} transition-colors duration-200 leading-snug`}>
                                             {cat.name}
                                         </span>
-                                        <span className="text-[11px] text-amber-600 group-hover:text-slate-900 font-semibold mt-1.5 inline-flex items-center gap-1">
-                                            Shop Now <i className="fas fa-arrow-right text-[9px] group-hover:translate-x-0.5 transition-transform"></i>
+
+                                        {/* Distinctive Themed Tag / Feature */}
+                                        <span className="text-[10px] font-semibold text-slate-500 mt-1 uppercase tracking-wider">
+                                            {theme.tagLabel}
+                                        </span>
+
+                                        {/* Themed "Shop Now" Action Pill Button */}
+                                        <span className={`mt-3 text-[11px] font-bold ${theme.cta} px-3 py-1.5 rounded-full transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm`}>
+                                            Shop Now <i className="fas fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
                                         </span>
                                     </Link>
                                 );
