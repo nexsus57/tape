@@ -19,7 +19,7 @@ export default function CombinedContactColumn() {
                 Engineering Support
             </h4>
             
-            <form action="https://formsubmit.co/tapeindiain@yahoo.com" method="POST" className="space-y-3 mb-8">
+            <form action="https://formsubmit.co/tapeindia@yahoo.com" method="POST" className="space-y-3 mb-8">
                 {/* FormSubmit settings */}
                 <input type="hidden" name="_next" value={redirectUrl} />
                 <input type="hidden" name="_honey" style={{ display: 'none' }} />
@@ -57,7 +57,7 @@ export default function CombinedContactColumn() {
                 </button>
             </form>
             
-            <div className="space-y-5">
+            <div className="space-y-4">
                 <div className="flex items-start">
                     <i className="fas fa-map-marker-alt text-slate-500 w-5 text-center mt-1 mr-3 flex-shrink-0 text-sm"></i>
                     <p className="text-slate-400 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: contact.address.replace(/\n/g, '<br />') }}/>
@@ -72,6 +72,10 @@ export default function CombinedContactColumn() {
                             </>
                         )}
                     </div>
+                </div>
+                <div className="flex items-start">
+                    <i className="fab fa-whatsapp text-emerald-400 w-5 text-center mt-1 mr-3 flex-shrink-0 text-base"></i>
+                    <a href="https://wa.me/918072468057" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">+91-8072468057 (WhatsApp)</a>
                 </div>
                 <div className="flex items-start">
                     <i className="fas fa-envelope text-slate-500 w-5 text-center mt-1 mr-3 flex-shrink-0 text-sm"></i>
